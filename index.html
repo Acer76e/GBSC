@@ -208,6 +208,40 @@ h3{font-size:15px;line-height:1.3;}
 .trick{padding:10px 12px;margin-bottom:8px;background:rgba(251,191,36,.13);border-left:3px solid var(--warn);border-radius:8px;font-size:14px;line-height:1.55;}
 .trick b{color:var(--warn);}
 
+.timer-row{display:flex;align-items:center;gap:12px;}
+.timer-info{flex:1;min-width:0;}
+.timer-ring{position:relative;width:48px;height:48px;flex-shrink:0;}
+.timer-ring svg{transform:rotate(-90deg);width:100%;height:100%;display:block;}
+.timer-ring .ring-bg{stroke:rgba(0,0,0,.09);fill:none;}
+.timer-ring .ring-pg{transition:stroke-dashoffset .1s linear,stroke .25s;fill:none;}
+.timer-ring .timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--text);}
+.timer-ring.warn .timer-num{animation:tickPulse .9s ease infinite;color:#ef4444;}
+@keyframes tickPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.btn-timed{background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;box-shadow:0 6px 20px -4px rgba(8,145,178,.55);}
+
+.trend-chart{width:100%;height:auto;display:block;border-radius:10px;background:#fafafa;margin-top:6px;}
+.trend-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.trend-stat{background:rgba(99,102,241,.08);padding:11px 12px;border-radius:12px;}
+.trend-stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;}
+.trend-stat .v{font-size:18px;font-weight:800;color:var(--primary);margin-top:2px;line-height:1.1;}
+.trend-stat.up{background:rgba(16,185,129,.12);}
+.trend-stat.up .v{color:var(--correct);}
+.trend-stat.down{background:rgba(239,68,68,.1);}
+.trend-stat.down .v{color:var(--incorrect);}
+.history-list{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.hist{display:flex;align-items:center;gap:12px;padding:11px 12px;background:#fff;border-radius:12px;border:1px solid #f3f4f6;font-size:13px;}
+.hist .hd{font-size:22px;flex-shrink:0;}
+.hist .info{flex:1;min-width:0;}
+.hist .info .top{font-weight:700;font-size:14px;}
+.hist .info .sub{color:var(--muted);font-size:11px;margin-top:2px;}
+.hist .pct{font-weight:800;font-size:18px;flex-shrink:0;}
+.hist .pct.high{color:var(--correct);}
+.hist .pct.mid{color:var(--warn);}
+.hist .pct.low{color:var(--incorrect);}
+.mode-legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:10px;justify-content:center;}
+.mode-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600;}
+.mode-pill .dot{width:9px;height:9px;border-radius:50%;}
+
 @media (max-width:380px){
   h1{font-size:22px}
   .qtext{font-size:18px}
@@ -375,6 +409,9 @@ const TIPS = {
 };
 
 const KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
+const TIMED_PER_Q = 7000;
+const TIMED_QS = 20;
+const RING_C = 131.95;
 
 const state = {
   screen: "home",
@@ -410,6 +447,20 @@ function nextAvatar() {
 }
 function loadName() { return lsGet("g6_name","Julia"); }
 
+function loadHistory() { try { return JSON.parse(lsGet("g6_history","[]")); } catch(e) { return []; } }
+function saveHistoryEntry(e) {
+  const hist = loadHistory();
+  hist.push(e);
+  if (hist.length > 50) hist.shift();
+  lsSet("g6_history", JSON.stringify(hist));
+}
+function clearHistory() {
+  if (confirm("Clear all quiz history? This can't be undone.")) {
+    lsSet("g6_history", "[]");
+    render();
+  }
+}
+
 function getTroubleTopics() {
   const stats = loadLastStats();
   if (!stats) return [];
@@ -435,6 +486,11 @@ function shuffleOptions(q) {
 }
 
 function gatherQuestions(mode, key) {
+  if (mode === "timed") {
+    const all = [];
+    for (const k of KEY_ORDER) for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
+    return shuffle(all).slice(0, TIMED_QS).map(shuffleOptions);
+  }
   if (mode === "subobj") return shuffle(SUBOBJ.questions.map(q => ({ ...q, _cat: "pronouns", _sub: true }))).map(shuffleOptions);
   if (mode === "category") return shuffle(QUIZ[key].questions.map(q => ({ ...q, _cat: key }))).map(shuffleOptions);
   if (mode === "quick") {
@@ -461,7 +517,7 @@ function startQuiz(mode, key) {
   state.mode = mode;
   state.currentCategory = key || (mode === "subobj" ? "pronouns" : null);
   state.examMode = (mode === "exam");
-  state.helpers = !state.examMode;
+  state.helpers = !state.examMode && mode !== "timed";
   state.questions = gatherQuestions(mode, key);
   state.index = 0; state.score = 0; state.streak = 0; state.bestStreak = 0;
   state.answered = false; state.selected = -1;
@@ -476,6 +532,7 @@ function startQuiz(mode, key) {
 
 function selectOption(i) {
   if (state.answered) return;
+  clearTimer();
   const q = state.questions[state.index];
   state.selected = i;
   state.answered = true;
@@ -506,6 +563,7 @@ function revealHint() {
 }
 
 function nextQuestion() {
+  clearTimer();
   if (state.index + 1 >= state.questions.length) { finishQuiz(); return; }
   state.index++;
   state.answered = false; state.selected = -1; state.hintShown = false;
@@ -513,11 +571,17 @@ function nextQuestion() {
 }
 
 function finishQuiz() {
+  clearTimer();
   state.elapsedMs = Date.now() - state.startTime;
   bumpPlays();
   const pct = Math.round((state.score / state.questions.length) * 100);
   saveHigh(pct);
   saveBestStreak(state.bestStreak);
+  saveHistoryEntry({
+    date: Date.now(), mode: state.mode,
+    score: state.score, total: state.questions.length, pct,
+    elapsedMs: state.elapsedMs, hintsUsed: state.hintsUsed
+  });
   if (state.mode === "practice" || state.mode === "exam") saveLastStats(state.categoryStats);
   if (state.mode === "exam") saveBestExam(pct);
   state.screen = "results";
@@ -527,10 +591,11 @@ function finishQuiz() {
   else if (pct >= 70) miniConfetti();
 }
 
-function goHome() { state.screen = "home"; state.currentCategory = null; render(); }
-function showTopic(k) { state.currentCategory = k; state.screen = "topic"; render(); }
-function showTips(k) { state.currentCategory = k; state.screen = "tips"; render(); }
-function showSubObj() { state.screen = "subobj-tutorial"; render(); }
+function goHome() { clearTimer(); state.screen = "home"; state.currentCategory = null; render(); }
+function showTopic(k) { clearTimer(); state.currentCategory = k; state.screen = "topic"; render(); }
+function showTips(k) { clearTimer(); state.currentCategory = k; state.screen = "tips"; render(); }
+function showSubObj() { clearTimer(); state.screen = "subobj-tutorial"; render(); }
+function showHistory() { clearTimer(); state.screen = "history"; render(); }
 
 function startFlashcards(k, set) {
   state.currentCategory = k;
@@ -597,6 +662,63 @@ function chimeAchievement() {
 }
 function chimeStart() { tone(523, 0.1, "sine", 0.12); setTimeout(() => tone(784, 0.14, "sine", 0.12), 90); }
 
+let timerInterval = null;
+let lastBeepSec = 99;
+
+function startTimer() {
+  clearTimer();
+  if (state.mode !== "timed" || state.answered) return;
+  state.timeRemaining = TIMED_PER_Q;
+  lastBeepSec = 99;
+  updateTimerUI();
+  timerInterval = setInterval(() => {
+    state.timeRemaining -= 100;
+    if (state.timeRemaining <= 0) {
+      clearTimer();
+      timeoutAnswer();
+      return;
+    }
+    updateTimerUI();
+    const sec = Math.ceil(state.timeRemaining / 1000);
+    if (sec <= 3 && sec !== lastBeepSec) {
+      lastBeepSec = sec;
+      tone(900, 0.08, "square", 0.16);
+    }
+  }, 100);
+}
+function clearTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+}
+function updateTimerUI() {
+  const ring = document.querySelector(".ring-pg");
+  const num = document.querySelector(".timer-num");
+  const wrap = document.querySelector(".timer-ring");
+  if (!ring || !num) return;
+  const pct = Math.max(0, state.timeRemaining / TIMED_PER_Q);
+  ring.setAttribute("stroke-dashoffset", String((1 - pct) * RING_C));
+  num.textContent = String(Math.max(0, Math.ceil(state.timeRemaining / 1000)));
+  let color = "#10b981";
+  if (pct < 0.45) color = "#f59e0b";
+  if (pct < 0.3) color = "#ef4444";
+  ring.setAttribute("stroke", color);
+  if (wrap) wrap.classList.toggle("warn", pct < 0.45);
+}
+function timeoutAnswer() {
+  if (state.answered) return;
+  const q = state.questions[state.index];
+  state.selected = -1;
+  state.answered = true;
+  state.categoryStats[q._cat].total++;
+  state.streak = 0;
+  toneTimeout();
+  render();
+}
+function toneTimeout() {
+  tone(440, 0.15, "square", 0.18);
+  setTimeout(() => tone(330, 0.15, "square", 0.16), 130);
+  setTimeout(() => tone(220, 0.35, "square", 0.18), 260);
+}
+
 function bigConfetti() { spawnConfetti(140); }
 function miniConfetti() { spawnConfetti(50); }
 function smallConfetti() { spawnConfetti(22); }
@@ -653,6 +775,7 @@ function viewHome() {
     </div>
     <button class="btn btn-success btn-icon" onclick="startQuiz('practice')">🟢 Practice Quiz <span style="opacity:.9;font-weight:500;">(with hints, ${totalQ} Qs)</span></button>
     <button class="btn btn-exam btn-icon" onclick="startQuiz('exam')">🔴 Final Exam Mode <span style="opacity:.9;font-weight:500;">(no hints, all ${totalQ})</span></button>
+    <button class="btn btn-timed btn-icon" onclick="startQuiz('timed')">⏱️ Timed Challenge <span style="opacity:.9;font-weight:500;">(${TIMED_QS} Qs, 7 sec each!)</span></button>
     <div class="row">
       <button class="btn btn-ghost btn-small btn-icon" onclick="startQuiz('quick')">⚡ Quick Quiz (10)</button>
       ${trouble.length > 0
@@ -678,6 +801,7 @@ function viewHome() {
       </div>
     </div>
     <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
+    <button class="btn btn-ghost btn-small btn-icon" onclick="showHistory()">📊 View My Progress</button>
   `;
 }
 
@@ -852,6 +976,7 @@ function viewQuiz() {
   const cat = q._sub ? SUBOBJ : QUIZ[q._cat];
   const streakChip = state.streak >= 3 ? `<div class="streak">🔥 ${state.streak} streak!</div>` : "";
   const modeLabel = state.mode === "exam" ? "🔴 FINAL EXAM"
+                  : state.mode === "timed" ? "⏱️ TIMED CHALLENGE"
                   : state.mode === "trouble" ? "🎯 Trouble Topics"
                   : state.mode === "quick" ? "⚡ Quick Quiz"
                   : state.mode === "subobj" ? "🎯 Subject vs Object"
@@ -862,9 +987,14 @@ function viewQuiz() {
   let feedback = "";
   if (state.answered) {
     const correct = state.selected === q.a;
+    const timeout = state.selected === -1;
+    const cls = correct ? "correct" : "incorrect";
+    const msg = timeout ? "⏰ Time's up!"
+              : correct ? `<span class="avatar-celebrate">${avatar}</span> ${pick(PRAISE_CORRECT)}`
+              : pick(PRAISE_WRONG);
     feedback = `
-      <div class="feedback ${correct ? "correct" : "incorrect"}">
-        ${correct ? `<span class="avatar-celebrate">${avatar}</span> ` : ""}${correct ? pick(PRAISE_CORRECT) : pick(PRAISE_WRONG)}
+      <div class="feedback ${cls}">
+        ${msg}
         <span class="hint">${correct ? esc(q.hint) : "Answer: <b>" + esc(q.opts[q.a]) + "</b> — " + esc(q.hint)}</span>
       </div>
       <button class="btn btn-primary" style="margin-top:12px;" onclick="nextQuestion()">${cur === total ? (state.examMode ? "🎓 Finish Exam" : "See Results 🎯") : "Next Question →"}</button>
@@ -882,11 +1012,23 @@ function viewQuiz() {
   return `
     ${streakChip}
     <div class="card" style="padding:14px 18px;">
-      <div class="qhead">
-        <span>${modeLabel} · Q ${cur}/${total}</span>
-        <span>Score: ${state.score}</span>
+      <div class="timer-row">
+        ${state.mode === "timed" && !state.answered ? `
+          <div class="timer-ring">
+            <svg viewBox="0 0 50 50">
+              <circle class="ring-bg" cx="25" cy="25" r="21" stroke-width="4"/>
+              <circle class="ring-pg" cx="25" cy="25" r="21" stroke="#10b981" stroke-width="4" stroke-dasharray="${RING_C}" stroke-dashoffset="0" stroke-linecap="round"/>
+            </svg>
+            <div class="timer-num">7</div>
+          </div>` : ""}
+        <div class="timer-info">
+          <div class="qhead">
+            <span>${modeLabel} · Q ${cur}/${total}</span>
+            <span>Score: ${state.score}</span>
+          </div>
+          <div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>
+        </div>
       </div>
-      <div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>
     </div>
     <div class="card quiz fade-in">
       <span class="badge ${state.examMode?"badge-exam":""}" style="background:${state.examMode?"":cat.color+"22"};color:${state.examMode?"":"#000a"};">${cat.emoji} ${esc(cat.title)}</span>
@@ -896,7 +1038,7 @@ function viewQuiz() {
           let cls = "option";
           if (state.answered) {
             if (i === q.a) cls += " correct";
-            else if (i === state.selected) cls += " incorrect";
+            else if (state.selected >= 0 && i === state.selected) cls += " incorrect";
           }
           return `<button class="${cls}" ${state.answered ? "disabled" : ""} onclick="selectOption(${i})">
             <span class="letter">${letter(i)}</span>
@@ -960,6 +1102,139 @@ function viewResults() {
   `;
 }
 
+function modeInfo(m) {
+  const map = {
+    practice:{ emoji:"🟢", name:"Practice", color:"#6366f1" },
+    exam:    { emoji:"🔴", name:"Final Exam", color:"#dc2626" },
+    timed:   { emoji:"⏱️", name:"Timed", color:"#0891b2" },
+    quick:   { emoji:"⚡", name:"Quick Quiz", color:"#f59e0b" },
+    trouble: { emoji:"🎯", name:"Trouble Topics", color:"#fbbf24" },
+    category:{ emoji:"📂", name:"Topic Quiz", color:"#60a5fa" },
+    subobj:  { emoji:"🎯", name:"S vs O", color:"#fb7185" }
+  };
+  return map[m] || { emoji:"❓", name:String(m), color:"#9ca3af" };
+}
+
+function renderTrendChart(hist) {
+  const W = 320, H = 180, PL = 36, PR = 14, PT = 18, PB = 16;
+  const innerW = W - PL - PR, innerH = H - PT - PB;
+  const n = hist.length;
+  if (n === 0) return '<p class="muted">No data yet.</p>';
+  const x = i => n === 1 ? PL + innerW/2 : PL + (i/(n-1)) * innerW;
+  const y = pct => PT + (1 - pct/100) * innerH;
+  const pts = hist.map((h,i) => [x(i), y(h.pct)]);
+  const path = pts.map(([px,py],i) => (i===0?"M":"L") + px.toFixed(1) + " " + py.toFixed(1)).join(" ");
+  const areaPath = n>1 ? path + " L " + x(n-1).toFixed(1) + " " + (PT+innerH).toFixed(1) + " L " + PL + " " + (PT+innerH).toFixed(1) + " Z" : "";
+  const grid = [0,25,50,75,100].map(lvl => {
+    const gy = y(lvl);
+    return `<line x1="${PL}" y1="${gy}" x2="${W-PR}" y2="${gy}" stroke="#e5e7eb" stroke-width="1" ${(lvl===0||lvl===100)?"":'stroke-dasharray="2 3"'}/>
+            <text x="${PL-4}" y="${gy+3}" text-anchor="end" font-size="9" fill="#9ca3af">${lvl}%</text>`;
+  }).join("");
+  const t80 = y(80);
+  const thresh = `<line x1="${PL}" y1="${t80}" x2="${W-PR}" y2="${t80}" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.6"/>
+                  <text x="${W-PR-2}" y="${t80-3}" text-anchor="end" font-size="9" fill="#10b981" font-weight="700">80% goal</text>`;
+  const dots = pts.map((p,i) => {
+    const mi = modeInfo(hist[i].mode);
+    return `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="${mi.color}" stroke="white" stroke-width="2"/>`;
+  }).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" class="trend-chart" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/>
+      </linearGradient>
+      <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6366f1" stop-opacity="0.28"/>
+        <stop offset="1" stop-color="#ec4899" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${grid}${thresh}
+    ${n>1 ? `<path d="${areaPath}" fill="url(#areaGrad)"/>` : ""}
+    ${n>1 ? `<path d="${path}" stroke="url(#lineGrad)" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>` : ""}
+    ${dots}
+  </svg>`;
+}
+
+function historyRow(h) {
+  const mi = modeInfo(h.mode);
+  const d = new Date(h.date);
+  const dateStr = d.toLocaleDateString("en-US",{month:"short",day:"numeric"}) + " " + d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
+  const c = h.pct >= 80 ? "high" : h.pct >= 60 ? "mid" : "low";
+  return `<div class="hist">
+    <span class="hd">${mi.emoji}</span>
+    <div class="info">
+      <div class="top">${mi.name}</div>
+      <div class="sub">${dateStr} · ${h.score}/${h.total} · ${fmtTime(h.elapsedMs)}</div>
+    </div>
+    <span class="pct ${c}">${h.pct}%</span>
+  </div>`;
+}
+
+function viewHistory() {
+  const hist = loadHistory();
+  const name = loadName();
+  if (hist.length === 0) {
+    return `
+      <button class="back-btn" onclick="goHome()">← Back</button>
+      <div class="card topic-hero">
+        <div class="big-icon" style="background:#dbeafe;">📊</div>
+        <h1>No Progress Yet!</h1>
+        <p>Take a quiz and your history will appear here.</p>
+      </div>
+      <button class="btn btn-primary" onclick="goHome()">🏠 Home</button>
+    `;
+  }
+  const sorted = hist.slice().sort((a,b) => a.date - b.date);
+  const pcts = sorted.map(h => h.pct);
+  const avg = Math.round(pcts.reduce((s,p) => s+p, 0) / pcts.length);
+  const best = Math.max.apply(null, pcts);
+  const last5 = pcts.slice(-5);
+  const prior5 = pcts.slice(-10, -5);
+  let trendArrow = "→ Steady", trendClass = "";
+  if (last5.length >= 3 && prior5.length >= 3) {
+    const lAvg = last5.reduce((s,p)=>s+p,0)/last5.length;
+    const pAvg = prior5.reduce((s,p)=>s+p,0)/prior5.length;
+    if (lAvg - pAvg > 5) { trendArrow = "↑ Improving"; trendClass = "up"; }
+    else if (lAvg - pAvg < -5) { trendArrow = "↓ Slipping"; trendClass = "down"; }
+  } else if (sorted.length >= 2) {
+    const diff = sorted[sorted.length-1].pct - sorted[sorted.length-2].pct;
+    if (diff > 5) { trendArrow = "↑ Up"; trendClass = "up"; }
+    else if (diff < -5) { trendArrow = "↓ Down"; trendClass = "down"; }
+  }
+  const modes = ["practice","exam","timed","quick","trouble","subobj"];
+  const legend = modes.map(m => {
+    const mi = modeInfo(m);
+    return `<span class="mode-pill"><span class="dot" style="background:${mi.color};"></span>${mi.name}</span>`;
+  }).join("");
+  return `
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="card topic-hero">
+      <div class="big-icon" style="background:#dbeafe;">📊</div>
+      <h1>${esc(name)}'s Progress</h1>
+      <p>${hist.length} quiz${hist.length===1?"":"zes"} taken so far</p>
+    </div>
+    <div class="card">
+      <h2>📈 Score Trend</h2>
+      <p class="muted" style="font-size:13px;margin:4px 0 6px;">Each dot is one quiz. Color = mode.</p>
+      ${renderTrendChart(sorted)}
+      <div class="mode-legend">${legend}</div>
+    </div>
+    <div class="trend-stats">
+      <div class="trend-stat"><div class="l">Average</div><div class="v">${avg}%</div></div>
+      <div class="trend-stat"><div class="l">Best Score</div><div class="v">${best}%</div></div>
+      <div class="trend-stat ${trendClass}"><div class="l">Recent Trend</div><div class="v">${trendArrow}</div></div>
+      <div class="trend-stat"><div class="l">Quizzes Taken</div><div class="v">${hist.length}</div></div>
+    </div>
+    <div class="card">
+      <h2>📋 Recent Quizzes</h2>
+      <div class="history-list">
+        ${sorted.slice().reverse().slice(0,15).map(historyRow).join("")}
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-small" onclick="clearHistory()">🗑️ Clear History</button>
+    <button class="btn btn-primary" onclick="goHome()">🏠 Home</button>
+  `;
+}
+
 function render() {
   const app = document.getElementById("app");
   let view;
@@ -971,10 +1246,14 @@ function render() {
     case "flashcards-done": view = viewFlashcardsDone(); break;
     case "quiz": view = viewQuiz(); break;
     case "results": view = viewResults(); break;
+    case "history": view = viewHistory(); break;
     default: view = viewHome();
   }
   app.innerHTML = view;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  if (state.screen === "quiz" && state.mode === "timed" && !state.answered) {
+    setTimeout(startTimer, 40);
+  }
 }
 
 window.selectOption = selectOption;
@@ -989,6 +1268,8 @@ window.flipCard = flipCard;
 window.fcAction = fcAction;
 window.revealHint = revealHint;
 window.nextAvatar = nextAvatar;
+window.showHistory = showHistory;
+window.clearHistory = clearHistory;
 
 render();
 

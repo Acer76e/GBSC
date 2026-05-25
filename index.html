@@ -242,7 +242,44 @@ h3{font-size:15px;line-height:1.3;}
 .mode-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600;}
 .mode-pill .dot{width:9px;height:9px;border-radius:50%;}
 
+.celebrate-overlay{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s ease;background:radial-gradient(circle at 50% 50%,rgba(139,92,246,.97),rgba(236,72,153,.97) 50%,rgba(99,102,241,.97));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden;}
+.celebrate-overlay.show{opacity:1;animation:bgPulse 3s ease-in-out infinite;}
+.celebrate-overlay.fade-out{opacity:0;}
+@keyframes bgPulse{0%,100%{background:radial-gradient(circle at 30% 40%,rgba(139,92,246,.97),rgba(236,72,153,.97) 50%,rgba(99,102,241,.97))}50%{background:radial-gradient(circle at 70% 60%,rgba(236,72,153,.97),rgba(251,191,36,.97) 50%,rgba(139,92,246,.97))}}
+.celebrate-content{text-align:center;color:#fff;padding:30px;position:relative;z-index:2;animation:celeIn .75s cubic-bezier(.2,1.6,.4,1);max-width:90vw;}
+@keyframes celeIn{0%{transform:scale(0) rotate(-30deg);opacity:0}60%{transform:scale(1.12) rotate(6deg);opacity:1}100%{transform:scale(1) rotate(0)}}
+.celebrate-emoji{font-size:130px;display:block;animation:emoBounce 1.1s ease infinite;filter:drop-shadow(0 10px 24px rgba(0,0,0,.35));}
+@keyframes emoBounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-22px) scale(1.1)}}
+.celebrate-streak{font-size:16px;font-weight:800;letter-spacing:3px;margin-top:8px;text-shadow:0 2px 8px rgba(0,0,0,.4);}
+.celebrate-title{font-size:54px;font-weight:900;letter-spacing:4px;margin:8px 0 6px;line-height:1;background:linear-gradient(135deg,#fff,#fef3c7,#fff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:titleGlow 1.8s ease-in-out infinite;filter:drop-shadow(0 4px 14px rgba(0,0,0,.45));}
+@keyframes titleGlow{0%,100%{filter:drop-shadow(0 0 10px rgba(255,255,255,.8)) drop-shadow(0 4px 14px rgba(0,0,0,.45))}50%{filter:drop-shadow(0 0 22px rgba(255,255,255,1)) drop-shadow(0 4px 14px rgba(0,0,0,.45))}}
+.celebrate-sub{font-size:17px;margin:8px 0 26px;opacity:.96;text-shadow:0 2px 6px rgba(0,0,0,.35);font-weight:600;}
+.celebrate-btn{max-width:260px;margin:0 auto;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.45);color:#fff;font-weight:800;letter-spacing:1px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.celebrate-rays{position:absolute;inset:-30%;background:repeating-conic-gradient(rgba(255,255,255,.08) 0deg 14deg,transparent 14deg 28deg);animation:raySpin 20s linear infinite;z-index:1;pointer-events:none;}
+@keyframes raySpin{to{transform:rotate(360deg)}}
+
+.trophy-toast{position:fixed;top:14px;left:14px;right:14px;max-width:360px;margin:0 auto;z-index:1500;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;padding:14px 16px;border-radius:16px;box-shadow:0 12px 30px rgba(245,158,11,.55);display:flex;align-items:center;gap:14px;transform:translateY(-120px);opacity:0;transition:transform .4s cubic-bezier(.2,1.4,.4,1),opacity .35s;}
+.trophy-toast.show{transform:translateY(0);opacity:1;}
+.trophy-toast .toast-emoji{font-size:36px;flex-shrink:0;animation:emoBounce 1s ease infinite;}
+.trophy-toast .toast-title{font-size:11px;font-weight:800;opacity:.95;text-transform:uppercase;letter-spacing:.6px;}
+.trophy-toast .toast-name{font-size:17px;font-weight:900;line-height:1.15;}
+
+.trophy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.trophy{background:#fff;border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.06);border:2px solid transparent;transition:transform .12s,box-shadow .2s;}
+.trophy.earned{background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b;box-shadow:0 4px 14px rgba(245,158,11,.25);}
+.trophy.locked{opacity:.45;filter:grayscale(.85);}
+.trophy .emo{font-size:42px;display:block;}
+.trophy .nm{font-size:13px;font-weight:800;margin-top:4px;line-height:1.2;}
+.trophy .ds{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
+.trophy.earned .nm{color:#92400e;}
+.trophy.earned .ds{color:#78350f;opacity:.85;}
+.trophy-progress{background:rgba(245,158,11,.12);border-radius:12px;padding:10px 14px;margin-bottom:6px;text-align:center;font-weight:700;color:#92400e;font-size:14px;}
+
 @media (max-width:380px){
+  .celebrate-emoji{font-size:100px;}
+  .celebrate-title{font-size:40px;letter-spacing:2px;}
+  .celebrate-sub{font-size:15px;}
+  .trophy .emo{font-size:36px;}
   h1{font-size:22px}
   .qtext{font-size:18px}
   .option{font-size:15px;padding:12px 14px}
@@ -443,6 +480,10 @@ function nextAvatar() {
   const cur = loadAvatar(); const i = AVATARS.indexOf(cur);
   saveAvatar(AVATARS[(i+1) % AVATARS.length]);
   chimePop();
+  const earned = loadTrophies(); const newOnes = [];
+  tryEarn(earned, newOnes, "customizer");
+  saveTrophies(earned);
+  if (newOnes.length) queueToasts(newOnes);
   render();
 }
 function loadName() { return lsGet("g6_name","Julia"); }
@@ -460,6 +501,173 @@ function clearHistory() {
     render();
   }
 }
+
+const TROPHIES = [
+  { id:"first_quiz",    emoji:"🏅", name:"First Try",        desc:"Complete your first quiz." },
+  { id:"perfect",       emoji:"💯", name:"Perfect Score!",   desc:"Get 100% on any quiz." },
+  { id:"sharp_shooter", emoji:"🥇", name:"Sharp Shooter",    desc:"Score 90%+ on Final Exam." },
+  { id:"streak_5",      emoji:"🔥", name:"On Fire!",         desc:"Get a 5-answer streak." },
+  { id:"streak_10",     emoji:"🔥🔥",name:"Blazing!",         desc:"Get a 10-answer streak." },
+  { id:"streak_15",     emoji:"☄️", name:"Inferno!",         desc:"Get a 15-answer streak." },
+  { id:"streak_20",     emoji:"🌋", name:"Volcano!",         desc:"Get a 20-answer streak." },
+  { id:"speed_demon",   emoji:"⚡", name:"Speed Demon",      desc:"Score 80%+ on Timed Challenge." },
+  { id:"lightning",     emoji:"💨", name:"Lightning",        desc:"Beat the timer on all 20 timed questions." },
+  { id:"flash_master",  emoji:"🃏", name:"Card Master",      desc:"Master all flashcards in any topic." },
+  { id:"bookworm",      emoji:"📚", name:"Bookworm",         desc:"Complete 10 quizzes total." },
+  { id:"scholar",       emoji:"🎓", name:"Scholar",          desc:"Complete 25 quizzes total." },
+  { id:"no_hints",      emoji:"🌟", name:"No Help Needed",   desc:"Finish a Practice Quiz without using a hint." },
+  { id:"sub_obj_pro",   emoji:"🎯", name:"S vs O Pro",       desc:"Score 100% on Subject vs Object." },
+  { id:"all_modes",     emoji:"🌈", name:"Mode Master",      desc:"Try every quiz mode at least once." },
+  { id:"customizer",    emoji:"🦄", name:"Stylish",          desc:"Change your avatar." },
+  { id:"improver",      emoji:"📈", name:"Climbing Higher",  desc:"Have an improving trend in your history." },
+  { id:"centurion",     emoji:"💪", name:"Centurion",        desc:"Get 100 total correct answers." }
+];
+
+const LEVELS = [
+  { at:5,  emoji:"🌟", name:"SUPERSTAR",      tagline:"You're shining bright!" },
+  { at:10, emoji:"💫", name:"ROCKSTAR",       tagline:"Absolutely crushing it!" },
+  { at:15, emoji:"👑", name:"GODDESS",        tagline:"You rule this kingdom!" },
+  { at:20, emoji:"🏆", name:"LEGEND",         tagline:"They'll sing songs about this!" },
+  { at:25, emoji:"🚀", name:"CHAMPION",       tagline:"No stopping you now!" },
+  { at:30, emoji:"💎", name:"DIAMOND MIND",   tagline:"Unbreakable focus!" },
+  { at:35, emoji:"🦄", name:"MYTHICAL",       tagline:"You are pure magic." },
+  { at:40, emoji:"⚡", name:"ULTRA INSTINCT", tagline:"Beyond mortal limits!" }
+];
+
+function loadTrophies() {
+  try { return new Set(JSON.parse(lsGet("g6_trophies","[]"))); } catch(e) { return new Set(); }
+}
+function saveTrophies(set) { lsSet("g6_trophies", JSON.stringify(Array.from(set))); }
+function loadCorrectTotal() { return parseInt(lsGet("g6_correctTotal","0"),10); }
+function addCorrectTotal(n) { lsSet("g6_correctTotal", String(loadCorrectTotal() + n)); }
+
+function tryEarn(set, newList, id) {
+  if (!set.has(id)) {
+    set.add(id);
+    const t = TROPHIES.find(x => x.id === id);
+    if (t) newList.push(t);
+  }
+}
+
+function checkTrophiesAfterQuiz(ctx) {
+  const earned = loadTrophies(); const newOnes = [];
+  tryEarn(earned, newOnes, "first_quiz");
+  if (ctx.pct === 100) tryEarn(earned, newOnes, "perfect");
+  if (ctx.mode === "exam" && ctx.pct >= 90) tryEarn(earned, newOnes, "sharp_shooter");
+  if (ctx.mode === "timed" && ctx.pct >= 80) tryEarn(earned, newOnes, "speed_demon");
+  if (ctx.mode === "timed" && ctx.score === ctx.total) tryEarn(earned, newOnes, "lightning");
+  if (ctx.mode === "subobj" && ctx.pct === 100) tryEarn(earned, newOnes, "sub_obj_pro");
+  if (ctx.mode === "practice" && ctx.hintsUsed === 0) tryEarn(earned, newOnes, "no_hints");
+  if (loadPlays() >= 10) tryEarn(earned, newOnes, "bookworm");
+  if (loadPlays() >= 25) tryEarn(earned, newOnes, "scholar");
+  if (loadCorrectTotal() >= 100) tryEarn(earned, newOnes, "centurion");
+  const tried = new Set(loadHistory().map(h => h.mode));
+  const allModes = ["practice","exam","timed","quick","trouble","subobj","category"];
+  if (allModes.every(m => tried.has(m))) tryEarn(earned, newOnes, "all_modes");
+  // Improving trend check
+  const hist = loadHistory().slice().sort((a,b)=>a.date-b.date);
+  if (hist.length >= 6) {
+    const last3 = hist.slice(-3).map(h=>h.pct);
+    const prior3 = hist.slice(-6,-3).map(h=>h.pct);
+    const lAvg = last3.reduce((s,p)=>s+p,0)/3;
+    const pAvg = prior3.reduce((s,p)=>s+p,0)/3;
+    if (lAvg - pAvg >= 5) tryEarn(earned, newOnes, "improver");
+  }
+  saveTrophies(earned);
+  return newOnes;
+}
+
+function checkStreakTrophy(streak) {
+  const map = { 5:"streak_5", 10:"streak_10", 15:"streak_15", 20:"streak_20" };
+  const id = map[streak]; if (!id) return [];
+  const earned = loadTrophies(); const newOnes = [];
+  tryEarn(earned, newOnes, id);
+  saveTrophies(earned);
+  return newOnes;
+}
+
+let toastQueue = [];
+let toastShowing = false;
+function queueToasts(list) {
+  toastQueue = toastQueue.concat(list);
+  if (!toastShowing) showNextToast();
+}
+function showNextToast() {
+  if (toastQueue.length === 0) { toastShowing = false; return; }
+  toastShowing = true;
+  const t = toastQueue.shift();
+  const toast = document.createElement("div");
+  toast.className = "trophy-toast";
+  toast.innerHTML = `
+    <span class="toast-emoji">${t.emoji}</span>
+    <div>
+      <div class="toast-title">🏆 Trophy Earned!</div>
+      <div class="toast-name">${esc(t.name)}</div>
+    </div>`;
+  document.body.appendChild(toast);
+  chimeAchievement();
+  setTimeout(() => toast.classList.add("show"), 30);
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => { toast.remove(); showNextToast(); }, 380);
+  }, 2900);
+}
+
+function celebrationLevel(streak) {
+  let chosen = LEVELS[0];
+  for (const lvl of LEVELS) if (streak >= lvl.at) chosen = lvl;
+  if (streak > 40) chosen = { emoji:"⭐", name:"GALACTIC", tagline:"Beyond all words!" };
+  return chosen;
+}
+
+let celebrating = false;
+function showLevelUp(streak) {
+  if (celebrating) return;
+  celebrating = true;
+  clearTimer();
+  const lvl = celebrationLevel(streak);
+  const overlay = document.createElement("div");
+  overlay.className = "celebrate-overlay";
+  overlay.innerHTML = `
+    <div class="celebrate-rays"></div>
+    <div class="celebrate-content">
+      <span class="celebrate-emoji">${lvl.emoji}</span>
+      <div class="celebrate-streak">🔥 ${streak} IN A ROW 🔥</div>
+      <h1 class="celebrate-title">${lvl.name}!</h1>
+      <p class="celebrate-sub">${esc(lvl.tagline)}</p>
+      <button class="btn celebrate-btn" onclick="dismissCelebration()">Keep Going! →</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.classList.add("show"), 20);
+  tada();
+  bigConfetti();
+  setTimeout(bigConfetti, 250);
+  setTimeout(bigConfetti, 600);
+  setTimeout(dismissCelebration, 6000);
+}
+function dismissCelebration() {
+  const overlay = document.querySelector(".celebrate-overlay");
+  if (!overlay) return;
+  overlay.classList.add("fade-out");
+  setTimeout(() => {
+    overlay.remove();
+    celebrating = false;
+    if (state.screen === "quiz" && state.mode === "timed" && !state.answered) startTimer();
+  }, 380);
+}
+
+function tada() {
+  tone(523, 0.12, "triangle", 0.18);
+  setTimeout(() => tone(659, 0.12, "triangle", 0.16), 80);
+  setTimeout(() => {
+    tone(784, 0.55, "triangle", 0.2);
+    tone(988, 0.55, "triangle", 0.18);
+    tone(1175, 0.55, "triangle", 0.16);
+    tone(1568, 0.55, "sine", 0.14);
+  }, 200);
+}
+
+function showTrophies() { clearTimer(); state.screen = "trophies"; render(); }
 
 function getTroubleTopics() {
   const stats = loadLastStats();
@@ -544,8 +752,11 @@ function selectOption(i) {
     if (state.streak > state.bestStreak) state.bestStreak = state.streak;
     chimeCorrect();
     smallConfetti();
-    if (state.streak === 5 || state.streak === 10) { miniConfetti(); chimeLevelUp(); }
-    if (state.streak === 15) { bigConfetti(); chimeAchievement(); }
+    if (state.streak > 0 && state.streak % 5 === 0) {
+      setTimeout(() => showLevelUp(state.streak), 650);
+      const newT = checkStreakTrophy(state.streak);
+      if (newT.length) setTimeout(() => queueToasts(newT), 6800);
+    }
   } else {
     state.streak = 0;
     toneWrong();
@@ -574,6 +785,7 @@ function finishQuiz() {
   clearTimer();
   state.elapsedMs = Date.now() - state.startTime;
   bumpPlays();
+  addCorrectTotal(state.score);
   const pct = Math.round((state.score / state.questions.length) * 100);
   saveHigh(pct);
   saveBestStreak(state.bestStreak);
@@ -585,7 +797,11 @@ function finishQuiz() {
   if (state.mode === "practice" || state.mode === "exam") saveLastStats(state.categoryStats);
   if (state.mode === "exam") saveBestExam(pct);
   state.screen = "results";
+  const newT = checkTrophiesAfterQuiz({
+    mode: state.mode, pct, score: state.score, total: state.questions.length, hintsUsed: state.hintsUsed
+  });
   render();
+  if (newT.length) setTimeout(() => queueToasts(newT), 700);
   if (pct >= 90) { bigConfetti(); chimeAchievement(); }
   else if (pct >= 80) { bigConfetti(); chimeLevelUp(); }
   else if (pct >= 70) miniConfetti();
@@ -617,6 +833,10 @@ function fcAction(gotIt) {
     state.fcCurrent = null;
     state.screen = "flashcards-done";
     bigConfetti();
+    const earned = loadTrophies(); const newOnes = [];
+    tryEarn(earned, newOnes, "flash_master");
+    saveTrophies(earned);
+    if (newOnes.length) setTimeout(() => queueToasts(newOnes), 600);
   } else {
     state.fcCurrent = state.fcPile.shift();
     state.fcFlipped = false;
@@ -801,7 +1021,37 @@ function viewHome() {
       </div>
     </div>
     <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
-    <button class="btn btn-ghost btn-small btn-icon" onclick="showHistory()">📊 View My Progress</button>
+    <div class="row">
+      <button class="btn btn-ghost btn-small btn-icon" onclick="showHistory()">📊 Progress</button>
+      <button class="btn btn-ghost btn-small btn-icon" onclick="showTrophies()">🏆 Trophies (${loadTrophies().size}/${TROPHIES.length})</button>
+    </div>
+  `;
+}
+
+function viewTrophies() {
+  const earned = loadTrophies();
+  const name = loadName();
+  return `
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="card topic-hero">
+      <div class="big-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">🏆</div>
+      <h1>${esc(name)}'s Trophies</h1>
+      <p>${earned.size} of ${TROPHIES.length} earned</p>
+    </div>
+    <div class="trophy-progress">🏆 ${Math.round((earned.size/TROPHIES.length)*100)}% complete &nbsp;·&nbsp; ${TROPHIES.length - earned.size} to go!</div>
+    <div class="card">
+      <div class="trophy-grid">
+        ${TROPHIES.map(t => {
+          const has = earned.has(t.id);
+          return `<div class="trophy ${has ? "earned" : "locked"}">
+            <span class="emo">${t.emoji}</span>
+            <div class="nm">${esc(t.name)}</div>
+            <div class="ds">${esc(t.desc)}</div>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="goHome()">🏠 Home</button>
   `;
 }
 
@@ -1247,6 +1497,7 @@ function render() {
     case "quiz": view = viewQuiz(); break;
     case "results": view = viewResults(); break;
     case "history": view = viewHistory(); break;
+    case "trophies": view = viewTrophies(); break;
     default: view = viewHome();
   }
   app.innerHTML = view;
@@ -1270,6 +1521,8 @@ window.revealHint = revealHint;
 window.nextAvatar = nextAvatar;
 window.showHistory = showHistory;
 window.clearHistory = clearHistory;
+window.showTrophies = showTrophies;
+window.dismissCelebration = dismissCelebration;
 
 render();
 

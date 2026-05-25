@@ -305,6 +305,17 @@ h3{font-size:15px;line-height:1.3;}
 .btn-danger{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;box-shadow:0 6px 20px -4px rgba(220,38,38,.5);}
 .btn-warn-outline{background:#fff;border:2px solid var(--warn);color:#92400e;}
 
+.sync-status{display:flex;align-items:center;gap:8px;padding:11px 14px;border-radius:12px;font-size:13px;font-weight:700;margin-bottom:10px;}
+.sync-status.ok{background:rgba(16,185,129,.12);color:#065f46;}
+.sync-status.warn{background:rgba(245,158,11,.12);color:#92400e;}
+.sync-status.err{background:rgba(239,68,68,.12);color:#7f1d1d;}
+.sync-status.busy{background:rgba(99,102,241,.12);color:#3730a3;}
+.sync-status .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;animation:pulse-dot 1.2s ease infinite;}
+@keyframes pulse-dot{0%,100%{opacity:.4}50%{opacity:1}}
+.sync-indicator{position:fixed;bottom:14px;right:14px;background:rgba(99,102,241,.95);color:#fff;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:700;box-shadow:0 4px 14px rgba(99,102,241,.4);z-index:40;animation:fadeIn .3s;display:flex;align-items:center;gap:6px;}
+.sync-indicator.ok{background:rgba(16,185,129,.95);box-shadow:0 4px 14px rgba(16,185,129,.4);}
+.sync-indicator.err{background:rgba(239,68,68,.95);box-shadow:0 4px 14px rgba(239,68,68,.4);}
+
 @media (max-width:380px){
   .celebrate-emoji{font-size:100px;}
   .celebrate-title{font-size:40px;letter-spacing:2px;}
@@ -514,6 +525,7 @@ function nextAvatar() {
   tryEarn(earned, newOnes, "customizer");
   saveTrophies(earned);
   if (newOnes.length) queueToasts(newOnes);
+  settingsChanged();
   render();
 }
 function loadName() { return lsGet("g6_name","Julia"); }
@@ -720,6 +732,7 @@ function toggleFocus(k) {
   const f = loadFocus();
   if (f.has(k)) f.delete(k); else f.add(k);
   saveFocus(f);
+  settingsChanged();
   render();
 }
 function editNote() {
@@ -727,6 +740,7 @@ function editNote() {
   const note = prompt("Note for the student (shown on home screen). Leave blank to clear:", cur);
   if (note === null) return;
   saveNote(note.slice(0, 240));
+  settingsChanged();
   render();
 }
 function changePin() {
@@ -737,11 +751,12 @@ function changePin() {
   if (np === null) return;
   if (!/^\d{4}$/.test(np)) { alert("PIN must be exactly 4 digits."); return; }
   savePin(np);
+  settingsChanged();
   alert("✅ PIN updated.");
 }
 function changeStudentName() {
   const n = prompt("Student's name:", loadName());
-  if (n && n.trim()) { lsSet("g6_name", n.trim()); render(); }
+  if (n && n.trim()) { lsSet("g6_name", n.trim()); settingsChanged(); render(); }
 }
 function adminReset(scope) {
   let keys, msg;
@@ -752,6 +767,7 @@ function adminReset(scope) {
   if (!confirm(msg)) return;
   if (scope === "all" && !confirm("Are you absolutely sure? Type-confirm by pressing OK.")) return;
   keys.forEach(k => localStorage.removeItem(k));
+  if (syncEnabled()) { bumpSettingsAt(); syncNow(true).catch(()=>{}); }
   render();
 }
 
@@ -910,6 +926,7 @@ function finishQuiz() {
   if (pct >= 90) { bigConfetti(); chimeAchievement(); }
   else if (pct >= 80) { bigConfetti(); chimeLevelUp(); }
   else if (pct >= 70) miniConfetti();
+  historyChanged();
 }
 
 function goHome() { clearTimer(); state.screen = "home"; state.currentCategory = null; render(); }
@@ -1225,6 +1242,23 @@ function viewAdmin() {
       <p class="muted" style="font-size:11px;margin-top:10px;text-align:center;">Default PIN is 1234 — change it so ${esc(name)} can't peek!</p>
     </div>
     <div class="card">
+      <h2>☁️ Cloud Sync</h2>
+      ${syncEnabled() ? `
+        <div class="sync-status ${loadSyncStatus()==="ok" ? "ok" : loadSyncStatus().startsWith("err") ? "err" : "warn"}">
+          <span class="pulse"></span>
+          ${loadSyncStatus()==="ok" ? `Connected · Last sync ${loadSyncLast() ? fmtAgo(Date.now()-loadSyncLast()) : "never"}`
+            : loadSyncStatus().startsWith("err") ? `Sync error — tap Sync Now to retry`
+            : "Not yet synced"}
+        </div>
+        <p class="muted" style="font-size:12px;margin:0 0 10px;word-break:break-all;">Gist: ${esc(loadSyncGist())}</p>
+        <button class="btn btn-primary btn-small" onclick="syncNow()" style="margin-bottom:6px;">🔄 Sync Now</button>
+        <button class="btn btn-ghost btn-small" onclick="disconnectSync()">Disconnect Sync</button>
+      ` : `
+        <p style="font-size:14px;line-height:1.5;">Sync ${esc(name)}'s progress between her phone and yours via a private GitHub gist. Setup takes about 3 minutes per device.</p>
+        <button class="btn btn-primary btn-small" style="margin-top:10px;" onclick="promptSyncSetup()">📲 Set Up Sync</button>
+      `}
+    </div>
+    <div class="card">
       <h2>🔄 Reset Options</h2>
       <button class="btn btn-warn-outline btn-small" onclick="adminReset('history')" style="margin-bottom:6px;">Clear Quiz History</button>
       <button class="btn btn-warn-outline btn-small" onclick="adminReset('trophies')" style="margin-bottom:6px;">Reset Trophies</button>
@@ -1235,8 +1269,211 @@ function viewAdmin() {
   `;
 }
 
-function clearFocus() { if (confirm("Clear all focus topics?")) { saveFocus(new Set()); render(); } }
-function clearNote() { if (confirm("Clear the note?")) { saveNote(""); render(); } }
+function clearFocus() { if (confirm("Clear all focus topics?")) { saveFocus(new Set()); settingsChanged(); render(); } }
+function clearNote() { if (confirm("Clear the note?")) { saveNote(""); settingsChanged(); render(); } }
+
+function loadSyncToken() { return lsGet("g6_syncToken", ""); }
+function loadSyncGist() { return lsGet("g6_syncGist", ""); }
+function loadSyncLast() { return parseInt(lsGet("g6_syncLastAt","0"),10); }
+function loadSyncStatus() { return lsGet("g6_syncStatus","none"); }
+function setSyncStatus(s) { lsSet("g6_syncStatus", s); }
+function loadSettingsAt() { return parseInt(lsGet("g6_settingsAt","0"),10); }
+function bumpSettingsAt() { lsSet("g6_settingsAt", String(Date.now())); }
+function syncEnabled() { return !!loadSyncToken() && !!loadSyncGist(); }
+
+function fmtAgo(ms) {
+  const s = Math.floor(ms/1000);
+  if (s < 60) return "just now";
+  if (s < 3600) return Math.floor(s/60) + " min ago";
+  if (s < 86400) return Math.floor(s/3600) + " hr ago";
+  return Math.floor(s/86400) + " day(s) ago";
+}
+
+function collectLocal() {
+  return {
+    version: 1, syncedAt: Date.now(), settingsAt: loadSettingsAt(),
+    history: loadHistory(), trophies: Array.from(loadTrophies()),
+    high: loadHigh(), plays: loadPlays(), streak: loadBestStreak(),
+    examBest: loadBestExam(), correctTotal: loadCorrectTotal(),
+    lastStats: loadLastStats(), focus: Array.from(loadFocus()),
+    note: loadNote(), name: loadName(), avatar: loadAvatar(), pin: loadPin()
+  };
+}
+function applyMerged(m) {
+  lsSet("g6_history", JSON.stringify(m.history || []));
+  lsSet("g6_trophies", JSON.stringify(m.trophies || []));
+  lsSet("g6_high", String(m.high || 0));
+  lsSet("g6_plays", String(m.plays || 0));
+  lsSet("g6_streak", String(m.streak || 0));
+  lsSet("g6_examBest", String(m.examBest || 0));
+  lsSet("g6_correctTotal", String(m.correctTotal || 0));
+  if (m.lastStats) lsSet("g6_lastStats", JSON.stringify(m.lastStats));
+  lsSet("g6_focus", JSON.stringify(m.focus || []));
+  lsSet("g6_note", m.note || "");
+  lsSet("g6_name", m.name || "Julia");
+  lsSet("g6_avatar", m.avatar || "🦄");
+  lsSet("g6_pin", m.pin || "1234");
+  lsSet("g6_settingsAt", String(m.settingsAt || 0));
+}
+function mergeData(local, remote) {
+  if (!remote) return local;
+  const hm = new Map();
+  for (const h of (local.history || [])) hm.set(h.date, h);
+  for (const h of (remote.history || [])) hm.set(h.date, h);
+  const history = Array.from(hm.values()).sort((a,b) => a.date - b.date).slice(-50);
+  const trophies = Array.from(new Set([...(local.trophies||[]), ...(remote.trophies||[])]));
+  const lTime = local.settingsAt || 0;
+  const rTime = remote.settingsAt || 0;
+  const newer = rTime > lTime ? remote : local;
+  return {
+    version: 1,
+    settingsAt: Math.max(lTime, rTime),
+    history, trophies,
+    high: Math.max(local.high||0, remote.high||0),
+    plays: Math.max(local.plays||0, remote.plays||0),
+    streak: Math.max(local.streak||0, remote.streak||0),
+    examBest: Math.max(local.examBest||0, remote.examBest||0),
+    correctTotal: Math.max(local.correctTotal||0, remote.correctTotal||0),
+    lastStats: newer.lastStats || local.lastStats,
+    focus: newer.focus || [],
+    note: newer.note || "",
+    name: newer.name || "Julia",
+    avatar: newer.avatar || "🦄",
+    pin: newer.pin || "1234"
+  };
+}
+
+async function ghGet(path) {
+  const token = loadSyncToken();
+  const r = await fetch("https://api.github.com" + path, {
+    headers: { Authorization: "token " + token, "Accept": "application/vnd.github+json" }
+  });
+  if (!r.ok) throw new Error("GitHub " + r.status + " " + r.statusText);
+  return r.json();
+}
+async function ghPatch(path, body) {
+  const token = loadSyncToken();
+  const r = await fetch("https://api.github.com" + path, {
+    method: "PATCH",
+    headers: { Authorization: "token " + token, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error("GitHub " + r.status + " " + r.statusText);
+  return r.json();
+}
+async function ghPost(path, body) {
+  const token = loadSyncToken();
+  const r = await fetch("https://api.github.com" + path, {
+    method: "POST",
+    headers: { Authorization: "token " + token, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error("GitHub " + r.status + " " + r.statusText);
+  return r.json();
+}
+
+async function createSyncGist(token) {
+  lsSet("g6_syncToken", token);
+  const j = await ghPost("/gists", {
+    description: "Grade 6 Study App — Julia's progress sync",
+    public: false,
+    files: { "progress.json": { content: "{}" } }
+  });
+  return j.id;
+}
+
+let syncBusy = false;
+let syncIndicatorTimer = null;
+function showSyncIndicator(state) {
+  if (syncIndicatorTimer) { clearTimeout(syncIndicatorTimer); syncIndicatorTimer = null; }
+  const old = document.querySelector(".sync-indicator");
+  if (old) old.remove();
+  if (!state) return;
+  const el = document.createElement("div");
+  el.className = "sync-indicator " + (state.type || "");
+  el.innerHTML = state.html;
+  document.body.appendChild(el);
+  if (state.fade) {
+    syncIndicatorTimer = setTimeout(() => { el.remove(); }, state.fade);
+  }
+}
+
+async function syncNow(quiet) {
+  if (!syncEnabled() || syncBusy) return;
+  syncBusy = true;
+  if (!quiet) showSyncIndicator({ type:"", html:"☁️ Syncing…" });
+  try {
+    const j = await ghGet("/gists/" + loadSyncGist());
+    const file = j.files && j.files["progress.json"];
+    let remote = null;
+    if (file && file.content) { try { remote = JSON.parse(file.content); } catch(e) {} }
+    const local = collectLocal();
+    const merged = mergeData(local, remote);
+    applyMerged(merged);
+    await ghPatch("/gists/" + loadSyncGist(), {
+      files: { "progress.json": { content: JSON.stringify(merged, null, 2) } }
+    });
+    lsSet("g6_syncLastAt", String(Date.now()));
+    setSyncStatus("ok");
+    showSyncIndicator({ type:"ok", html:"✓ Synced", fade: 1800 });
+    render();
+  } catch (e) {
+    setSyncStatus("err:" + (e.message || "unknown"));
+    showSyncIndicator({ type:"err", html:"⚠️ Sync failed", fade: 2500 });
+    if (!quiet) alert("Sync failed: " + e.message);
+  } finally {
+    syncBusy = false;
+  }
+}
+function settingsChanged() { bumpSettingsAt(); if (syncEnabled()) syncNow(true).catch(()=>{}); }
+function historyChanged() { if (syncEnabled()) syncNow(true).catch(()=>{}); }
+
+async function promptSyncSetup() {
+  const intro = "☁️ Cloud Sync Setup\n\n" +
+    "This syncs Julia's progress between phones using a private GitHub gist.\n\n" +
+    "Step 1: Make a token at github.com/settings/tokens:\n" +
+    "  • Tap 'Generate new token (classic)'\n" +
+    "  • Name: Study App Sync\n" +
+    "  • Expiration: 1 year (or longer)\n" +
+    "  • Check ONLY: gist\n" +
+    "  • Generate and copy the token (starts with ghp_)\n\n" +
+    "Tap OK to continue.";
+  if (!confirm(intro)) return;
+  const token = (prompt("Paste your GitHub token (ghp_...):") || "").trim();
+  if (!token) return;
+  const useExisting = confirm("First device? Tap OK to create a NEW sync gist automatically.\n\nSecond device? Tap Cancel to enter your existing gist ID.");
+  if (useExisting) {
+    try {
+      showSyncIndicator({ type:"", html:"☁️ Creating gist…" });
+      const id = await createSyncGist(token);
+      lsSet("g6_syncGist", id);
+      await syncNow(true);
+      prompt("✅ Sync set up!\n\nCopy this gist ID and use it on Julia's other phone (along with the same token, or a new gist-scoped token):", id);
+    } catch (e) {
+      alert("❌ Could not create gist: " + e.message + "\n\nCheck the token has 'gist' scope.");
+      lsSet("g6_syncToken", "");
+    }
+  } else {
+    const gist = (prompt("Paste your Gist ID (the long alphanumeric in the gist URL):") || "").trim();
+    if (!gist) return;
+    lsSet("g6_syncToken", token);
+    lsSet("g6_syncGist", gist);
+    try {
+      await syncNow(true);
+      alert("✅ Connected! Progress from the other device has been pulled in.");
+    } catch (e) {
+      alert("❌ Could not connect: " + e.message);
+      lsSet("g6_syncToken", "");
+      lsSet("g6_syncGist", "");
+    }
+  }
+  render();
+}
+function disconnectSync() {
+  if (!confirm("Disconnect cloud sync?\n\nProgress stays on this device. You can reconnect later.")) return;
+  ["g6_syncToken","g6_syncGist","g6_syncLastAt","g6_syncStatus","g6_settingsAt"].forEach(k => localStorage.removeItem(k));
+  render();
+}
 
 function viewTrophies() {
   const earned = loadTrophies();
@@ -1742,8 +1979,15 @@ window.changeStudentName = changeStudentName;
 window.adminReset = adminReset;
 window.clearFocus = clearFocus;
 window.clearNote = clearNote;
+window.promptSyncSetup = promptSyncSetup;
+window.syncNow = syncNow;
+window.disconnectSync = disconnectSync;
 
 render();
+
+if (syncEnabled()) {
+  setTimeout(() => syncNow(true).catch(()=>{}), 800);
+}
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });

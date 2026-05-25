@@ -1,4 +1,4 @@
-const CACHE = "g6-quiz-v2";
+const CACHE = "g6-quiz-v4";
 const ASSETS = [
   "./",
   "./index.html",

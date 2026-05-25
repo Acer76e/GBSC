@@ -17,6 +17,8 @@
   --correct:#10b981; --correct-bg:#d1fae5; --correct-tx:#065f46;
   --incorrect:#ef4444; --incorrect-bg:#fee2e2; --incorrect-tx:#7f1d1d;
   --warn:#f59e0b; --warn-bg:#fef3c7;
+  --subj:#3b82f6; --subj-bg:#dbeafe;
+  --obj:#fb7185; --obj-bg:#ffe4e6;
   --text:#1f2937; --muted:#6b7280; --card:#ffffff; --line:#e5e7eb;
   --radius:18px; --shadow:0 10px 25px -5px rgb(0 0 0 / .12), 0 8px 10px -6px rgb(0 0 0 / .08);
 }
@@ -38,8 +40,8 @@ body{
 #app{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:16px;gap:14px;}
 .card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);}
 button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
-.btn{display:block;width:100%;padding:18px 20px;border-radius:14px;font-size:17px;font-weight:600;transition:transform .1s ease,background .2s,border-color .2s,box-shadow .2s;text-align:center;}
-.btn:active{transform:scale(.97);}
+.btn{display:block;width:100%;padding:18px 20px;border-radius:14px;font-size:17px;font-weight:600;transition:transform .12s ease,background .2s,border-color .2s,box-shadow .2s;text-align:center;}
+.btn:active{transform:scale(.96);}
 .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;box-shadow:0 6px 20px -4px rgba(99,102,241,.6);}
 .btn-primary:hover{box-shadow:0 8px 24px -2px rgba(99,102,241,.7);}
 .btn-ghost{background:rgba(255,255,255,.7);color:var(--text);border:2px solid transparent;}
@@ -47,7 +49,10 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 .btn-small{padding:12px 16px;font-size:15px;}
 .btn-warn{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;box-shadow:0 6px 20px -4px rgba(239,68,68,.5);}
 .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 6px 20px -4px rgba(16,185,129,.5);}
+.btn-exam{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;box-shadow:0 6px 20px -4px rgba(220,38,38,.55);}
 .btn-icon{display:flex;align-items:center;justify-content:center;gap:10px;}
+.btn-hint{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;font-weight:700;padding:10px 16px;border-radius:12px;font-size:14px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 10px -2px rgba(251,191,36,.5);}
+.btn-hint:disabled{opacity:.55;cursor:default;}
 h1{font-size:26px;line-height:1.2;}
 h2{font-size:20px;line-height:1.35;}
 h3{font-size:15px;line-height:1.3;}
@@ -55,10 +60,17 @@ h3{font-size:15px;line-height:1.3;}
 .row{display:flex;gap:10px;}
 .row > *{flex:1;}
 
-.hero{text-align:center;padding:30px 10px 10px;}
-.hero .emoji{font-size:70px;margin-bottom:8px;display:block;}
+.hero{text-align:center;padding:24px 10px 10px;}
 .hero h1{font-size:30px;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
 .hero p{color:var(--muted);margin-bottom:6px;}
+.avatar-btn{background:none;border:none;cursor:pointer;padding:0;margin-bottom:4px;display:inline-block;animation:wiggle 4s ease-in-out infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.avatar-btn .avatar{font-size:84px;display:inline-block;transition:transform .2s;filter:drop-shadow(0 6px 12px rgba(99,102,241,.25));}
+.avatar-btn:active .avatar{transform:scale(.85) rotate(-12deg);}
+.avatar-tap{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;display:block;font-weight:700;margin-top:-4px;}
+.avatar-mini{display:inline-block;font-size:22px;margin-right:6px;vertical-align:middle;}
+.avatar-celebrate{animation:celebrate .9s cubic-bezier(.2,1.4,.4,1);display:inline-block;font-size:30px;}
+@keyframes celebrate{0%{transform:scale(0) rotate(-30deg)}50%{transform:scale(1.4) rotate(15deg)}75%{transform:scale(1.1) rotate(-5deg)}100%{transform:scale(1) rotate(0)}}
 
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px;}
 .stat{background:rgba(255,255,255,.75);border-radius:14px;padding:12px 6px;text-align:center;}
@@ -66,7 +78,7 @@ h3{font-size:15px;line-height:1.3;}
 .stat .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-top:2px;}
 
 .topic-grid{display:grid;gap:10px;}
-.topic{display:flex;align-items:center;gap:14px;background:#fff;padding:14px;border-radius:16px;border:2px solid transparent;transition:border-color .2s,transform .1s;cursor:pointer;text-align:left;width:100%;}
+.topic{display:flex;align-items:center;gap:14px;background:#fff;padding:14px;border-radius:16px;border:2px solid transparent;transition:border-color .2s,transform .12s;cursor:pointer;text-align:left;width:100%;}
 .topic:active{transform:scale(.98);}
 .topic:hover{border-color:var(--primary);}
 .topic .icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
@@ -76,45 +88,61 @@ h3{font-size:15px;line-height:1.3;}
 .topic .arrow{color:#9ca3af;font-size:22px;}
 .topic.weak{border-color:var(--warn);}
 .topic.weak .info .sub{color:var(--warn);font-weight:600;}
+.topic.feature{background:linear-gradient(135deg,#dbeafe,#ffe4e6);border-color:var(--accent);}
+.topic.feature .info .ttl{color:var(--accent);}
+.topic .nbadge{background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px;}
 
 .progress{height:10px;background:rgba(255,255,255,.7);border-radius:999px;overflow:hidden;}
-.progress > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .3s ease;border-radius:999px;}
+.progress > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .4s ease;border-radius:999px;}
 
 .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:600;}
 .badge{display:inline-block;background:rgba(99,102,241,.12);color:var(--primary);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.badge-exam{background:rgba(220,38,38,.15);color:#dc2626;}
 
 .options{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
-.option{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--line);color:var(--text);padding:14px 16px;border-radius:14px;font-size:16px;font-weight:600;text-align:left;transition:border-color .15s,background .15s,transform .1s;width:100%;}
-.option:not(:disabled):active{transform:scale(.98);}
+.option{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--line);color:var(--text);padding:14px 16px;border-radius:14px;font-size:16px;font-weight:600;text-align:left;transition:border-color .15s,background .15s,transform .12s,box-shadow .2s;width:100%;position:relative;overflow:hidden;}
+.option:not(:disabled):active{transform:scale(.97);}
 .option:not(:disabled):hover{border-color:var(--primary);}
 .option .letter{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:#f3f4f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
-.option.correct{background:var(--correct-bg);border-color:var(--correct);color:var(--correct-tx);}
+.option.correct{background:var(--correct-bg);border-color:var(--correct);color:var(--correct-tx);animation:pulseG .55s ease;}
 .option.correct .letter{background:var(--correct);color:#fff;}
 .option.incorrect{background:var(--incorrect-bg);border-color:var(--incorrect);color:var(--incorrect-tx);}
 .option.incorrect .letter{background:var(--incorrect);color:#fff;}
 .option:disabled{cursor:default;}
+@keyframes pulseG{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(16,185,129,.55)}50%{transform:scale(1.03);box-shadow:0 0 0 16px rgba(16,185,129,0)}100%{transform:scale(1)}}
 
-.feedback{margin-top:14px;padding:14px;border-radius:14px;font-weight:600;text-align:center;animation:pop .3s ease;}
+.feedback{margin-top:14px;padding:14px;border-radius:14px;font-weight:600;text-align:center;animation:pop .35s ease;}
 .feedback.correct{background:var(--correct-bg);color:var(--correct-tx);}
 .feedback.incorrect{background:var(--incorrect-bg);color:var(--incorrect-tx);}
-.feedback .hint{display:block;font-size:14px;font-weight:500;margin-top:6px;opacity:.85;}
+.feedback .hint{display:block;font-size:14px;font-weight:500;margin-top:6px;opacity:.85;line-height:1.45;}
+
+.hint-box{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(251,191,36,.18);border-left:4px solid var(--warn);font-size:14px;line-height:1.45;animation:pop .3s ease;}
+.hint-box b{color:var(--warn);}
+.hint-box .tag{font-size:11px;font-weight:800;color:var(--warn);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:4px;}
 
 @keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.shake{animation:shake .35s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+.shake{animation:shake .4s ease;}
 
-.streak{position:fixed;top:14px;right:14px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px;animation:pop .3s;box-shadow:0 4px 14px rgba(239,68,68,.5);z-index:50;}
+.streak{position:fixed;top:14px;right:14px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px;animation:streakPop .45s ease;box-shadow:0 4px 14px rgba(239,68,68,.5);z-index:50;}
+@keyframes streakPop{0%{transform:scale(0) rotate(-12deg)}60%{transform:scale(1.15) rotate(3deg)}100%{transform:scale(1) rotate(0)}}
 
 .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1000;}
 .confetti span{position:absolute;top:-20px;width:10px;height:14px;border-radius:2px;animation:fall linear forwards;}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 
 .score-big{text-align:center;padding:24px 16px 10px;}
-.score-big .grade{font-size:88px;font-weight:900;line-height:1;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.score-big .grade{font-size:88px;font-weight:900;line-height:1;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:gradeIn .8s cubic-bezier(.2,1.4,.4,1);}
 .score-big .label{font-size:22px;font-weight:700;margin-top:8px;}
 .score-big .pct{font-size:16px;color:var(--muted);margin-top:4px;}
 .score-big .emoji{font-size:50px;margin-top:8px;display:block;animation:bounce 1.2s ease infinite;}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes gradeIn{0%{transform:scale(0) rotate(-25deg);opacity:0}60%{transform:scale(1.2) rotate(8deg);opacity:1}100%{transform:scale(1) rotate(0)}}
+
+.stamp{display:inline-block;padding:18px 36px;border:5px double;border-radius:14px;font-weight:900;font-size:34px;letter-spacing:3px;text-transform:uppercase;transform:rotate(-8deg);animation:stamp .65s cubic-bezier(.2,1.5,.5,1);}
+.stamp.pass{color:#059669;border-color:#059669;background:rgba(16,185,129,.08);}
+.stamp.review{color:#dc2626;border-color:#dc2626;background:rgba(220,38,38,.08);}
+@keyframes stamp{0%{transform:scale(4) rotate(-30deg);opacity:0}50%{transform:scale(.9) rotate(-12deg);opacity:1}80%{transform:scale(1.05) rotate(-6deg)}100%{transform:scale(1) rotate(-8deg)}}
 
 .breakdown{margin-top:14px;}
 .breakdown .row-b{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:15px;}
@@ -123,27 +151,27 @@ h3{font-size:15px;line-height:1.3;}
 .breakdown .val{font-weight:700;color:var(--primary);}
 
 .qtext{font-size:20px;font-weight:700;line-height:1.35;margin-top:6px;}
-.fade-in{animation:fadeIn .3s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fade-in{animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-in{animation:slideIn .35s cubic-bezier(.2,.8,.2,1);}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 
 .back-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.6);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;color:var(--text);align-self:flex-start;border:none;cursor:pointer;}
 .back-btn:hover{background:rgba(255,255,255,.9);}
 
-/* Topic detail */
 .topic-hero{text-align:center;padding:24px 14px;}
-.topic-hero .big-icon{width:80px;height:80px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;font-size:44px;}
+.topic-hero .big-icon{width:80px;height:80px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;font-size:44px;animation:popBig .5s cubic-bezier(.2,1.4,.4,1);}
+@keyframes popBig{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
 .topic-hero h1{margin-top:10px;}
 .topic-hero p{color:var(--muted);margin-top:6px;}
 
-/* Tips */
 .tip-list{display:flex;flex-direction:column;gap:10px;}
 .tip{background:#fff;border-left:4px solid var(--primary);padding:14px 16px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
 .tip h3{color:var(--primary);margin-bottom:6px;}
 .tip p{font-size:14px;line-height:1.55;}
 
-/* Flashcards */
 .flashcard{perspective:1200px;height:340px;cursor:pointer;}
-.flashcard-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.2,.2,1);}
+.flashcard-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1);}
 .flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
 .flashcard-face{position:absolute;inset:0;border-radius:var(--radius);padding:24px;background:#fff;box-shadow:var(--shadow);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
 .flashcard-back{transform:rotateY(180deg);background:linear-gradient(135deg,#fef3c7,#fce7f3);}
@@ -154,6 +182,32 @@ h3{font-size:15px;line-height:1.3;}
 .fc-actions{display:flex;gap:10px;}
 .fc-progress{font-size:13px;color:var(--muted);text-align:center;margin-bottom:6px;font-weight:600;}
 
+.tut-section{margin-bottom:18px;}
+.tut-section:last-child{margin-bottom:0;}
+.tut-section h3{font-size:16px;color:var(--primary);margin-bottom:8px;}
+.tut-section p{font-size:14px;line-height:1.55;margin-bottom:8px;}
+.tut-section code{background:#f3f4f6;padding:2px 8px;border-radius:6px;font-size:13px;font-family:Menlo,Monaco,monospace;}
+.contrast-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.contrast-box{padding:14px;border-radius:14px;text-align:center;}
+.contrast-box.subj{background:var(--subj-bg);}
+.contrast-box.obj{background:var(--obj-bg);}
+.contrast-box .big-emoji{font-size:36px;margin-bottom:4px;}
+.contrast-box h4{font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.contrast-box.subj h4{color:var(--subj);}
+.contrast-box.obj h4{color:var(--obj);}
+.contrast-box p{font-size:13px;color:var(--muted);margin-bottom:6px;}
+.contrast-box code{display:block;background:rgba(255,255,255,.6);}
+.pron-table{width:100%;border-collapse:collapse;}
+.pron-table th{background:linear-gradient(90deg,var(--subj-bg),var(--obj-bg));padding:8px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;}
+.pron-table th:first-child{color:var(--subj);}
+.pron-table th:last-child{color:var(--obj);}
+.pron-table td{padding:8px;text-align:center;font-weight:600;border-top:1px solid #f3f4f6;font-size:15px;}
+.mistake{margin-bottom:8px;padding:10px 12px;background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.mistake .wrong{color:var(--incorrect);font-size:14px;text-decoration:line-through;text-decoration-color:rgba(239,68,68,.5);margin-bottom:4px;}
+.mistake .right{color:var(--correct-tx);font-size:14px;font-weight:600;}
+.trick{padding:10px 12px;margin-bottom:8px;background:rgba(251,191,36,.13);border-left:3px solid var(--warn);border-radius:8px;font-size:14px;line-height:1.55;}
+.trick b{color:var(--warn);}
+
 @media (max-width:380px){
   h1{font-size:22px}
   .qtext{font-size:18px}
@@ -163,6 +217,7 @@ h3{font-size:15px;line-height:1.3;}
   .flashcard{height:300px}
   .flashcard .term{font-size:18px}
   .flashcard .answer{font-size:24px}
+  .stamp{font-size:26px;padding:14px 24px;}
 }
 </style>
 </head>
@@ -174,9 +229,7 @@ h3{font-size:15px;line-height:1.3;}
 
 const QUIZ = {
   vocab: {
-    title: "Vocabulary & Roots",
-    emoji: "📚",
-    color: "#a78bfa",
+    title: "Vocabulary & Roots", emoji: "📚", color: "#a78bfa",
     questions: [
       { q:"Which prefix means \"far away\" or \"at a distance\"?", a:0, opts:["tele","micro","mono","deca"], hint:"As in television — seeing from far away." },
       { q:"Which root means \"sound\" or \"voice\"?", a:1, opts:["scrib","phon","therm","photo"], hint:"As in telephone or microphone." },
@@ -202,9 +255,7 @@ const QUIZ = {
     ]
   },
   literary: {
-    title: "Literary Terms",
-    emoji: "✍️",
-    color: "#f472b6",
+    title: "Literary Terms", emoji: "✍️", color: "#f472b6",
     questions: [
       { q:"What is comparing two things using \"like\" or \"as\"?", a:0, opts:["Simile","Metaphor","Personification","Hyperbole"], hint:"\"As brave as a lion.\"" },
       { q:"What is comparing two things WITHOUT using \"like\" or \"as\"?", a:0, opts:["Metaphor","Simile","Symbolism","Imagery"], hint:"\"Her smile is sunshine.\"" },
@@ -218,9 +269,7 @@ const QUIZ = {
     ]
   },
   pronouns: {
-    title: "Pronouns",
-    emoji: "🔤",
-    color: "#60a5fa",
+    title: "Pronouns", emoji: "🔤", color: "#60a5fa",
     questions: [
       { q:"What kind of pronoun is \"Mine\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"It shows ownership." },
       { q:"What kind of pronoun is \"Them\"?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"It receives the action: \"I saw ___.\"" },
@@ -245,9 +294,7 @@ const QUIZ = {
     ]
   },
   story: {
-    title: "Story Structure",
-    emoji: "📖",
-    color: "#34d399",
+    title: "Story Structure", emoji: "📖", color: "#34d399",
     questions: [
       { q:"Which part means \"story reaches its conclusion\"?", a:0, opts:["Resolution","Climax","Exposition","Rising Action"], hint:"Everything wraps up at the end." },
       { q:"Which part \"introduces characters and setting\"?", a:0, opts:["Exposition","Resolution","Falling Action","Climax"], hint:"This is where the story begins." },
@@ -257,9 +304,7 @@ const QUIZ = {
     ]
   },
   writing: {
-    title: "Writing",
-    emoji: "✏️",
-    color: "#fbbf24",
+    title: "Writing", emoji: "✏️", color: "#fbbf24",
     questions: [
       { q:"In writing, what does TAG stand for?", a:0, opts:["Title, Author, Genre","Topic, Argument, Goal","Theme, Audience, Genre","Title, Audience, Goal"], hint:"You introduce these three things at the start of an essay." },
       { q:"What should be included in body paragraphs?", a:3, opts:["Just an intro","Just evidence","Just justification","All of the above"], hint:"Body paragraphs need a topic sentence, evidence, AND justification." },
@@ -268,6 +313,29 @@ const QUIZ = {
       { q:"Which is a sign that a source is CREDIBLE?", a:0, opts:["The author is an expert on the topic","It has lots of colorful images","It was published a very long time ago","It is full of strong personal opinions"], hint:"Credible sources are accurate, current, and unbiased." }
     ]
   }
+};
+
+const SUBOBJ = {
+  title: "Subject vs Object",
+  emoji: "🎯",
+  color: "#fb7185",
+  questions: [
+    { q:"Sarah and ___ went to the mall.", a:0, opts:["I","me"], hint:"Drop \"Sarah and\": \"I went\" ✓ — so the subject pronoun I is right." },
+    { q:"The teacher gave Sarah and ___ a sticker.", a:1, opts:["I","me"], hint:"Drop \"Sarah and\": \"gave me a sticker\" ✓ — object pronoun." },
+    { q:"Between you and ___, this homework is tough.", a:1, opts:["I","me"], hint:"After \"between\" (a preposition), always use the object pronoun: me." },
+    { q:"Sarah and ___ are best friends.", a:0, opts:["I","me"], hint:"Subject of \"are\". Drop Sarah: \"I am best friends\" ✓ — subject pronoun I." },
+    { q:"Mom called ___ for dinner.", a:1, opts:["we","us"], hint:"\"Called\" is the verb — we RECEIVE the call. Object pronoun: us." },
+    { q:"___ are leaving early today.", a:0, opts:["We","Us"], hint:"Subject of \"are leaving\" — \"We are leaving\" ✓." },
+    { q:"Wait for ___ at the door!", a:1, opts:["we","us"], hint:"After preposition \"for\" → object pronoun us." },
+    { q:"___ saw the parade yesterday.", a:0, opts:["They","Them"], hint:"They DID the seeing — subject pronoun." },
+    { q:"I told ___ the secret.", a:1, opts:["they","them"], hint:"\"Told\" is the verb — they RECEIVED the secret. Object: them." },
+    { q:"Pass the ball to ___!", a:1, opts:["he","him"], hint:"After preposition \"to\" → object pronoun him." },
+    { q:"___ is the smartest in our class.", a:0, opts:["He","Him"], hint:"Subject of \"is\" → He." },
+    { q:"Did you see ___ at the game?", a:1, opts:["she","her"], hint:"\"See\" is the verb — she is being seen. Object: her." },
+    { q:"___ baked cookies last night.", a:0, opts:["She","Her"], hint:"Subject of \"baked\" → She." },
+    { q:"The package was for John and ___.", a:1, opts:["I","me"], hint:"After preposition \"for\" → object pronoun me. (Drop John: \"for me\" ✓)" },
+    { q:"She invited ___ to the party.", a:1, opts:["I","me"], hint:"\"Invited\" is the verb — I'm receiving the invitation. Object: me." }
+  ]
 };
 
 const TIPS = {
@@ -310,28 +378,16 @@ const KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
 
 const state = {
   screen: "home",
-  questions: [],
-  index: 0,
-  score: 0,
-  streak: 0,
-  bestStreak: 0,
-  answered: false,
-  selected: -1,
-  categoryStats: {},
-  currentCategory: null,
-  mode: "full",
-  fcPile: [],
-  fcCurrent: null,
-  fcFlipped: false,
-  fcDone: 0,
-  fcTotal: 0
+  questions: [], index: 0, score: 0, streak: 0, bestStreak: 0,
+  answered: false, selected: -1, categoryStats: {},
+  currentCategory: null, mode: "practice",
+  helpers: true, hintShown: false, hintsUsed: 0,
+  examMode: false, startTime: 0, elapsedMs: 0,
+  fcPile: [], fcCurrent: null, fcFlipped: false, fcDone: 0, fcTotal: 0
 };
 
-function lsGet(k, fallback) {
-  try { const v = localStorage.getItem(k); return v == null ? fallback : v; } catch(e) { return fallback; }
-}
+function lsGet(k, fb) { try { const v = localStorage.getItem(k); return v == null ? fb : v; } catch(e) { return fb; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
-
 function loadHigh() { return parseInt(lsGet("g6_high","0"),10); }
 function saveHigh(v) { if (v > loadHigh()) lsSet("g6_high", String(v)); }
 function loadPlays() { return parseInt(lsGet("g6_plays","0"),10); }
@@ -339,18 +395,27 @@ function bumpPlays() { lsSet("g6_plays", String(loadPlays()+1)); }
 function loadBestStreak() { return parseInt(lsGet("g6_streak","0"),10); }
 function saveBestStreak(v) { if (v > loadBestStreak()) lsSet("g6_streak", String(v)); }
 function saveLastStats(s) { lsSet("g6_lastStats", JSON.stringify(s)); }
-function loadLastStats() {
-  try { return JSON.parse(lsGet("g6_lastStats","null")); } catch(e) { return null; }
+function loadLastStats() { try { return JSON.parse(lsGet("g6_lastStats","null")); } catch(e) { return null; } }
+function loadBestExam() { return parseInt(lsGet("g6_examBest","0"),10); }
+function saveBestExam(v) { if (v > loadBestExam()) lsSet("g6_examBest", String(v)); }
+
+const AVATARS = ["🦄","🦊","🐱","🐼","🦉","🐯","🐶","🐸","🐰","🦋"];
+function loadAvatar() { return lsGet("g6_avatar","🦄"); }
+function saveAvatar(v) { lsSet("g6_avatar", v); }
+function nextAvatar() {
+  const cur = loadAvatar(); const i = AVATARS.indexOf(cur);
+  saveAvatar(AVATARS[(i+1) % AVATARS.length]);
+  chimePop();
+  render();
 }
+function loadName() { return lsGet("g6_name","Julia"); }
 
 function getTroubleTopics() {
   const stats = loadLastStats();
   if (!stats) return [];
   const trouble = [];
   for (const k of KEY_ORDER) {
-    if (stats[k] && stats[k].total > 0 && (stats[k].right / stats[k].total) < 0.8) {
-      trouble.push(k);
-    }
+    if (stats[k] && stats[k].total > 0 && (stats[k].right / stats[k].total) < 0.8) trouble.push(k);
   }
   return trouble;
 }
@@ -363,21 +428,15 @@ function shuffle(a) {
   }
   return arr;
 }
-
 function shuffleOptions(q) {
   const idxs = q.opts.map((_, i) => i);
   const order = shuffle(idxs);
-  return {
-    ...q,
-    opts: order.map(i => q.opts[i]),
-    a: order.indexOf(q.a)
-  };
+  return { ...q, opts: order.map(i => q.opts[i]), a: order.indexOf(q.a) };
 }
 
 function gatherQuestions(mode, key) {
-  if (mode === "category") {
-    return shuffle(QUIZ[key].questions.map(q => ({ ...q, _cat: key }))).map(shuffleOptions);
-  }
+  if (mode === "subobj") return shuffle(SUBOBJ.questions.map(q => ({ ...q, _cat: "pronouns", _sub: true }))).map(shuffleOptions);
+  if (mode === "category") return shuffle(QUIZ[key].questions.map(q => ({ ...q, _cat: key }))).map(shuffleOptions);
   if (mode === "quick") {
     const all = [];
     for (const k of KEY_ORDER) for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
@@ -395,25 +454,23 @@ function gatherQuestions(mode, key) {
 }
 
 function startQuiz(mode, key) {
-  if (mode === "trouble") {
-    const t = getTroubleTopics();
-    if (t.length === 0) {
-      alert("No trouble topics yet!\n\nTake a full quiz first. Any topic you score under 80% on will show up here for extra practice.");
-      return;
-    }
+  if (mode === "trouble" && getTroubleTopics().length === 0) {
+    alert("No trouble topics yet!\n\nTake a full quiz first. Any topic you score under 80% on will show up here for extra practice.");
+    return;
   }
   state.mode = mode;
-  state.currentCategory = key || null;
+  state.currentCategory = key || (mode === "subobj" ? "pronouns" : null);
+  state.examMode = (mode === "exam");
+  state.helpers = !state.examMode;
   state.questions = gatherQuestions(mode, key);
-  state.index = 0;
-  state.score = 0;
-  state.streak = 0;
-  state.bestStreak = 0;
-  state.answered = false;
-  state.selected = -1;
+  state.index = 0; state.score = 0; state.streak = 0; state.bestStreak = 0;
+  state.answered = false; state.selected = -1;
+  state.hintShown = false; state.hintsUsed = 0;
+  state.startTime = Date.now();
   state.categoryStats = {};
   for (const k of KEY_ORDER) state.categoryStats[k] = { right: 0, total: 0 };
   state.screen = "quiz";
+  chimeStart();
   render();
 }
 
@@ -428,65 +485,73 @@ function selectOption(i) {
     state.streak++;
     state.categoryStats[q._cat].right++;
     if (state.streak > state.bestStreak) state.bestStreak = state.streak;
-    beep(true);
-    if (state.streak === 5 || state.streak === 10) miniConfetti();
+    chimeCorrect();
+    smallConfetti();
+    if (state.streak === 5 || state.streak === 10) { miniConfetti(); chimeLevelUp(); }
+    if (state.streak === 15) { bigConfetti(); chimeAchievement(); }
   } else {
     state.streak = 0;
-    beep(false);
+    toneWrong();
     const card = document.querySelector(".card.quiz");
-    if (card) { card.classList.add("shake"); setTimeout(() => card.classList.remove("shake"), 400); }
+    if (card) { card.classList.add("shake"); setTimeout(() => card.classList.remove("shake"), 420); }
   }
+  render();
+}
+
+function revealHint() {
+  if (!state.helpers || state.answered) return;
+  if (!state.hintShown) state.hintsUsed++;
+  state.hintShown = true;
   render();
 }
 
 function nextQuestion() {
   if (state.index + 1 >= state.questions.length) { finishQuiz(); return; }
   state.index++;
-  state.answered = false;
-  state.selected = -1;
+  state.answered = false; state.selected = -1; state.hintShown = false;
   render();
 }
 
 function finishQuiz() {
+  state.elapsedMs = Date.now() - state.startTime;
   bumpPlays();
   const pct = Math.round((state.score / state.questions.length) * 100);
   saveHigh(pct);
   saveBestStreak(state.bestStreak);
-  if (state.mode === "full") saveLastStats(state.categoryStats);
+  if (state.mode === "practice" || state.mode === "exam") saveLastStats(state.categoryStats);
+  if (state.mode === "exam") saveBestExam(pct);
   state.screen = "results";
   render();
-  if (pct >= 80) bigConfetti();
+  if (pct >= 90) { bigConfetti(); chimeAchievement(); }
+  else if (pct >= 80) { bigConfetti(); chimeLevelUp(); }
+  else if (pct >= 70) miniConfetti();
 }
 
 function goHome() { state.screen = "home"; state.currentCategory = null; render(); }
 function showTopic(k) { state.currentCategory = k; state.screen = "topic"; render(); }
 function showTips(k) { state.currentCategory = k; state.screen = "tips"; render(); }
+function showSubObj() { state.screen = "subobj-tutorial"; render(); }
 
-function startFlashcards(k) {
+function startFlashcards(k, set) {
   state.currentCategory = k;
-  const cards = shuffle(QUIZ[k].questions.slice());
-  state.fcPile = cards;
+  const source = set === "subobj" ? SUBOBJ.questions : QUIZ[k].questions;
+  state.fcPile = shuffle(source.slice());
   state.fcCurrent = state.fcPile.shift() || null;
-  state.fcFlipped = false;
-  state.fcDone = 0;
-  state.fcTotal = QUIZ[k].questions.length;
+  state.fcFlipped = false; state.fcDone = 0;
+  state.fcTotal = source.length;
   state.screen = "flashcards";
+  state._fcSet = set || "topic";
   render();
 }
-
-function flipCard() { state.fcFlipped = !state.fcFlipped; render(); }
-
+function flipCard() { state.fcFlipped = !state.fcFlipped; tapTick(); render(); }
 function fcAction(gotIt) {
   if (!state.fcCurrent) return;
-  if (!gotIt) {
-    state.fcPile.push(state.fcCurrent);
-  } else {
-    state.fcDone++;
-  }
+  if (!gotIt) state.fcPile.push(state.fcCurrent);
+  else { state.fcDone++; chimeCorrect(); smallConfetti(); }
   if (state.fcPile.length === 0) {
     state.fcCurrent = null;
     state.screen = "flashcards-done";
-    miniConfetti();
+    bigConfetti();
   } else {
     state.fcCurrent = state.fcPile.shift();
     state.fcFlipped = false;
@@ -495,38 +560,55 @@ function fcAction(gotIt) {
 }
 
 let audioCtx = null;
-function beep(ok) {
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-    o.type = "sine";
-    if (ok) {
-      o.frequency.setValueAtTime(660, audioCtx.currentTime);
-      o.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
-    } else {
-      o.frequency.setValueAtTime(220, audioCtx.currentTime);
-    }
-    g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
-    o.start();
-    o.stop(audioCtx.currentTime + 0.25);
-  } catch(e) {}
+function getCtx() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  return audioCtx;
 }
+function tone(freq, dur, type, gain) {
+  const ctx = getCtx(); if (!ctx) return;
+  const o = ctx.createOscillator(); const g = ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  o.type = type || "sine"; o.frequency.value = freq;
+  const t = ctx.currentTime;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(gain || 0.15, t + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.start(t); o.stop(t + dur + 0.02);
+}
+function chimeCorrect() {
+  tone(784, 0.18, "sine", 0.18);
+  setTimeout(() => tone(988, 0.18, "sine", 0.16), 90);
+  setTimeout(() => tone(1175, 0.22, "sine", 0.14), 180);
+}
+function toneWrong() {
+  tone(330, 0.16, "sine", 0.14);
+  setTimeout(() => tone(247, 0.22, "sine", 0.13), 110);
+}
+function tapTick() { tone(1400, 0.04, "triangle", 0.06); }
+function chimePop() { tone(880, 0.08, "triangle", 0.12); setTimeout(() => tone(1320, 0.1, "triangle", 0.1), 50); }
+function chimeLevelUp() {
+  [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, 0.17, "triangle", 0.16), i * 75));
+}
+function chimeAchievement() {
+  [523, 659, 784, 1047, 1319].forEach((f, i) => setTimeout(() => tone(f, 0.2, "triangle", 0.18), i * 85));
+  setTimeout(() => tone(1568, 0.55, "sine", 0.2), 450);
+}
+function chimeStart() { tone(523, 0.1, "sine", 0.12); setTimeout(() => tone(784, 0.14, "sine", 0.12), 90); }
 
-function bigConfetti() { spawnConfetti(120); }
-function miniConfetti() { spawnConfetti(40); }
+function bigConfetti() { spawnConfetti(140); }
+function miniConfetti() { spawnConfetti(50); }
+function smallConfetti() { spawnConfetti(22); }
 function spawnConfetti(n) {
   const c = document.getElementById("confetti");
-  const colors = ["#6366f1","#ec4899","#f59e0b","#10b981","#06b6d4","#a855f7"];
+  const colors = ["#6366f1","#ec4899","#f59e0b","#10b981","#06b6d4","#a855f7","#facc15"];
   for (let i = 0; i < n; i++) {
     const s = document.createElement("span");
     s.style.left = (Math.random() * 100) + "%";
     s.style.background = colors[Math.floor(Math.random() * colors.length)];
-    s.style.animationDuration = (1.6 + Math.random() * 1.6) + "s";
-    s.style.animationDelay = (Math.random() * 0.4) + "s";
+    s.style.animationDuration = (1.5 + Math.random() * 1.8) + "s";
+    s.style.animationDelay = (Math.random() * 0.3) + "s";
     s.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
     s.style.width = (6 + Math.random() * 8) + "px";
     s.style.height = (8 + Math.random() * 12) + "px";
@@ -535,10 +617,9 @@ function spawnConfetti(n) {
   }
 }
 
-const PRAISE_CORRECT = ["Awesome! 🎉","Nailed it! ⭐","Brilliant! ✨","You got it! 🔥","Smart move! 🧠","Yes! 💯","On point! 🎯"];
-const PRAISE_WRONG  = ["Not quite! 💭","Almost! 🤔","Tricky one! 📝","Remember this one! 💡","Keep going! 💪"];
+const PRAISE_CORRECT = ["Awesome! 🎉","Nailed it! ⭐","Brilliant! ✨","You got it! 🔥","Smart move! 🧠","Yes! 💯","On point! 🎯","Boom! 💥","Crushed it! 💪"];
+const PRAISE_WRONG  = ["Not quite! 💭","Almost! 🤔","Tricky one! 📝","Remember this one! 💡","Keep going! 💪","So close! 🌟"];
 function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-
 function gradeFor(pct) {
   if (pct >= 95) return { grade:"A+", label:"Perfect!", emoji:"🏆" };
   if (pct >= 90) return { grade:"A",  label:"Excellent!", emoji:"🌟" };
@@ -547,46 +628,48 @@ function gradeFor(pct) {
   if (pct >= 60) return { grade:"D",  label:"Keep practicing!", emoji:"💪" };
   return { grade:"F", label:"Let's study more!", emoji:"📚" };
 }
-
 function letter(i) { return ["A","B","C","D","E"][i] || ""; }
 function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function fmtTime(ms) { const s = Math.floor(ms/1000); const m = Math.floor(s/60); const r = s%60; return m + "m " + (r<10?"0":"") + r + "s"; }
 
 function viewHome() {
-  const high = loadHigh();
-  const plays = loadPlays();
-  const bestStreak = loadBestStreak();
-  const trouble = getTroubleTopics();
-  const lastStats = loadLastStats();
+  const high = loadHigh(); const plays = loadPlays(); const bestStreak = loadBestStreak();
+  const trouble = getTroubleTopics(); const lastStats = loadLastStats();
   const totalQ = KEY_ORDER.reduce((n,k)=>n+QUIZ[k].questions.length,0);
+  const avatar = loadAvatar(); const name = loadName();
   return `
     <div class="card hero">
-      <span class="emoji">🎓</span>
-      <h1>Grade 6 Study Quiz</h1>
-      <p>Fun practice for your final exam!</p>
+      <button class="avatar-btn" onclick="nextAvatar()" aria-label="Change avatar">
+        <span class="avatar">${avatar}</span>
+      </button>
+      <span class="avatar-tap">tap to change</span>
+      <h1>Hi ${esc(name)}! 👋</h1>
+      <p>Ready to crush your final exam?</p>
     </div>
     <div class="stats">
       <div class="stat"><div class="num">${high}%</div><div class="lbl">High Score</div></div>
       <div class="stat"><div class="num">${plays}</div><div class="lbl">Quizzes</div></div>
       <div class="stat"><div class="num">${bestStreak}🔥</div><div class="lbl">Best Streak</div></div>
     </div>
-    <button class="btn btn-primary btn-icon" onclick="startQuiz('full')">🚀 Start Full Quiz <span style="opacity:.85;font-weight:500;">(${totalQ} questions)</span></button>
-    <button class="btn btn-ghost btn-icon" onclick="startQuiz('quick')">⚡ Quick Quiz (10 random)</button>
-    ${trouble.length > 0
-      ? `<button class="btn btn-warn btn-icon" onclick="startQuiz('trouble')">🎯 Trouble Topics <span style="opacity:.9;font-weight:500;">(${trouble.length} topic${trouble.length>1?"s":""} to review)</span></button>`
-      : (lastStats ? `<button class="btn btn-success btn-icon" disabled style="opacity:.85;">✅ No trouble topics — nice work!</button>` : "")}
+    <button class="btn btn-success btn-icon" onclick="startQuiz('practice')">🟢 Practice Quiz <span style="opacity:.9;font-weight:500;">(with hints, ${totalQ} Qs)</span></button>
+    <button class="btn btn-exam btn-icon" onclick="startQuiz('exam')">🔴 Final Exam Mode <span style="opacity:.9;font-weight:500;">(no hints, all ${totalQ})</span></button>
+    <div class="row">
+      <button class="btn btn-ghost btn-small btn-icon" onclick="startQuiz('quick')">⚡ Quick Quiz (10)</button>
+      ${trouble.length > 0
+        ? `<button class="btn btn-warn btn-small btn-icon" onclick="startQuiz('trouble')">🎯 Trouble Topics (${trouble.length})</button>`
+        : `<button class="btn btn-ghost btn-small btn-icon" disabled style="opacity:.55;">🎯 Trouble Topics</button>`}
+    </div>
     <div class="card" style="padding:18px;">
       <h2 style="margin-bottom:10px;">📂 Study by Topic</h2>
-      <p class="muted" style="margin-bottom:12px;">Tap a topic to take a quiz, flip flashcards, or see memory tricks.</p>
+      <p class="muted" style="margin-bottom:12px;">Tap a topic for quizzes, flashcards, and memory tricks.</p>
       <div class="topic-grid">
         ${KEY_ORDER.map(k => {
           const weak = lastStats && lastStats[k] && lastStats[k].total > 0 && (lastStats[k].right / lastStats[k].total) < 0.8;
-          const score = lastStats && lastStats[k] && lastStats[k].total > 0
-            ? ` · last: ${lastStats[k].right}/${lastStats[k].total}` : "";
-          return `
-          <button class="topic ${weak?"weak":""}" onclick="showTopic('${k}')">
+          const score = lastStats && lastStats[k] && lastStats[k].total > 0 ? ` · last: ${lastStats[k].right}/${lastStats[k].total}` : "";
+          return `<button class="topic ${weak?"weak":""}" onclick="showTopic('${k}')">
             <div class="icon" style="background:${QUIZ[k].color}33;">${QUIZ[k].emoji}</div>
             <div class="info">
-              <div class="ttl">${esc(QUIZ[k].title)}</div>
+              <div class="ttl">${esc(QUIZ[k].title)}${k==="pronouns" ? ' <span class="nbadge">+ S vs O</span>' : ""}</div>
               <div class="sub">${QUIZ[k].questions.length} questions${score}${weak?" · needs practice":""}</div>
             </div>
             <div class="arrow">›</div>
@@ -599,12 +682,20 @@ function viewHome() {
 }
 
 function viewTopic() {
-  const k = state.currentCategory;
-  const cat = QUIZ[k];
-  const ls = loadLastStats();
+  const k = state.currentCategory; const cat = QUIZ[k]; const ls = loadLastStats();
   const lastBit = ls && ls[k] && ls[k].total > 0
     ? `Last quiz: <b>${ls[k].right}/${ls[k].total}</b> (${Math.round(ls[k].right/ls[k].total*100)}%)`
     : `${cat.questions.length} questions to practice`;
+  const pronounExtras = k === "pronouns" ? `
+    <button class="topic feature" onclick="showSubObj()">
+      <div class="icon" style="background:#ffe4e6;">🎯</div>
+      <div class="info">
+        <div class="ttl">Subject vs Object <span class="nbadge">NEW</span></div>
+        <div class="sub">Tutorial + 15 fill-in-the-blank questions</div>
+      </div>
+      <div class="arrow">›</div>
+    </button>
+  ` : "";
   return `
     <button class="back-btn" onclick="goHome()">← Back</button>
     <div class="card topic-hero fade-in">
@@ -612,16 +703,84 @@ function viewTopic() {
       <h1>${esc(cat.title)}</h1>
       <p>${lastBit}</p>
     </div>
+    ${pronounExtras}
     <button class="btn btn-primary btn-icon" onclick="startQuiz('category','${k}')">📝 Take Quiz</button>
     <button class="btn btn-ghost btn-icon" onclick="startFlashcards('${k}')">🃏 Flashcards</button>
     <button class="btn btn-ghost btn-icon" onclick="showTips('${k}')">💡 Memory Tricks</button>
   `;
 }
 
+function viewSubObj() {
+  return `
+    <button class="back-btn" onclick="showTopic('pronouns')">← Back to Pronouns</button>
+    <div class="card topic-hero fade-in">
+      <div class="big-icon" style="background:#ffe4e6;">🎯</div>
+      <h1>Subject vs Object</h1>
+      <p>The two trickiest pronoun types — let's master them.</p>
+    </div>
+    <div class="card slide-in">
+      <div class="tut-section">
+        <h3>🧠 The Big Idea</h3>
+        <p>Every pronoun either <b>DOES</b> the action (subject) or <b>RECEIVES</b> it (object).</p>
+        <div class="contrast-row">
+          <div class="contrast-box subj">
+            <div class="big-emoji">🏃</div>
+            <h4>Subject</h4>
+            <p>Does the action</p>
+            <code>SHE ran fast.</code>
+          </div>
+          <div class="contrast-box obj">
+            <div class="big-emoji">🎯</div>
+            <h4>Object</h4>
+            <p>Receives the action</p>
+            <code>Sarah saw HER.</code>
+          </div>
+        </div>
+      </div>
+      <div class="tut-section">
+        <h3>📋 The Pairs (memorize these!)</h3>
+        <table class="pron-table">
+          <thead><tr><th>Subject (Doer)</th><th>Object (Receiver)</th></tr></thead>
+          <tbody>
+            <tr><td>I</td><td>me</td></tr>
+            <tr><td>you</td><td>you</td></tr>
+            <tr><td>he</td><td>him</td></tr>
+            <tr><td>she</td><td>her</td></tr>
+            <tr><td>we</td><td>us</td></tr>
+            <tr><td>they</td><td>them</td></tr>
+            <tr><td>it</td><td>it</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tut-section">
+        <h3>🔑 Three Killer Tricks</h3>
+        <div class="trick"><b>1. Drop the other person.</b><br>"Tom and ___ went" → drop "Tom and": "I went" ✓ (not "Me went"). So: <b>I</b>.</div>
+        <div class="trick"><b>2. After to / with / for / at / by</b> = always OBJECT.<br>"between you and ___" → <b>me</b> ✓ (NOT "I")</div>
+        <div class="trick"><b>3. Before the verb</b> = Subject. <b>After the verb</b> = Object.<br>"<b>SHE</b> called <b>HIM</b>." (She did the calling; him received it.)</div>
+      </div>
+      <div class="tut-section">
+        <h3>❌ Common Mistakes (don't fall for these!)</h3>
+        <div class="mistake">
+          <div class="wrong">❌ Me and Sarah went to the mall.</div>
+          <div class="right">✅ Sarah and I went to the mall.</div>
+        </div>
+        <div class="mistake">
+          <div class="wrong">❌ Between you and I, this is hard.</div>
+          <div class="right">✅ Between you and me, this is hard.</div>
+        </div>
+        <div class="mistake">
+          <div class="wrong">❌ She gave it to John and I.</div>
+          <div class="right">✅ She gave it to John and me.</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-icon" onclick="startQuiz('subobj')">🎯 Practice with 15 Fill-in-the-Blanks</button>
+    <button class="btn btn-ghost btn-icon" onclick="startFlashcards('pronouns','subobj')">🃏 Subject/Object Flashcards</button>
+  `;
+}
+
 function viewTips() {
-  const k = state.currentCategory;
-  const cat = QUIZ[k];
-  const tips = TIPS[k] || [];
+  const k = state.currentCategory; const cat = QUIZ[k]; const tips = TIPS[k] || [];
   return `
     <button class="back-btn" onclick="showTopic('${k}')">← Back to ${esc(cat.title)}</button>
     <div class="card fade-in">
@@ -638,11 +797,13 @@ function viewTips() {
 
 function viewFlashcards() {
   const k = state.currentCategory;
-  const cat = QUIZ[k];
+  const isSub = state._fcSet === "subobj";
+  const cat = isSub ? SUBOBJ : QUIZ[k];
   const card = state.fcCurrent;
   const remaining = state.fcPile.length + (card ? 1 : 0);
+  const backTarget = isSub ? "showSubObj()" : `showTopic('${k}')`;
   return `
-    <button class="back-btn" onclick="showTopic('${k}')">← Back</button>
+    <button class="back-btn" onclick="${backTarget}">← Back</button>
     <div class="fc-progress">${cat.emoji} ${esc(cat.title)} · ${remaining} card${remaining===1?"":"s"} left · ${state.fcDone} mastered</div>
     <div class="flashcard ${state.fcFlipped?"flipped":""}" onclick="flipCard()">
       <div class="flashcard-inner">
@@ -667,8 +828,10 @@ function viewFlashcards() {
 }
 
 function viewFlashcardsDone() {
-  const k = state.currentCategory;
-  const cat = QUIZ[k];
+  const k = state.currentCategory; const isSub = state._fcSet === "subobj";
+  const cat = isSub ? SUBOBJ : QUIZ[k];
+  const backAction = isSub ? `showSubObj()` : `showTopic('${k}')`;
+  const practiceAction = isSub ? `startQuiz('subobj')` : `startQuiz('category','${k}')`;
   return `
     <div class="card score-big">
       <div class="grade" style="font-size:64px;">🎉</div>
@@ -676,32 +839,45 @@ function viewFlashcardsDone() {
       <div class="pct">${esc(cat.title)}</div>
       <span class="emoji">🃏</span>
     </div>
-    <button class="btn btn-primary" onclick="startQuiz('category','${k}')">📝 Take the Quiz Now</button>
-    <button class="btn btn-ghost" onclick="startFlashcards('${k}')">🔁 Do Flashcards Again</button>
+    <button class="btn btn-primary" onclick="${practiceAction}">📝 Take the Quiz Now</button>
+    <button class="btn btn-ghost" onclick="${backAction}">← Back</button>
     <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
   `;
 }
 
 function viewQuiz() {
   const q = state.questions[state.index];
-  const total = state.questions.length;
-  const cur = state.index + 1;
+  const total = state.questions.length; const cur = state.index + 1;
   const pct = ((cur - 1) / total) * 100;
-  const cat = QUIZ[q._cat];
+  const cat = q._sub ? SUBOBJ : QUIZ[q._cat];
   const streakChip = state.streak >= 3 ? `<div class="streak">🔥 ${state.streak} streak!</div>` : "";
-  const modeLabel = state.mode === "trouble" ? "🎯 Trouble Topics" : state.mode === "quick" ? "⚡ Quick Quiz" : state.mode === "category" ? "📂 " + cat.title : "🚀 Full Quiz";
+  const modeLabel = state.mode === "exam" ? "🔴 FINAL EXAM"
+                  : state.mode === "trouble" ? "🎯 Trouble Topics"
+                  : state.mode === "quick" ? "⚡ Quick Quiz"
+                  : state.mode === "subobj" ? "🎯 Subject vs Object"
+                  : state.mode === "category" ? "📂 " + cat.title
+                  : "🟢 Practice";
 
+  const avatar = loadAvatar();
   let feedback = "";
   if (state.answered) {
     const correct = state.selected === q.a;
     feedback = `
       <div class="feedback ${correct ? "correct" : "incorrect"}">
-        ${correct ? pick(PRAISE_CORRECT) : pick(PRAISE_WRONG)}
+        ${correct ? `<span class="avatar-celebrate">${avatar}</span> ` : ""}${correct ? pick(PRAISE_CORRECT) : pick(PRAISE_WRONG)}
         <span class="hint">${correct ? esc(q.hint) : "Answer: <b>" + esc(q.opts[q.a]) + "</b> — " + esc(q.hint)}</span>
       </div>
-      <button class="btn btn-primary" style="margin-top:12px;" onclick="nextQuestion()">${cur === total ? "See Results 🎯" : "Next Question →"}</button>
+      <button class="btn btn-primary" style="margin-top:12px;" onclick="nextQuestion()">${cur === total ? (state.examMode ? "🎓 Finish Exam" : "See Results 🎯") : "Next Question →"}</button>
     `;
   }
+
+  const hintBlock = (state.helpers && !state.answered && state.hintShown) ? `
+    <div class="hint-box"><span class="tag">💡 Hint</span>${q.hint}</div>` : "";
+
+  const hintBtn = (state.helpers && !state.answered) ? `
+    <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+      <button class="btn-hint" onclick="revealHint()" ${state.hintShown ? "disabled" : ""}>💡 ${state.hintShown ? "Hint shown" : "Show Hint"}</button>
+    </div>` : "";
 
   return `
     ${streakChip}
@@ -713,7 +889,7 @@ function viewQuiz() {
       <div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>
     </div>
     <div class="card quiz fade-in">
-      <span class="badge" style="background:${cat.color}22;color:#000a;">${cat.emoji} ${esc(cat.title)}</span>
+      <span class="badge ${state.examMode?"badge-exam":""}" style="background:${state.examMode?"":cat.color+"22"};color:${state.examMode?"":"#000a"};">${cat.emoji} ${esc(cat.title)}</span>
       <div class="qtext" style="margin-top:10px;">${esc(q.q)}</div>
       <div class="options">
         ${q.opts.map((opt, i) => {
@@ -728,6 +904,8 @@ function viewQuiz() {
           </button>`;
         }).join("")}
       </div>
+      ${hintBtn}
+      ${hintBlock}
       ${feedback}
     </div>
     <button class="btn btn-ghost btn-small" onclick="goHome()">← Quit to Home</button>
@@ -739,11 +917,21 @@ function viewResults() {
   const pct = Math.round((state.score / total) * 100);
   const g = gradeFor(pct);
   const did = Object.keys(state.categoryStats).filter(k => state.categoryStats[k].total > 0);
-  const replayArgs = state.currentCategory ? "'category','" + state.currentCategory + "'" : "'" + state.mode + "'";
+  const replayArgs = state.currentCategory && state.mode !== "subobj"
+    ? "'category','" + state.currentCategory + "'"
+    : "'" + state.mode + "'";
+  const examBest = loadBestExam();
+  const avatar = loadAvatar(); const name = loadName();
+  const stampHTML = state.examMode ? `
+    <div style="text-align:center;margin:10px 0 18px;">
+      <div class="stamp ${pct >= 70 ? "pass" : "review"}">${pct >= 70 ? "Passed" : "Review"}</div>
+    </div>` : "";
   return `
+    ${stampHTML}
     <div class="card score-big">
+      <span class="avatar-celebrate" style="font-size:60px;">${avatar}</span>
       <div class="grade">${g.grade}</div>
-      <div class="label">${g.label}</div>
+      <div class="label">${g.label} ${esc(name)}!</div>
       <div class="pct">${state.score} / ${total} correct &nbsp;•&nbsp; ${pct}%</div>
       <span class="emoji">${g.emoji}</span>
     </div>
@@ -752,8 +940,7 @@ function viewResults() {
         <h2>📊 By Topic</h2>
         <div class="breakdown">
           ${did.map(k => {
-            const s = state.categoryStats[k];
-            const p = Math.round((s.right / s.total) * 100);
+            const s = state.categoryStats[k]; const p = Math.round((s.right / s.total) * 100);
             return `<div class="row-b">
               <span class="name">${QUIZ[k].emoji} ${esc(QUIZ[k].title)}</span>
               <span class="val">${s.right}/${s.total} (${p}%)</span>
@@ -762,7 +949,8 @@ function viewResults() {
         </div>
       </div>` : ""}
     <div class="card" style="text-align:center;padding:18px;">
-      <p class="muted">Best streak this quiz: <b style="color:#ef4444;">🔥 ${state.bestStreak}</b></p>
+      <p class="muted">🔥 Best streak: <b style="color:#ef4444;">${state.bestStreak}</b> &nbsp;·&nbsp; ⏱️ Time: <b>${fmtTime(state.elapsedMs)}</b>${state.helpers ? `&nbsp;·&nbsp; 💡 Hints: <b>${state.hintsUsed}</b>` : ""}</p>
+      ${state.examMode ? `<p class="muted" style="margin-top:6px;">Best exam score: <b style="color:var(--primary);">${examBest}%</b></p>` : ""}
     </div>
     <div class="row">
       <button class="btn btn-primary" onclick="startQuiz(${replayArgs})">🔄 Play Again</button>
@@ -777,6 +965,7 @@ function render() {
   let view;
   switch (state.screen) {
     case "topic": view = viewTopic(); break;
+    case "subobj-tutorial": view = viewSubObj(); break;
     case "tips": view = viewTips(); break;
     case "flashcards": view = viewFlashcards(); break;
     case "flashcards-done": view = viewFlashcardsDone(); break;
@@ -794,16 +983,17 @@ window.startQuiz = startQuiz;
 window.goHome = goHome;
 window.showTopic = showTopic;
 window.showTips = showTips;
+window.showSubObj = showSubObj;
 window.startFlashcards = startFlashcards;
 window.flipCard = flipCard;
 window.fcAction = fcAction;
+window.revealHint = revealHint;
+window.nextAvatar = nextAvatar;
 
 render();
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
-  });
+  window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });
 }
 </script>
 </body>

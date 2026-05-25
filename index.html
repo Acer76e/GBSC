@@ -16,6 +16,7 @@
   --primary:#6366f1; --primary-2:#8b5cf6; --accent:#ec4899;
   --correct:#10b981; --correct-bg:#d1fae5; --correct-tx:#065f46;
   --incorrect:#ef4444; --incorrect-bg:#fee2e2; --incorrect-tx:#7f1d1d;
+  --warn:#f59e0b; --warn-bg:#fef3c7;
   --text:#1f2937; --muted:#6b7280; --card:#ffffff; --line:#e5e7eb;
   --radius:18px; --shadow:0 10px 25px -5px rgb(0 0 0 / .12), 0 8px 10px -6px rgb(0 0 0 / .08);
 }
@@ -44,8 +45,12 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 .btn-ghost{background:rgba(255,255,255,.7);color:var(--text);border:2px solid transparent;}
 .btn-ghost:hover{border-color:var(--primary);}
 .btn-small{padding:12px 16px;font-size:15px;}
+.btn-warn{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;box-shadow:0 6px 20px -4px rgba(239,68,68,.5);}
+.btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 6px 20px -4px rgba(16,185,129,.5);}
+.btn-icon{display:flex;align-items:center;justify-content:center;gap:10px;}
 h1{font-size:26px;line-height:1.2;}
 h2{font-size:20px;line-height:1.35;}
+h3{font-size:15px;line-height:1.3;}
 .muted{color:var(--muted);font-size:14px;}
 .row{display:flex;gap:10px;}
 .row > *{flex:1;}
@@ -61,7 +66,7 @@ h2{font-size:20px;line-height:1.35;}
 .stat .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-top:2px;}
 
 .topic-grid{display:grid;gap:10px;}
-.topic{display:flex;align-items:center;gap:14px;background:#fff;padding:14px;border-radius:16px;border:2px solid transparent;transition:border-color .2s,transform .1s;cursor:pointer;text-align:left;}
+.topic{display:flex;align-items:center;gap:14px;background:#fff;padding:14px;border-radius:16px;border:2px solid transparent;transition:border-color .2s,transform .1s;cursor:pointer;text-align:left;width:100%;}
 .topic:active{transform:scale(.98);}
 .topic:hover{border-color:var(--primary);}
 .topic .icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
@@ -69,6 +74,8 @@ h2{font-size:20px;line-height:1.35;}
 .topic .info .ttl{font-weight:700;font-size:16px;}
 .topic .info .sub{font-size:13px;color:var(--muted);margin-top:2px;}
 .topic .arrow{color:#9ca3af;font-size:22px;}
+.topic.weak{border-color:var(--warn);}
+.topic.weak .info .sub{color:var(--warn);font-weight:600;}
 
 .progress{height:10px;background:rgba(255,255,255,.7);border-radius:999px;overflow:hidden;}
 .progress > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .3s ease;border-radius:999px;}
@@ -77,7 +84,7 @@ h2{font-size:20px;line-height:1.35;}
 .badge{display:inline-block;background:rgba(99,102,241,.12);color:var(--primary);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
 
 .options{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
-.option{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--line);color:var(--text);padding:14px 16px;border-radius:14px;font-size:16px;font-weight:600;text-align:left;transition:border-color .15s,background .15s,transform .1s;}
+.option{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--line);color:var(--text);padding:14px 16px;border-radius:14px;font-size:16px;font-weight:600;text-align:left;transition:border-color .15s,background .15s,transform .1s;width:100%;}
 .option:not(:disabled):active{transform:scale(.98);}
 .option:not(:disabled):hover{border-color:var(--primary);}
 .option .letter{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:#f3f4f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
@@ -119,12 +126,43 @@ h2{font-size:20px;line-height:1.35;}
 .fade-in{animation:fadeIn .3s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.6);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;color:var(--text);align-self:flex-start;border:none;cursor:pointer;}
+.back-btn:hover{background:rgba(255,255,255,.9);}
+
+/* Topic detail */
+.topic-hero{text-align:center;padding:24px 14px;}
+.topic-hero .big-icon{width:80px;height:80px;border-radius:20px;display:inline-flex;align-items:center;justify-content:center;font-size:44px;}
+.topic-hero h1{margin-top:10px;}
+.topic-hero p{color:var(--muted);margin-top:6px;}
+
+/* Tips */
+.tip-list{display:flex;flex-direction:column;gap:10px;}
+.tip{background:#fff;border-left:4px solid var(--primary);padding:14px 16px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.tip h3{color:var(--primary);margin-bottom:6px;}
+.tip p{font-size:14px;line-height:1.55;}
+
+/* Flashcards */
+.flashcard{perspective:1200px;height:340px;cursor:pointer;}
+.flashcard-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.2,.2,1);}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+.flashcard-face{position:absolute;inset:0;border-radius:var(--radius);padding:24px;background:#fff;box-shadow:var(--shadow);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.flashcard-back{transform:rotateY(180deg);background:linear-gradient(135deg,#fef3c7,#fce7f3);}
+.flashcard .tap-hint{font-size:12px;color:var(--muted);margin-top:14px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;}
+.flashcard .term{font-size:22px;font-weight:700;line-height:1.3;}
+.flashcard .answer{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:8px;}
+.flashcard .answer-hint{font-size:15px;color:var(--text);opacity:.8;line-height:1.5;}
+.fc-actions{display:flex;gap:10px;}
+.fc-progress{font-size:13px;color:var(--muted);text-align:center;margin-bottom:6px;font-weight:600;}
+
 @media (max-width:380px){
   h1{font-size:22px}
   .qtext{font-size:18px}
   .option{font-size:15px;padding:12px 14px}
   .hero .emoji{font-size:60px}
   .hero h1{font-size:26px}
+  .flashcard{height:300px}
+  .flashcard .term{font-size:18px}
+  .flashcard .answer{font-size:24px}
 }
 </style>
 </head>
@@ -158,7 +196,7 @@ const QUIZ = {
       { q:"A long story involving heroes or adventures is called a…", a:0, opts:["saga","pun","hyperbole","metaphor"], hint:"Like an epic Norse tale." },
       { q:"Which word means \"requiring immediate action\"?", a:0, opts:["urgent","arid","fruitless","negligent"], hint:"An ___ message can't wait." },
       { q:"Which word means \"careless or failing to take proper care\"?", a:0, opts:["negligent","foreseeable","urgent","deter"], hint:"A driver who texts is being ___." },
-      { q:"What do you call a person who sees an event happen?", a:0, opts:["bystander","narrator","protagonist","witness only in court"], hint:"They were standing nearby when it happened." },
+      { q:"What do you call a person who sees an event happen?", a:0, opts:["bystander","narrator","protagonist","author"], hint:"They were standing nearby when it happened." },
       { q:"Which word means \"to discourage or prevent someone from doing something\"?", a:0, opts:["deter","omit","reverence","negligent"], hint:"A loud alarm can ___ thieves." },
       { q:"Which word means \"able to be predicted ahead of time\"?", a:0, opts:["foreseeable","urgent","arid","fruitless"], hint:"The result was ___ — you could see it coming." }
     ]
@@ -191,7 +229,19 @@ const QUIZ = {
       { q:"What kind of pronoun is \"Him\"?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"It receives the action: \"I told ___.\"" },
       { q:"What kind of pronoun is \"Yours\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"It shows what belongs to you." },
       { q:"What kind of pronoun is \"Myself\"?", a:3, opts:["Subject","Object","Possessive","Intensive"], hint:"\"I ___ saw it happen.\" (emphasis)" },
-      { q:"What kind of pronoun is \"We\"?", a:0, opts:["Subject","Object","Possessive","Intensive"], hint:"It performs the action: \"___ are ready.\"" }
+      { q:"What kind of pronoun is \"We\"?", a:0, opts:["Subject","Object","Possessive","Intensive"], hint:"It performs the action: \"___ are ready.\"" },
+      { q:"What kind of pronoun is \"Hers\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"Shows ownership — \"That backpack is ___.\"" },
+      { q:"What kind of pronoun is \"Himself\"?", a:3, opts:["Subject","Object","Possessive","Intensive"], hint:"Ends in -self → adds emphasis." },
+      { q:"What kind of pronoun is \"Us\"?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"\"Tell ___ the news.\" — receives action." },
+      { q:"What kind of pronoun is \"His\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"Shows what belongs to him." },
+      { q:"What kind of pronoun is \"Yourselves\"?", a:3, opts:["Subject","Object","Possessive","Intensive"], hint:"-selves → intensive (emphasis)." },
+      { q:"What kind of pronoun is \"I\"?", a:0, opts:["Subject","Object","Possessive","Intensive"], hint:"Performs the action: \"___ ran home.\"" },
+      { q:"What kind of pronoun is \"Theirs\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"Shows ownership — \"The trophy is ___.\"" },
+      { q:"In \"She gave HIM the book,\" what type of pronoun is HIM?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"HIM receives the book — it's the object." },
+      { q:"In \"THEY are coming over,\" what type of pronoun is THEY?", a:0, opts:["Subject","Object","Possessive","Intensive"], hint:"THEY are doing the action — subject." },
+      { q:"In \"The cake is MINE,\" what type of pronoun is MINE?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"It shows the cake belongs to me." },
+      { q:"In \"I MYSELF baked it,\" what type of pronoun is MYSELF?", a:3, opts:["Subject","Object","Possessive","Intensive"], hint:"Remove \"myself\" — sentence still works → intensive." },
+      { q:"In \"I will help YOU,\" what type of pronoun is YOU?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"YOU receives the help — it's the object." }
     ]
   },
   story: {
@@ -220,6 +270,42 @@ const QUIZ = {
   }
 };
 
+const TIPS = {
+  vocab: [
+    { h:"Tele- = far away", p:"Television, telephone, telescope — all reach across distance. Picture an antenna stretching out." },
+    { h:"Photo vs Phon", p:"<b>Photo</b> = light (photograph). <b>Phon</b> = sound (phone, symphony). They look similar but mean totally different things." },
+    { h:"Mono / Uni / Bi / Tri", p:"Mono = single/alone (monologue = one speaker). Uni = one (unicycle). Bi = two (bicycle). Tri = three (tricycle)." },
+    { h:"Deca / Cent", p:"Deca = 10 (decade = 10 years). Cent = 100 (century = 100 years, cent = 1/100 of a dollar)." },
+    { h:"Tricky words to memorize", p:"<b>Arid</b> = dry · <b>Omit</b> = leave out · <b>Deter</b> = prevent · <b>Reverence</b> = deep respect · <b>Negligent</b> = careless." }
+  ],
+  literary: [
+    { h:"Simile uses LIKE / AS", p:"If you can spot \"like\" or \"as\" in the comparison, it's a SIMILE. Without those words → metaphor." },
+    { h:"Personification = PERSON qualities", p:"Anything non-human acting human: \"The wind whispered.\" \"The trees danced.\"" },
+    { h:"Alliteration = ALL the same start", p:"\"Peter Piper picked peppers.\" Multiple words starting with the same sound." },
+    { h:"Onomatopoeia = sound words", p:"BOOM, POP, BUZZ, SPLASH, MEOW. If you can <i>hear</i> the word, it's onomatopoeia." },
+    { h:"Hyperbole = huge exaggeration", p:"\"I've told you a MILLION times!\" Obviously not literal — just for effect." },
+    { h:"Symbolism = stands for something bigger", p:"A dove = peace. A red rose = love. The object represents an idea." }
+  ],
+  pronouns: [
+    { h:"The Body-Move trick 💪", p:"<b>Subject</b> → point forward (I DO!). <b>Object</b> → cup hands like catching. <b>Possessive</b> → closed fist (MINE!). <b>Intensive</b> → thumb to chest (myself!)." },
+    { h:"Intensive secret test ⭐", p:"Remove the -self word. If the sentence still makes sense, it's INTENSIVE.<br>\"I myself baked the cake\" → \"I baked the cake\" ✓ = Intensive." },
+    { h:"Subject vs Object", p:"Subject DOES the action: \"<b>SHE</b> runs.\" Object RECEIVES it: \"I helped <b>HER</b>.\" Whisper it — your ear knows which sounds right." },
+    { h:"Possessive = ownership", p:"Mine, yours, hers, his, ours, theirs — they answer \"<b>whose?</b>\" \"The blue bag is <b>hers</b>.\"" },
+    { h:"-self/-selves words", p:"<b>Always</b> intensive (or reflexive): myself, yourself, herself, himself, itself, ourselves, yourselves, themselves." }
+  ],
+  story: [
+    { h:"Draw the Mountain ⛰️", p:"Left-to-right: <b>Exposition</b> (foot) → <b>Rising Action</b> (climb) → <b>Climax</b> (peak) → <b>Falling Action</b> (descent) → <b>Resolution</b> (home)." },
+    { h:"Use a movie you love", p:"Pick a favorite movie. Where's the climax? The exposition is the slow intro setup. Once you spot it in movies, you've got it." },
+    { h:"Climb / Peak / Fall", p:"Rising goes UP, Climax is the TOP, Falling goes DOWN, Resolution is THE END. Easy as a hike." }
+  ],
+  writing: [
+    { h:"TAG = Teachers Always Grade", p:"<b>T</b>itle, <b>A</b>uthor, <b>G</b>enre — what you introduce at the start of an essay. Picture a luggage tag with 3 lines." },
+    { h:"Body paragraph = Tell, Show, Prove", p:"<b>Tell</b> (topic sentence intro) → <b>Show</b> (evidence) → <b>Prove</b> (justification/explanation)." },
+    { h:"Transitions: flip vs forward", p:"🔀 <b>Contrast</b> (flip the direction): However, On the other hand, Conversely, In contrast.<br>➡️ <b>Sequence</b> (move forward): First, Initially, Next, Then, Finally." },
+    { h:"CRAAP test for sources", p:"<b>C</b>urrent · <b>R</b>eliable · <b>A</b>uthority · <b>A</b>ccurate · <b>P</b>urpose. Yes — that's really what it's called!" }
+  ]
+};
+
 const KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
 
 const state = {
@@ -233,27 +319,40 @@ const state = {
   selected: -1,
   categoryStats: {},
   currentCategory: null,
-  mode: "full"
+  mode: "full",
+  fcPile: [],
+  fcCurrent: null,
+  fcFlipped: false,
+  fcDone: 0,
+  fcTotal: 0
 };
 
-function loadHigh() {
-  return parseInt(localStorage.getItem("g6_high") || "0", 10);
+function lsGet(k, fallback) {
+  try { const v = localStorage.getItem(k); return v == null ? fallback : v; } catch(e) { return fallback; }
 }
-function saveHigh(v) {
-  const cur = loadHigh();
-  if (v > cur) localStorage.setItem("g6_high", String(v));
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+
+function loadHigh() { return parseInt(lsGet("g6_high","0"),10); }
+function saveHigh(v) { if (v > loadHigh()) lsSet("g6_high", String(v)); }
+function loadPlays() { return parseInt(lsGet("g6_plays","0"),10); }
+function bumpPlays() { lsSet("g6_plays", String(loadPlays()+1)); }
+function loadBestStreak() { return parseInt(lsGet("g6_streak","0"),10); }
+function saveBestStreak(v) { if (v > loadBestStreak()) lsSet("g6_streak", String(v)); }
+function saveLastStats(s) { lsSet("g6_lastStats", JSON.stringify(s)); }
+function loadLastStats() {
+  try { return JSON.parse(lsGet("g6_lastStats","null")); } catch(e) { return null; }
 }
-function loadPlays() {
-  return parseInt(localStorage.getItem("g6_plays") || "0", 10);
-}
-function bumpPlays() {
-  localStorage.setItem("g6_plays", String(loadPlays() + 1));
-}
-function loadBestStreak() {
-  return parseInt(localStorage.getItem("g6_streak") || "0", 10);
-}
-function saveBestStreak(v) {
-  if (v > loadBestStreak()) localStorage.setItem("g6_streak", String(v));
+
+function getTroubleTopics() {
+  const stats = loadLastStats();
+  if (!stats) return [];
+  const trouble = [];
+  for (const k of KEY_ORDER) {
+    if (stats[k] && stats[k].total > 0 && (stats[k].right / stats[k].total) < 0.8) {
+      trouble.push(k);
+    }
+  }
+  return trouble;
 }
 
 function shuffle(a) {
@@ -277,23 +376,32 @@ function shuffleOptions(q) {
 
 function gatherQuestions(mode, key) {
   if (mode === "category") {
-    return shuffle(QUIZ[key].questions.map(shuffleOptions)).map(q => ({ ...q, _cat: key }));
+    return shuffle(QUIZ[key].questions.map(q => ({ ...q, _cat: key }))).map(shuffleOptions);
   }
   if (mode === "quick") {
     const all = [];
-    for (const k of KEY_ORDER) {
-      for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
-    }
+    for (const k of KEY_ORDER) for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
     return shuffle(all).slice(0, 10).map(shuffleOptions);
   }
-  const all = [];
-  for (const k of KEY_ORDER) {
-    for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
+  if (mode === "trouble") {
+    const trouble = getTroubleTopics();
+    const all = [];
+    for (const k of trouble) for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
+    return shuffle(all).map(shuffleOptions);
   }
+  const all = [];
+  for (const k of KEY_ORDER) for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
   return shuffle(all).map(shuffleOptions);
 }
 
 function startQuiz(mode, key) {
+  if (mode === "trouble") {
+    const t = getTroubleTopics();
+    if (t.length === 0) {
+      alert("No trouble topics yet!\n\nTake a full quiz first. Any topic you score under 80% on will show up here for extra practice.");
+      return;
+    }
+  }
   state.mode = mode;
   state.currentCategory = key || null;
   state.questions = gatherQuestions(mode, key);
@@ -332,10 +440,7 @@ function selectOption(i) {
 }
 
 function nextQuestion() {
-  if (state.index + 1 >= state.questions.length) {
-    finishQuiz();
-    return;
-  }
+  if (state.index + 1 >= state.questions.length) { finishQuiz(); return; }
   state.index++;
   state.answered = false;
   state.selected = -1;
@@ -347,13 +452,45 @@ function finishQuiz() {
   const pct = Math.round((state.score / state.questions.length) * 100);
   saveHigh(pct);
   saveBestStreak(state.bestStreak);
+  if (state.mode === "full") saveLastStats(state.categoryStats);
   state.screen = "results";
   render();
   if (pct >= 80) bigConfetti();
 }
 
-function goHome() {
-  state.screen = "home";
+function goHome() { state.screen = "home"; state.currentCategory = null; render(); }
+function showTopic(k) { state.currentCategory = k; state.screen = "topic"; render(); }
+function showTips(k) { state.currentCategory = k; state.screen = "tips"; render(); }
+
+function startFlashcards(k) {
+  state.currentCategory = k;
+  const cards = shuffle(QUIZ[k].questions.slice());
+  state.fcPile = cards;
+  state.fcCurrent = state.fcPile.shift() || null;
+  state.fcFlipped = false;
+  state.fcDone = 0;
+  state.fcTotal = QUIZ[k].questions.length;
+  state.screen = "flashcards";
+  render();
+}
+
+function flipCard() { state.fcFlipped = !state.fcFlipped; render(); }
+
+function fcAction(gotIt) {
+  if (!state.fcCurrent) return;
+  if (!gotIt) {
+    state.fcPile.push(state.fcCurrent);
+  } else {
+    state.fcDone++;
+  }
+  if (state.fcPile.length === 0) {
+    state.fcCurrent = null;
+    state.screen = "flashcards-done";
+    miniConfetti();
+  } else {
+    state.fcCurrent = state.fcPile.shift();
+    state.fcFlipped = false;
+  }
   render();
 }
 
@@ -418,6 +555,9 @@ function viewHome() {
   const high = loadHigh();
   const plays = loadPlays();
   const bestStreak = loadBestStreak();
+  const trouble = getTroubleTopics();
+  const lastStats = loadLastStats();
+  const totalQ = KEY_ORDER.reduce((n,k)=>n+QUIZ[k].questions.length,0);
   return `
     <div class="card hero">
       <span class="emoji">🎓</span>
@@ -429,24 +569,116 @@ function viewHome() {
       <div class="stat"><div class="num">${plays}</div><div class="lbl">Quizzes</div></div>
       <div class="stat"><div class="num">${bestStreak}🔥</div><div class="lbl">Best Streak</div></div>
     </div>
-    <button class="btn btn-primary" onclick="startQuiz('full')">🚀 Start Full Quiz (${KEY_ORDER.reduce((n,k)=>n+QUIZ[k].questions.length,0)} questions)</button>
-    <button class="btn btn-ghost" onclick="startQuiz('quick')">⚡ Quick Quiz (10 random)</button>
+    <button class="btn btn-primary btn-icon" onclick="startQuiz('full')">🚀 Start Full Quiz <span style="opacity:.85;font-weight:500;">(${totalQ} questions)</span></button>
+    <button class="btn btn-ghost btn-icon" onclick="startQuiz('quick')">⚡ Quick Quiz (10 random)</button>
+    ${trouble.length > 0
+      ? `<button class="btn btn-warn btn-icon" onclick="startQuiz('trouble')">🎯 Trouble Topics <span style="opacity:.9;font-weight:500;">(${trouble.length} topic${trouble.length>1?"s":""} to review)</span></button>`
+      : (lastStats ? `<button class="btn btn-success btn-icon" disabled style="opacity:.85;">✅ No trouble topics — nice work!</button>` : "")}
     <div class="card" style="padding:18px;">
       <h2 style="margin-bottom:10px;">📂 Study by Topic</h2>
+      <p class="muted" style="margin-bottom:12px;">Tap a topic to take a quiz, flip flashcards, or see memory tricks.</p>
       <div class="topic-grid">
-        ${KEY_ORDER.map(k => `
-          <button class="topic" onclick="startQuiz('category','${k}')">
+        ${KEY_ORDER.map(k => {
+          const weak = lastStats && lastStats[k] && lastStats[k].total > 0 && (lastStats[k].right / lastStats[k].total) < 0.8;
+          const score = lastStats && lastStats[k] && lastStats[k].total > 0
+            ? ` · last: ${lastStats[k].right}/${lastStats[k].total}` : "";
+          return `
+          <button class="topic ${weak?"weak":""}" onclick="showTopic('${k}')">
             <div class="icon" style="background:${QUIZ[k].color}33;">${QUIZ[k].emoji}</div>
             <div class="info">
               <div class="ttl">${esc(QUIZ[k].title)}</div>
-              <div class="sub">${QUIZ[k].questions.length} questions</div>
+              <div class="sub">${QUIZ[k].questions.length} questions${score}${weak?" · needs practice":""}</div>
             </div>
             <div class="arrow">›</div>
-          </button>
-        `).join("")}
+          </button>`;
+        }).join("")}
       </div>
     </div>
-    <p class="muted" style="text-align:center;padding:8px;">Tip: install this on your phone! Tap your browser menu → "Add to Home Screen". 📱</p>
+    <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
+  `;
+}
+
+function viewTopic() {
+  const k = state.currentCategory;
+  const cat = QUIZ[k];
+  const ls = loadLastStats();
+  const lastBit = ls && ls[k] && ls[k].total > 0
+    ? `Last quiz: <b>${ls[k].right}/${ls[k].total}</b> (${Math.round(ls[k].right/ls[k].total*100)}%)`
+    : `${cat.questions.length} questions to practice`;
+  return `
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="card topic-hero fade-in">
+      <div class="big-icon" style="background:${cat.color}33;">${cat.emoji}</div>
+      <h1>${esc(cat.title)}</h1>
+      <p>${lastBit}</p>
+    </div>
+    <button class="btn btn-primary btn-icon" onclick="startQuiz('category','${k}')">📝 Take Quiz</button>
+    <button class="btn btn-ghost btn-icon" onclick="startFlashcards('${k}')">🃏 Flashcards</button>
+    <button class="btn btn-ghost btn-icon" onclick="showTips('${k}')">💡 Memory Tricks</button>
+  `;
+}
+
+function viewTips() {
+  const k = state.currentCategory;
+  const cat = QUIZ[k];
+  const tips = TIPS[k] || [];
+  return `
+    <button class="back-btn" onclick="showTopic('${k}')">← Back to ${esc(cat.title)}</button>
+    <div class="card fade-in">
+      <h2>💡 ${esc(cat.title)} — Memory Tricks</h2>
+      <p class="muted" style="margin:6px 0 14px;">Read these tricks, then try the quiz to lock them in!</p>
+      <div class="tip-list">
+        ${tips.map(t => `<div class="tip"><h3>${t.h}</h3><p>${t.p}</p></div>`).join("")}
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz('category','${k}')">📝 Practice This Topic Now</button>
+    <button class="btn btn-ghost" onclick="startFlashcards('${k}')">🃏 Flashcards Instead</button>
+  `;
+}
+
+function viewFlashcards() {
+  const k = state.currentCategory;
+  const cat = QUIZ[k];
+  const card = state.fcCurrent;
+  const remaining = state.fcPile.length + (card ? 1 : 0);
+  return `
+    <button class="back-btn" onclick="showTopic('${k}')">← Back</button>
+    <div class="fc-progress">${cat.emoji} ${esc(cat.title)} · ${remaining} card${remaining===1?"":"s"} left · ${state.fcDone} mastered</div>
+    <div class="flashcard ${state.fcFlipped?"flipped":""}" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-face">
+          <div class="term">${esc(card.q)}</div>
+          <div class="tap-hint">tap to reveal answer</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="answer">${esc(card.opts[card.a])}</div>
+          <div class="answer-hint">${card.hint}</div>
+          <div class="tap-hint">tap to flip back</div>
+        </div>
+      </div>
+    </div>
+    ${state.fcFlipped ? `
+      <div class="fc-actions">
+        <button class="btn btn-ghost btn-icon" onclick="fcAction(false)">🔁 Review Again</button>
+        <button class="btn btn-success btn-icon" onclick="fcAction(true)">✅ Got It!</button>
+      </div>
+    ` : `<p class="muted" style="text-align:center;">Think of the answer first, then tap the card to check.</p>`}
+  `;
+}
+
+function viewFlashcardsDone() {
+  const k = state.currentCategory;
+  const cat = QUIZ[k];
+  return `
+    <div class="card score-big">
+      <div class="grade" style="font-size:64px;">🎉</div>
+      <div class="label">All ${state.fcTotal} cards mastered!</div>
+      <div class="pct">${esc(cat.title)}</div>
+      <span class="emoji">🃏</span>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz('category','${k}')">📝 Take the Quiz Now</button>
+    <button class="btn btn-ghost" onclick="startFlashcards('${k}')">🔁 Do Flashcards Again</button>
+    <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
   `;
 }
 
@@ -457,6 +689,7 @@ function viewQuiz() {
   const pct = ((cur - 1) / total) * 100;
   const cat = QUIZ[q._cat];
   const streakChip = state.streak >= 3 ? `<div class="streak">🔥 ${state.streak} streak!</div>` : "";
+  const modeLabel = state.mode === "trouble" ? "🎯 Trouble Topics" : state.mode === "quick" ? "⚡ Quick Quiz" : state.mode === "category" ? "📂 " + cat.title : "🚀 Full Quiz";
 
   let feedback = "";
   if (state.answered) {
@@ -474,7 +707,7 @@ function viewQuiz() {
     ${streakChip}
     <div class="card" style="padding:14px 18px;">
       <div class="qhead">
-        <span>Question ${cur} of ${total}</span>
+        <span>${modeLabel} · Q ${cur}/${total}</span>
         <span>Score: ${state.score}</span>
       </div>
       <div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>
@@ -506,6 +739,7 @@ function viewResults() {
   const pct = Math.round((state.score / total) * 100);
   const g = gradeFor(pct);
   const did = Object.keys(state.categoryStats).filter(k => state.categoryStats[k].total > 0);
+  const replayArgs = state.currentCategory ? "'category','" + state.currentCategory + "'" : "'" + state.mode + "'";
   return `
     <div class="card score-big">
       <div class="grade">${g.grade}</div>
@@ -531,17 +765,25 @@ function viewResults() {
       <p class="muted">Best streak this quiz: <b style="color:#ef4444;">🔥 ${state.bestStreak}</b></p>
     </div>
     <div class="row">
-      <button class="btn btn-primary" onclick="startQuiz('${state.mode}'${state.currentCategory ? ",'" + state.currentCategory + "'" : ""})">🔄 Play Again</button>
+      <button class="btn btn-primary" onclick="startQuiz(${replayArgs})">🔄 Play Again</button>
       <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
     </div>
+    ${getTroubleTopics().length > 0 && state.mode !== "trouble" ? `<button class="btn btn-warn" onclick="startQuiz('trouble')">🎯 Practice Trouble Topics</button>` : ""}
   `;
 }
 
 function render() {
   const app = document.getElementById("app");
-  const view = state.screen === "home" ? viewHome()
-             : state.screen === "quiz" ? viewQuiz()
-             : viewResults();
+  let view;
+  switch (state.screen) {
+    case "topic": view = viewTopic(); break;
+    case "tips": view = viewTips(); break;
+    case "flashcards": view = viewFlashcards(); break;
+    case "flashcards-done": view = viewFlashcardsDone(); break;
+    case "quiz": view = viewQuiz(); break;
+    case "results": view = viewResults(); break;
+    default: view = viewHome();
+  }
   app.innerHTML = view;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 }
@@ -550,6 +792,11 @@ window.selectOption = selectOption;
 window.nextQuestion = nextQuestion;
 window.startQuiz = startQuiz;
 window.goHome = goHome;
+window.showTopic = showTopic;
+window.showTips = showTips;
+window.startFlashcards = startFlashcards;
+window.flipCard = flipCard;
+window.fcAction = fcAction;
 
 render();
 

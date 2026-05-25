@@ -1348,7 +1348,7 @@ async function ghGet(path) {
   const r = await fetch("https://api.github.com" + path, {
     headers: { Authorization: "token " + token, "Accept": "application/vnd.github+json" }
   });
-  if (!r.ok) throw new Error("GitHub " + r.status + " " + r.statusText);
+  if (!r.ok) throw new Error(ghErrorMsg(r.status, r.statusText));
   return r.json();
 }
 async function ghPatch(path, body) {
@@ -1358,7 +1358,7 @@ async function ghPatch(path, body) {
     headers: { Authorization: "token " + token, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
     body: JSON.stringify(body)
   });
-  if (!r.ok) throw new Error("GitHub " + r.status + " " + r.statusText);
+  if (!r.ok) throw new Error(ghErrorMsg(r.status, r.statusText));
   return r.json();
 }
 async function ghPost(path, body) {
@@ -1368,8 +1368,26 @@ async function ghPost(path, body) {
     headers: { Authorization: "token " + token, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
     body: JSON.stringify(body)
   });
-  if (!r.ok) throw new Error("GitHub " + r.status + " " + r.statusText);
+  if (!r.ok) throw new Error(ghErrorMsg(r.status, r.statusText));
   return r.json();
+}
+
+function ghErrorMsg(status, statusText) {
+  const tok = loadSyncToken();
+  const looksFineGrained = tok && tok.startsWith("github_pat_");
+  if (status === 401) {
+    if (looksFineGrained) return "Token rejected (401).\n\nYou used a fine-grained token (github_pat_...) — those don't support gists.\n\nMake a CLASSIC token instead at github.com/settings/tokens → 'Generate new token (classic)' → check only the 'gist' scope.";
+    return "Token rejected (401).\n\nThe token is invalid or expired. Generate a new CLASSIC token at github.com/settings/tokens with the 'gist' scope checked.";
+  }
+  if (status === 403) {
+    return "Permission denied (403).\n\nYour token doesn't have the 'gist' scope.\n\nFix: github.com/settings/tokens → click your token → check 'gist' → Update token.";
+  }
+  if (status === 404) {
+    return "Not found (404).\n\nThe gist ID is wrong or the gist was deleted. Double-check the ID from gist.github.com.";
+  }
+  if (status === 422) return "GitHub rejected the request (422 — validation error). Try disconnecting and setting up sync again.";
+  if (status >= 500) return "GitHub is having problems (" + status + "). Try again in a minute.";
+  return "Sync failed: " + status + " " + statusText;
 }
 
 async function createSyncGist(token) {
@@ -1439,8 +1457,15 @@ async function promptSyncSetup() {
     "  • Generate and copy the token (starts with ghp_)\n\n" +
     "Tap OK to continue.";
   if (!confirm(intro)) return;
-  const token = (prompt("Paste your GitHub token (ghp_...):") || "").trim();
+  const token = (prompt("Paste your CLASSIC GitHub token (starts with ghp_):") || "").trim();
   if (!token) return;
+  if (token.startsWith("github_pat_")) {
+    alert("⚠️ That's a fine-grained token — it won't work for gists.\n\nMake a CLASSIC token at:\ngithub.com/settings/tokens\n→ 'Generate new token (classic)'\n→ check only the 'gist' scope");
+    return;
+  }
+  if (!token.startsWith("ghp_")) {
+    if (!confirm("That token doesn't start with 'ghp_'. It might not be a classic token.\n\nContinue anyway?")) return;
+  }
   const useExisting = confirm("First device? Tap OK to create a NEW sync gist automatically.\n\nSecond device? Tap Cancel to enter your existing gist ID.");
   if (useExisting) {
     try {

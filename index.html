@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#6366f1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Study Quiz">
+<title>Grade 6 Study Quiz</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{
+  --primary:#6366f1; --primary-2:#8b5cf6; --accent:#ec4899;
+  --correct:#10b981; --correct-bg:#d1fae5; --correct-tx:#065f46;
+  --incorrect:#ef4444; --incorrect-bg:#fee2e2; --incorrect-tx:#7f1d1d;
+  --text:#1f2937; --muted:#6b7280; --card:#ffffff; --line:#e5e7eb;
+  --radius:18px; --shadow:0 10px 25px -5px rgb(0 0 0 / .12), 0 8px 10px -6px rgb(0 0 0 / .08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:linear-gradient(135deg,#fef3c7,#ddd6fe,#fce7f3);
+  background-size:200% 200%;
+  animation:shift 25s ease infinite;
+  color:var(--text);
+  min-height:100dvh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+@keyframes shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+#app{flex:1;display:flex;flex-direction:column;max-width:640px;width:100%;margin:0 auto;padding:16px;gap:14px;}
+.card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.btn{display:block;width:100%;padding:18px 20px;border-radius:14px;font-size:17px;font-weight:600;transition:transform .1s ease,background .2s,border-color .2s,box-shadow .2s;text-align:center;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;box-shadow:0 6px 20px -4px rgba(99,102,241,.6);}
+.btn-primary:hover{box-shadow:0 8px 24px -2px rgba(99,102,241,.7);}
+.btn-ghost{background:rgba(255,255,255,.7);color:var(--text);border:2px solid transparent;}
+.btn-ghost:hover{border-color:var(--primary);}
+.btn-small{padding:12px 16px;font-size:15px;}
+h1{font-size:26px;line-height:1.2;}
+h2{font-size:20px;line-height:1.35;}
+.muted{color:var(--muted);font-size:14px;}
+.row{display:flex;gap:10px;}
+.row > *{flex:1;}
+
+.hero{text-align:center;padding:30px 10px 10px;}
+.hero .emoji{font-size:70px;margin-bottom:8px;display:block;}
+.hero h1{font-size:30px;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
+.hero p{color:var(--muted);margin-bottom:6px;}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px;}
+.stat{background:rgba(255,255,255,.75);border-radius:14px;padding:12px 6px;text-align:center;}
+.stat .num{font-size:22px;font-weight:800;color:var(--primary);}
+.stat .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-top:2px;}
+
+.topic-grid{display:grid;gap:10px;}
+.topic{display:flex;align-items:center;gap:14px;background:#fff;padding:14px;border-radius:16px;border:2px solid transparent;transition:border-color .2s,transform .1s;cursor:pointer;text-align:left;}
+.topic:active{transform:scale(.98);}
+.topic:hover{border-color:var(--primary);}
+.topic .icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.topic .info{flex:1;}
+.topic .info .ttl{font-weight:700;font-size:16px;}
+.topic .info .sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.topic .arrow{color:#9ca3af;font-size:22px;}
+
+.progress{height:10px;background:rgba(255,255,255,.7);border-radius:999px;overflow:hidden;}
+.progress > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .3s ease;border-radius:999px;}
+
+.qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:600;}
+.badge{display:inline-block;background:rgba(99,102,241,.12);color:var(--primary);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+
+.options{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.option{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--line);color:var(--text);padding:14px 16px;border-radius:14px;font-size:16px;font-weight:600;text-align:left;transition:border-color .15s,background .15s,transform .1s;}
+.option:not(:disabled):active{transform:scale(.98);}
+.option:not(:disabled):hover{border-color:var(--primary);}
+.option .letter{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:#f3f4f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
+.option.correct{background:var(--correct-bg);border-color:var(--correct);color:var(--correct-tx);}
+.option.correct .letter{background:var(--correct);color:#fff;}
+.option.incorrect{background:var(--incorrect-bg);border-color:var(--incorrect);color:var(--incorrect-tx);}
+.option.incorrect .letter{background:var(--incorrect);color:#fff;}
+.option:disabled{cursor:default;}
+
+.feedback{margin-top:14px;padding:14px;border-radius:14px;font-weight:600;text-align:center;animation:pop .3s ease;}
+.feedback.correct{background:var(--correct-bg);color:var(--correct-tx);}
+.feedback.incorrect{background:var(--incorrect-bg);color:var(--incorrect-tx);}
+.feedback .hint{display:block;font-size:14px;font-weight:500;margin-top:6px;opacity:.85;}
+
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .35s ease;}
+
+.streak{position:fixed;top:14px;right:14px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px;animation:pop .3s;box-shadow:0 4px 14px rgba(239,68,68,.5);z-index:50;}
+
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1000;}
+.confetti span{position:absolute;top:-20px;width:10px;height:14px;border-radius:2px;animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+.score-big{text-align:center;padding:24px 16px 10px;}
+.score-big .grade{font-size:88px;font-weight:900;line-height:1;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.score-big .label{font-size:22px;font-weight:700;margin-top:8px;}
+.score-big .pct{font-size:16px;color:var(--muted);margin-top:4px;}
+.score-big .emoji{font-size:50px;margin-top:8px;display:block;animation:bounce 1.2s ease infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.breakdown{margin-top:14px;}
+.breakdown .row-b{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:15px;}
+.breakdown .row-b:last-child{border-bottom:none;}
+.breakdown .name{font-weight:600;}
+.breakdown .val{font-weight:700;color:var(--primary);}
+
+.qtext{font-size:20px;font-weight:700;line-height:1.35;margin-top:6px;}
+.fade-in{animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+@media (max-width:380px){
+  h1{font-size:22px}
+  .qtext{font-size:18px}
+  .option{font-size:15px;padding:12px 14px}
+  .hero .emoji{font-size:60px}
+  .hero h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+<script>
+"use strict";
+
+const QUIZ = {
+  vocab: {
+    title: "Vocabulary & Roots",
+    emoji: "📚",
+    color: "#a78bfa",
+    questions: [
+      { q:"Which prefix means \"far away\" or \"at a distance\"?", a:0, opts:["tele","micro","mono","deca"], hint:"As in television — seeing from far away." },
+      { q:"Which root means \"sound\" or \"voice\"?", a:1, opts:["scrib","phon","therm","photo"], hint:"As in telephone or microphone." },
+      { q:"Which root means \"write\"?", a:0, opts:["scrib","phon","rupt","therm"], hint:"As in describe or manuscript." },
+      { q:"Which prefix means \"one\"?", a:0, opts:["uni","bi","tri","quad"], hint:"As in unicycle — one wheel." },
+      { q:"Which prefix means \"single\" or \"alone\"?", a:0, opts:["mono","poly","multi","tele"], hint:"As in monorail or monologue." },
+      { q:"Which prefix means \"ten\"?", a:0, opts:["deca","cent","mono","uni"], hint:"As in decade — ten years." },
+      { q:"Which prefix means \"one hundred\"?", a:0, opts:["cent","deca","mono","tele"], hint:"As in century or centimeter." },
+      { q:"Which root means \"light\"?", a:0, opts:["photo","therm","phon","rupt"], hint:"As in photograph — drawing with light." },
+      { q:"Which root means \"break\"?", a:0, opts:["rupt","scrib","omit","photo"], hint:"As in interrupt or rupture." },
+      { q:"Which root means \"heat\"?", a:0, opts:["therm","photo","rupt","arid"], hint:"As in thermometer." },
+      { q:"Which prefix means \"small\"?", a:0, opts:["micro","tele","deca","cent"], hint:"As in microscope — to see small things." },
+      { q:"Which word means \"dry\" or \"parched\"?", a:0, opts:["arid","urgent","fruitless","negligent"], hint:"Deserts are very ___ places." },
+      { q:"Which word means \"to leave out\" or \"skip\"?", a:0, opts:["omit","deter","arid","reverence"], hint:"Don't ___ the important details." },
+      { q:"Which word means \"deep respect or admiration\"?", a:0, opts:["reverence","negligent","saga","bystander"], hint:"People show ___ for someone they greatly admire." },
+      { q:"Which word means \"unsuccessful or producing no results\"?", a:0, opts:["fruitless","urgent","foreseeable","deter"], hint:"The search was ___ — they found nothing." },
+      { q:"A long story involving heroes or adventures is called a…", a:0, opts:["saga","pun","hyperbole","metaphor"], hint:"Like an epic Norse tale." },
+      { q:"Which word means \"requiring immediate action\"?", a:0, opts:["urgent","arid","fruitless","negligent"], hint:"An ___ message can't wait." },
+      { q:"Which word means \"careless or failing to take proper care\"?", a:0, opts:["negligent","foreseeable","urgent","deter"], hint:"A driver who texts is being ___." },
+      { q:"What do you call a person who sees an event happen?", a:0, opts:["bystander","narrator","protagonist","witness only in court"], hint:"They were standing nearby when it happened." },
+      { q:"Which word means \"to discourage or prevent someone from doing something\"?", a:0, opts:["deter","omit","reverence","negligent"], hint:"A loud alarm can ___ thieves." },
+      { q:"Which word means \"able to be predicted ahead of time\"?", a:0, opts:["foreseeable","urgent","arid","fruitless"], hint:"The result was ___ — you could see it coming." }
+    ]
+  },
+  literary: {
+    title: "Literary Terms",
+    emoji: "✍️",
+    color: "#f472b6",
+    questions: [
+      { q:"What is comparing two things using \"like\" or \"as\"?", a:0, opts:["Simile","Metaphor","Personification","Hyperbole"], hint:"\"As brave as a lion.\"" },
+      { q:"What is comparing two things WITHOUT using \"like\" or \"as\"?", a:0, opts:["Metaphor","Simile","Symbolism","Imagery"], hint:"\"Her smile is sunshine.\"" },
+      { q:"What is giving human qualities to nonhuman things?", a:0, opts:["Personification","Symbolism","Simile","Metaphor"], hint:"\"The wind whispered.\"" },
+      { q:"What is the repetition of beginning sounds in words?", a:0, opts:["Alliteration","Onomatopoeia","Hyperbole","Pun"], hint:"\"Peter Piper picked peppers.\"" },
+      { q:"What are words that imitate sounds?", a:0, opts:["Onomatopoeia","Alliteration","Imagery","Symbolism"], hint:"Buzz, splash, boom!" },
+      { q:"What is extreme exaggeration for effect?", a:0, opts:["Hyperbole","Pun","Metaphor","Personification"], hint:"\"I've told you a million times!\"" },
+      { q:"What is a joke using multiple meanings of words?", a:0, opts:["Pun","Onomatopoeia","Symbolism","Hyperbole"], hint:"\"Time flies like an arrow; fruit flies like a banana.\"" },
+      { q:"What is language that creates mental pictures for readers?", a:0, opts:["Imagery","Symbolism","Personification","Alliteration"], hint:"Vivid descriptions you can see and feel." },
+      { q:"What is using objects or ideas to represent something deeper?", a:0, opts:["Symbolism","Imagery","Metaphor","Hyperbole"], hint:"A dove can represent peace." }
+    ]
+  },
+  pronouns: {
+    title: "Pronouns",
+    emoji: "🔤",
+    color: "#60a5fa",
+    questions: [
+      { q:"What kind of pronoun is \"Mine\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"It shows ownership." },
+      { q:"What kind of pronoun is \"Them\"?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"It receives the action: \"I saw ___.\"" },
+      { q:"What kind of pronoun is \"Ourselves\"?", a:3, opts:["Subject","Object","Possessive","Intensive"], hint:"Used for emphasis: \"We ___ built it.\"" },
+      { q:"What kind of pronoun is \"She\"?", a:0, opts:["Subject","Object","Possessive","Intensive"], hint:"It performs the action: \"___ runs fast.\"" },
+      { q:"What kind of pronoun is \"Him\"?", a:1, opts:["Subject","Object","Possessive","Intensive"], hint:"It receives the action: \"I told ___.\"" },
+      { q:"What kind of pronoun is \"Yours\"?", a:2, opts:["Subject","Object","Possessive","Intensive"], hint:"It shows what belongs to you." },
+      { q:"What kind of pronoun is \"Myself\"?", a:3, opts:["Subject","Object","Possessive","Intensive"], hint:"\"I ___ saw it happen.\" (emphasis)" },
+      { q:"What kind of pronoun is \"We\"?", a:0, opts:["Subject","Object","Possessive","Intensive"], hint:"It performs the action: \"___ are ready.\"" }
+    ]
+  },
+  story: {
+    title: "Story Structure",
+    emoji: "📖",
+    color: "#34d399",
+    questions: [
+      { q:"Which part means \"story reaches its conclusion\"?", a:0, opts:["Resolution","Climax","Exposition","Rising Action"], hint:"Everything wraps up at the end." },
+      { q:"Which part \"introduces characters and setting\"?", a:0, opts:["Exposition","Resolution","Falling Action","Climax"], hint:"This is where the story begins." },
+      { q:"Which part \"builds tension through events\"?", a:0, opts:["Rising Action","Falling Action","Exposition","Climax"], hint:"Things keep getting more intense…" },
+      { q:"Which part is the \"highest point of tension\"?", a:0, opts:["Climax","Rising Action","Resolution","Exposition"], hint:"The most exciting moment of the story!" },
+      { q:"Which part \"shows consequences after the climax\"?", a:0, opts:["Falling Action","Resolution","Rising Action","Climax"], hint:"What happens right after the big moment." }
+    ]
+  },
+  writing: {
+    title: "Writing",
+    emoji: "✏️",
+    color: "#fbbf24",
+    questions: [
+      { q:"In writing, what does TAG stand for?", a:0, opts:["Title, Author, Genre","Topic, Argument, Goal","Theme, Audience, Genre","Title, Audience, Goal"], hint:"You introduce these three things at the start of an essay." },
+      { q:"What should be included in body paragraphs?", a:3, opts:["Just an intro","Just evidence","Just justification","All of the above"], hint:"Body paragraphs need a topic sentence, evidence, AND justification." },
+      { q:"Which is a transition word for CONTRAST?", a:0, opts:["However","Initially","Finally","Next"], hint:"Used to show a different or opposite idea." },
+      { q:"Which is a transition word for SEQUENCE?", a:0, opts:["Initially","However","Conversely","On the other hand"], hint:"Used to show order: first, then, finally…" },
+      { q:"Which is a sign that a source is CREDIBLE?", a:0, opts:["The author is an expert on the topic","It has lots of colorful images","It was published a very long time ago","It is full of strong personal opinions"], hint:"Credible sources are accurate, current, and unbiased." }
+    ]
+  }
+};
+
+const KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
+
+const state = {
+  screen: "home",
+  questions: [],
+  index: 0,
+  score: 0,
+  streak: 0,
+  bestStreak: 0,
+  answered: false,
+  selected: -1,
+  categoryStats: {},
+  currentCategory: null,
+  mode: "full"
+};
+
+function loadHigh() {
+  return parseInt(localStorage.getItem("g6_high") || "0", 10);
+}
+function saveHigh(v) {
+  const cur = loadHigh();
+  if (v > cur) localStorage.setItem("g6_high", String(v));
+}
+function loadPlays() {
+  return parseInt(localStorage.getItem("g6_plays") || "0", 10);
+}
+function bumpPlays() {
+  localStorage.setItem("g6_plays", String(loadPlays() + 1));
+}
+function loadBestStreak() {
+  return parseInt(localStorage.getItem("g6_streak") || "0", 10);
+}
+function saveBestStreak(v) {
+  if (v > loadBestStreak()) localStorage.setItem("g6_streak", String(v));
+}
+
+function shuffle(a) {
+  const arr = a.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function shuffleOptions(q) {
+  const idxs = q.opts.map((_, i) => i);
+  const order = shuffle(idxs);
+  return {
+    ...q,
+    opts: order.map(i => q.opts[i]),
+    a: order.indexOf(q.a)
+  };
+}
+
+function gatherQuestions(mode, key) {
+  if (mode === "category") {
+    return shuffle(QUIZ[key].questions.map(shuffleOptions)).map(q => ({ ...q, _cat: key }));
+  }
+  if (mode === "quick") {
+    const all = [];
+    for (const k of KEY_ORDER) {
+      for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
+    }
+    return shuffle(all).slice(0, 10).map(shuffleOptions);
+  }
+  const all = [];
+  for (const k of KEY_ORDER) {
+    for (const q of QUIZ[k].questions) all.push({ ...q, _cat: k });
+  }
+  return shuffle(all).map(shuffleOptions);
+}
+
+function startQuiz(mode, key) {
+  state.mode = mode;
+  state.currentCategory = key || null;
+  state.questions = gatherQuestions(mode, key);
+  state.index = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.bestStreak = 0;
+  state.answered = false;
+  state.selected = -1;
+  state.categoryStats = {};
+  for (const k of KEY_ORDER) state.categoryStats[k] = { right: 0, total: 0 };
+  state.screen = "quiz";
+  render();
+}
+
+function selectOption(i) {
+  if (state.answered) return;
+  const q = state.questions[state.index];
+  state.selected = i;
+  state.answered = true;
+  state.categoryStats[q._cat].total++;
+  if (i === q.a) {
+    state.score++;
+    state.streak++;
+    state.categoryStats[q._cat].right++;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+    beep(true);
+    if (state.streak === 5 || state.streak === 10) miniConfetti();
+  } else {
+    state.streak = 0;
+    beep(false);
+    const card = document.querySelector(".card.quiz");
+    if (card) { card.classList.add("shake"); setTimeout(() => card.classList.remove("shake"), 400); }
+  }
+  render();
+}
+
+function nextQuestion() {
+  if (state.index + 1 >= state.questions.length) {
+    finishQuiz();
+    return;
+  }
+  state.index++;
+  state.answered = false;
+  state.selected = -1;
+  render();
+}
+
+function finishQuiz() {
+  bumpPlays();
+  const pct = Math.round((state.score / state.questions.length) * 100);
+  saveHigh(pct);
+  saveBestStreak(state.bestStreak);
+  state.screen = "results";
+  render();
+  if (pct >= 80) bigConfetti();
+}
+
+function goHome() {
+  state.screen = "home";
+  render();
+}
+
+let audioCtx = null;
+function beep(ok) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    o.type = "sine";
+    if (ok) {
+      o.frequency.setValueAtTime(660, audioCtx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+    } else {
+      o.frequency.setValueAtTime(220, audioCtx.currentTime);
+    }
+    g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
+    o.start();
+    o.stop(audioCtx.currentTime + 0.25);
+  } catch(e) {}
+}
+
+function bigConfetti() { spawnConfetti(120); }
+function miniConfetti() { spawnConfetti(40); }
+function spawnConfetti(n) {
+  const c = document.getElementById("confetti");
+  const colors = ["#6366f1","#ec4899","#f59e0b","#10b981","#06b6d4","#a855f7"];
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement("span");
+    s.style.left = (Math.random() * 100) + "%";
+    s.style.background = colors[Math.floor(Math.random() * colors.length)];
+    s.style.animationDuration = (1.6 + Math.random() * 1.6) + "s";
+    s.style.animationDelay = (Math.random() * 0.4) + "s";
+    s.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
+    s.style.width = (6 + Math.random() * 8) + "px";
+    s.style.height = (8 + Math.random() * 12) + "px";
+    c.appendChild(s);
+    setTimeout(() => s.remove(), 4000);
+  }
+}
+
+const PRAISE_CORRECT = ["Awesome! 🎉","Nailed it! ⭐","Brilliant! ✨","You got it! 🔥","Smart move! 🧠","Yes! 💯","On point! 🎯"];
+const PRAISE_WRONG  = ["Not quite! 💭","Almost! 🤔","Tricky one! 📝","Remember this one! 💡","Keep going! 💪"];
+function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+function gradeFor(pct) {
+  if (pct >= 95) return { grade:"A+", label:"Perfect!", emoji:"🏆" };
+  if (pct >= 90) return { grade:"A",  label:"Excellent!", emoji:"🌟" };
+  if (pct >= 80) return { grade:"B",  label:"Great job!", emoji:"🎉" };
+  if (pct >= 70) return { grade:"C",  label:"Good effort!", emoji:"👍" };
+  if (pct >= 60) return { grade:"D",  label:"Keep practicing!", emoji:"💪" };
+  return { grade:"F", label:"Let's study more!", emoji:"📚" };
+}
+
+function letter(i) { return ["A","B","C","D","E"][i] || ""; }
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+
+function viewHome() {
+  const high = loadHigh();
+  const plays = loadPlays();
+  const bestStreak = loadBestStreak();
+  return `
+    <div class="card hero">
+      <span class="emoji">🎓</span>
+      <h1>Grade 6 Study Quiz</h1>
+      <p>Fun practice for your final exam!</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">${high}%</div><div class="lbl">High Score</div></div>
+      <div class="stat"><div class="num">${plays}</div><div class="lbl">Quizzes</div></div>
+      <div class="stat"><div class="num">${bestStreak}🔥</div><div class="lbl">Best Streak</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz('full')">🚀 Start Full Quiz (${KEY_ORDER.reduce((n,k)=>n+QUIZ[k].questions.length,0)} questions)</button>
+    <button class="btn btn-ghost" onclick="startQuiz('quick')">⚡ Quick Quiz (10 random)</button>
+    <div class="card" style="padding:18px;">
+      <h2 style="margin-bottom:10px;">📂 Study by Topic</h2>
+      <div class="topic-grid">
+        ${KEY_ORDER.map(k => `
+          <button class="topic" onclick="startQuiz('category','${k}')">
+            <div class="icon" style="background:${QUIZ[k].color}33;">${QUIZ[k].emoji}</div>
+            <div class="info">
+              <div class="ttl">${esc(QUIZ[k].title)}</div>
+              <div class="sub">${QUIZ[k].questions.length} questions</div>
+            </div>
+            <div class="arrow">›</div>
+          </button>
+        `).join("")}
+      </div>
+    </div>
+    <p class="muted" style="text-align:center;padding:8px;">Tip: install this on your phone! Tap your browser menu → "Add to Home Screen". 📱</p>
+  `;
+}
+
+function viewQuiz() {
+  const q = state.questions[state.index];
+  const total = state.questions.length;
+  const cur = state.index + 1;
+  const pct = ((cur - 1) / total) * 100;
+  const cat = QUIZ[q._cat];
+  const streakChip = state.streak >= 3 ? `<div class="streak">🔥 ${state.streak} streak!</div>` : "";
+
+  let feedback = "";
+  if (state.answered) {
+    const correct = state.selected === q.a;
+    feedback = `
+      <div class="feedback ${correct ? "correct" : "incorrect"}">
+        ${correct ? pick(PRAISE_CORRECT) : pick(PRAISE_WRONG)}
+        <span class="hint">${correct ? esc(q.hint) : "Answer: <b>" + esc(q.opts[q.a]) + "</b> — " + esc(q.hint)}</span>
+      </div>
+      <button class="btn btn-primary" style="margin-top:12px;" onclick="nextQuestion()">${cur === total ? "See Results 🎯" : "Next Question →"}</button>
+    `;
+  }
+
+  return `
+    ${streakChip}
+    <div class="card" style="padding:14px 18px;">
+      <div class="qhead">
+        <span>Question ${cur} of ${total}</span>
+        <span>Score: ${state.score}</span>
+      </div>
+      <div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>
+    </div>
+    <div class="card quiz fade-in">
+      <span class="badge" style="background:${cat.color}22;color:#000a;">${cat.emoji} ${esc(cat.title)}</span>
+      <div class="qtext" style="margin-top:10px;">${esc(q.q)}</div>
+      <div class="options">
+        ${q.opts.map((opt, i) => {
+          let cls = "option";
+          if (state.answered) {
+            if (i === q.a) cls += " correct";
+            else if (i === state.selected) cls += " incorrect";
+          }
+          return `<button class="${cls}" ${state.answered ? "disabled" : ""} onclick="selectOption(${i})">
+            <span class="letter">${letter(i)}</span>
+            <span>${esc(opt)}</span>
+          </button>`;
+        }).join("")}
+      </div>
+      ${feedback}
+    </div>
+    <button class="btn btn-ghost btn-small" onclick="goHome()">← Quit to Home</button>
+  `;
+}
+
+function viewResults() {
+  const total = state.questions.length;
+  const pct = Math.round((state.score / total) * 100);
+  const g = gradeFor(pct);
+  const did = Object.keys(state.categoryStats).filter(k => state.categoryStats[k].total > 0);
+  return `
+    <div class="card score-big">
+      <div class="grade">${g.grade}</div>
+      <div class="label">${g.label}</div>
+      <div class="pct">${state.score} / ${total} correct &nbsp;•&nbsp; ${pct}%</div>
+      <span class="emoji">${g.emoji}</span>
+    </div>
+    ${did.length > 1 ? `
+      <div class="card">
+        <h2>📊 By Topic</h2>
+        <div class="breakdown">
+          ${did.map(k => {
+            const s = state.categoryStats[k];
+            const p = Math.round((s.right / s.total) * 100);
+            return `<div class="row-b">
+              <span class="name">${QUIZ[k].emoji} ${esc(QUIZ[k].title)}</span>
+              <span class="val">${s.right}/${s.total} (${p}%)</span>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>` : ""}
+    <div class="card" style="text-align:center;padding:18px;">
+      <p class="muted">Best streak this quiz: <b style="color:#ef4444;">🔥 ${state.bestStreak}</b></p>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" onclick="startQuiz('${state.mode}'${state.currentCategory ? ",'" + state.currentCategory + "'" : ""})">🔄 Play Again</button>
+      <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
+    </div>
+  `;
+}
+
+function render() {
+  const app = document.getElementById("app");
+  const view = state.screen === "home" ? viewHome()
+             : state.screen === "quiz" ? viewQuiz()
+             : viewResults();
+  app.innerHTML = view;
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
+window.selectOption = selectOption;
+window.nextQuestion = nextQuestion;
+window.startQuiz = startQuiz;
+window.goHome = goHome;
+
+render();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

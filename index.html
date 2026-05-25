@@ -60,7 +60,7 @@ h3{font-size:15px;line-height:1.3;}
 .row{display:flex;gap:10px;}
 .row > *{flex:1;}
 
-.hero{text-align:center;padding:24px 10px 10px;}
+.hero{text-align:center;padding:24px 10px 10px;position:relative;}
 .hero h1{font-size:30px;background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
 .hero p{color:var(--muted);margin-bottom:6px;}
 .avatar-btn{background:none;border:none;cursor:pointer;padding:0;margin-bottom:4px;display:inline-block;animation:wiggle 4s ease-in-out infinite;}
@@ -274,6 +274,36 @@ h3{font-size:15px;line-height:1.3;}
 .trophy.earned .nm{color:#92400e;}
 .trophy.earned .ds{color:#78350f;opacity:.85;}
 .trophy-progress{background:rgba(245,158,11,.12);border-radius:12px;padding:10px 14px;margin-bottom:6px;text-align:center;font-weight:700;color:#92400e;font-size:14px;}
+
+.settings-icon{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.06);width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:none;transition:background .2s,transform .35s;z-index:5;}
+.settings-icon:active{transform:rotate(60deg);}
+.settings-icon:hover{background:rgba(0,0,0,.12);}
+
+.mom-card{background:linear-gradient(135deg,#fef3c7,#fed7aa);border-radius:18px;padding:16px;border:2px dashed #fbbf24;}
+.mom-card h3{color:#92400e;font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;font-weight:800;}
+.mom-note{font-size:15px;line-height:1.5;color:#78350f;font-weight:600;font-style:italic;}
+.focus-topics{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.focus-pill{background:#fff;border:2px solid #f59e0b;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:700;color:#92400e;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:transform .1s;}
+.focus-pill:active{transform:scale(.95);}
+.topic.focus-topic{border-color:#f59e0b;background:linear-gradient(90deg,rgba(254,243,199,.4),#fff);}
+.topic.focus-topic .info .ttl::after{content:" 📌";font-size:14px;}
+
+.topic-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f3f4f6;font-size:14px;}
+.topic-row:last-child{border-bottom:none;}
+.topic-row .nm{font-weight:600;}
+.topic-row .pct{font-weight:800;}
+.topic-row .pct.bad{color:var(--incorrect);}
+.topic-row .pct.mid{color:var(--warn);}
+.topic-row .pct.good{color:var(--correct);}
+.focus-checks{display:flex;flex-direction:column;gap:8px;}
+.focus-check{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#f9fafb;border-radius:12px;cursor:pointer;border:2px solid transparent;transition:border-color .2s,background .2s;}
+.focus-check.on{border-color:#f59e0b;background:#fef3c7;}
+.focus-check input{width:20px;height:20px;cursor:pointer;flex-shrink:0;accent-color:#f59e0b;}
+.focus-check .ic{font-size:24px;}
+.focus-check .nm{font-weight:700;flex:1;}
+.focus-check .pct-mini{font-size:12px;color:var(--muted);font-weight:600;}
+.btn-danger{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;box-shadow:0 6px 20px -4px rgba(220,38,38,.5);}
+.btn-warn-outline{background:#fff;border:2px solid var(--warn);color:#92400e;}
 
 @media (max-width:380px){
   .celebrate-emoji{font-size:100px;}
@@ -669,6 +699,80 @@ function tada() {
 
 function showTrophies() { clearTimer(); state.screen = "trophies"; render(); }
 
+function loadPin() { return lsGet("g6_pin", "1234"); }
+function savePin(v) { lsSet("g6_pin", v); }
+function loadFocus() { try { return new Set(JSON.parse(lsGet("g6_focus","[]"))); } catch(e) { return new Set(); } }
+function saveFocus(set) { lsSet("g6_focus", JSON.stringify(Array.from(set))); }
+function loadNote() { return lsGet("g6_note", ""); }
+function saveNote(t) { lsSet("g6_note", t); }
+
+function promptAdmin() {
+  const entered = prompt("Enter parent PIN (default: 1234):");
+  if (entered === null) return;
+  if (entered === loadPin()) {
+    state.screen = "admin";
+    render();
+  } else {
+    alert("❌ Incorrect PIN.");
+  }
+}
+function toggleFocus(k) {
+  const f = loadFocus();
+  if (f.has(k)) f.delete(k); else f.add(k);
+  saveFocus(f);
+  render();
+}
+function editNote() {
+  const cur = loadNote();
+  const note = prompt("Note for the student (shown on home screen). Leave blank to clear:", cur);
+  if (note === null) return;
+  saveNote(note.slice(0, 240));
+  render();
+}
+function changePin() {
+  const cur = prompt("Enter current PIN:");
+  if (cur === null) return;
+  if (cur !== loadPin()) { alert("❌ Wrong PIN."); return; }
+  const np = prompt("Enter new 4-digit PIN:");
+  if (np === null) return;
+  if (!/^\d{4}$/.test(np)) { alert("PIN must be exactly 4 digits."); return; }
+  savePin(np);
+  alert("✅ PIN updated.");
+}
+function changeStudentName() {
+  const n = prompt("Student's name:", loadName());
+  if (n && n.trim()) { lsSet("g6_name", n.trim()); render(); }
+}
+function adminReset(scope) {
+  let keys, msg;
+  if (scope === "history") { keys = ["g6_history","g6_lastStats"]; msg = "Reset all quiz history?\n(Trophies & stats remain.)"; }
+  else if (scope === "trophies") { keys = ["g6_trophies"]; msg = "Reset all earned trophies?"; }
+  else if (scope === "stats") { keys = ["g6_high","g6_plays","g6_streak","g6_examBest","g6_correctTotal"]; msg = "Reset high score, plays, streak, exam best, and total correct?"; }
+  else { keys = ["g6_history","g6_lastStats","g6_trophies","g6_high","g6_plays","g6_streak","g6_examBest","g6_correctTotal","g6_focus","g6_note"]; msg = "⚠️ RESET EVERYTHING?\n\nThis wipes ALL of " + loadName() + "'s progress — history, trophies, scores, focus topics, and note. This cannot be undone."; }
+  if (!confirm(msg)) return;
+  if (scope === "all" && !confirm("Are you absolutely sure? Type-confirm by pressing OK.")) return;
+  keys.forEach(k => localStorage.removeItem(k));
+  render();
+}
+
+function topicAggregates() {
+  const hist = loadHistory();
+  const agg = {};
+  for (const k of KEY_ORDER) agg[k] = { right: 0, total: 0, quizzes: 0 };
+  for (const h of hist) {
+    if (!h.categoryStats) continue;
+    for (const k of KEY_ORDER) {
+      const s = h.categoryStats[k];
+      if (s && s.total > 0) {
+        agg[k].right += s.right;
+        agg[k].total += s.total;
+        agg[k].quizzes++;
+      }
+    }
+  }
+  return agg;
+}
+
 function getTroubleTopics() {
   const stats = loadLastStats();
   if (!stats) return [];
@@ -792,7 +896,8 @@ function finishQuiz() {
   saveHistoryEntry({
     date: Date.now(), mode: state.mode,
     score: state.score, total: state.questions.length, pct,
-    elapsedMs: state.elapsedMs, hintsUsed: state.hintsUsed
+    elapsedMs: state.elapsedMs, hintsUsed: state.hintsUsed,
+    categoryStats: state.categoryStats
   });
   if (state.mode === "practice" || state.mode === "exam") saveLastStats(state.categoryStats);
   if (state.mode === "exam") saveBestExam(pct);
@@ -979,8 +1084,10 @@ function viewHome() {
   const trouble = getTroubleTopics(); const lastStats = loadLastStats();
   const totalQ = KEY_ORDER.reduce((n,k)=>n+QUIZ[k].questions.length,0);
   const avatar = loadAvatar(); const name = loadName();
+  const focus = loadFocus(); const note = loadNote();
   return `
     <div class="card hero">
+      <button class="settings-icon" onclick="promptAdmin()" title="Parent dashboard" aria-label="Parent dashboard">⚙️</button>
       <button class="avatar-btn" onclick="nextAvatar()" aria-label="Change avatar">
         <span class="avatar">${avatar}</span>
       </button>
@@ -988,6 +1095,15 @@ function viewHome() {
       <h1>Hi ${esc(name)}! 👋</h1>
       <p>Ready to crush your final exam?</p>
     </div>
+    ${(note || focus.size > 0) ? `
+      <div class="mom-card">
+        ${note ? `<h3>📌 From Mom:</h3><div class="mom-note">"${esc(note)}"</div>` : ""}
+        ${focus.size > 0 ? `
+          <h3 style="${note ? "margin-top:12px;" : ""}">🎯 Today's Focus:</h3>
+          <div class="focus-topics">
+            ${Array.from(focus).map(k => `<button class="focus-pill" onclick="showTopic('${k}')">${QUIZ[k].emoji} ${esc(QUIZ[k].title)} ›</button>`).join("")}
+          </div>` : ""}
+      </div>` : ""}
     <div class="stats">
       <div class="stat"><div class="num">${high}%</div><div class="lbl">High Score</div></div>
       <div class="stat"><div class="num">${plays}</div><div class="lbl">Quizzes</div></div>
@@ -1008,8 +1124,9 @@ function viewHome() {
       <div class="topic-grid">
         ${KEY_ORDER.map(k => {
           const weak = lastStats && lastStats[k] && lastStats[k].total > 0 && (lastStats[k].right / lastStats[k].total) < 0.8;
+          const isF = focus.has(k);
           const score = lastStats && lastStats[k] && lastStats[k].total > 0 ? ` · last: ${lastStats[k].right}/${lastStats[k].total}` : "";
-          return `<button class="topic ${weak?"weak":""}" onclick="showTopic('${k}')">
+          return `<button class="topic ${weak?"weak":""} ${isF?"focus-topic":""}" onclick="showTopic('${k}')">
             <div class="icon" style="background:${QUIZ[k].color}33;">${QUIZ[k].emoji}</div>
             <div class="info">
               <div class="ttl">${esc(QUIZ[k].title)}${k==="pronouns" ? ' <span class="nbadge">+ S vs O</span>' : ""}</div>
@@ -1027,6 +1144,99 @@ function viewHome() {
     </div>
   `;
 }
+
+function viewAdmin() {
+  const hist = loadHistory();
+  const totalTime = hist.reduce((s,h) => s + (h.elapsedMs || 0), 0);
+  const totalQs = hist.reduce((s,h) => s + h.total, 0);
+  const totalCorrect = hist.reduce((s,h) => s + h.score, 0);
+  const avgPct = hist.length ? Math.round(hist.reduce((s,h)=>s+h.pct,0)/hist.length) : 0;
+  const trophies = loadTrophies();
+  const focus = loadFocus();
+  const note = loadNote();
+  const agg = topicAggregates();
+  const name = loadName();
+  const topicRows = KEY_ORDER.map(k => {
+    const a = agg[k];
+    const pct = a.total ? Math.round((a.right/a.total)*100) : null;
+    const cls = pct === null ? "" : pct >= 80 ? "good" : pct >= 60 ? "mid" : "bad";
+    return `<div class="topic-row">
+      <span class="nm">${QUIZ[k].emoji} ${esc(QUIZ[k].title)}</span>
+      <span class="pct ${cls}">${pct === null ? "—" : pct + "% (" + a.right + "/" + a.total + ")"}</span>
+    </div>`;
+  }).join("");
+  const focusBoxes = KEY_ORDER.map(k => {
+    const on = focus.has(k);
+    const a = agg[k];
+    const pct = a.total ? Math.round((a.right/a.total)*100) : null;
+    return `<label class="focus-check ${on?"on":""}">
+      <input type="checkbox" ${on?"checked":""} onchange="toggleFocus('${k}')">
+      <span class="ic">${QUIZ[k].emoji}</span>
+      <span class="nm">${esc(QUIZ[k].title)}</span>
+      ${pct !== null ? `<span class="pct-mini">${pct}%</span>` : ""}
+    </label>`;
+  }).join("");
+  const recent = hist.slice().reverse().slice(0, 5).map(historyRow).join("");
+  return `
+    <button class="back-btn" onclick="goHome()">← Exit Admin</button>
+    <div class="card topic-hero">
+      <div class="big-icon" style="background:#fee2e2;">⚙️</div>
+      <h1>Parent Dashboard</h1>
+      <p>Monitor & manage ${esc(name)}'s app</p>
+    </div>
+    <div class="card">
+      <h2>📊 Overview</h2>
+      <div class="trend-stats" style="margin-top:10px;">
+        <div class="trend-stat"><div class="l">Quizzes</div><div class="v">${hist.length}</div></div>
+        <div class="trend-stat"><div class="l">Avg Score</div><div class="v">${avgPct}%</div></div>
+        <div class="trend-stat"><div class="l">Correct</div><div class="v">${totalCorrect}/${totalQs}</div></div>
+        <div class="trend-stat"><div class="l">Study Time</div><div class="v">${fmtTime(totalTime)}</div></div>
+        <div class="trend-stat"><div class="l">Trophies</div><div class="v">${trophies.size}/${TROPHIES.length}</div></div>
+        <div class="trend-stat"><div class="l">Best Streak</div><div class="v">${loadBestStreak()}🔥</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📚 Accuracy by Topic</h2>
+      <p class="muted" style="font-size:13px;margin:4px 0 10px;">Cumulative across all quizzes. Anything under 80% needs more practice.</p>
+      ${hist.some(h => h.categoryStats) ? topicRows : '<p class="muted" style="text-align:center;padding:14px;">No per-topic data yet. Have ' + esc(name) + ' take a Practice or Final Exam quiz to populate this.</p>'}
+    </div>
+    <div class="card">
+      <h2>📋 Assign Focus Topics</h2>
+      <p class="muted" style="font-size:13px;margin:4px 0 10px;">Checked topics will be 📌-pinned on ${esc(name)}'s home screen and shown as quick-access pills.</p>
+      <div class="focus-checks">${focusBoxes}</div>
+      ${focus.size > 0 ? `<button class="btn btn-ghost btn-small" style="margin-top:10px;" onclick="clearFocus()">Clear All Focus Topics</button>` : ""}
+    </div>
+    <div class="card">
+      <h2>📝 Note for ${esc(name)}</h2>
+      <p class="muted" style="font-size:13px;margin:4px 0 10px;">Shows on the home screen as "From Mom:".</p>
+      ${note ? `<div class="mom-note" style="background:#fef3c7;padding:12px;border-radius:10px;margin-bottom:10px;">"${esc(note)}"</div>` : '<p class="muted" style="margin-bottom:10px;">No note set.</p>'}
+      <button class="btn btn-ghost btn-small" onclick="editNote()">${note ? "✏️ Edit Note" : "✏️ Add Note"}</button>
+      ${note ? `<button class="btn btn-ghost btn-small" style="margin-top:6px;" onclick="clearNote()">🗑️ Clear Note</button>` : ""}
+    </div>
+    ${recent ? `<div class="card">
+      <h2>📋 Recent Quizzes</h2>
+      <div class="history-list">${recent}</div>
+      <button class="btn btn-ghost btn-small" style="margin-top:10px;" onclick="showHistory()">View Full History →</button>
+    </div>` : ""}
+    <div class="card">
+      <h2>⚙️ Settings</h2>
+      <button class="btn btn-ghost btn-small" onclick="changeStudentName()" style="margin-bottom:8px;">✏️ Change Student Name (currently: ${esc(name)})</button>
+      <button class="btn btn-ghost btn-small" onclick="changePin()">🔒 Change PIN</button>
+      <p class="muted" style="font-size:11px;margin-top:10px;text-align:center;">Default PIN is 1234 — change it so ${esc(name)} can't peek!</p>
+    </div>
+    <div class="card">
+      <h2>🔄 Reset Options</h2>
+      <button class="btn btn-warn-outline btn-small" onclick="adminReset('history')" style="margin-bottom:6px;">Clear Quiz History</button>
+      <button class="btn btn-warn-outline btn-small" onclick="adminReset('trophies')" style="margin-bottom:6px;">Reset Trophies</button>
+      <button class="btn btn-warn-outline btn-small" onclick="adminReset('stats')" style="margin-bottom:6px;">Reset Scores & Streak</button>
+      <button class="btn btn-danger btn-small" onclick="adminReset('all')">⚠️ Reset Everything</button>
+    </div>
+    <button class="btn btn-primary" onclick="goHome()">← Exit Admin</button>
+  `;
+}
+
+function clearFocus() { if (confirm("Clear all focus topics?")) { saveFocus(new Set()); render(); } }
+function clearNote() { if (confirm("Clear the note?")) { saveNote(""); render(); } }
 
 function viewTrophies() {
   const earned = loadTrophies();
@@ -1498,6 +1708,7 @@ function render() {
     case "results": view = viewResults(); break;
     case "history": view = viewHistory(); break;
     case "trophies": view = viewTrophies(); break;
+    case "admin": view = viewAdmin(); break;
     default: view = viewHome();
   }
   app.innerHTML = view;
@@ -1523,6 +1734,14 @@ window.showHistory = showHistory;
 window.clearHistory = clearHistory;
 window.showTrophies = showTrophies;
 window.dismissCelebration = dismissCelebration;
+window.promptAdmin = promptAdmin;
+window.toggleFocus = toggleFocus;
+window.editNote = editNote;
+window.changePin = changePin;
+window.changeStudentName = changeStudentName;
+window.adminReset = adminReset;
+window.clearFocus = clearFocus;
+window.clearNote = clearNote;
 
 render();
 

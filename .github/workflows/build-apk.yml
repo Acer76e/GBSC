@@ -37,6 +37,11 @@ jobs:
           # to fail with "Module was compiled with an incompatible version of Kotlin".
           sed -i -E 's/(org\.jetbrains\.kotlin\.android" version ")[^"]+/\11.9.24/' android/settings.gradle
           grep -n "kotlin.android" android/settings.gradle
+          # Release manifests don't get the INTERNET permission by default —
+          # only debug/profile manifests do. Without this, the release APK
+          # cannot reach api.cloudflare.com (DNS lookup fails).
+          sed -i '/^<manifest /a\    <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
+          grep -n INTERNET android/app/src/main/AndroidManifest.xml
 
       - name: Install dependencies
         run: flutter pub get

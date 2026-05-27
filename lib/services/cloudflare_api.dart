@@ -60,20 +60,61 @@ class CloudflareApi {
   }
 
   Future<bool> verifyCredentials() async {
-    try {
-      await _send('GET', '/user/tokens/verify');
-      return true;
-    } on CloudflareApiException catch (e) {
-      if (e.statusCode == 400 || e.statusCode == 401) {
-        try {
-          await _send('GET', '/user');
-          return true;
-        } catch (_) {
-          return false;
+    final creds = auth.credentials;
+    if (creds == null) return false;
+    return CloudflareApi.verifyWithCredentials(creds, client: _client);
+  }
+
+  static Future<String?> verifyWithCredentialsForError(
+    Credentials creds, {
+    http.Client? client,
+  }) async {
+    final c = client ?? http.Client();
+    Future<String?> probe(String path) async {
+      try {
+        final uri = Uri.parse('$_base$path');
+        final res = await c.get(uri, headers: creds.headers());
+        Map<String, dynamic> body = {};
+        if (res.body.isNotEmpty) {
+          try {
+            body = jsonDecode(res.body) as Map<String, dynamic>;
+          } catch (_) {
+            return 'Unexpected response from $path (HTTP ${res.statusCode})';
+          }
         }
+        if (res.statusCode >= 200 && res.statusCode < 300 && (body['success'] == true)) {
+          return null;
+        }
+        final errs = (body['errors'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
+        final msg = errs.isNotEmpty
+            ? errs.map((e) => e['message']).whereType<String>().join('; ')
+            : 'HTTP ${res.statusCode}';
+        return msg;
+      } catch (e) {
+        return e.toString();
       }
-      return false;
     }
+
+    try {
+      // /user/tokens/verify is the canonical check for API Tokens.
+      final tokenErr = await probe('/user/tokens/verify');
+      if (tokenErr == null) return null;
+      // Fall back to /user which works for Global API Key (and for tokens
+      // with User:Read permission). If this also fails, surface its error
+      // since it's the more permissive check.
+      final userErr = await probe('/user');
+      if (userErr == null) return null;
+      return userErr;
+    } finally {
+      if (client == null) c.close();
+    }
+  }
+
+  static Future<bool> verifyWithCredentials(
+    Credentials creds, {
+    http.Client? client,
+  }) async {
+    return (await verifyWithCredentialsForError(creds, client: client)) == null;
   }
 
   Future<List<Zone>> listZones({String? search}) async {

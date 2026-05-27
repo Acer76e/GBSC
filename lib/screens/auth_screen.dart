@@ -33,29 +33,39 @@ class _AuthScreenState extends State<AuthScreen> {
       _busy = true;
       _error = null;
     });
-    final auth = context.read<AuthService>();
     try {
+      Credentials creds;
       if (_mode == AuthMode.apiToken) {
         final token = _tokenCtrl.text.trim();
         if (token.isEmpty) throw ArgumentError('Enter an API token');
-        await auth.saveApiToken(token);
+        creds = Credentials.apiToken(token);
       } else {
         final email = _emailCtrl.text.trim();
         final key = _keyCtrl.text.trim();
         if (email.isEmpty || key.isEmpty) {
           throw ArgumentError('Enter email and Global API Key');
         }
-        await auth.saveGlobalKey(email: email, key: key);
+        creds = Credentials.globalKey(email: email, globalKey: key);
       }
-      final api = CloudflareApi(auth);
-      final ok = await api.verifyCredentials();
-      api.dispose();
-      if (!ok) {
-        await auth.signOut();
-        throw Exception('Credentials rejected by Cloudflare');
+
+      // Verify first; only save on success so a failed verify doesn't
+      // flash the next screen and lose its error message on dispose.
+      final err = await CloudflareApi.verifyWithCredentialsForError(creds);
+      if (err != null) {
+        throw Exception('Cloudflare rejected the credentials: $err');
       }
+
+      final auth = context.read<AuthService>();
+      if (_mode == AuthMode.apiToken) {
+        await auth.saveApiToken(creds.token!);
+      } else {
+        await auth.saveGlobalKey(email: creds.email!, key: creds.globalKey!);
+      }
+      // After saveX, the root rebuilds and this widget is disposed.
     } catch (e) {
-      setState(() => _error = e.toString().replaceFirst('Exception: ', ''));
+      if (mounted) {
+        setState(() => _error = e.toString().replaceFirst('Exception: ', ''));
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }

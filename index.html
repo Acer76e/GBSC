@@ -316,6 +316,20 @@ h3{font-size:15px;line-height:1.3;}
 .sync-indicator.ok{background:rgba(16,185,129,.95);box-shadow:0 4px 14px rgba(16,185,129,.4);}
 .sync-indicator.err{background:rgba(239,68,68,.95);box-shadow:0 4px 14px rgba(239,68,68,.4);}
 
+.subject-card{display:flex;align-items:center;gap:16px;background:#fff;padding:18px;border-radius:18px;border:3px solid transparent;transition:transform .12s,border-color .2s,box-shadow .2s;cursor:pointer;text-align:left;width:100%;box-shadow:var(--shadow);}
+.subject-card:active{transform:scale(.98);}
+.subject-card:hover{border-color:var(--primary);}
+.subject-card .subject-icon{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:38px;flex-shrink:0;}
+.subject-card .subject-info{flex:1;min-width:0;}
+.subject-card .subject-title{font-weight:800;font-size:18px;}
+.subject-card .subject-desc{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35;}
+.subject-card .subject-stats{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;}
+.subject-card .subject-arrow{color:#9ca3af;font-size:26px;flex-shrink:0;}
+.subject-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.75);padding:7px 14px;border-radius:999px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;border:none;margin:0 auto;box-shadow:0 2px 6px rgba(0,0,0,.06);transition:transform .1s,background .2s;}
+.subject-pill:active{transform:scale(.95);}
+.subject-pill:hover{background:#fff;}
+.subject-pill-wrap{display:flex;justify-content:center;}
+
 @media (max-width:380px){
   .celebrate-emoji{font-size:100px;}
   .celebrate-title{font-size:40px;letter-spacing:2px;}
@@ -339,7 +353,7 @@ h3{font-size:15px;line-height:1.3;}
 <script>
 "use strict";
 
-const QUIZ = {
+const QUIZ_ELA = {
   vocab: {
     title: "Vocabulary & Roots", emoji: "📚", color: "#a78bfa",
     questions: [
@@ -450,7 +464,7 @@ const SUBOBJ = {
   ]
 };
 
-const TIPS = {
+const TIPS_ELA = {
   vocab: [
     { h:"Tele- = far away", p:"Television, telephone, telescope — all reach across distance. Picture an antenna stretching out." },
     { h:"Photo vs Phon", p:"<b>Photo</b> = light (photograph). <b>Phon</b> = sound (phone, symphony). They look similar but mean totally different things." },
@@ -486,7 +500,268 @@ const TIPS = {
   ]
 };
 
-const KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
+const ELA_KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
+
+const SOCIAL_RAW = {
+  mesopotamia: {
+    title: "Mesopotamia", emoji: "🏺", color: "#a16207",
+    terms: [
+      { term: "Pictographs", def: "Picture symbols used for communication" },
+      { term: "Fertile Crescent", def: "Arc of rich farmland in Southwest Asia where early civilizations developed" },
+      { term: "Polytheism", def: "Belief in many gods" },
+      { term: "Irrigation", def: "Supplying water to crops through canals or systems" },
+      { term: "Empire", def: "A group of territories ruled by one leader or government" },
+      { term: "Monarch", def: "A king or queen who rules a kingdom" },
+      { term: "Urban", def: "Related to cities" },
+      { term: "Rural", def: "Related to countryside or farming areas" },
+      { term: "Epics", def: "Long poems or stories about heroes and important events" },
+      { term: "Alphabet", def: "System of letters used in writing" },
+      { term: "Cuneiform", def: "Mesopotamian wedge-shaped writing system" },
+      { term: "Social Hierarchy", def: "Ranking of people in society by status or power" },
+      { term: "Chariot", def: "Two-wheeled vehicle often used in warfare" }
+    ]
+  },
+  egypt: {
+    title: "Ancient Egypt", emoji: "🐫", color: "#ca8a04",
+    terms: [
+      { term: "Piankhi", def: "Nubian king who conquered Egypt" },
+      { term: "Queen Hatshepsut", def: "Female pharaoh known for expanding trade" },
+      { term: "Mummies", def: "Preserved bodies prepared for burial" },
+      { term: "Sphinx", def: "Statue with a human head and lion body" },
+      { term: "Khufu", def: "Pharaoh who built the Great Pyramid at Giza" },
+      { term: "Trade Network", def: "System used to exchange goods and ideas" },
+      { term: "Papyrus", def: "Plant used to make writing material" },
+      { term: "Menes", def: "King credited with uniting Upper and Lower Egypt" },
+      { term: "Hieroglyphics", def: "Egyptian writing using symbols and pictures" },
+      { term: "Obelisk", def: "Tall stone monument with four sides and a pointed top" },
+      { term: "Ahmose of Thebes", def: "Pharaoh who drove out the Hyksos invaders" },
+      { term: "Mentuhotep II", def: "Pharaoh who reunited Egypt" },
+      { term: "Meroitic", def: "Writing system and culture of Kush" }
+    ]
+  },
+  africa: {
+    title: "Ancient Africa (Ghana / Mali / Songhai)", emoji: "🌍", color: "#16a34a",
+    terms: [
+      { term: "Griot", def: "Storyteller and keeper of history" },
+      { term: "Animism", def: "Belief that spirits exist in nature" },
+      { term: "Oral Tradition", def: "Passing stories and history by speaking" },
+      { term: "Bantu Migration", def: "Movement of Bantu-speaking people through Africa" },
+      { term: "Extended Family", def: "Family group including relatives beyond parents and children" },
+      { term: "Clan", def: "Group of related families" },
+      { term: "Savanna", def: "Tropical grassland region" },
+      { term: "Desertification", def: "Process where land becomes desert" },
+      { term: "Trade Routes", def: "Paths used to transport and trade goods" },
+      { term: "Gold-Salt Trade", def: "Exchange of gold and salt that made kingdoms wealthy" },
+      { term: "Silent Barter", def: "Trading without speaking face to face" },
+      { term: "Tunka Manin", def: "Powerful ruler of Ghana" },
+      { term: "Ghana Empire", def: "Wealthy West African kingdom built on trade" },
+      { term: "Ghana Empire Decline", def: "Loss of trade, invasions, and weakened power" },
+      { term: "Sundiata", def: "Founder of Mali Empire" },
+      { term: "Mansa", def: "Title meaning emperor or king" },
+      { term: "Mansa Musa", def: "Wealthy ruler of Mali famous for pilgrimage to Mecca" },
+      { term: "Mecca", def: "Holy city of Islam" },
+      { term: "Timbuktu", def: "Major center of trade and learning" },
+      { term: "Fall of Mali", def: "Weak rulers and loss of trade routes" },
+      { term: "Tuareg", def: "Nomadic desert traders" },
+      { term: "Songhai", def: "Large West African empire after Mali" },
+      { term: "Sunni Ali", def: "Military leader who expanded Songhai" },
+      { term: "Sunni Baru", def: "Ruler replaced by Askia the Great" },
+      { term: "Askia the Great", def: "Leader who strengthened Songhai government and trade" },
+      { term: "Berbers", def: "North African desert traders" },
+      { term: "Morocco", def: "Kingdom that defeated Songhai" },
+      { term: "Arquebus", def: "Early firearm or gun" },
+      { term: "Great Zimbabwe", def: "Wealthy African trading city known for stone structures" }
+    ]
+  },
+  india: {
+    title: "Ancient India", emoji: "🕉️", color: "#ea580c",
+    terms: [
+      { term: "Indus", def: "Major river valley where early Indian civilization developed" },
+      { term: "Caste System", def: "Social class system in India" },
+      { term: "Reincarnation", def: "Belief that a person is reborn after death" },
+      { term: "Jainism", def: "Religion focused on nonviolence" },
+      { term: "Metallurgy", def: "Science of working with metals" },
+      { term: "Subcontinent", def: "Large landmass smaller than a continent" },
+      { term: "Vedic", def: "Related to ancient religious texts called Vedas" },
+      { term: "Karma", def: "Belief that actions have consequences" },
+      { term: "Dharma", def: "Moral duties and responsibilities" },
+      { term: "Sutra", def: "Religious teaching or text" }
+    ]
+  },
+  china: {
+    title: "Ancient China", emoji: "🐉", color: "#dc2626",
+    terms: [
+      { term: "Shi Huangdi", def: "First emperor of China" },
+      { term: "Laozi", def: "Founder of Daoism" },
+      { term: "Confucius", def: "Chinese teacher who promoted respect and order" },
+      { term: "Jade", def: "Valuable stone used in art and jewelry" },
+      { term: "Shiji", def: "Historical record of China" },
+      { term: "Silk Road", def: "Trade route connecting Asia and Europe" },
+      { term: "Daoism", def: "Belief system focused on harmony with nature" },
+      { term: "Diffusion", def: "Spread of ideas and culture" },
+      { term: "Lord", def: "Powerful landowner" }
+    ]
+  },
+  greece: {
+    title: "Ancient Greece", emoji: "🏛️", color: "#0891b2",
+    terms: [
+      { term: "Oligarchy", def: "Government ruled by a few powerful people" },
+      { term: "Tyrant", def: "Leader who takes power by force" },
+      { term: "Homer", def: "Greek poet who wrote the Iliad and Odyssey" },
+      { term: "Polis", def: "Greek city-state" },
+      { term: "Citizens", def: "People with legal rights and responsibilities" },
+      { term: "Mythology", def: "Stories about gods and heroes" },
+      { term: "Acropolis", def: "Hilltop area with temples and important buildings" },
+      { term: "Aristocrats", def: "Wealthy upper-class landowners" },
+      { term: "Aesop", def: "Writer of fables" },
+      { term: "Classical Greece", def: "Time of great achievements in Greece" },
+      { term: "Democracy", def: "Government where citizens participate" },
+      { term: "Pericles", def: "Leader who expanded democracy in Athens" },
+      { term: "Apollo", def: "Greek god of music, healing, and the sun" },
+      { term: "Iliad", def: "Story about the Trojan War" },
+      { term: "Odyssey", def: "Story of Odysseus's journey home" }
+    ]
+  },
+  rome: {
+    title: "Roman Republic", emoji: "⚔️", color: "#9333ea",
+    terms: [
+      { term: "Tripartite", def: "Divided into three parts" },
+      { term: "Senate", def: "Group of Roman leaders and advisors" },
+      { term: "Patricians", def: "Wealthy upper-class citizens" },
+      { term: "Consuls", def: "Elected leaders of Rome" },
+      { term: "Checks and Balances", def: "System where branches limit one another's power" },
+      { term: "Legions", def: "Roman army units" },
+      { term: "Veto", def: "Power to reject a decision" },
+      { term: "Purpose of Government", def: "To maintain order and protect citizens" },
+      { term: "Primary", def: "Election to choose candidates" },
+      { term: "Republic", def: "Government with elected representatives" },
+      { term: "Plebeians", def: "Common citizens of Rome" },
+      { term: "Forum", def: "Marketplace and meeting center" },
+      { term: "Dictators", def: "Temporary rulers during emergencies" }
+    ]
+  }
+};
+
+function buildSocialQuiz(raw) {
+  const out = {};
+  for (const k in raw) {
+    const r = raw[k];
+    const n = r.terms.length;
+    const questions = r.terms.map((t, i) => {
+      const distractors = [];
+      for (let off = 1; distractors.length < 3 && off < n; off++) {
+        distractors.push(r.terms[(i + off) % n].term);
+      }
+      return {
+        q: 'Which term means: "' + t.def + '"?',
+        a: 0,
+        opts: [t.term].concat(distractors),
+        hint: t.term + " — " + t.def
+      };
+    });
+    out[k] = { title: r.title, emoji: r.emoji, color: r.color, questions: questions };
+  }
+  return out;
+}
+const QUIZ_SOCIAL = buildSocialQuiz(SOCIAL_RAW);
+
+const TIPS_SOCIAL = {
+  mesopotamia: [
+    { h:"Cradle of Civilization 🏺", p:"Mesopotamia was the FIRST big civilization, between the Tigris and Euphrates rivers in the Fertile Crescent." },
+    { h:"Cuneiform = wedge-shaped", p:"<b>Cuneiform</b> wedges were pressed into clay. It came AFTER pictographs as writing got more abstract." },
+    { h:"Polytheism vs Monarch", p:"<b>Poly</b> = many (polytheism = many gods). <b>Mon</b> = one (monarch = ONE ruler — a king or queen)." },
+    { h:"Urban vs Rural", p:"<b>Urban</b> = city. <b>Rural</b> = countryside / farms. (Think \"Uber drives in URBAN areas.\")" },
+    { h:"Irrigation 💧", p:"Canals carried river water to crops — that's what let farming feed those first cities." },
+    { h:"Social Hierarchy", p:"<b>Hierarchy</b> = ranking. People at the top had more power than people at the bottom." }
+  ],
+  egypt: [
+    { h:"Khufu = Great Pyramid 🔺", p:"<b>Khufu</b> built the Great Pyramid at Giza. (Easy: KHUFU = the name on the biggest tomb.)" },
+    { h:"Menes united Egypt 👑", p:"<b>Menes</b> = Merged Egypt. He united Upper + Lower Egypt into one kingdom." },
+    { h:"Hatshepsut = trade queen", p:"Female pharaoh famous for EXPANDING TRADE (not war). Remember: <b>Hat</b>shepsut wore the pharaoh's hat." },
+    { h:"Hieroglyphics = sacred pictures", p:"<b>Hiero</b> = sacred, <b>glyph</b> = carving. Sacred picture carvings on temples and tombs." },
+    { h:"Mummies, Sphinx, Obelisk", p:"<b>Mummies</b> = preserved bodies. <b>Sphinx</b> = human HEAD + lion BODY. <b>Obelisk</b> = tall 4-sided pointed monument." },
+    { h:"Piankhi vs Hyksos", p:"<b>Piankhi</b> = Nubian king who CONQUERED Egypt. <b>Ahmose of Thebes</b> DROVE OUT the Hyksos invaders earlier." }
+  ],
+  africa: [
+    { h:"Three Empires in Order 📜", p:"<b>Ghana → Mali → Songhai</b> (G-M-S). Each empire rose AFTER the last one fell." },
+    { h:"Mansa Musa = wealthy Mali king 🕌", p:"Famous for his <b>pilgrimage to Mecca</b> with so much gold he caused inflation in cities he passed through!" },
+    { h:"Sundiata FOUNDED Mali 🦁", p:"\"Sun started Mali\" — <b>Sundiata</b> is the lion king who founded the Mali Empire." },
+    { h:"Songhai's leaders", p:"<b>Sunni Ali</b> EXPANDED Songhai. <b>Askia the Great</b> STRENGTHENED its government and trade after him." },
+    { h:"Gold-Salt Trade 💰🧂", p:"West Africa had GOLD, North Africa had SALT. The exchange made the empires super wealthy." },
+    { h:"Griots = living history", p:"<b>Griots</b> memorized history and passed it on by speaking — that's <b>oral tradition</b>." },
+    { h:"Desert traders", p:"<b>Tuareg</b> and <b>Berbers</b> = nomadic North African desert traders who crossed the Sahara." }
+  ],
+  india: [
+    { h:"Indus = India's river 🏞️", p:"The name <b>India</b> comes from the <b>Indus</b> river, where Indian civilization began." },
+    { h:"Reincarnation = REborn", p:"<b>Re</b> = again. Reincarnation = born again in a new life." },
+    { h:"Karma vs Dharma", p:"<b>Karma</b> = actions have consequences (what you do affects your future). <b>Dharma</b> = your DUTY (what you should do)." },
+    { h:"Caste System", p:"A rigid social class system — the family you're born into determined your role for life." },
+    { h:"Jainism = nonviolence ☮️", p:"Religion focused on harmlessness to ALL living things. Jain followers won't even harm insects." },
+    { h:"Vedas = sacred texts", p:"<b>Vedic</b> means \"related to the Vedas\" — ancient Indian religious texts. A <b>Sutra</b> is a religious teaching." }
+  ],
+  china: [
+    { h:"Shi Huangdi = FIRST emperor 👑", p:"<b>Shi Huangdi</b> built the early Great Wall and started the Qin dynasty. \"Shi\" sounds like \"first.\"" },
+    { h:"Confucius = order and respect", p:"Teacher who promoted respect for elders, family, and government." },
+    { h:"Laozi = Daoism 🌿", p:"<b>Laozi</b> founded <b>Daoism</b>, which teaches harmony with nature. Dao means \"the way.\"" },
+    { h:"Silk Road 🐪", p:"A trade route connecting China to Europe — spread silk, spices, and IDEAS." },
+    { h:"Diffusion = spread", p:"When cultures meet through trade or migration, ideas spread. That's <b>diffusion</b>." }
+  ],
+  greece: [
+    { h:"Polis = city-state 🏛️", p:"A <b>polis</b> was a Greek city-state — like a tiny country. (Poli = city, like POLIce.)" },
+    { h:"Democracy = people power 🗳️", p:"<b>Demos</b> = people, <b>kratos</b> = power. <b>Pericles</b> expanded democracy in Athens." },
+    { h:"Oligarchy vs Tyrant", p:"<b>Oligarchy</b> = ruled by a FEW (oligo = few). <b>Tyrant</b> = one ruler who took power by FORCE." },
+    { h:"Homer's epics 📜", p:"<b>Homer</b> wrote two famous stories: <b>Iliad</b> (Trojan WAR) and <b>Odyssey</b> (Odysseus's JOURNEY home)." },
+    { h:"Acropolis = high city", p:"<b>Acro</b> = high (like acrobat). The Acropolis was the hilltop with temples and important buildings." },
+    { h:"Aesop = fables 🦊", p:"Aesop wrote short stories with morals (the Tortoise and the Hare, etc.)." }
+  ],
+  rome: [
+    { h:"Tripartite = THREE parts 3️⃣", p:"<b>Tri</b> = 3. Rome's government had three parts. Checks and balances kept any one from getting too powerful." },
+    { h:"Patricians vs Plebeians", p:"<b>Patricians</b> = wealthy upper class (\"fathers\"). <b>Plebeians</b> = common citizens. Pleb = people." },
+    { h:"Consuls + Senate", p:"<b>Consuls</b> = the TWO elected leaders. <b>Senate</b> = the group of advisors (senators)." },
+    { h:"Veto = \"I forbid\" 🚫", p:"In Latin, <b>veto</b> literally means \"I forbid.\" It's the power to REJECT a decision." },
+    { h:"Republic = elected reps 🗳️", p:"Re-public = \"of the people.\" A <b>republic</b> has elected representatives — NOT direct democracy." },
+    { h:"Dictators = TEMPORARY (in Rome)", p:"In Roman times, a <b>dictator</b> was an emergency leader given temporary power. Different from the modern meaning!" },
+    { h:"Forum = meeting place 🏛️", p:"Like a public square — Romans met in the Forum to trade, debate, and gather." }
+  ]
+};
+
+const SOCIAL_KEY_ORDER = ["mesopotamia","egypt","africa","india","china","greece","rome"];
+
+const SUBJECTS = {
+  ela: {
+    title: "ELA (English)", emoji: "📖", color: "#6366f1",
+    description: "Vocabulary, literary terms, pronouns, story structure, writing",
+    topics: QUIZ_ELA, tips: TIPS_ELA, keyOrder: ELA_KEY_ORDER, hasSubObj: true
+  },
+  social: {
+    title: "Social Studies", emoji: "🏛️", color: "#dc2626",
+    description: "Ancient civilizations: Mesopotamia, Egypt, Africa, India, China, Greece, Rome",
+    topics: QUIZ_SOCIAL, tips: TIPS_SOCIAL, keyOrder: SOCIAL_KEY_ORDER, hasSubObj: false
+  }
+};
+const SUBJECT_ORDER = ["ela","social"];
+
+let QUIZ = QUIZ_ELA;
+let TIPS = TIPS_ELA;
+let KEY_ORDER = ELA_KEY_ORDER;
+
+function curSubject() { return SUBJECTS[(state && state.subject) || "ela"]; }
+function setSubject(s) {
+  if (!SUBJECTS[s]) s = "ela";
+  if (state) state.subject = s;
+  QUIZ = SUBJECTS[s].topics;
+  TIPS = SUBJECTS[s].tips;
+  KEY_ORDER = SUBJECTS[s].keyOrder;
+  lsSet("g6_subject", s);
+}
+function migrateData() {
+  if (lsGet("g6_migrated_v10","")) return;
+  const oldStats = lsGet("g6_lastStats", null);
+  if (oldStats !== null && lsGet("g6_lastStats_ela", null) === null) lsSet("g6_lastStats_ela", oldStats);
+  const oldFocus = lsGet("g6_focus", null);
+  if (oldFocus !== null && lsGet("g6_focus_ela", null) === null) lsSet("g6_focus_ela", oldFocus);
+  lsSet("g6_migrated_v10","1");
+}
 const TIMED_PER_Q = 7000;
 const TIMED_QS = 20;
 const RING_C = 131.95;
@@ -509,8 +784,10 @@ function loadPlays() { return parseInt(lsGet("g6_plays","0"),10); }
 function bumpPlays() { lsSet("g6_plays", String(loadPlays()+1)); }
 function loadBestStreak() { return parseInt(lsGet("g6_streak","0"),10); }
 function saveBestStreak(v) { if (v > loadBestStreak()) lsSet("g6_streak", String(v)); }
-function saveLastStats(s) { lsSet("g6_lastStats", JSON.stringify(s)); }
-function loadLastStats() { try { return JSON.parse(lsGet("g6_lastStats","null")); } catch(e) { return null; } }
+function saveLastStats(s) { lsSet(lastStatsKey(), JSON.stringify(s)); }
+function lastStatsKey() { return "g6_lastStats_" + ((state && state.subject) || "ela"); }
+function focusKey() { return "g6_focus_" + ((state && state.subject) || "ela"); }
+function loadLastStats() { try { return JSON.parse(lsGet(lastStatsKey(),"null")); } catch(e) { return null; } }
 function loadBestExam() { return parseInt(lsGet("g6_examBest","0"),10); }
 function saveBestExam(v) { if (v > loadBestExam()) lsSet("g6_examBest", String(v)); }
 
@@ -533,6 +810,7 @@ function loadName() { return lsGet("g6_name","Julia"); }
 function loadHistory() { try { return JSON.parse(lsGet("g6_history","[]")); } catch(e) { return []; } }
 function saveHistoryEntry(e) {
   const hist = loadHistory();
+  e.subject = e.subject || (state && state.subject) || "ela";
   hist.push(e);
   if (hist.length > 50) hist.shift();
   lsSet("g6_history", JSON.stringify(hist));
@@ -713,8 +991,8 @@ function showTrophies() { clearTimer(); state.screen = "trophies"; render(); }
 
 function loadPin() { return lsGet("g6_pin", "1234"); }
 function savePin(v) { lsSet("g6_pin", v); }
-function loadFocus() { try { return new Set(JSON.parse(lsGet("g6_focus","[]"))); } catch(e) { return new Set(); } }
-function saveFocus(set) { lsSet("g6_focus", JSON.stringify(Array.from(set))); }
+function loadFocus() { try { return new Set(JSON.parse(lsGet(focusKey(),"[]"))); } catch(e) { return new Set(); } }
+function saveFocus(set) { lsSet(focusKey(), JSON.stringify(Array.from(set))); }
 function loadNote() { return lsGet("g6_note", ""); }
 function saveNote(t) { lsSet("g6_note", t); }
 
@@ -1102,7 +1380,11 @@ function viewHome() {
   const totalQ = KEY_ORDER.reduce((n,k)=>n+QUIZ[k].questions.length,0);
   const avatar = loadAvatar(); const name = loadName();
   const focus = loadFocus(); const note = loadNote();
+  const subj = curSubject();
   return `
+    <div class="subject-pill-wrap">
+      <button class="subject-pill" onclick="goPicker()">${subj.emoji} ${esc(subj.title)} · switch ▾</button>
+    </div>
     <div class="card hero">
       <button class="settings-icon" onclick="promptAdmin()" title="Parent dashboard" aria-label="Parent dashboard">⚙️</button>
       <button class="avatar-btn" onclick="nextAvatar()" aria-label="Change avatar">
@@ -1110,7 +1392,7 @@ function viewHome() {
       </button>
       <span class="avatar-tap">tap to change</span>
       <h1>Hi ${esc(name)}! 👋</h1>
-      <p>Ready to crush your final exam?</p>
+      <p>Studying ${esc(subj.title)} today!</p>
     </div>
     ${(note || focus.size > 0) ? `
       <div class="mom-card">
@@ -1289,13 +1571,19 @@ function fmtAgo(ms) {
   return Math.floor(s/86400) + " day(s) ago";
 }
 
+function parseLS(k, fb) { try { const v = lsGet(k, null); return v === null ? fb : JSON.parse(v); } catch(e) { return fb; } }
+
 function collectLocal() {
   return {
-    version: 1, syncedAt: Date.now(), settingsAt: loadSettingsAt(),
+    version: 2, syncedAt: Date.now(), settingsAt: loadSettingsAt(),
+    subject: (state && state.subject) || "ela",
     history: loadHistory(), trophies: Array.from(loadTrophies()),
     high: loadHigh(), plays: loadPlays(), streak: loadBestStreak(),
     examBest: loadBestExam(), correctTotal: loadCorrectTotal(),
-    lastStats: loadLastStats(), focus: Array.from(loadFocus()),
+    lastStats_ela: parseLS("g6_lastStats_ela", null),
+    lastStats_social: parseLS("g6_lastStats_social", null),
+    focus_ela: parseLS("g6_focus_ela", []),
+    focus_social: parseLS("g6_focus_social", []),
     note: loadNote(), name: loadName(), avatar: loadAvatar(), pin: loadPin()
   };
 }
@@ -1307,8 +1595,10 @@ function applyMerged(m) {
   lsSet("g6_streak", String(m.streak || 0));
   lsSet("g6_examBest", String(m.examBest || 0));
   lsSet("g6_correctTotal", String(m.correctTotal || 0));
-  if (m.lastStats) lsSet("g6_lastStats", JSON.stringify(m.lastStats));
-  lsSet("g6_focus", JSON.stringify(m.focus || []));
+  if (m.lastStats_ela) lsSet("g6_lastStats_ela", JSON.stringify(m.lastStats_ela));
+  if (m.lastStats_social) lsSet("g6_lastStats_social", JSON.stringify(m.lastStats_social));
+  if (m.focus_ela) lsSet("g6_focus_ela", JSON.stringify(m.focus_ela));
+  if (m.focus_social) lsSet("g6_focus_social", JSON.stringify(m.focus_social));
   lsSet("g6_note", m.note || "");
   lsSet("g6_name", m.name || "Julia");
   lsSet("g6_avatar", m.avatar || "🦄");
@@ -1325,8 +1615,13 @@ function mergeData(local, remote) {
   const lTime = local.settingsAt || 0;
   const rTime = remote.settingsAt || 0;
   const newer = rTime > lTime ? remote : local;
+  // Back-compat: older payloads may have flat lastStats/focus — fold them into ELA
+  const fallbackStatsEla = local.lastStats_ela || (local.lastStats && !local.lastStats_social ? local.lastStats : null);
+  const fallbackStatsElaR = remote.lastStats_ela || (remote.lastStats && !remote.lastStats_social ? remote.lastStats : null);
+  const fallbackFocusEla = local.focus_ela || (Array.isArray(local.focus) ? local.focus : []);
+  const fallbackFocusElaR = remote.focus_ela || (Array.isArray(remote.focus) ? remote.focus : []);
   return {
-    version: 1,
+    version: 2,
     settingsAt: Math.max(lTime, rTime),
     history, trophies,
     high: Math.max(local.high||0, remote.high||0),
@@ -1334,8 +1629,10 @@ function mergeData(local, remote) {
     streak: Math.max(local.streak||0, remote.streak||0),
     examBest: Math.max(local.examBest||0, remote.examBest||0),
     correctTotal: Math.max(local.correctTotal||0, remote.correctTotal||0),
-    lastStats: newer.lastStats || local.lastStats,
-    focus: newer.focus || [],
+    lastStats_ela: (newer === remote ? fallbackStatsElaR : fallbackStatsEla) || fallbackStatsEla || fallbackStatsElaR,
+    lastStats_social: newer.lastStats_social || local.lastStats_social || remote.lastStats_social || null,
+    focus_ela: (newer === remote ? fallbackFocusElaR : fallbackFocusEla) || [],
+    focus_social: newer.focus_social || local.focus_social || remote.focus_social || [],
     note: newer.note || "",
     name: newer.name || "Julia",
     avatar: newer.avatar || "🦄",
@@ -1957,10 +2254,47 @@ function viewHistory() {
   `;
 }
 
+function viewPicker() {
+  const name = loadName(); const avatar = loadAvatar();
+  const hist = loadHistory();
+  return `
+    <div class="card hero">
+      <button class="settings-icon" onclick="promptAdmin()" title="Parent dashboard" aria-label="Parent dashboard">⚙️</button>
+      <button class="avatar-btn" onclick="nextAvatar()" aria-label="Change avatar">
+        <span class="avatar">${avatar}</span>
+      </button>
+      <span class="avatar-tap">tap to change</span>
+      <h1>Hi ${esc(name)}! 👋</h1>
+      <p>What do you want to study today?</p>
+    </div>
+    ${SUBJECT_ORDER.map(s => {
+      const sub = SUBJECTS[s];
+      const subjHist = hist.filter(h => (h.subject || "ela") === s);
+      const cnt = subjHist.length;
+      const avg = cnt ? Math.round(subjHist.reduce((sum,h)=>sum+h.pct,0)/cnt) : 0;
+      const topicCount = sub.keyOrder.length;
+      const qCount = sub.keyOrder.reduce((n,k)=>n+sub.topics[k].questions.length,0);
+      return `<button class="subject-card" onclick="enterSubject('${s}')">
+        <div class="subject-icon" style="background:${sub.color}22;">${sub.emoji}</div>
+        <div class="subject-info">
+          <div class="subject-title" style="color:${sub.color};">${esc(sub.title)}</div>
+          <div class="subject-desc">${esc(sub.description)}</div>
+          <div class="subject-stats">${topicCount} topics · ${qCount} questions${cnt ? ` · avg ${avg}%` : ""}</div>
+        </div>
+        <div class="subject-arrow">›</div>
+      </button>`;
+    }).join("")}
+    <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
+  `;
+}
+function enterSubject(s) { setSubject(s); state.screen = "home"; chimePop(); render(); }
+function goPicker() { clearTimer(); state.screen = "picker"; render(); }
+
 function render() {
   const app = document.getElementById("app");
   let view;
   switch (state.screen) {
+    case "picker": view = viewPicker(); break;
     case "topic": view = viewTopic(); break;
     case "subobj-tutorial": view = viewSubObj(); break;
     case "tips": view = viewTips(); break;
@@ -2007,6 +2341,20 @@ window.clearNote = clearNote;
 window.promptSyncSetup = promptSyncSetup;
 window.syncNow = syncNow;
 window.disconnectSync = disconnectSync;
+window.enterSubject = enterSubject;
+window.goPicker = goPicker;
+
+migrateData();
+{
+  const saved = lsGet("g6_subject", "");
+  if (saved && SUBJECTS[saved]) {
+    setSubject(saved);
+    state.screen = "home";
+  } else {
+    setSubject("ela");
+    state.screen = "picker";
+  }
+}
 
 render();
 

@@ -32,6 +32,11 @@ jobs:
       - name: Scaffold platform folders
         run: |
           flutter create --project-name cloudflare_mobile --org com.acer76e --platforms=android --no-pub .
+          # flutter_secure_storage 9.x ships kotlin-stdlib 1.9.x, but Flutter 3.24
+          # scaffolds with Kotlin Gradle Plugin 1.7.10, causing compileReleaseKotlin
+          # to fail with "Module was compiled with an incompatible version of Kotlin".
+          sed -i -E 's/(org\.jetbrains\.kotlin\.android" version ")[^"]+/\11.9.24/' android/settings.gradle
+          grep -n "kotlin.android" android/settings.gradle
 
       - name: Install dependencies
         run: flutter pub get

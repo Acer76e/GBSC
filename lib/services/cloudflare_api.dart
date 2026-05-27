@@ -1,0 +1,169 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+import '../models/dns_record.dart';
+import '../models/ip_access_rule.dart';
+import '../models/zone.dart';
+import 'auth_service.dart';
+
+class CloudflareApiException implements Exception {
+  final int statusCode;
+  final String message;
+  final List<Map<String, dynamic>> errors;
+
+  CloudflareApiException(this.statusCode, this.message, this.errors);
+
+  @override
+  String toString() => 'CloudflareApiException($statusCode): $message';
+}
+
+class CloudflareApi {
+  static const String _base = 'https://api.cloudflare.com/client/v4';
+
+  final AuthService auth;
+  final http.Client _client;
+
+  CloudflareApi(this.auth, {http.Client? client}) : _client = client ?? http.Client();
+
+  Map<String, String> get _headers {
+    final creds = auth.credentials;
+    if (creds == null) {
+      throw StateError('Not authenticated');
+    }
+    return creds.headers();
+  }
+
+  Future<dynamic> _send(
+    String method,
+    String path, {
+    Map<String, String>? query,
+    Object? body,
+  }) async {
+    final uri = Uri.parse('$_base$path').replace(queryParameters: query);
+    final req = http.Request(method, uri);
+    req.headers.addAll(_headers);
+    if (body != null) req.body = jsonEncode(body);
+
+    final streamed = await _client.send(req);
+    final res = await http.Response.fromStream(streamed);
+    final decoded = res.body.isEmpty ? {} : jsonDecode(res.body) as Map<String, dynamic>;
+    final success = (decoded['success'] as bool?) ?? false;
+    if (!success || res.statusCode >= 400) {
+      final errs = (decoded['errors'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
+      final msg = errs.isNotEmpty
+          ? errs.map((e) => e['message']).whereType<String>().join('; ')
+          : 'HTTP ${res.statusCode}';
+      throw CloudflareApiException(res.statusCode, msg, errs);
+    }
+    return decoded['result'];
+  }
+
+  Future<bool> verifyCredentials() async {
+    try {
+      await _send('GET', '/user/tokens/verify');
+      return true;
+    } on CloudflareApiException catch (e) {
+      if (e.statusCode == 400 || e.statusCode == 401) {
+        try {
+          await _send('GET', '/user');
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+      return false;
+    }
+  }
+
+  Future<List<Zone>> listZones({String? search}) async {
+    final query = <String, String>{'per_page': '50'};
+    if (search != null && search.isNotEmpty) query['name'] = 'contains:$search';
+    final result = await _send('GET', '/zones', query: query) as List;
+    return result.map((j) => Zone.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<Zone> getZone(String zoneId) async {
+    final result = await _send('GET', '/zones/$zoneId');
+    return Zone.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<List<DnsRecord>> listDnsRecords(String zoneId) async {
+    final result =
+        await _send('GET', '/zones/$zoneId/dns_records', query: {'per_page': '100'}) as List;
+    return result.map((j) => DnsRecord.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<DnsRecord> createDnsRecord(String zoneId, DnsRecord record) async {
+    final result =
+        await _send('POST', '/zones/$zoneId/dns_records', body: record.toCreatePayload());
+    return DnsRecord.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<DnsRecord> updateDnsRecord(String zoneId, String recordId, DnsRecord record) async {
+    final result = await _send(
+      'PUT',
+      '/zones/$zoneId/dns_records/$recordId',
+      body: record.toCreatePayload(),
+    );
+    return DnsRecord.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<void> deleteDnsRecord(String zoneId, String recordId) async {
+    await _send('DELETE', '/zones/$zoneId/dns_records/$recordId');
+  }
+
+  Future<List<IpAccessRule>> listAccessRules(String zoneId) async {
+    final result = await _send(
+      'GET',
+      '/zones/$zoneId/firewall/access_rules/rules',
+      query: {'per_page': '50'},
+    ) as List;
+    return result.map((j) => IpAccessRule.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<IpAccessRule> createAccessRule(
+    String zoneId, {
+    required AccessRuleMode mode,
+    required AccessRuleTargetType targetType,
+    required String value,
+    String? notes,
+  }) async {
+    final body = <String, dynamic>{
+      'mode': mode.apiValue,
+      'configuration': {'target': targetType.apiValue, 'value': value},
+      if (notes != null && notes.isNotEmpty) 'notes': notes,
+    };
+    final result = await _send('POST', '/zones/$zoneId/firewall/access_rules/rules', body: body);
+    return IpAccessRule.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<void> deleteAccessRule(String zoneId, String ruleId) async {
+    await _send('DELETE', '/zones/$zoneId/firewall/access_rules/rules/$ruleId');
+  }
+
+  Future<bool> getDevelopmentMode(String zoneId) async {
+    final result =
+        await _send('GET', '/zones/$zoneId/settings/development_mode') as Map<String, dynamic>;
+    return (result['value'] as String?) == 'on';
+  }
+
+  Future<void> setDevelopmentMode(String zoneId, bool enabled) async {
+    await _send(
+      'PATCH',
+      '/zones/$zoneId/settings/development_mode',
+      body: {'value': enabled ? 'on' : 'off'},
+    );
+  }
+
+  Future<void> purgeEverything(String zoneId) async {
+    await _send('POST', '/zones/$zoneId/purge_cache', body: {'purge_everything': true});
+  }
+
+  Future<List<Map<String, dynamic>>> listZoneSettings(String zoneId) async {
+    final result = await _send('GET', '/zones/$zoneId/settings') as List;
+    return result.cast<Map<String, dynamic>>();
+  }
+
+  void dispose() => _client.close();
+}

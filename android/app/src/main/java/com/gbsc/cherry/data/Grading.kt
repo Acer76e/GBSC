@@ -33,6 +33,23 @@ object Grading {
         }
     }
 
+    private fun score(g: Grade): Int = when (g) {
+        Grade.GOOD -> 2
+        Grade.AVERAGE -> 1
+        Grade.BAD -> 0
+    }
+
+    /** Single "is it worth it" grade, averaged across the supplied per-stat grades. */
+    fun averageGrade(grades: List<Grade>): Grade {
+        if (grades.isEmpty()) return Grade.AVERAGE
+        val avg = grades.sumOf { score(it) }.toDouble() / grades.size
+        return when {
+            avg >= 1.5 -> Grade.GOOD
+            avg >= 0.75 -> Grade.AVERAGE
+            else -> Grade.BAD
+        }
+    }
+
     fun colorHex(grade: Grade): String = when (grade) {
         Grade.GOOD -> "#22C55E"
         Grade.AVERAGE -> "#F5C518"

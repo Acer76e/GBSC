@@ -203,6 +203,15 @@ class ScreenCaptureService : Service() {
         val profitPct = if (offer.fare > 0) (profit / offer.fare * 100).toInt() else 0
         val profitGood = profit >= 0
 
+        val shownGrades = buildList {
+            if (c.showPerMile) add(miGrade)
+            if (c.showPerHour) add(hrGrade)
+            if (c.showPerMin) add(minGrade)
+            if (c.showRating && offer.rating != null) add(ratingGrade)
+        }
+        val borderGrade =
+            if (shownGrades.isEmpty()) Grading.overall(offer, f) else Grading.averageGrade(shownGrades)
+
         return OverlayData(
             signature = signature,
             fareText = "$" + fmt2(offer.fare),
@@ -223,6 +232,7 @@ class ScreenCaptureService : Service() {
             profitText = "Profit: $" + fmt2(profit) + " (" + profitPct + "%)",
             profitColor = if (profitGood) Grading.color(Grade.GOOD) else Grading.color(Grade.BAD),
             showProfit = c.showProfit,
+            borderColor = Grading.color(borderGrade),
             position = c.cardPosition,
             offsetYdp = c.offsetY,
         )

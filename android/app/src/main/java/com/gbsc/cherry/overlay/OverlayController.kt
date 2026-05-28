@@ -2,6 +2,7 @@ package com.gbsc.cherry.overlay
 
 import android.content.Context
 import android.graphics.PixelFormat
+import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
@@ -22,6 +23,7 @@ data class OverlayData(
     val ratingValue: String, val ratingColor: Int, val showRating: Boolean,
     val tripText: String, val showTrip: Boolean,
     val profitText: String?, val profitColor: Int, val showProfit: Boolean,
+    val borderColor: Int,
     val position: CardPosition,
     val offsetYdp: Int,
 )
@@ -97,6 +99,16 @@ class OverlayController(private val context: Context) {
 
     private fun bind(v: View, d: OverlayData) {
         v.tag = d.signature
+
+        val bg = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = dp(18).toFloat()
+            setColor(0xF2111111.toInt())
+            setStroke(dp(6), d.borderColor)
+        }
+        v.background = bg
+        v.setPadding(dp(16), dp(12), dp(16), dp(12))
+
         v.findViewById<TextView>(R.id.tv_fare).text = d.fareText
 
         v.findViewById<LinearLayout>(R.id.block_mi).visibility = vis(d.showMi)

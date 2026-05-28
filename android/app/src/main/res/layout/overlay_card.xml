@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/card_bg"
     android:orientation="vertical"
-    android:minWidth="180dp">
+    android:minWidth="250dp">
 
     <LinearLayout
         android:id="@+id/header_row"
@@ -20,17 +20,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/card_text"
-            android:textSize="18sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:text="$0.00" />
 
         <TextView
             android:id="@+id/btn_close"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:textColor="@color/card_subtext"
-            android:textSize="18sp"
+            android:textSize="26sp"
             android:text="×" />
     </LinearLayout>
 
@@ -39,19 +39,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="6dp">
+        android:paddingTop="8dp">
 
         <LinearLayout
             android:id="@+id/block_mi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingEnd="10dp">
+            android:paddingEnd="16dp">
             <View
                 android:id="@+id/bar_mi"
-                android:layout_width="5dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="7dp"
                 android:background="@color/grade_good" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -62,14 +62,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_text"
-                    android:textSize="17sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     android:text="0.00" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     android:text="$/mi" />
             </LinearLayout>
         </LinearLayout>
@@ -79,12 +79,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingEnd="10dp">
+            android:paddingEnd="16dp">
             <View
                 android:id="@+id/bar_hr"
-                android:layout_width="5dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="7dp"
                 android:background="@color/grade_good" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -95,14 +95,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_text"
-                    android:textSize="17sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     android:text="0.00" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     android:text="$/hr" />
             </LinearLayout>
         </LinearLayout>
@@ -112,12 +112,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingEnd="10dp">
+            android:paddingEnd="16dp">
             <View
                 android:id="@+id/bar_min"
-                android:layout_width="5dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="7dp"
                 android:background="@color/grade_good" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -128,14 +128,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_text"
-                    android:textSize="17sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     android:text="0.00" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     android:text="$/min" />
             </LinearLayout>
         </LinearLayout>
@@ -147,9 +147,9 @@
             android:orientation="horizontal">
             <View
                 android:id="@+id/bar_rating"
-                android:layout_width="5dp"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="7dp"
                 android:background="@color/grade_avg" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -160,14 +160,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_text"
-                    android:textSize="17sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     android:text="0.0" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     android:text="rating" />
             </LinearLayout>
         </LinearLayout>
@@ -177,18 +177,19 @@
         android:id="@+id/tv_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="6dp"
+        android:paddingTop="8dp"
         android:textColor="@color/card_subtext"
-        android:textSize="12sp"
+        android:textSize="17sp"
         android:text="0h00m · 0mi" />
 
     <TextView
         android:id="@+id/tv_profit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="2dp"
+        android:paddingTop="3dp"
         android:textColor="@color/grade_good"
-        android:textSize="12sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:visibility="gone"
         android:text="" />
 

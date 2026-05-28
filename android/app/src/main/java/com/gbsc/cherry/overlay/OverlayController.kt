@@ -5,11 +5,11 @@ import android.graphics.PixelFormat
 import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.gbsc.cherry.R
 import com.gbsc.cherry.data.CardPosition
@@ -24,6 +24,12 @@ data class OverlayData(
     val tripText: String, val showTrip: Boolean,
     val profitText: String?, val profitColor: Int, val showProfit: Boolean,
     val borderColor: Int,
+    val bgColor: Int,
+    val textColor: Int,
+    val subTextColor: Int,
+    val alpha: Float,
+    val fontBase: Int,
+    val durationMs: Long,
     val position: CardPosition,
     val offsetYdp: Int,
 )
@@ -35,16 +41,16 @@ class OverlayController(private val context: Context) {
     private var root: View? = null
     private var added = false
     private var dismissedSignature: String? = null
+    private var scheduledForSignature: String? = null
 
     private fun dp(value: Int): Int =
         (value * context.resources.displayMetrics.density).toInt()
 
     private fun layoutParams(position: CardPosition, offsetYdp: Int): WindowManager.LayoutParams {
-        val type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
-            type,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
             PixelFormat.TRANSLUCENT
@@ -74,6 +80,17 @@ class OverlayController(private val context: Context) {
             runCatching { wm.updateViewLayout(view, params) }
         }
         view.visibility = View.VISIBLE
+
+        if (data.durationMs > 0 && scheduledForSignature != data.signature) {
+            scheduledForSignature = data.signature
+            val sig = data.signature
+            main.postDelayed({
+                if (root?.tag == sig) {
+                    root?.visibility = View.GONE
+                    dismissedSignature = sig
+                }
+            }, data.durationMs)
+        }
     }
 
     fun hide() = main.post {
@@ -97,51 +114,77 @@ class OverlayController(private val context: Context) {
         return v
     }
 
+    private fun TextView.style(color: Int, sizeSp: Float) {
+        setTextColor(color)
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp)
+    }
+
     private fun bind(v: View, d: OverlayData) {
         v.tag = d.signature
 
         val bg = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = dp(18).toFloat()
-            setColor(0xF2111111.toInt())
+            setColor(d.bgColor)
             setStroke(dp(6), d.borderColor)
         }
         v.background = bg
+        v.alpha = d.alpha
         v.setPadding(dp(16), dp(12), dp(16), dp(12))
 
-        v.findViewById<TextView>(R.id.tv_fare).text = d.fareText
+        val base = d.fontBase.toFloat()
+        val valueSize = base * 1.95f
+        val labelSize = base * 0.85f
+        val smallSize = base * 1.05f
 
-        v.findViewById<LinearLayout>(R.id.block_mi).visibility = vis(d.showMi)
-        v.findViewById<TextView>(R.id.tv_mi_value).apply { text = d.miValue }
-        v.findViewById<View>(R.id.bar_mi).setBackgroundColor(d.miColor)
+        v.findViewById<TextView>(R.id.tv_fare).apply {
+            text = d.fareText; style(d.textColor, base * 1.85f)
+        }
+        v.findViewById<TextView>(R.id.btn_close).style(d.subTextColor, base * 1.5f)
 
-        v.findViewById<LinearLayout>(R.id.block_hr).visibility = vis(d.showHr)
-        v.findViewById<TextView>(R.id.tv_hr_value).apply { text = d.hrValue }
-        v.findViewById<View>(R.id.bar_hr).setBackgroundColor(d.hrColor)
-
-        v.findViewById<LinearLayout>(R.id.block_min).visibility = vis(d.showMin)
-        v.findViewById<TextView>(R.id.tv_min_value).apply { text = d.minValue }
-        v.findViewById<View>(R.id.bar_min).setBackgroundColor(d.minColor)
-
-        v.findViewById<LinearLayout>(R.id.block_rating).visibility = vis(d.showRating)
-        v.findViewById<TextView>(R.id.tv_rating_value).apply { text = d.ratingValue }
-        v.findViewById<View>(R.id.bar_rating).setBackgroundColor(d.ratingColor)
+        bindMetric(
+            v, R.id.block_mi, R.id.tv_mi_value, R.id.tv_mi_label, R.id.bar_mi,
+            d.showMi, d.miValue, d.miColor, d.textColor, d.subTextColor, valueSize, labelSize
+        )
+        bindMetric(
+            v, R.id.block_hr, R.id.tv_hr_value, R.id.tv_hr_label, R.id.bar_hr,
+            d.showHr, d.hrValue, d.hrColor, d.textColor, d.subTextColor, valueSize, labelSize
+        )
+        bindMetric(
+            v, R.id.block_min, R.id.tv_min_value, R.id.tv_min_label, R.id.bar_min,
+            d.showMin, d.minValue, d.minColor, d.textColor, d.subTextColor, valueSize, labelSize
+        )
+        bindMetric(
+            v, R.id.block_rating, R.id.tv_rating_value, R.id.tv_rating_label, R.id.bar_rating,
+            d.showRating, d.ratingValue, d.ratingColor, d.textColor, d.subTextColor, valueSize, labelSize
+        )
 
         v.findViewById<TextView>(R.id.tv_trip).apply {
-            visibility = vis(d.showTrip)
+            visibility = if (d.showTrip) View.VISIBLE else View.GONE
             text = d.tripText
+            style(d.subTextColor, smallSize)
         }
 
         v.findViewById<TextView>(R.id.tv_profit).apply {
             if (d.showProfit && d.profitText != null) {
                 visibility = View.VISIBLE
                 text = d.profitText
-                setTextColor(d.profitColor)
+                style(d.profitColor, smallSize)
             } else {
                 visibility = View.GONE
             }
         }
     }
 
-    private fun vis(show: Boolean) = if (show) View.VISIBLE else View.GONE
+    private fun bindMetric(
+        v: View,
+        blockId: Int, valueId: Int, labelId: Int, barId: Int,
+        show: Boolean, value: String, barColor: Int,
+        textColor: Int, subColor: Int, valueSize: Float, labelSize: Float,
+    ) {
+        v.findViewById<View>(blockId).visibility = if (show) View.VISIBLE else View.GONE
+        v.findViewById<TextView>(valueId).apply { text = value; style(textColor, valueSize) }
+        v.findViewById<TextView>(labelId).style(subColor, labelSize)
+        v.findViewById<View>(barId).setBackgroundColor(barColor)
+    }
 }

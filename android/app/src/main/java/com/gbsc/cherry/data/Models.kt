@@ -6,17 +6,19 @@ enum class Grade { GOOD, AVERAGE, BAD }
 
 enum class CardPosition { LEFT, CENTER, RIGHT }
 
+enum class CardTheme { LIGHT, DARK, GREEN }
+
 /** Color-grading thresholds the user sets in the Cherry Picker screen. */
 @Serializable
 data class Filters(
-    val miBad: Double = 1.70,
-    val miGood: Double = 2.10,
-    val hrBad: Double = 47.0,
-    val hrGood: Double = 57.0,
-    val minBad: Double = 0.50,
-    val minGood: Double = 0.80,
-    val ratingBad: Double = 4.75,
-    val ratingGood: Double = 4.90,
+    val miBad: Double = 0.60,
+    val miGood: Double = 1.00,
+    val hrBad: Double = 15.0,
+    val hrGood: Double = 25.0,
+    val minBad: Double = 0.30,
+    val minGood: Double = 0.50,
+    val ratingBad: Double = 4.50,
+    val ratingGood: Double = 4.80,
 )
 
 /** Inputs for the Net Profit Calculator (all monthly figures). */
@@ -44,13 +46,22 @@ data class ProfitConfig(
 @Serializable
 data class Customization(
     val cardPosition: CardPosition = CardPosition.CENTER,
+    val cardTheme: CardTheme = CardTheme.DARK,
     val showPerMile: Boolean = true,
     val showPerHour: Boolean = true,
     val showPerMin: Boolean = false,
     val showRating: Boolean = true,
     val showTrip: Boolean = true,
     val showProfit: Boolean = true,
+    val showProfitPct: Boolean = false,
+    val showProfitPerHour: Boolean = false,
     val notificationEnabled: Boolean = true,
+    val voiceEnabled: Boolean = false,
+    val screenshotEnabled: Boolean = false,
+    val colorblind: Boolean = false,
+    val cardOpacity: Int = 100,
+    val fontSize: Int = 16,
+    val cardDurationSecs: Int = 8,
     val offsetY: Int = 120,
 )
 

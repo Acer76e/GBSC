@@ -15,11 +15,16 @@ object Grading {
         }
     }
 
-    fun color(grade: Grade): Int = when (grade) {
-        Grade.GOOD -> 0xFF22C55E.toInt()
-        Grade.AVERAGE -> 0xFFF5C518.toInt()
-        Grade.BAD -> 0xFFEF4444.toInt()
-    }
+    fun color(grade: Grade, colorblind: Boolean = false): Int =
+        if (colorblind) when (grade) {
+            Grade.GOOD -> 0xFF0072B2.toInt()    // blue
+            Grade.AVERAGE -> 0xFFF0E442.toInt() // yellow
+            Grade.BAD -> 0xFFD55E00.toInt()     // vermillion
+        } else when (grade) {
+            Grade.GOOD -> 0xFF22C55E.toInt()
+            Grade.AVERAGE -> 0xFFF5C518.toInt()
+            Grade.BAD -> 0xFFEF4444.toInt()
+        }
 
     /** Overall grade for an offer: worst of the per-mile and per-hour grades. */
     fun overall(offer: TripOffer, f: Filters): Grade {

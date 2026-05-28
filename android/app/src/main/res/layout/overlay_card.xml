@@ -66,6 +66,7 @@
                     android:textStyle="bold"
                     android:text="0.00" />
                 <TextView
+                    android:id="@+id/tv_mi_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
@@ -99,6 +100,7 @@
                     android:textStyle="bold"
                     android:text="0.00" />
                 <TextView
+                    android:id="@+id/tv_hr_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
@@ -132,6 +134,7 @@
                     android:textStyle="bold"
                     android:text="0.00" />
                 <TextView
+                    android:id="@+id/tv_min_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"
@@ -164,6 +167,7 @@
                     android:textStyle="bold"
                     android:text="0.0" />
                 <TextView
+                    android:id="@+id/tv_rating_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/card_subtext"

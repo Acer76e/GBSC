@@ -392,6 +392,44 @@ h3{font-size:15px;line-height:1.3;}
 .tower-avatar{position:absolute;left:50%;transform:translateX(-50%);transition:bottom .55s cubic-bezier(.2,1,.2,1);font-size:34px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));z-index:2;}
 .tower-summit{position:absolute;top:50px;left:50%;transform:translateX(-50%);font-size:18px;opacity:.7;}
 
+.termle-btn{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 6px 20px -4px rgba(16,185,129,.5);}
+.ttl-btn{background:linear-gradient(135deg,#a855f7,#7e22ce);color:#fff;box-shadow:0 6px 20px -4px rgba(168,85,247,.5);}
+.spin-btn{background:linear-gradient(135deg,#f59e0b,#ec4899,#6366f1);background-size:200% 200%;color:#fff;box-shadow:0 6px 20px -4px rgba(236,72,153,.5);animation:spinBtnShift 4s ease infinite;}
+@keyframes spinBtnShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+.termle-grid{display:flex;flex-direction:column;gap:5px;align-items:center;margin:14px 0;}
+.termle-row{display:grid;grid-template-columns:repeat(5,48px);gap:5px;}
+.termle-tile{width:48px;height:48px;background:#fff;border:2px solid #d1d5db;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;text-transform:uppercase;color:var(--text);}
+.termle-tile.filled{border-color:#6b7280;animation:popTile .15s ease;}
+.termle-tile.correct{background:#10b981;color:#fff;border-color:#10b981;animation:flipTile .6s ease;}
+.termle-tile.present{background:#f59e0b;color:#fff;border-color:#f59e0b;animation:flipTile .6s ease;}
+.termle-tile.absent{background:#6b7280;color:#fff;border-color:#6b7280;animation:flipTile .6s ease;}
+@keyframes flipTile{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+@keyframes popTile{0%{transform:scale(.9)}100%{transform:scale(1)}}
+.termle-keyboard{display:flex;flex-direction:column;gap:5px;margin-top:8px;}
+.termle-key-row{display:flex;gap:4px;justify-content:center;}
+.termle-key{background:#d1d5db;color:#1f2937;padding:14px 6px;border-radius:6px;font-weight:700;font-size:14px;min-width:28px;border:none;cursor:pointer;text-transform:uppercase;transition:transform .1s,background .2s;}
+.termle-key:active{transform:scale(.92);}
+.termle-key.correct{background:#10b981;color:#fff;}
+.termle-key.present{background:#f59e0b;color:#fff;}
+.termle-key.absent{background:#6b7280;color:#fff;}
+.termle-key.wide{padding:14px 10px;font-size:11px;min-width:50px;}
+
+.spin-wheel{position:relative;width:240px;height:240px;margin:18px auto;border-radius:50%;border:6px solid #fff;box-shadow:0 10px 28px rgba(0,0,0,.25);}
+.spin-wheel-inner{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#6366f1 0deg 90deg,#dc2626 90deg 180deg,#10b981 180deg 270deg,#d97706 270deg 360deg);transition:transform 2.2s cubic-bezier(.18,.84,.3,1);}
+.spin-pointer{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:38px;z-index:3;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3));}
+.spin-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-size:30px;z-index:2;box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.spin-segment{position:absolute;color:#fff;font-size:30px;font-weight:800;text-shadow:0 2px 4px rgba(0,0,0,.4);}
+
+.ttl-statement{display:flex;align-items:flex-start;gap:12px;background:#fff;border:3px solid var(--line);color:var(--text);padding:14px;border-radius:14px;font-size:15px;font-weight:600;text-align:left;width:100%;transition:border-color .15s,background .15s,transform .12s;cursor:pointer;line-height:1.4;}
+.ttl-statement:not(:disabled):hover{border-color:var(--primary);}
+.ttl-statement:not(:disabled):active{transform:scale(.98);}
+.ttl-statement .letter{flex-shrink:0;width:34px;height:34px;border-radius:10px;background:#f3f4f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin-top:2px;}
+.ttl-statement.correct{background:var(--correct-bg);border-color:var(--correct);color:var(--correct-tx);}
+.ttl-statement.correct .letter{background:var(--correct);color:#fff;}
+.ttl-statement.incorrect{background:var(--incorrect-bg);border-color:var(--incorrect);color:var(--incorrect-tx);}
+.ttl-statement.incorrect .letter{background:var(--incorrect);color:#fff;}
+
 @media (max-width:380px){
   .celebrate-emoji{font-size:100px;}
   .celebrate-title{font-size:40px;letter-spacing:2px;}
@@ -1280,7 +1318,12 @@ const TROPHIES = [
   { id:"boss_social",   emoji:"🏛️", name:"History Hero",     desc:"Defeat all 7 Social Studies bosses." },
   { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
   { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 9 Reading bosses." },
-  { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." }
+  { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
+  { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
+  { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
+  { id:"termle_7",      emoji:"🟩", name:"Word Master",      desc:"Solve Termle 7 days in a row." },
+  { id:"spin_streak",   emoji:"🎡", name:"Lucky Spinner",    desc:"Get 10 correct in a row on Spin the Wheel." },
+  { id:"truth_seeker",  emoji:"🔀", name:"Truth Seeker",     desc:"Spot 10 lies in a row in Two Truths & a Lie." }
 ];
 
 const BOSSES = {
@@ -2166,6 +2209,411 @@ function finishTower(won) {
 }
 function quitTower() { state.screen = "home"; render(); }
 
+const TERMLE_WORDS = [
+"ABOUT","ABOVE","AFTER","AGAIN","ALONE","ALONG","ANGEL","ANGRY","APPLE","ARENA","ARGUE","AROSE","AWARE","BADLY","BASIC","BEACH","BEGAN","BEGIN","BEING","BIRTH","BLACK","BLAME","BLANK","BLIND","BLOCK","BLOOD","BOARD","BOOKS","BOUND","BRAIN","BRAVE","BREAD","BREAK","BRIEF","BRING","BROAD","BROWN","BRUSH","BUILD","CABIN","CABLE","CARRY","CATCH","CAUSE","CHAIN","CHAIR","CHARM","CHART","CHASE","CHEAP","CHECK","CHEER","CHESS","CHEST","CHIEF","CHILD","CHINA","CHIPS","CHOSE","CIVIC","CLAIM","CLASS","CLEAN","CLEAR","CLICK","CLIFF","CLIMB","CLOAK","CLOCK","CLOSE","CLOTH","CLOUD","CLOWN","COACH","COAST","COLOR","COULD","COUNT","COURT","COVER","CRASH","CREAM","CRIME","CROSS","CROWD","CROWN","CRUSH","CURVE","CYCLE","DAILY","DANCE","DEATH","DEPTH","DOING","DOUBT","DOZEN","DRAFT","DRAMA","DREAM","DRESS","DRINK","DRIVE","EAGER","EAGLE","EARLY","EARTH","EIGHT","ELDER","EMPTY","ENEMY","ENJOY","ENTER","EQUAL","ERROR","ESSAY","EVENT","EVERY","EXACT","EXIST","EXTRA","FAITH","FAULT","FENCE","FIFTH","FIFTY","FIGHT","FINAL","FIRST","FIXED","FLAME","FLASH","FLEET","FLOAT","FLOOD","FLOOR","FOCUS","FORCE","FORTH","FORTY","FORUM","FOUND","FRAME","FRANK","FRESH","FRONT","FROST","FRUIT","FUNNY","GHOST","GIANT","GIVEN","GLASS","GLOBE","GLORY","GRADE","GRAIN","GRAND","GRAPH","GRASS","GREAT","GREEN","GROUP","GROWN","GUEST","GUIDE","HABIT","HAPPY","HEARD","HEART","HEAVY","HENCE","HONOR","HORSE","HOTEL","HOUSE","HUMAN","IDEAL","INDEX","INNER","INPUT","JUDGE","JUICE","KNIFE","KNOWN","LABEL","LARGE","LATER","LAUGH","LAYER","LEARN","LEAST","LEAVE","LEGAL","LEMON","LEVEL","LIGHT","LIMIT","LIVED","LOCAL","LOGIC","LOOSE","LOWER","LOYAL","LUCKY","LUNCH","MAGIC","MAJOR","MARCH","MATCH","MAYBE","MAYOR","MEDIA","METAL","MIGHT","MODEL","MONEY","MONTH","MORAL","MOTOR","MOUSE","MOUTH","MOVIE","MUSIC","NAMED","NEEDS","NERVE","NEVER","NIGHT","NOBLE","NOISE","NORTH","NOVEL","NURSE","OCEAN","OFFER","OLDER","ORDER","OTHER","OWNER","PAGES","PAINT","PANEL","PAPER","PARTS","PARTY","PEACE","PHONE","PHOTO","PIANO","PIECE","PILOT","PITCH","PIZZA","PLACE","PLAIN","PLANE","PLANT","PLATE","PLAYS","POINT","POWER","PRESS","PRICE","PRIDE","PRIME","PRINT","PRIOR","PRIZE","PROOF","PROUD","PROVE","QUEEN","QUICK","QUIET","QUITE","RADIO","RANGE","REACH","READY","REPLY","RIGHT","RIVER","ROBOT","ROUGH","ROUND","ROUTE","ROYAL","RULER","RURAL","SAUCE","SCALE","SCARE","SCENE","SCOUT","SENSE","SEVEN","SHAKE","SHAPE","SHARE","SHARP","SHEEP","SHEET","SHELL","SHIFT","SHINE","SHIRT","SHOCK","SHOOT","SHORE","SHORT","SHOWN","SIGHT","SILLY","SINCE","SIXTH","SKILL","SKIRT","SKULL","SLEEP","SLIDE","SMALL","SMART","SMELL","SMILE","SMOKE","SNACK","SNAKE","SOLID","SOLVE","SORRY","SOUND","SOUTH","SPACE","SPARE","SPEAK","SPEED","SPELL","SPEND","SPENT","SPILL","SPORT","SPRAY","STAGE","STAIR","STAMP","STAND","START","STATE","STEAL","STEAM","STEEL","STEPS","STICK","STIFF","STILL","STING","STOCK","STONE","STOOD","STORE","STORM","STORY","STUDY","STYLE","SUGAR","SUITE","SUPER","SWEAR","SWEEP","SWEET","SWIFT","SWING","SWORD","TABLE","TAKEN","TASTE","TEACH","TEAMS","TEETH","TERMS","THANK","THEIR","THEME","THERE","THICK","THINK","THIRD","THOSE","THREE","THREW","THROW","THUMB","TIGER","TIRED","TITLE","TODAY","TOOLS","TOOTH","TOPIC","TORCH","TOTAL","TOUCH","TOUGH","TOWER","TOWNS","TRACK","TRADE","TRAIN","TRASH","TREAT","TREND","TRIAL","TRIBE","TRICK","TRUCK","TRULY","TRUST","TRUTH","TWICE","TWIST","ULTRA","UNCLE","UNDER","UNION","UNTIL","UPPER","URBAN","USING","USUAL","VALID","VALUE","VIDEO","VIRAL","VITAL","VIVID","VOCAL","VOICE","WAGON","WASTE","WATCH","WATER","WHEAT","WHEEL","WHERE","WHICH","WHILE","WHITE","WHOLE","WHOSE","WIDER","WINDY","WOMAN","WORDS","WORLD","WORTH","WOULD","WRITE","WRONG","YEARS","YIELD","YOUNG","YOURS","YOUTH"
+];
+
+function termleWordOfDay() {
+  const seed = stringHash(todayStr() + ":termle");
+  return TERMLE_WORDS[seed % TERMLE_WORDS.length];
+}
+function loadTermleState() {
+  try {
+    const s = JSON.parse(lsGet("g6_termleState", "null"));
+    if (s && s.date === todayStr()) return s;
+    return null;
+  } catch(e) { return null; }
+}
+function saveTermleState(s) { lsSet("g6_termleState", JSON.stringify(s)); }
+function loadTermleStreak() { return parseInt(lsGet("g6_termleStreak", "0"), 10); }
+function loadTermleLast() { return lsGet("g6_termleLast", ""); }
+function updateTermleStreak(won) {
+  const today = todayStr(); const yest = dateOffset(-1);
+  const last = loadTermleLast();
+  if (last === today) return loadTermleStreak();
+  let cur = loadTermleStreak();
+  if (last === yest && won) cur = cur + 1;
+  else cur = won ? 1 : 0;
+  lsSet("g6_termleStreak", String(cur));
+  lsSet("g6_termleLast", today);
+  return cur;
+}
+
+function startTermle() {
+  clearTimer(); clearSpeedTimer();
+  const saved = loadTermleState();
+  if (saved) {
+    state.termleWord = saved.word;
+    state.termleGuesses = saved.guesses || [];
+    state.termleStatuses = saved.statuses || [];
+    state.termleCurrent = saved.current || "";
+    state.termleStatus = saved.status || "playing";
+  } else {
+    state.termleWord = termleWordOfDay();
+    state.termleGuesses = [];
+    state.termleStatuses = [];
+    state.termleCurrent = "";
+    state.termleStatus = "playing";
+  }
+  state.screen = "termle";
+  render();
+}
+
+function termleType(letter) {
+  if (state.termleStatus !== "playing") return;
+  if (state.termleCurrent.length >= 5) return;
+  state.termleCurrent += letter.toUpperCase();
+  tapTick();
+  persistTermleState();
+  render();
+}
+function termleBackspace() {
+  if (state.termleStatus !== "playing") return;
+  state.termleCurrent = state.termleCurrent.slice(0, -1);
+  tapTick();
+  persistTermleState();
+  render();
+}
+function termleSubmit() {
+  if (state.termleStatus !== "playing") return;
+  if (state.termleCurrent.length !== 5) return;
+  const guess = state.termleCurrent.toUpperCase();
+  const statuses = checkTermleGuess(guess, state.termleWord);
+  state.termleGuesses.push(guess);
+  state.termleStatuses.push(statuses);
+  state.termleCurrent = "";
+  if (guess === state.termleWord) {
+    state.termleStatus = "won";
+    const streak = updateTermleStreak(true);
+    bigConfetti(); chimeAchievement();
+    const earned = loadTrophies(); const newOnes = [];
+    tryEarn(earned, newOnes, "termle_first");
+    if (streak >= 3) tryEarn(earned, newOnes, "termle_3");
+    if (streak >= 7) tryEarn(earned, newOnes, "termle_7");
+    saveTrophies(earned);
+    if (newOnes.length) setTimeout(() => queueToasts(newOnes), 700);
+  } else if (state.termleGuesses.length >= 6) {
+    state.termleStatus = "lost";
+    updateTermleStreak(false);
+    toneTimeout();
+  } else {
+    chimePop();
+  }
+  persistTermleState();
+  render();
+}
+function persistTermleState() {
+  saveTermleState({
+    date: todayStr(),
+    word: state.termleWord,
+    guesses: state.termleGuesses,
+    statuses: state.termleStatuses,
+    current: state.termleCurrent,
+    status: state.termleStatus
+  });
+}
+function checkTermleGuess(guess, word) {
+  const result = ["absent","absent","absent","absent","absent"];
+  const wordChars = word.split("");
+  const used = [false,false,false,false,false];
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === wordChars[i]) { result[i] = "correct"; used[i] = true; }
+  }
+  for (let i = 0; i < 5; i++) {
+    if (result[i] === "correct") continue;
+    for (let j = 0; j < 5; j++) {
+      if (!used[j] && guess[i] === wordChars[j]) {
+        result[i] = "present"; used[j] = true; break;
+      }
+    }
+  }
+  return result;
+}
+function getKeyState(letter) {
+  let best = null;
+  for (let i = 0; i < (state.termleGuesses||[]).length; i++) {
+    for (let j = 0; j < 5; j++) {
+      if (state.termleGuesses[i][j] === letter) {
+        const s = state.termleStatuses[i][j];
+        if (s === "correct") return "correct";
+        if (s === "present") best = "present";
+        else if (!best) best = "absent";
+      }
+    }
+  }
+  return best;
+}
+
+function viewTermle() {
+  const rows = [];
+  for (let i = 0; i < 6; i++) {
+    if (i < state.termleGuesses.length) {
+      const g = state.termleGuesses[i]; const s = state.termleStatuses[i];
+      rows.push(`<div class="termle-row">${[0,1,2,3,4].map(j => `<div class="termle-tile ${s[j]}">${g[j]}</div>`).join("")}</div>`);
+    } else if (i === state.termleGuesses.length && state.termleStatus === "playing") {
+      const c = state.termleCurrent;
+      rows.push(`<div class="termle-row">${[0,1,2,3,4].map(j => `<div class="termle-tile ${c[j]?"filled":""}">${c[j]||""}</div>`).join("")}</div>`);
+    } else {
+      rows.push(`<div class="termle-row">${[0,1,2,3,4].map(() => `<div class="termle-tile"></div>`).join("")}</div>`);
+    }
+  }
+  const kb = [
+    ["Q","W","E","R","T","Y","U","I","O","P"],
+    ["A","S","D","F","G","H","J","K","L"],
+    ["ENTER","Z","X","C","V","B","N","M","BACK"]
+  ];
+  return `
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="card" style="text-align:center;padding:14px;">
+      <h2>🟩 Termle</h2>
+      <p class="muted" style="font-size:13px;margin-top:4px;">Guess the daily 5-letter word in 6 tries · ${loadTermleStreak() > 0 ? `🔥 ${loadTermleStreak()}-day streak` : "Build a streak!"}</p>
+    </div>
+    <div class="termle-grid">${rows.join("")}</div>
+    ${state.termleStatus !== "playing" ? `
+      <div class="card" style="text-align:center;padding:18px;">
+        <h2>${state.termleStatus === "won" ? "🎉 You won!" : `💀 The word was <span style="color:var(--primary);">${esc(state.termleWord)}</span>`}</h2>
+        <p class="muted" style="margin-top:6px;">${state.termleStatus === "won" ? `Solved in ${state.termleGuesses.length} guess${state.termleGuesses.length===1?"":"es"}!` : "Better luck tomorrow!"}</p>
+        <p class="muted" style="margin-top:6px;">🔥 Streak: <b style="color:#ef4444;">${loadTermleStreak()} day${loadTermleStreak()===1?"":"s"}</b></p>
+        <p class="muted" style="margin-top:8px;font-size:12px;">Come back tomorrow for a new word!</p>
+      </div>
+      <button class="btn btn-primary" onclick="goHome()">🏠 Home</button>
+    ` : `
+      <div class="termle-keyboard">
+        ${kb.map(row => `<div class="termle-key-row">${row.map(k => {
+          if (k === "ENTER") return `<button class="termle-key wide" onclick="termleSubmit()">ENTER</button>`;
+          if (k === "BACK") return `<button class="termle-key wide" onclick="termleBackspace()">⌫</button>`;
+          const s = getKeyState(k);
+          return `<button class="termle-key ${s||""}" onclick="termleType('${k}')">${k}</button>`;
+        }).join("")}</div>`).join("")}
+      </div>
+    `}
+  `;
+}
+
+function startTwoTruths() {
+  clearTimer(); clearSpeedTimer();
+  state.ttlScore = 0;
+  state.ttlStreak = 0;
+  state.ttlTotal = 0;
+  doNextTTL();
+}
+function getTopicTerms(subjKey, topicKey) {
+  if (subjKey === "social" && SOCIAL_RAW[topicKey]) {
+    return SOCIAL_RAW[topicKey].terms.slice();
+  }
+  const topic = SUBJECTS[subjKey].topics[topicKey];
+  return topic.questions.map(q => {
+    let def = q.q;
+    const m = def.match(/["""]([^"""]+)["""]/);
+    if (m) def = m[1];
+    else def = def.replace(/^(Which|What is|What|How many|How|Who is|Who|Identify).*?(:|\?\??)\s*/i, "").replace(/\?$/, "");
+    return { term: q.opts[q.a], def: def };
+  });
+}
+function doNextTTL() {
+  const subj = curSubject();
+  const candidates = subj.keyOrder.filter(k => getTopicTerms(state.subject, k).length >= 4);
+  if (candidates.length === 0) { alert("Not enough terms in this subject for Two Truths & a Lie."); state.screen = "home"; render(); return; }
+  const topicKey = candidates[Math.floor(Math.random() * candidates.length)];
+  const terms = getTopicTerms(state.subject, topicKey);
+  const picks = shuffle(terms.slice()).slice(0, 3);
+  const others = terms.filter(t => !picks.some(p => p.term === t.term));
+  const lieIdx = Math.floor(Math.random() * 3);
+  const wrongDef = others[Math.floor(Math.random() * others.length)].def;
+  const statements = picks.map((p, i) => ({
+    term: p.term,
+    def: i === lieIdx ? wrongDef : p.def,
+    isLie: i === lieIdx,
+    realDef: p.def
+  }));
+  state.ttlStatements = shuffle(statements);
+  state.ttlAnswered = false;
+  state.ttlSelected = -1;
+  state.ttlTopicKey = topicKey;
+  state.screen = "ttl";
+  render();
+}
+function answerTTL(i) {
+  if (state.ttlAnswered) return;
+  state.ttlAnswered = true;
+  state.ttlSelected = i;
+  state.ttlTotal++;
+  if (state.ttlStatements[i].isLie) {
+    state.ttlScore++;
+    state.ttlStreak++;
+    chimeCorrect(); smallConfetti();
+    if (state.ttlStreak >= 10) {
+      const earned = loadTrophies(); const newOnes = [];
+      tryEarn(earned, newOnes, "truth_seeker");
+      saveTrophies(earned);
+      if (newOnes.length) setTimeout(() => queueToasts(newOnes), 700);
+    }
+  } else {
+    state.ttlStreak = 0;
+    toneWrong();
+  }
+  render();
+}
+function nextTTL() { doNextTTL(); }
+function quitTTL() { state.screen = "home"; render(); }
+
+function viewTTL() {
+  const subj = curSubject();
+  const topic = subj.topics[state.ttlTopicKey];
+  const lie = state.ttlStatements.find(s => s.isLie);
+  return `
+    <button class="back-btn" onclick="quitTTL()">← Back</button>
+    <div class="card" style="text-align:center;padding:14px;">
+      <h2>🔀 Two Truths &amp; a Lie</h2>
+      <p class="muted" style="font-size:13px;margin-top:4px;">Spot the FALSE statement · Score: <b style="color:var(--primary);">${state.ttlScore}</b>${state.ttlStreak >= 3 ? ` · 🔥 ${state.ttlStreak}` : ""}</p>
+    </div>
+    <div class="card fade-in">
+      <span class="badge" style="background:${topic.color}22;color:#000a;">${topic.emoji} ${esc(topic.title)}</span>
+      <div class="qtext" style="margin-top:10px;font-size:17px;">Which one is the LIE?</div>
+      <div class="options" style="gap:10px;margin-top:14px;">
+        ${state.ttlStatements.map((s, i) => {
+          let cls = "ttl-statement";
+          if (state.ttlAnswered) {
+            if (s.isLie) cls += " correct";
+            else if (i === state.ttlSelected) cls += " incorrect";
+          }
+          return `<button class="${cls}" ${state.ttlAnswered?"disabled":""} onclick="answerTTL(${i})">
+            <span class="letter">${letter(i)}</span><span><b>${esc(s.term)}:</b> ${esc(s.def)}</span>
+          </button>`;
+        }).join("")}
+      </div>
+      ${state.ttlAnswered ? `
+        <div class="feedback ${state.ttlStatements[state.ttlSelected].isLie?"correct":"incorrect"}" style="margin-top:14px;">
+          ${state.ttlStatements[state.ttlSelected].isLie ? "🎯 You caught the lie!" : "❌ Almost!"}
+          <span class="hint"><b>${esc(lie.term)}</b> actually means: ${esc(lie.realDef)}</span>
+        </div>
+        <button class="btn btn-primary" style="margin-top:12px;" onclick="nextTTL()">Next Round →</button>
+      ` : ""}
+    </div>
+  `;
+}
+
+function startSpin() {
+  clearTimer(); clearSpeedTimer();
+  state.spinScore = 0;
+  state.spinStreak = 0;
+  state.spinTotal = 0;
+  state.spinAngle = 0;
+  state.spinSpinning = false;
+  state.spinResult = null;
+  state.spinAnswered = false;
+  state.spinSelected = -1;
+  state.screen = "spin";
+  render();
+}
+function doSpinWheel() {
+  if (state.spinSpinning) return;
+  state.spinSpinning = true;
+  state.spinResult = null;
+  state.spinAnswered = false;
+  const subjects = SUBJECT_ORDER;
+  const targetIdx = Math.floor(Math.random() * subjects.length);
+  const segDeg = 360 / subjects.length;
+  // We want the pointer (top) to land in the middle of the target segment.
+  // Pointer is at 0deg. After rotation, segment 0 starts at -rotation. We need the rotation to be -(targetIdx * segDeg) - segDeg/2 (mod 360), plus a few full spins.
+  const finalDeg = 360 - (targetIdx * segDeg + segDeg / 2);
+  const fullSpins = 5;
+  const next = Math.floor(state.spinAngle / 360 + fullSpins) * 360 + finalDeg;
+  state.spinAngle = next;
+  render();
+  setTimeout(() => {
+    const subj = subjects[targetIdx];
+    const topics = SUBJECTS[subj].keyOrder;
+    const topic = topics[Math.floor(Math.random() * topics.length)];
+    const qs = SUBJECTS[subj].topics[topic].questions;
+    const q = shuffleOptions(qs[Math.floor(Math.random() * qs.length)]);
+    state.spinResult = { subj, topic, question: q };
+    state.spinSpinning = false;
+    state.spinAnswered = false;
+    state.spinSelected = -1;
+    render();
+  }, 2300);
+}
+function answerSpin(i) {
+  if (state.spinAnswered) return;
+  state.spinAnswered = true;
+  state.spinSelected = i;
+  state.spinTotal++;
+  const q = state.spinResult.question;
+  if (i === q.a) {
+    state.spinScore++;
+    state.spinStreak++;
+    chimeCorrect(); smallConfetti();
+    if (state.spinStreak >= 10) {
+      const earned = loadTrophies(); const newOnes = [];
+      tryEarn(earned, newOnes, "spin_streak");
+      saveTrophies(earned);
+      if (newOnes.length) setTimeout(() => queueToasts(newOnes), 700);
+    }
+  } else {
+    state.spinStreak = 0;
+    toneWrong();
+  }
+  render();
+}
+function quitSpin() { state.screen = "home"; render(); }
+
+function viewSpin() {
+  const r = state.spinResult;
+  const ready = !state.spinSpinning && !r;
+  return `
+    <button class="back-btn" onclick="quitSpin()">← Back</button>
+    <div class="card" style="text-align:center;padding:14px;">
+      <h2>🎡 Spin the Wheel</h2>
+      <p class="muted" style="font-size:13px;margin-top:4px;">Random subject + question · Score: <b style="color:var(--primary);">${state.spinScore}</b>${state.spinStreak >= 3 ? ` · 🔥 ${state.spinStreak}` : ""}</p>
+    </div>
+    <div style="position:relative;">
+      <div class="spin-wheel">
+        <span class="spin-pointer">▼</span>
+        <div class="spin-wheel-inner" style="transform:rotate(${state.spinAngle}deg);">
+          ${SUBJECT_ORDER.map((s, idx) => {
+            const segDeg = 360 / SUBJECT_ORDER.length;
+            const ang = idx * segDeg + segDeg / 2;
+            const rad = (ang - 90) * Math.PI / 180;
+            const dist = 78;
+            const x = 50 + (dist / 240 * 100) * Math.cos(rad);
+            const y = 50 + (dist / 240 * 100) * Math.sin(rad);
+            return `<div class="spin-segment" style="left:${x}%;top:${y}%;transform:translate(-50%,-50%) rotate(${ang}deg);">${SUBJECTS[s].emoji}</div>`;
+          }).join("")}
+        </div>
+        <div class="spin-center">🎡</div>
+      </div>
+    </div>
+    ${ready ? `<button class="btn btn-primary" onclick="doSpinWheel()">🎡 SPIN!</button>` : ""}
+    ${state.spinSpinning ? `<p class="muted" style="text-align:center;">🎡 Spinning...</p>` : ""}
+    ${r ? `
+      <div class="card quiz fade-in">
+        <span class="badge" style="background:${SUBJECTS[r.subj].color}22;color:#000a;">${SUBJECTS[r.subj].emoji} ${esc(SUBJECTS[r.subj].title)} · ${esc(SUBJECTS[r.subj].topics[r.topic].title)}</span>
+        <div class="qtext" style="margin-top:10px;">${esc(r.question.q)}</div>
+        <div class="options">
+          ${r.question.opts.map((opt, i) => {
+            let cls = "option";
+            if (state.spinAnswered) {
+              if (i === r.question.a) cls += " correct";
+              else if (i === state.spinSelected) cls += " incorrect";
+            }
+            return `<button class="${cls}" ${state.spinAnswered?"disabled":""} onclick="answerSpin(${i})">
+              <span class="letter">${letter(i)}</span><span>${esc(opt)}</span>
+            </button>`;
+          }).join("")}
+        </div>
+        ${state.spinAnswered ? `
+          <div class="feedback ${state.spinSelected === r.question.a?"correct":"incorrect"}" style="margin-top:14px;">
+            ${state.spinSelected === r.question.a ? pick(PRAISE_CORRECT) : pick(PRAISE_WRONG)}
+            <span class="hint">${state.spinSelected === r.question.a ? esc(r.question.hint) : "Answer: <b>" + esc(r.question.opts[r.question.a]) + "</b> — " + esc(r.question.hint)}</span>
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px;" onclick="doSpinWheel()">🎡 Spin Again!</button>
+        ` : ""}
+      </div>
+    ` : ""}
+  `;
+}
+
 function viewTower() {
   const q = state.towerQuestions[state.towerIndex];
   const fillPct = (state.towerFloor / 50) * 100;
@@ -2465,6 +2913,9 @@ function viewHome() {
       <button class="btn speed-btn btn-icon" style="margin-top:6px;" onclick="startSpeedRound()">💨 Speed Round <span style="opacity:.85;font-weight:500;">(60 sec)</span></button>
       <button class="btn boss-btn btn-icon" style="margin-top:6px;" onclick="goBossPicker()">⚔️ Boss Battle <span style="opacity:.85;font-weight:500;">— defeat the topic boss!</span></button>
       <button class="btn tower-btn btn-icon" style="margin-top:6px;" onclick="startTowerClimb()">🗼 Tower Climb <span style="opacity:.85;font-weight:500;">(50 floors)</span></button>
+      <button class="btn termle-btn btn-icon" style="margin-top:6px;" onclick="startTermle()">🟩 Termle <span style="opacity:.85;font-weight:500;">— guess the daily word</span></button>
+      <button class="btn ttl-btn btn-icon" style="margin-top:6px;" onclick="startTwoTruths()">🔀 Two Truths &amp; a Lie</button>
+      <button class="btn spin-btn btn-icon" style="margin-top:6px;" onclick="startSpin()">🎡 Spin the Wheel <span style="opacity:.85;font-weight:500;">— random anything</span></button>
     </div>
     <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
     <div class="row">
@@ -3453,6 +3904,9 @@ function render() {
     case "boss-done": view = viewBossDone(); break;
     case "tower": view = viewTower(); break;
     case "tower-done": view = viewTowerDone(); break;
+    case "termle": view = viewTermle(); break;
+    case "ttl": view = viewTTL(); break;
+    case "spin": view = viewSpin(); break;
     default: view = viewHome();
   }
   app.innerHTML = view;
@@ -3505,6 +3959,18 @@ window.quitBoss = quitBoss;
 window.startTowerClimb = startTowerClimb;
 window.answerTower = answerTower;
 window.quitTower = quitTower;
+window.startTermle = startTermle;
+window.termleType = termleType;
+window.termleBackspace = termleBackspace;
+window.termleSubmit = termleSubmit;
+window.startTwoTruths = startTwoTruths;
+window.answerTTL = answerTTL;
+window.nextTTL = nextTTL;
+window.quitTTL = quitTTL;
+window.startSpin = startSpin;
+window.doSpinWheel = doSpinWheel;
+window.answerSpin = answerSpin;
+window.quitSpin = quitSpin;
 
 migrateData();
 {

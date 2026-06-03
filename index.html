@@ -330,6 +330,42 @@ h3{font-size:15px;line-height:1.3;}
 .subject-pill:hover{background:#fff;}
 .subject-pill-wrap{display:flex;justify-content:center;}
 
+.games-card{padding:18px;}
+.games-card h2{margin-bottom:8px;}
+.daily-btn{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;box-shadow:0 6px 20px -4px rgba(245,158,11,.5);}
+.daily-btn.done{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 6px 20px -4px rgba(16,185,129,.45);}
+.daily-streak{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:999px;font-size:12px;font-weight:800;margin-left:4px;}
+.match-btn{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;box-shadow:0 6px 20px -4px rgba(236,72,153,.5);}
+.speed-btn{background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;box-shadow:0 6px 20px -4px rgba(8,145,178,.5);}
+
+.match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0;}
+.match-card{aspect-ratio:1/1.15;perspective:700px;cursor:pointer;}
+.match-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,.2,.2,1);}
+.match-card.flipped .match-card-inner,.match-card.matched .match-card-inner{transform:rotateY(180deg);}
+.match-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:6px;text-align:center;line-height:1.2;overflow:hidden;}
+.match-front{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;font-size:34px;font-weight:800;}
+.match-back{background:#fff;border:2px solid var(--line);transform:rotateY(180deg);color:var(--text);font-weight:700;font-size:11px;padding:8px;}
+.match-card.matched .match-back{background:var(--correct-bg);border-color:var(--correct);color:var(--correct-tx);}
+.match-card.matched{animation:matchPulse .5s ease;}
+@keyframes matchPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.match-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.match-stats .ms{background:rgba(255,255,255,.7);border-radius:12px;padding:10px;text-align:center;}
+.match-stats .ms .v{font-size:20px;font-weight:800;color:var(--primary);}
+.match-stats .ms .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;}
+
+.speed-timer{position:fixed;top:8px;left:14px;right:14px;height:8px;background:rgba(255,255,255,.5);border-radius:999px;overflow:hidden;z-index:40;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.speed-timer-fill{height:100%;background:linear-gradient(90deg,#10b981 0%,#f59e0b 50%,#ef4444 100%);transition:width .1s linear;border-radius:999px;}
+.speed-score-chip{position:fixed;top:22px;right:14px;background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff;padding:6px 14px;border-radius:999px;font-weight:800;font-size:16px;box-shadow:0 4px 14px rgba(8,145,178,.45);z-index:40;animation:pop .3s;}
+
+.daily-card{background:linear-gradient(135deg,#fef3c7,#fed7aa);border-radius:18px;padding:14px 16px;border:2px solid #fbbf24;margin-bottom:0;}
+.daily-card .row-top{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.daily-card .row-top h3{flex:1;font-size:15px;color:#92400e;font-weight:800;}
+.daily-card .row-top .streak-chip{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;}
+.daily-card .day-cal{display:flex;gap:4px;justify-content:center;margin:8px 0;}
+.daily-card .day-cal .cell{width:18px;height:24px;border-radius:6px;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:14px;color:#9ca3af;}
+.daily-card .day-cal .cell.lit{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;}
+.daily-card .day-cal .cell.today{outline:2px solid #92400e;}
+
 @media (max-width:380px){
   .celebrate-emoji{font-size:100px;}
   .celebrate-title{font-size:40px;letter-spacing:2px;}
@@ -1206,7 +1242,12 @@ const TROPHIES = [
   { id:"all_modes",     emoji:"🌈", name:"Mode Master",      desc:"Try every quiz mode at least once." },
   { id:"customizer",    emoji:"🦄", name:"Stylish",          desc:"Change your avatar." },
   { id:"improver",      emoji:"📈", name:"Climbing Higher",  desc:"Have an improving trend in your history." },
-  { id:"centurion",     emoji:"💪", name:"Centurion",        desc:"Get 100 total correct answers." }
+  { id:"centurion",     emoji:"💪", name:"Centurion",        desc:"Get 100 total correct answers." },
+  { id:"daily_3",       emoji:"🔥", name:"Day Tripper",      desc:"Complete the Daily Challenge 3 days in a row." },
+  { id:"daily_7",       emoji:"🌟", name:"Week Warrior",     desc:"Complete the Daily Challenge 7 days in a row." },
+  { id:"daily_30",      emoji:"🏆", name:"Month Maverick",   desc:"Complete the Daily Challenge 30 days in a row." },
+  { id:"match_master",  emoji:"🃏", name:"Memory Master",    desc:"Beat a Match Game in under 60 seconds." },
+  { id:"speed_star",    emoji:"💨", name:"Quick Draw",       desc:"Get 20+ correct in a Speed Round." }
 ];
 
 const LEVELS = [
@@ -1504,7 +1545,7 @@ function startQuiz(mode, key) {
 
 function selectOption(i) {
   if (state.answered) return;
-  clearTimer();
+  if (state.mode !== "speed") clearTimer();
   const q = state.questions[state.index];
   state.selected = i;
   state.answered = true;
@@ -1526,6 +1567,15 @@ function selectOption(i) {
     toneWrong();
     const card = document.querySelector(".card.quiz");
     if (card) { card.classList.add("shake"); setTimeout(() => card.classList.remove("shake"), 420); }
+  }
+  if (state.mode === "speed") {
+    setTimeout(() => {
+      if (state.mode !== "speed" || state.speedRemaining <= 0) return;
+      state.index = (state.index + 1) % state.questions.length;
+      state.answered = false; state.selected = -1;
+      render();
+    }, 350);
+    return;
   }
   render();
 }
@@ -1553,6 +1603,15 @@ function finishQuiz() {
   const pct = Math.round((state.score / state.questions.length) * 100);
   saveHigh(pct);
   saveBestStreak(state.bestStreak);
+  if (state.mode === "daily") {
+    const newStreak = updateDailyStreak();
+    const earned = loadTrophies(); const dailyNew = [];
+    if (newStreak >= 3) tryEarn(earned, dailyNew, "daily_3");
+    if (newStreak >= 7) tryEarn(earned, dailyNew, "daily_7");
+    if (newStreak >= 30) tryEarn(earned, dailyNew, "daily_30");
+    saveTrophies(earned);
+    if (dailyNew.length) setTimeout(() => queueToasts(dailyNew), 800);
+  }
   saveHistoryEntry({
     date: Date.now(), mode: state.mode,
     score: state.score, total: state.questions.length, pct,
@@ -1578,6 +1637,240 @@ function showTopic(k) { clearTimer(); state.currentCategory = k; state.screen = 
 function showTips(k) { clearTimer(); state.currentCategory = k; state.screen = "tips"; render(); }
 function showSubObj() { clearTimer(); state.screen = "subobj-tutorial"; render(); }
 function showHistory() { clearTimer(); state.screen = "history"; render(); }
+
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function dateOffset(days) {
+  const d = new Date(); d.setDate(d.getDate() + days);
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function dailyLastKey() { return "g6_dailyLast_" + state.subject; }
+function dailyStreakKey() { return "g6_dailyStreak_" + state.subject; }
+function loadDailyLast() { return lsGet(dailyLastKey(), ""); }
+function loadDailyStreak() { return parseInt(lsGet(dailyStreakKey(), "0"), 10); }
+function isDailyDoneToday() { return loadDailyLast() === todayStr(); }
+
+function stringHash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+function lcg(seed) {
+  let s = seed || 1;
+  return function() { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+}
+function seededShuffle(arr, seed) {
+  const rng = lcg(seed);
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function getDailyQuestions(subjKey) {
+  const subj = SUBJECTS[subjKey];
+  const all = [];
+  for (const k of subj.keyOrder) {
+    for (const q of subj.topics[k].questions) all.push({...q, _cat: k});
+  }
+  const seed = stringHash(todayStr() + ":" + subjKey);
+  return seededShuffle(all, seed).slice(0, 5).map(shuffleOptions);
+}
+
+function startDailyChallenge() {
+  if (isDailyDoneToday()) return;
+  state.mode = "daily";
+  state.examMode = false;
+  state.helpers = true;
+  state.currentCategory = null;
+  state.questions = getDailyQuestions(state.subject);
+  state.index = 0; state.score = 0; state.streak = 0; state.bestStreak = 0;
+  state.answered = false; state.selected = -1;
+  state.hintShown = false; state.hintsUsed = 0;
+  state.startTime = Date.now();
+  state.categoryStats = {};
+  for (const k of curSubject().keyOrder) state.categoryStats[k] = { right: 0, total: 0 };
+  state.screen = "quiz";
+  chimeStart();
+  render();
+}
+
+function updateDailyStreak() {
+  const today = todayStr(); const yest = dateOffset(-1);
+  const last = loadDailyLast();
+  let cur = loadDailyStreak();
+  if (last === today) return cur;
+  if (last === yest) cur = cur + 1;
+  else cur = 1;
+  lsSet(dailyStreakKey(), String(cur));
+  lsSet(dailyLastKey(), today);
+  return cur;
+}
+
+function makeMatchPairs(subjKey, topicKey, count) {
+  count = count || 6;
+  if (subjKey === "social" && SOCIAL_RAW[topicKey]) {
+    return shuffle(SOCIAL_RAW[topicKey].terms).slice(0, count).map(t => ({ a: t.term, b: t.def }));
+  }
+  const topic = SUBJECTS[subjKey].topics[topicKey];
+  const pairs = topic.questions.map(q => {
+    let label = q.q;
+    const m = label.match(/["""]([^"""]+)["""]/);
+    if (m) label = m[1];
+    else label = label.replace(/^(Which|What is|What|How many|How|Who is|Who|Identify).*?(:|\?\??)\s*/i, "").replace(/\?$/, "");
+    if (!label) label = q.q.replace(/\?$/, "");
+    return { a: q.opts[q.a], b: label.length > 70 ? label.slice(0, 67) + "..." : label };
+  });
+  return shuffle(pairs).slice(0, count);
+}
+
+function startMatch(topicKey) {
+  clearTimer();
+  state.matchTopic = topicKey;
+  const pairs = makeMatchPairs(state.subject, topicKey, 6);
+  const cards = [];
+  pairs.forEach((p, i) => {
+    cards.push({ type:"a", pairId:i, text:p.a });
+    cards.push({ type:"b", pairId:i, text:p.b });
+  });
+  state.matchCards = shuffle(cards);
+  state.matchFlipped = [];
+  state.matchMatched = new Set();
+  state.matchMoves = 0;
+  state.matchStart = Date.now();
+  state.matchPairs = pairs.length;
+  state.screen = "match";
+  chimeStart();
+  render();
+}
+
+function flipMatchCard(idx) {
+  if (state.matchFlipped.length >= 2) return;
+  if (state.matchFlipped.indexOf(idx) !== -1) return;
+  const card = state.matchCards[idx];
+  if (state.matchMatched.has(card.pairId)) return;
+  state.matchFlipped.push(idx);
+  tapTick();
+  if (state.matchFlipped.length === 2) {
+    render();
+    setTimeout(checkMatchResult, 850);
+  } else {
+    render();
+  }
+}
+
+function checkMatchResult() {
+  const [a, b] = state.matchFlipped;
+  const cA = state.matchCards[a]; const cB = state.matchCards[b];
+  state.matchMoves++;
+  if (cA.pairId === cB.pairId && cA.type !== cB.type) {
+    state.matchMatched.add(cA.pairId);
+    chimeCorrect();
+    smallConfetti();
+    if (state.matchMatched.size === state.matchPairs) {
+      state.matchFlipped = [];
+      setTimeout(finishMatch, 450);
+      render();
+      return;
+    }
+  } else {
+    toneWrong();
+  }
+  state.matchFlipped = [];
+  render();
+}
+
+function finishMatch() {
+  const elapsed = (Date.now() - state.matchStart) / 1000;
+  state.matchElapsed = elapsed;
+  const key = "g6_matchBest_" + state.subject + "_" + state.matchTopic;
+  const best = parseFloat(lsGet(key, "9999"));
+  if (elapsed < best) lsSet(key, String(elapsed));
+  const earned = loadTrophies(); const newOnes = [];
+  if (elapsed < 60) tryEarn(earned, newOnes, "match_master");
+  saveTrophies(earned);
+  if (newOnes.length) setTimeout(() => queueToasts(newOnes), 700);
+  state.screen = "match-done";
+  bigConfetti();
+  chimeAchievement();
+  render();
+  historyChanged();
+}
+function quitMatch() { state.screen = "home"; render(); }
+
+let speedInterval = null;
+function startSpeedRound() {
+  clearTimer(); clearSpeedTimer();
+  state.mode = "speed";
+  state.examMode = false;
+  state.helpers = false;
+  state.currentCategory = null;
+  const subj = curSubject();
+  const all = [];
+  for (const k of subj.keyOrder) {
+    for (const q of subj.topics[k].questions) all.push({...q, _cat: k});
+  }
+  state.questions = shuffle(all).map(shuffleOptions);
+  state.index = 0; state.score = 0; state.streak = 0; state.bestStreak = 0;
+  state.answered = false; state.selected = -1;
+  state.hintShown = false; state.hintsUsed = 0;
+  state.speedRemaining = 60000;
+  state.startTime = Date.now();
+  state.categoryStats = {};
+  for (const k of subj.keyOrder) state.categoryStats[k] = { right: 0, total: 0 };
+  state.screen = "quiz";
+  chimeStart();
+  render();
+  startSpeedTimer();
+}
+function startSpeedTimer() {
+  clearSpeedTimer();
+  speedInterval = setInterval(() => {
+    state.speedRemaining -= 100;
+    if (state.speedRemaining <= 0) {
+      clearSpeedTimer();
+      finishSpeed();
+      return;
+    }
+    updateSpeedUI();
+  }, 100);
+}
+function clearSpeedTimer() {
+  if (speedInterval) { clearInterval(speedInterval); speedInterval = null; }
+}
+function updateSpeedUI() {
+  const fill = document.querySelector(".speed-timer-fill");
+  if (fill) fill.style.width = Math.max(0, state.speedRemaining / 60000 * 100) + "%";
+  const chip = document.querySelector(".speed-score-chip");
+  if (chip) chip.textContent = state.score;
+}
+function finishSpeed() {
+  clearSpeedTimer();
+  state.elapsedMs = Date.now() - state.startTime;
+  bumpPlays();
+  addCorrectTotal(state.score);
+  saveBestStreak(state.bestStreak);
+  saveHistoryEntry({
+    date: Date.now(), mode: "speed",
+    score: state.score, total: state.score,
+    pct: state.score >= 20 ? 100 : Math.round((state.score/20)*100),
+    elapsedMs: state.elapsedMs, hintsUsed: 0,
+    categoryStats: state.categoryStats
+  });
+  const earned = loadTrophies(); const newOnes = [];
+  if (state.score >= 20) tryEarn(earned, newOnes, "speed_star");
+  saveTrophies(earned);
+  if (newOnes.length) setTimeout(() => queueToasts(newOnes), 700);
+  state.screen = "speed-done";
+  render();
+  if (state.score >= 20) { bigConfetti(); chimeAchievement(); }
+  else if (state.score >= 10) { miniConfetti(); chimeLevelUp(); }
+  historyChanged();
+}
+function quitSpeed() { clearSpeedTimer(); state.screen = "home"; render(); }
 
 function startFlashcards(k, set) {
   state.currentCategory = k;
@@ -1802,10 +2095,135 @@ function viewHome() {
         }).join("")}
       </div>
     </div>
+    <div class="card games-card">
+      <h2>🎮 Games</h2>
+      <p class="muted" style="font-size:13px;margin-bottom:10px;">Quick study games to mix things up.</p>
+      ${(function(){
+        const done = isDailyDoneToday();
+        const ds = loadDailyStreak();
+        const last = loadDailyLast();
+        const last7 = [];
+        for (let i = 6; i >= 0; i--) {
+          const dStr = dateOffset(-i);
+          const lit = dStr <= last && (last >= dateOffset(-(ds-1)));
+          last7.push({ d: dStr.slice(-2), lit: dStr <= last && dStr >= dateOffset(-(ds-1)), today: i === 0 });
+        }
+        return `
+        <button class="btn ${done?"daily-btn done":"daily-btn"} btn-icon" onclick="${done?"goHome":"startDailyChallenge"}()">
+          ${done ? "✅ Daily Done — Come back tomorrow!" : "🔥 Daily Challenge"}
+          ${ds > 0 ? `<span class="daily-streak">${ds} 🔥</span>` : ""}
+        </button>
+        <div style="display:flex;gap:4px;justify-content:center;margin:10px 0;">
+          ${last7.map(d => `<div style="width:26px;height:30px;border-radius:6px;background:${d.lit?"linear-gradient(135deg,#f59e0b,#ef4444)":"rgba(0,0,0,.06)"};color:${d.lit?"#fff":"#9ca3af"};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;${d.today?"outline:2px solid #6366f1;":""}">${d.d}</div>`).join("")}
+        </div>
+        `;
+      })()}
+      <button class="btn match-btn btn-icon" style="margin-top:6px;" onclick="goMatchPicker()">🃏 Match Game <span style="opacity:.85;font-weight:500;">— flip & pair</span></button>
+      <button class="btn speed-btn btn-icon" style="margin-top:6px;" onclick="startSpeedRound()">💨 Speed Round <span style="opacity:.85;font-weight:500;">(60 sec)</span></button>
+    </div>
     <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
     <div class="row">
       <button class="btn btn-ghost btn-small btn-icon" onclick="showHistory()">📊 Progress</button>
       <button class="btn btn-ghost btn-small btn-icon" onclick="showTrophies()">🏆 Trophies (${loadTrophies().size}/${TROPHIES.length})</button>
+    </div>
+  `;
+}
+
+function viewMatchPicker() {
+  const subj = curSubject();
+  return `
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="card topic-hero">
+      <div class="big-icon" style="background:linear-gradient(135deg,#fbcfe8,#fde2e8);">🃏</div>
+      <h1>Match Game</h1>
+      <p>Pick a topic to match terms with definitions.</p>
+    </div>
+    <div class="topic-grid">
+      ${subj.keyOrder.map(k => {
+        const bestKey = "g6_matchBest_" + state.subject + "_" + k;
+        const best = parseFloat(lsGet(bestKey, "0"));
+        const bestStr = best > 0 && best < 9999 ? `Best: ${best.toFixed(1)}s` : "Not played yet";
+        return `<button class="topic" onclick="startMatch('${k}')">
+          <div class="icon" style="background:${subj.topics[k].color}33;">${subj.topics[k].emoji}</div>
+          <div class="info">
+            <div class="ttl">${esc(subj.topics[k].title)}</div>
+            <div class="sub">${bestStr}</div>
+          </div>
+          <div class="arrow">›</div>
+        </button>`;
+      }).join("")}
+    </div>
+  `;
+}
+function goMatchPicker() { clearTimer(); state.screen = "match-picker"; render(); }
+
+function viewMatch() {
+  const elapsed = Math.floor((Date.now() - state.matchStart) / 1000);
+  return `
+    <div class="match-stats">
+      <div class="ms"><div class="v">${state.matchMatched.size}/${state.matchPairs}</div><div class="l">Pairs</div></div>
+      <div class="ms"><div class="v">${state.matchMoves}</div><div class="l">Moves</div></div>
+      <div class="ms"><div class="v">${elapsed}s</div><div class="l">Time</div></div>
+    </div>
+    <div class="match-grid">
+      ${state.matchCards.map((c, i) => {
+        const flipped = state.matchFlipped.indexOf(i) !== -1 || state.matchMatched.has(c.pairId);
+        const matched = state.matchMatched.has(c.pairId);
+        return `<div class="match-card ${flipped?"flipped":""} ${matched?"matched":""}" onclick="flipMatchCard(${i})">
+          <div class="match-card-inner">
+            <div class="match-face match-front">?</div>
+            <div class="match-face match-back">${esc(c.text)}</div>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>
+    <button class="btn btn-ghost btn-small" onclick="quitMatch()">← Quit Game</button>
+  `;
+}
+
+function viewMatchDone() {
+  const subj = curSubject();
+  const topic = subj.topics[state.matchTopic];
+  const elapsed = state.matchElapsed;
+  const moves = state.matchMoves;
+  const great = moves === state.matchPairs;
+  const fast = elapsed < 60;
+  const label = great && fast ? "PERFECT! 🏆" : fast ? "Fast! ⚡" : great ? "No misses! 🎯" : "Nice work! ✨";
+  return `
+    <div class="card score-big">
+      <span class="avatar-celebrate" style="font-size:60px;">${loadAvatar()}</span>
+      <div class="grade" style="font-size:64px;">🃏</div>
+      <div class="label">${label}</div>
+      <div class="pct">${esc(topic.title)} · ${elapsed.toFixed(1)}s · ${moves} moves</div>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" onclick="startMatch('${state.matchTopic}')">🔄 Play Again</button>
+      <button class="btn btn-ghost" onclick="goMatchPicker()">🃏 New Topic</button>
+    </div>
+    <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
+  `;
+}
+
+function viewSpeedDone() {
+  const correct = state.score;
+  const label = correct >= 25 ? "Incredible! 🏆"
+              : correct >= 20 ? "Quick Draw! 💨"
+              : correct >= 15 ? "Excellent pace! 🌟"
+              : correct >= 10 ? "Great start! 🎯"
+              : correct >= 5 ? "Good effort! 💪"
+              : "Keep practicing! 📚";
+  const emoji = correct >= 20 ? "🏆" : correct >= 15 ? "🌟" : correct >= 10 ? "🎯" : "💪";
+  return `
+    <div class="card score-big">
+      <span class="avatar-celebrate" style="font-size:60px;">${loadAvatar()}</span>
+      <div class="grade" style="font-size:80px;">${correct}</div>
+      <div class="label">${label}</div>
+      <div class="pct">correct in 60 seconds &nbsp;·&nbsp; 🔥 best streak: ${state.bestStreak}</div>
+      <span class="emoji">${emoji}</span>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" onclick="startSpeedRound()">🔄 Go Again</button>
+      <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
     </div>
   `;
 }
@@ -2365,6 +2783,8 @@ function viewQuiz() {
                   : state.mode === "trouble" ? "🎯 Trouble Topics"
                   : state.mode === "quick" ? "⚡ Quick Quiz"
                   : state.mode === "subobj" ? "🎯 Subject vs Object"
+                  : state.mode === "daily" ? "🔥 Daily Challenge"
+                  : state.mode === "speed" ? "💨 Speed Round"
                   : state.mode === "category" ? "📂 " + cat.title
                   : "🟢 Practice";
 
@@ -2380,9 +2800,9 @@ function viewQuiz() {
     feedback = `
       <div class="feedback ${cls}">
         ${msg}
-        <span class="hint">${correct ? esc(q.hint) : "Answer: <b>" + esc(q.opts[q.a]) + "</b> — " + esc(q.hint)}</span>
+        ${state.mode !== "speed" ? `<span class="hint">${correct ? esc(q.hint) : "Answer: <b>" + esc(q.opts[q.a]) + "</b> — " + esc(q.hint)}</span>` : ""}
       </div>
-      <button class="btn btn-primary" style="margin-top:12px;" onclick="nextQuestion()">${cur === total ? (state.examMode ? "🎓 Finish Exam" : "See Results 🎯") : "Next Question →"}</button>
+      ${state.mode === "speed" ? "" : `<button class="btn btn-primary" style="margin-top:12px;" onclick="nextQuestion()">${cur === total ? (state.examMode ? "🎓 Finish Exam" : "See Results 🎯") : "Next Question →"}</button>`}
     `;
   }
 
@@ -2394,9 +2814,15 @@ function viewQuiz() {
       <button class="btn-hint" onclick="revealHint()" ${state.hintShown ? "disabled" : ""}>💡 ${state.hintShown ? "Hint shown" : "Show Hint"}</button>
     </div>` : "";
 
+  const speedUI = state.mode === "speed" ? `
+    <div class="speed-timer"><div class="speed-timer-fill" style="width:${Math.max(0,state.speedRemaining/60000*100)}%;"></div></div>
+    <div class="speed-score-chip">${state.score}</div>
+  ` : "";
+
   return `
     ${streakChip}
-    <div class="card" style="padding:14px 18px;">
+    ${speedUI}
+    <div class="card" style="padding:14px 18px;${state.mode === "speed" ? "margin-top:30px;" : ""}">
       <div class="timer-row">
         ${state.mode === "timed" && !state.answered ? `
           <div class="timer-ring">
@@ -2408,10 +2834,10 @@ function viewQuiz() {
           </div>` : ""}
         <div class="timer-info">
           <div class="qhead">
-            <span>${modeLabel} · Q ${cur}/${total}</span>
+            <span>${state.mode === "speed" ? modeLabel : modeLabel + " · Q " + cur + "/" + total}</span>
             <span>Score: ${state.score}</span>
           </div>
-          <div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>
+          ${state.mode === "speed" ? "" : `<div class="progress" style="margin-top:8px;"><div style="width:${pct}%;"></div></div>`}
         </div>
       </div>
     </div>
@@ -2435,7 +2861,7 @@ function viewQuiz() {
       ${hintBlock}
       ${feedback}
     </div>
-    <button class="btn btn-ghost btn-small" onclick="goHome()">← Quit to Home</button>
+    <button class="btn btn-ghost btn-small" onclick="${state.mode === "speed" ? "quitSpeed" : "goHome"}()">← Quit to Home</button>
   `;
 }
 
@@ -2495,7 +2921,9 @@ function modeInfo(m) {
     quick:   { emoji:"⚡", name:"Quick Quiz", color:"#f59e0b" },
     trouble: { emoji:"🎯", name:"Trouble Topics", color:"#fbbf24" },
     category:{ emoji:"📂", name:"Topic Quiz", color:"#60a5fa" },
-    subobj:  { emoji:"🎯", name:"S vs O", color:"#fb7185" }
+    subobj:  { emoji:"🎯", name:"S vs O", color:"#fb7185" },
+    daily:   { emoji:"🔥", name:"Daily Challenge", color:"#f59e0b" },
+    speed:   { emoji:"💨", name:"Speed Round", color:"#0891b2" }
   };
   return map[m] || { emoji:"❓", name:String(m), color:"#9ca3af" };
 }
@@ -2671,6 +3099,10 @@ function render() {
     case "history": view = viewHistory(); break;
     case "trophies": view = viewTrophies(); break;
     case "admin": view = viewAdmin(); break;
+    case "match-picker": view = viewMatchPicker(); break;
+    case "match": view = viewMatch(); break;
+    case "match-done": view = viewMatchDone(); break;
+    case "speed-done": view = viewSpeedDone(); break;
     default: view = viewHome();
   }
   app.innerHTML = view;
@@ -2709,6 +3141,13 @@ window.syncNow = syncNow;
 window.disconnectSync = disconnectSync;
 window.enterSubject = enterSubject;
 window.goPicker = goPicker;
+window.startDailyChallenge = startDailyChallenge;
+window.startSpeedRound = startSpeedRound;
+window.quitSpeed = quitSpeed;
+window.goMatchPicker = goMatchPicker;
+window.startMatch = startMatch;
+window.flipMatchCard = flipMatchCard;
+window.quitMatch = quitMatch;
 
 migrateData();
 {

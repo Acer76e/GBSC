@@ -727,6 +727,278 @@ const TIPS_SOCIAL = {
 
 const SOCIAL_KEY_ORDER = ["mesopotamia","egypt","africa","india","china","greece","rome"];
 
+const QUIZ_MATH = {
+  whole_ops: {
+    title: "Whole Number Operations", emoji: "➕", color: "#10b981",
+    questions: [
+      { q: "450,629,341 + 3,567,904 = ?", a: 0, opts: ["454,197,245","454,197,254","454,107,245","453,197,245"], hint: "Line up by place value and add column by column from the right." },
+      { q: "64,329,037 − 61,984,320 = ?", a: 0, opts: ["2,344,717","2,345,717","2,344,317","2,354,717"], hint: "Subtract column by column; borrow when the top digit is smaller." },
+      { q: "7,824,506 + 1,397,825 = ?", a: 0, opts: ["9,222,331","9,212,331","9,222,231","9,212,431"], hint: "Add the ones first, then move left, carrying as needed." },
+      { q: "50,000,000 − 27,365,489 = ?", a: 0, opts: ["22,634,511","22,634,521","22,734,511","22,635,511"], hint: "When subtracting from zeros, borrow all the way across." },
+      { q: "12,475,892 + 87,524,108 = ?", a: 0, opts: ["100,000,000","100,000,100","99,999,000","100,100,000"], hint: "These two add to exactly 100,000,000." },
+      { q: "1,234,567 + 7,654,321 = ?", a: 0, opts: ["8,888,888","8,898,888","8,888,988","8,988,888"], hint: "Add column by column — the answer has a fun pattern." },
+      { q: "9,000,000 − 1,234,567 = ?", a: 0, opts: ["7,765,433","7,765,443","7,765,533","7,665,433"], hint: "Borrow across the zeros." },
+      { q: "Estimate: 597,832 + 401,956 ≈ ?", a: 0, opts: ["1,000,000","990,000","900,000","1,100,000"], hint: "Round both numbers: 600,000 + 400,000." },
+      { q: "Which number is greater?", a: 0, opts: ["12,345,687","12,345,678","12,344,678","12,335,678"], hint: "Compare digit by digit from the left." },
+      { q: "5,000 × 800 = ?", a: 0, opts: ["4,000,000","400,000","40,000,000","40,000"], hint: "Multiply 5 × 8 = 40, then add the zeros: 3 + 2 = 5 zeros total." },
+      { q: "84,000 ÷ 200 = ?", a: 0, opts: ["420","42","4,200","4,000"], hint: "Cancel two zeros from each: 840 ÷ 2 = 420." },
+      { q: "What is the value of the 6 in 467,123?", a: 0, opts: ["60,000","6,000","600,000","6,000,000"], hint: "Count places from the right — the 6 is in the ten-thousands place." }
+    ]
+  },
+  integers: {
+    title: "Positive & Negative Numbers", emoji: "±", color: "#0ea5e9",
+    questions: [
+      { q: "−5 + 3 = ?", a: 0, opts: ["−2","2","−8","8"], hint: "Start at −5 and move 3 RIGHT on the number line." },
+      { q: "−7 − 4 = ?", a: 0, opts: ["−11","−3","11","3"], hint: "Subtracting moves you LEFT: −7 − 4." },
+      { q: "8 + (−3) = ?", a: 0, opts: ["5","−5","11","−11"], hint: "Adding a negative is the same as subtracting: 8 − 3." },
+      { q: "−6 × 2 = ?", a: 0, opts: ["−12","12","−8","−4"], hint: "Negative times positive = negative." },
+      { q: "−10 ÷ (−2) = ?", a: 0, opts: ["5","−5","20","−20"], hint: "Negative ÷ negative = positive." },
+      { q: "−4 − (−9) = ?", a: 0, opts: ["5","−13","13","−5"], hint: "Subtracting a negative flips it to addition: −4 + 9." },
+      { q: "Which is greater: −7 or −3?", a: 0, opts: ["−3","−7","They're equal","Can't tell"], hint: "On the number line, closer to zero = greater." },
+      { q: "What is the opposite of −15?", a: 0, opts: ["15","−15","0","30"], hint: "Opposite = same number, different sign." },
+      { q: "(−3) × (−5) × 2 = ?", a: 0, opts: ["30","−30","10","−10"], hint: "Two negatives make a positive, then × 2." },
+      { q: "0 − 12 = ?", a: 0, opts: ["−12","12","0","−24"], hint: "Zero minus a number = the negative of that number." },
+      { q: "What is |−9|? (absolute value)", a: 0, opts: ["9","−9","0","18"], hint: "Absolute value = distance from zero, always positive." },
+      { q: "−2 + (−6) + 3 = ?", a: 0, opts: ["−5","5","−11","1"], hint: "Combine the negatives: −2 + −6 = −8, then add 3." }
+    ]
+  },
+  decimals: {
+    title: "Decimals", emoji: "•", color: "#8b5cf6",
+    questions: [
+      { q: "3.45 + 2.6 = ?", a: 0, opts: ["6.05","6.5","5.05","6.15"], hint: "Line up decimals; treat 2.6 as 2.60." },
+      { q: "7.8 − 3.45 = ?", a: 0, opts: ["4.35","4.45","3.35","4.55"], hint: "Line up decimals; 7.8 = 7.80." },
+      { q: "4.5 × 0.2 = ?", a: 0, opts: ["0.9","9","0.09","0.45"], hint: "Multiply 45 × 2 = 90. Total decimal places = 2 → 0.90." },
+      { q: "12.6 ÷ 3 = ?", a: 0, opts: ["4.2","42","4.02","4.5"], hint: "Divide and keep the decimal in place." },
+      { q: "0.5 + 0.25 + 0.125 = ?", a: 0, opts: ["0.875","0.785","0.95","0.825"], hint: "Treat shorter decimals as having trailing zeros." },
+      { q: "Which is greater: 0.6 or 0.59?", a: 0, opts: ["0.6","0.59","Equal","Can't tell"], hint: "0.6 = 0.60, and 0.60 > 0.59." },
+      { q: "Round 5.476 to the nearest tenth.", a: 0, opts: ["5.5","5.4","5.48","5.47"], hint: "Look at the hundredths digit (7); 7 ≥ 5, so round up." },
+      { q: "0.1 × 0.1 = ?", a: 0, opts: ["0.01","0.1","1","0.001"], hint: "1 × 1 = 1, decimal places = 2 → 0.01." },
+      { q: "3.6 ÷ 0.6 = ?", a: 0, opts: ["6","0.6","60","0.06"], hint: "Multiply both by 10 to clear the decimal: 36 ÷ 6 = 6." },
+      { q: "0.25 as a fraction = ?", a: 0, opts: ["1/4","1/2","1/5","2/5"], hint: "0.25 = 25/100 = 1/4." },
+      { q: "2.5 + 1.75 = ?", a: 0, opts: ["4.25","3.25","4.75","3.75"], hint: "Line up: 2.50 + 1.75." },
+      { q: "10 − 4.6 = ?", a: 0, opts: ["5.4","6.4","5.6","4.4"], hint: "Treat 10 as 10.0; 10.0 − 4.6." }
+    ]
+  },
+  fractions: {
+    title: "Fractions", emoji: "½", color: "#ec4899",
+    questions: [
+      { q: "1/2 + 1/4 = ?", a: 0, opts: ["3/4","2/6","1/6","2/4"], hint: "Common denominator 4: 2/4 + 1/4 = 3/4." },
+      { q: "1/3 + 1/6 = ?", a: 0, opts: ["1/2","2/9","2/6","2/3"], hint: "Common denominator 6: 2/6 + 1/6 = 3/6 = 1/2." },
+      { q: "2/3 − 1/3 = ?", a: 0, opts: ["1/3","1/0","3/3","2/0"], hint: "Same denominator — just subtract numerators." },
+      { q: "1/2 × 1/3 = ?", a: 0, opts: ["1/6","2/3","2/5","1/5"], hint: "Multiply tops, multiply bottoms: 1×1 / 2×3." },
+      { q: "3/4 ÷ 1/2 = ?", a: 0, opts: ["3/2 (or 1½)","3/8","2/3","6/4"], hint: "Flip the second fraction and multiply: 3/4 × 2/1." },
+      { q: "Which is greater: 2/3 or 3/5?", a: 0, opts: ["2/3","3/5","Equal","Can't tell"], hint: "Common denominator 15: 10/15 vs 9/15." },
+      { q: "4/8 simplified = ?", a: 0, opts: ["1/2","2/4","1/4","4/8"], hint: "Divide top and bottom by 4." },
+      { q: "Convert 2 1/3 to an improper fraction.", a: 0, opts: ["7/3","3/7","6/3","5/3"], hint: "Multiply whole × bottom + top: 2×3+1 = 7." },
+      { q: "Convert 11/4 to a mixed number.", a: 0, opts: ["2 3/4","3 1/4","2 1/4","3 3/4"], hint: "11 ÷ 4 = 2 remainder 3." },
+      { q: "1/2 of 24 = ?", a: 0, opts: ["12","6","8","24"], hint: "1/2 × 24 = 12." },
+      { q: "5/6 − 1/3 = ?", a: 0, opts: ["1/2","4/3","2/3","1/6"], hint: "Common denominator 6: 5/6 − 2/6 = 3/6 = 1/2." },
+      { q: "2/3 × 3/4 = ?", a: 0, opts: ["1/2","6/7","5/12","2/12"], hint: "Multiply: 6/12 = 1/2." }
+    ]
+  },
+  cards: {
+    title: "Deck of Cards", emoji: "🃏", color: "#dc2626",
+    questions: [
+      { q: "How many cards are in a standard deck (no jokers)?", a: 0, opts: ["52","54","48","56"], hint: "4 suits × 13 cards each." },
+      { q: "How many suits are in a deck?", a: 0, opts: ["4","2","8","13"], hint: "Hearts, Diamonds, Clubs, Spades." },
+      { q: "Which TWO suits are RED?", a: 0, opts: ["Hearts and Diamonds","Hearts and Spades","Hearts and Clubs","Diamonds and Spades"], hint: "♥ and ♦." },
+      { q: "Which TWO suits are BLACK?", a: 0, opts: ["Clubs and Spades","Hearts and Spades","Diamonds and Clubs","Clubs and Diamonds"], hint: "♣ and ♠." },
+      { q: "How many cards in each suit?", a: 0, opts: ["13","12","10","14"], hint: "Ace, 2-10, Jack, Queen, King." },
+      { q: "How many RED cards in a deck?", a: 0, opts: ["26","13","52","12"], hint: "2 red suits × 13 cards each." },
+      { q: "How many face cards in a deck (Jack/Queen/King)?", a: 0, opts: ["12","13","4","16"], hint: "3 face cards × 4 suits." },
+      { q: "How many Aces in a standard deck?", a: 0, opts: ["4","1","2","13"], hint: "One per suit, 4 suits." },
+      { q: "How many number cards (2-10) in ONE suit?", a: 0, opts: ["9","10","13","8"], hint: "2,3,4,5,6,7,8,9,10 = 9 cards." },
+      { q: "How many face cards in ONE suit?", a: 0, opts: ["3","4","12","13"], hint: "Jack, Queen, King." }
+    ]
+  },
+  calendar: {
+    title: "Calendar & Time", emoji: "📅", color: "#f59e0b",
+    questions: [
+      { q: "How many days in a week?", a: 0, opts: ["7","5","6","8"], hint: "Sun through Sat." },
+      { q: "How many months in a year?", a: 0, opts: ["12","10","52","6"], hint: "Jan-Dec." },
+      { q: "How many days in a regular (non-leap) year?", a: 0, opts: ["365","366","360","364"], hint: "Regular = 365, leap = 366." },
+      { q: "How many days in a LEAP year?", a: 0, opts: ["366","365","364","367"], hint: "One extra day in February." },
+      { q: "How many hours in a day?", a: 0, opts: ["24","12","60","48"], hint: "Two 12-hour clock cycles." },
+      { q: "How many minutes in an hour?", a: 0, opts: ["60","30","100","24"], hint: "Same as seconds in a minute." },
+      { q: "How many seconds in a minute?", a: 0, opts: ["60","30","100","24"], hint: "Same as minutes in an hour." },
+      { q: "Approximately how many weeks in a year?", a: 0, opts: ["52","48","50","100"], hint: "365 ÷ 7 ≈ 52." },
+      { q: "How many months have 31 days?", a: 0, opts: ["7","6","5","8"], hint: "Jan, Mar, May, Jul, Aug, Oct, Dec." },
+      { q: "How many months have 30 days?", a: 0, opts: ["4","5","6","3"], hint: "April, June, September, November." },
+      { q: "How many days in February in a NON-leap year?", a: 0, opts: ["28","29","30","31"], hint: "The shortest month." },
+      { q: "About how many WEEKS are in a typical MONTH?", a: 0, opts: ["About 4","About 6","About 8","About 3"], hint: "30 days ÷ 7 ≈ 4.3." }
+    ]
+  },
+  conversions: {
+    title: "Unit Conversions", emoji: "📏", color: "#06b6d4",
+    questions: [
+      { q: "How many inches in 1 FOOT?", a: 0, opts: ["12","10","16","36"], hint: "A foot is 12 inches." },
+      { q: "How many feet in 1 YARD?", a: 0, opts: ["3","12","36","2"], hint: "A yard = 3 feet." },
+      { q: "How many inches in 1 YARD?", a: 0, opts: ["36","12","24","30"], hint: "3 feet × 12 inches." },
+      { q: "How many feet in 1 MILE?", a: 0, opts: ["5,280","1,000","5,000","6,000"], hint: "Memorize: 5,280." },
+      { q: "How many CUPS in 1 PINT?", a: 0, opts: ["2","4","8","1"], hint: "Two cups make a pint." },
+      { q: "How many PINTS in 1 QUART?", a: 0, opts: ["2","4","8","1"], hint: "Same as cups in a pint." },
+      { q: "How many QUARTS in 1 GALLON?", a: 0, opts: ["4","2","8","16"], hint: "Four quarts in a gallon." },
+      { q: "How many CUPS in 1 QUART?", a: 0, opts: ["4","2","8","16"], hint: "2 cups × 2 pints = 4." },
+      { q: "How many CUPS in 1 GALLON?", a: 0, opts: ["16","8","4","32"], hint: "4 cups × 4 quarts = 16." },
+      { q: "How many OUNCES in 1 POUND?", a: 0, opts: ["16","12","8","20"], hint: "A pound = 16 oz." },
+      { q: "How many centimeters in 1 METER?", a: 0, opts: ["100","10","1,000","60"], hint: "Centi = 100ths." },
+      { q: "How many millimeters in 1 CENTIMETER?", a: 0, opts: ["10","100","1,000","60"], hint: "Milli is 10× smaller than centi." }
+    ]
+  }
+};
+
+const TIPS_MATH = {
+  whole_ops: [
+    { h:"Line up by place value 📐", p:"When adding or subtracting large numbers, line up the digits by place value (ones under ones, tens under tens). Use graph paper or draw columns." },
+    { h:"Estimate first, then check", p:"Round to the nearest big place and add. If your final answer is way off your estimate, recheck." },
+    { h:"Borrowing across zeros 0️⃣", p:"Subtracting from 50,000,000 means borrowing across multiple zeros. Work right-to-left and turn each zero into a 9 (after the first borrow)." },
+    { h:"Reading big numbers", p:"Commas separate groups of three: ones, thousands, millions, billions. 450,629,341 = \"four hundred fifty MILLION, six hundred twenty-nine THOUSAND, three hundred forty-one.\"" }
+  ],
+  integers: [
+    { h:"Number line 🔢", p:"Picture a number line. <b>Adding</b> moves RIGHT. <b>Subtracting</b> moves LEFT. Negative numbers are LEFT of zero." },
+    { h:"Adding a negative = subtracting", p:"<b>8 + (−3) = 8 − 3 = 5</b>. Subtracting a negative = adding: <b>4 − (−9) = 4 + 9 = 13</b>." },
+    { h:"Sign rules", p:"<b>Same signs</b> (+ + or − −) → POSITIVE. <b>Different signs</b> (+ − or − +) → NEGATIVE. Works for ×, ÷, and combining." },
+    { h:"Absolute value | |", p:"|−9| = 9. Absolute value = distance from zero, always positive (or zero)." }
+  ],
+  decimals: [
+    { h:"Line up the decimal point", p:"When adding/subtracting decimals, ALWAYS line up the decimal points. Add trailing zeros so both have the same number of decimal places (3.45 + 2.6 → 3.45 + 2.60)." },
+    { h:"Multiplying decimals", p:"Ignore the decimal points, multiply as whole numbers. Then count TOTAL decimal places in both factors, and put the decimal that many places from the right of your answer." },
+    { h:"Dividing decimals", p:"Multiply BOTH numbers by the same power of 10 until the DIVISOR is a whole number. Then divide normally. 3.6 ÷ 0.6 → 36 ÷ 6 = 6." },
+    { h:"Rounding decimals", p:"Look at the digit right AFTER the place you're rounding to. 5 or more → round UP. Less than 5 → round DOWN." }
+  ],
+  fractions: [
+    { h:"Add/subtract = need common denominator", p:"<b>2/5 + 1/5</b> easy — same bottom. <b>1/2 + 1/3</b> need common denom: multiply tops and bottoms to make them match (3/6 + 2/6 = 5/6)." },
+    { h:"Multiply = straight across", p:"<b>1/2 × 1/3 = (1×1) / (2×3) = 1/6</b>. No common denominator needed. Easy!" },
+    { h:"Divide = KEEP, CHANGE, FLIP", p:"<b>3/4 ÷ 1/2</b>: KEEP 3/4, CHANGE ÷ to ×, FLIP 1/2 to 2/1 → 3/4 × 2/1 = 6/4 = 1½." },
+    { h:"Mixed ↔ Improper", p:"<b>Mixed → improper</b>: whole × bottom + top, over the same bottom (2⅓ = 7/3). <b>Improper → mixed</b>: divide top ÷ bottom; quotient is the whole, remainder over original bottom." }
+  ],
+  cards: [
+    { h:"4 × 13 = 52", p:"A standard deck = <b>4 suits × 13 cards = 52</b>. No jokers in the standard count." },
+    { h:"Red vs Black", p:"<b>RED</b> suits: ♥ Hearts + ♦ Diamonds (26 red cards). <b>BLACK</b> suits: ♣ Clubs + ♠ Spades (26 black cards)." },
+    { h:"Face cards = 12", p:"<b>Jack, Queen, King</b> = 3 face cards × 4 suits = 12 face cards total." },
+    { h:"Each suit's 13 cards", p:"Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King = <b>1 ace + 9 number cards + 3 face cards = 13</b>." }
+  ],
+  calendar: [
+    { h:"Knuckles trick 🤜", p:"Make a fist. Each KNUCKLE bump = 31 days. Each VALLEY between knuckles = 30 days (except Feb). Going across: Jan (knuckle, 31), Feb (valley, 28/29), Mar (knuckle, 31)…" },
+    { h:"30 days hath September…", p:"\"<b>30 days</b> hath September, April, June, and November. All the rest have <b>31</b> — except February alone (28 or 29).\"" },
+    { h:"Leap year basics", p:"Every 4 years, February gets 29 days → 366-day year. Years divisible by 4 are leap years (with some exceptions for century years like 1900)." },
+    { h:"Time units to memorize", p:"<b>60</b> sec/min · <b>60</b> min/hr · <b>24</b> hr/day · <b>7</b> days/week · <b>52</b> weeks/year · <b>12</b> months/year." }
+  ],
+  conversions: [
+    { h:"Length: 12, 3, 5,280", p:"<b>12</b> inches in a foot · <b>3</b> feet (or 36 inches) in a yard · <b>5,280</b> feet in a mile." },
+    { h:"Volume: 2-2-4", p:"Going up the chain: <b>2</b> cups in a pint · <b>2</b> pints in a quart · <b>4</b> quarts in a gallon. Remember as \"2-2-4\". So 16 cups in a gallon." },
+    { h:"Weight: 16 oz/lb", p:"<b>16</b> ounces in a pound. (Note: fluid ounces measure volume — different from weight ounces!)" },
+    { h:"Metric = powers of 10", p:"<b>milli</b> = 1/1,000 · <b>centi</b> = 1/100. So <b>10 mm = 1 cm</b>, <b>100 cm = 1 m</b>, <b>1,000 m = 1 km</b>. Easier than the US system!" }
+  ]
+};
+const MATH_KEY_ORDER = ["whole_ops","integers","decimals","fractions","cards","calendar","conversions"];
+
+const QUIZ_READING = {
+  plot: {
+    title: "Plot & Events", emoji: "📖", color: "#7c2d12",
+    questions: [
+      { q: "What is the setting of Legend?", a: 0, opts: ["A future Republic of America at war with the Colonies","Modern-day California","Ancient Rome","Medieval England"], hint: "Dystopian future: the western US has become the Republic, the eastern US is the Colonies." },
+      { q: "Who are the TWO main narrators of Legend?", a: 0, opts: ["June and Day","June and Tess","Day and Eden","Metias and Thomas"], hint: "The story alternates between their two perspectives." },
+      { q: "What is June's role at the start of the book?", a: 0, opts: ["Military prodigy from an elite family","Street criminal","Doctor","Engineer"], hint: "She's 15 and the only person to score a perfect 1500 on the Trial." },
+      { q: "What is Day's status in the Republic?", a: 0, opts: ["Most-wanted criminal","Senator","Wealthy merchant","Republic general"], hint: "He's a street kid wanted for many crimes against the Republic." },
+      { q: "What event sets the main plot in motion?", a: 0, opts: ["June's brother Metias is killed","A massive earthquake","A war begins","Day is captured"], hint: "Day is blamed for Metias's death; June goes undercover to hunt him." },
+      { q: "Why does Day break into the hospital at the start?", a: 0, opts: ["To get plague medicine for his brother Eden","To free a friend","To steal money","To start a fire"], hint: "His youngest brother Eden is sick with the plague." },
+      { q: "How do June and Day first meet?", a: 0, opts: ["June goes undercover; Day helps her after she's injured","At a school","In prison","At a Republic ball"], hint: "Neither knows the other's true identity at first." },
+      { q: "What is the Trial?", a: 0, opts: ["A test taken at age 10 that determines social status","A court hearing","A military draft","A graduation ceremony"], hint: "June scored a perfect 1500 — the only one ever." },
+      { q: "What does June discover about her brother's death?", a: 0, opts: ["The Republic killed him and framed Day","Day really did kill him","It was a random accident","He's still alive"], hint: "Government corruption is the major theme." },
+      { q: "How does the book end?", a: 0, opts: ["June and Day escape together as fugitives","Day is executed","June joins the Colonies' army","Eden dies"], hint: "Day is rescued at the last moment; they flee toward the Patriots." }
+    ]
+  },
+  characters: {
+    title: "Characters", emoji: "👥", color: "#9333ea",
+    questions: [
+      { q: "Who is June Iparis?", a: 0, opts: ["15-year-old military prodigy with a perfect Trial score","A common laborer","An older general","The Elector's daughter"], hint: "Born to a wealthy elite family; the youngest student at Drake University." },
+      { q: "What is Day's real name?", a: 0, opts: ["Daniel Altan Wing","David Anders","Dan Wells","Damian Ash"], hint: "He took the nickname 'Day' as a street criminal." },
+      { q: "Who is Metias Iparis?", a: 0, opts: ["June's older brother — a soldier who is killed","June's father","Day's brother","A Patriot leader"], hint: "He raised June after their parents died. His death drives the plot." },
+      { q: "Who is Tess?", a: 0, opts: ["A girl Day rescued — his loyal best friend","Day's sister","June's best friend","A doctor"], hint: "She travels with Day and cares deeply about him." },
+      { q: "Who is Eden?", a: 0, opts: ["Day's youngest brother who has the plague","June's cousin","A Republic soldier","A Patriot leader"], hint: "Saving Eden is Day's main motivation." },
+      { q: "Who is John?", a: 0, opts: ["Day's older brother","Day's best friend","A teacher","A doctor"], hint: "He lives with their mother and Eden in the slums." },
+      { q: "Who is Commander Jameson?", a: 0, opts: ["June's commanding officer and the antagonist","Day's mentor","June's father","A friendly judge"], hint: "Cold and ambitious — heavily involved in the Republic's crimes." },
+      { q: "Who is Thomas?", a: 0, opts: ["A soldier who was Metias's friend — has a dark secret","Day's brother","A doctor","A Patriot"], hint: "He's loved June for years; his loyalty is to the Republic." }
+    ]
+  },
+  themes: {
+    title: "Themes", emoji: "💡", color: "#0891b2",
+    questions: [
+      { q: "Which is a MAJOR theme of Legend?", a: 0, opts: ["Class divide and inequality","The joy of farming","The history of music","Generational friendships"], hint: "The Republic is sharply divided between elite and poor." },
+      { q: "How does the Republic government control its people?", a: 0, opts: ["Propaganda, fear, and the Trial system","Free education","Honest news","Religious teachings"], hint: "They hide the truth and crush dissent." },
+      { q: "What does the plague symbolize?", a: 0, opts: ["The Republic's corruption and willingness to harm citizens","Natural disaster","Old age","Random misfortune"], hint: "The plague isn't accidental — the Republic created and spread it." },
+      { q: "What theme is shown through Day and Tess's bond?", a: 0, opts: ["Found family and loyalty","Rivalry","Romance and marriage","Religious devotion"], hint: "They're not blood relatives but family by choice." },
+      { q: "Which theme is shown through June's arc?", a: 0, opts: ["Questioning authority and discovering truth","Becoming a soldier","Falling in love at first sight","Climate change"], hint: "She starts loyal to the Republic and learns the system is corrupt." },
+      { q: "What does Day's nickname symbolize?", a: 0, opts: ["Hope — 'sometimes the sun sets so the day can rise again'","A weather forecast","His age","His school grade"], hint: "Day = hope and resistance against the Republic." }
+    ]
+  },
+  figlang: {
+    title: "Figurative Language", emoji: "🎨", color: "#f59e0b",
+    questions: [
+      { q: "\"Her eyes were stars\" is an example of…", a: 0, opts: ["Metaphor","Simile","Personification","Hyperbole"], hint: "Says one thing IS another (no 'like'/'as')." },
+      { q: "\"The wind whispered through the trees\" is…", a: 0, opts: ["Personification","Metaphor","Hyperbole","Onomatopoeia"], hint: "Gives a human action (whispering) to a non-human thing." },
+      { q: "\"As brave as a lion\" is…", a: 0, opts: ["Simile","Metaphor","Imagery","Pun"], hint: "Uses 'as' to compare." },
+      { q: "\"I've told you a million times!\" is…", a: 0, opts: ["Hyperbole","Metaphor","Imagery","Symbolism"], hint: "Obvious exaggeration for effect." },
+      { q: "\"Peter Piper picked a peck of pickled peppers\" uses…", a: 0, opts: ["Alliteration","Onomatopoeia","Hyperbole","Pun"], hint: "Repeated beginning sounds." },
+      { q: "\"Boom! Crash! Pop!\" uses…", a: 0, opts: ["Onomatopoeia","Alliteration","Simile","Metaphor"], hint: "Words that imitate sounds." },
+      { q: "A flag standing for a country is an example of…", a: 0, opts: ["Symbolism","Simile","Personification","Hyperbole"], hint: "An object representing a bigger idea." },
+      { q: "\"The room was a refrigerator\" is…", a: 0, opts: ["Metaphor","Simile","Personification","Pun"], hint: "Says one thing IS another (no 'like'/'as')." },
+      { q: "Vivid descriptions that appeal to the five senses are called…", a: 0, opts: ["Imagery","Symbolism","Alliteration","Hyperbole"], hint: "Words that create mental pictures." },
+      { q: "When annotating, what's a good way to mark figurative language?", a: 0, opts: ["A short code like 'FL' or 🎨 in the margin","A red X","No mark","Just underline it"], hint: "Use a consistent symbol so you can find them later." }
+    ]
+  },
+  cst: {
+    title: "Catholic Social Teachings", emoji: "✝️", color: "#7c3aed",
+    questions: [
+      { q: "How many key themes of Catholic Social Teaching are there?", a: 0, opts: ["7","5","10","12"], hint: "The seven CST themes." },
+      { q: "Which theme says every person is sacred and made in God's image?", a: 0, opts: ["Life and Dignity of the Human Person","Solidarity","Care for God's Creation","Rights and Responsibilities"], hint: "The foundational theme — all life is sacred." },
+      { q: "Which theme says we are made for community?", a: 0, opts: ["Call to Family, Community, and Participation","Solidarity","Option for the Poor","Care for Creation"], hint: "We're social beings; family is the basic unit." },
+      { q: "Which theme says to help those most in need FIRST?", a: 0, opts: ["Option for the Poor and Vulnerable","Solidarity","Rights and Responsibilities","Dignity of Work"], hint: "Putting the poor and vulnerable first." },
+      { q: "Which theme says workers have rights and work has dignity?", a: 0, opts: ["The Dignity of Work and the Rights of Workers","Solidarity","Care for Creation","Rights and Responsibilities"], hint: "Work participates in God's creation." },
+      { q: "Which theme says we are ONE HUMAN FAMILY worldwide?", a: 0, opts: ["Solidarity","Subsidiarity","Stewardship","Sanctity"], hint: "Peace and global responsibility — connected across all borders." },
+      { q: "Which theme is about caring for the environment?", a: 0, opts: ["Care for God's Creation","Solidarity","Subsidiarity","Dignity of Work"], hint: "Stewardship of the earth God created." },
+      { q: "Which theme balances rights with duties to others?", a: 0, opts: ["Rights and Responsibilities","Solidarity","Care for Creation","Dignity of Work"], hint: "Every right has a corresponding responsibility." },
+      { q: "In Legend, characters helping the poor and sick connects to which CST theme?", a: 0, opts: ["Option for the Poor and Vulnerable","Care for Creation","Dignity of Work","Subsidiarity"], hint: "Day risking himself for Eden and the slum residents." },
+      { q: "In Legend, when June seeks the truth about her brother's death, this connects to which CST theme?", a: 0, opts: ["Rights and Responsibilities","Care for Creation","Dignity of Work","Subsidiarity"], hint: "Every person has a right to truth; we have a duty to seek it." }
+    ]
+  }
+};
+
+const TIPS_READING = {
+  plot: [
+    { h:"Plot mountain for Legend ⛰️", p:"<b>Exposition</b>: meet June (elite) and Day (criminal). <b>Rising Action</b>: Metias dies, June hunts Day, plague hits Eden. <b>Climax</b>: June learns the Republic killed Metias. <b>Falling Action</b>: rescue plan. <b>Resolution</b>: June and Day escape together." },
+    { h:"Annotate key events ⭐", p:"Mark events that MOVE THE STORY FORWARD: deaths, betrayals, discoveries, major decisions. Use ⭐ or write \"PLOT\" in the margin." },
+    { h:"Two alternating perspectives", p:"June's chapters and Day's chapters look different in the book (font/color). Always check WHO is narrating — they often see the same events differently." },
+    { h:"Key locations", p:"<b>LA slums</b> (Day's home), <b>Republic capital</b> (June's elite world), <b>the hospitals</b> (plague experiments), <b>Lake sector</b> (Day's territory)." }
+  ],
+  characters: [
+    { h:"Mark traits in the margin 🧍", p:"When a character does something revealing, write the TRAIT next to it: \"brave,\" \"loyal,\" \"manipulative.\" Also mark IMPORTANT RELATIONSHIPS as they shift." },
+    { h:"June and Day are foils", p:"<b>Foils</b> are characters who are OPPOSITES that highlight each other. June (elite, system) vs Day (slum, rebel). Notice how they're similar AND different at the same time." },
+    { h:"Track motivations 🎯", p:"Every character WANTS something. Day → save Eden. June → avenge Metias. Thomas → loyalty to Republic. Knowing motivations helps predict actions." },
+    { h:"Character names are clues", p:"\"Day\" → hope, light, new beginning. \"June\" → middle of the year. Authors choose names on purpose — what do they suggest?" }
+  ],
+  themes: [
+    { h:"What IS a theme?", p:"A theme is the BIG IDEA or MESSAGE the author wants you to think about — like \"power corrupts\" or \"loyalty has limits.\" It's the meaning, not the plot." },
+    { h:"Annotate themes", p:"When you spot a recurring idea, write it: \"THEME: trust,\" \"THEME: class,\" etc. By the end of the book you'll have a list of all the big ideas the author kept circling back to." },
+    { h:"Top themes in Legend", p:"<b>Government corruption</b> · <b>class inequality</b> · <b>family loyalty</b> · <b>truth vs propaganda</b> · <b>identity</b> · <b>sacrifice for love</b>." },
+    { h:"Show, don't tell", p:"Themes usually aren't stated — they're SHOWN through events. When Day risks his life for Eden, that SHOWS family loyalty without saying it." }
+  ],
+  figlang: [
+    { h:"Common types to spot", p:"<b>Simile</b> (like/as), <b>Metaphor</b> (direct), <b>Personification</b> (human traits to non-human), <b>Hyperbole</b> (exaggeration), <b>Alliteration</b> (repeated sounds), <b>Imagery</b> (sensory details), <b>Symbolism</b> (objects that stand for ideas)." },
+    { h:"Annotate with a code", p:"Use short codes in the margin: <b>S</b> = simile, <b>M</b> = metaphor, <b>P</b> = personification, <b>H</b> = hyperbole, <b>FL</b> = any figurative language. Consistent codes make later review easy." },
+    { h:"Why it matters", p:"Figurative language reveals MOOD, CHARACTER, and THEME. \"The Republic was a cage\" (metaphor) tells you the narrator's view of the government." },
+    { h:"Imagery 5-senses checklist", p:"Look for words appealing to: <b>sight</b> (colors, shapes), <b>sound</b> (loud/soft), <b>smell</b>, <b>taste</b>, <b>touch</b> (cold, rough). Imagery makes scenes feel REAL." }
+  ],
+  cst: [
+    { h:"The 7 CST themes ✝️", p:"1. Life and Dignity of the Human Person<br>2. Call to Family, Community, and Participation<br>3. Rights and Responsibilities<br>4. Option for the Poor and Vulnerable<br>5. The Dignity of Work and the Rights of Workers<br>6. Solidarity<br>7. Care for God's Creation" },
+    { h:"Spot CST in Legend", p:"When characters help the poor (Tess and the homeless), seek truth (June questioning the Republic), or show the dignity of every person — mark it with 'CST' and the theme number." },
+    { h:"Connect specific themes", p:"Day risking life for Eden → <b>Option for the Poor / Family</b>. June discovering the corrupt system → <b>Rights and Responsibilities</b>. Republic propaganda dehumanizing the slums → violation of <b>Life and Dignity</b>." },
+    { h:"For the Theme Project", p:"Pick ONE CST theme that connects most strongly to Legend. Use 3–4 specific quotes/events from the book as evidence. Strong essays are SPECIFIC, not general." }
+  ]
+};
+const READING_KEY_ORDER = ["plot","characters","themes","figlang","cst"];
+
 const SUBJECTS = {
   ela: {
     title: "ELA (English)", emoji: "📖", color: "#6366f1",
@@ -737,9 +1009,19 @@ const SUBJECTS = {
     title: "Social Studies", emoji: "🏛️", color: "#dc2626",
     description: "Ancient civilizations: Mesopotamia, Egypt, Africa, India, China, Greece, Rome",
     topics: QUIZ_SOCIAL, tips: TIPS_SOCIAL, keyOrder: SOCIAL_KEY_ORDER, hasSubObj: false
+  },
+  math: {
+    title: "Math 7", emoji: "🔢", color: "#10b981",
+    description: "Whole numbers, integers, decimals, fractions + cards / calendar / units review",
+    topics: QUIZ_MATH, tips: TIPS_MATH, keyOrder: MATH_KEY_ORDER, hasSubObj: false
+  },
+  reading: {
+    title: "Summer Reading: Legend", emoji: "📚", color: "#d97706",
+    description: "AR test prep for Legend by Marie Lu — plot, characters, themes, figurative language, CST",
+    topics: QUIZ_READING, tips: TIPS_READING, keyOrder: READING_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["ela","social"];
+const SUBJECT_ORDER = ["ela","social","math","reading"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;

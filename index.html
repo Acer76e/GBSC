@@ -366,6 +366,32 @@ h3{font-size:15px;line-height:1.3;}
 .daily-card .day-cal .cell.lit{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;}
 .daily-card .day-cal .cell.today{outline:2px solid #92400e;}
 
+.boss-btn{background:linear-gradient(135deg,#7c2d12,#991b1b);color:#fff;box-shadow:0 6px 20px -4px rgba(124,45,18,.55);}
+.tower-btn{background:linear-gradient(135deg,#0891b2,#1e40af);color:#fff;box-shadow:0 6px 20px -4px rgba(8,145,178,.55);}
+
+.boss-arena{background:linear-gradient(135deg,#0f172a,#1e1b4b,#581c87);color:#fff;border-radius:18px;padding:22px;text-align:center;box-shadow:0 10px 30px rgba(15,23,42,.3);}
+.boss-portrait{font-size:84px;display:inline-block;animation:bossIdle 2.5s ease-in-out infinite;margin-bottom:6px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));}
+.boss-portrait.attacking{animation:bossAttack .5s ease;}
+.boss-portrait.hurt{animation:bossHurt .45s ease;}
+@keyframes bossIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes bossAttack{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.35) rotate(10deg);filter:drop-shadow(0 0 20px #ef4444);}}
+@keyframes bossHurt{0%,100%{transform:translateX(0)}25%{transform:translateX(-12px)}50%{transform:translateX(12px);filter:hue-rotate(20deg);}75%{transform:translateX(-6px)}}
+.boss-name{font-size:22px;font-weight:800;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.5);}
+.boss-hp-row{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.boss-hp-row .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;opacity:.85;flex-shrink:0;}
+.boss-hp-bar{flex:1;height:14px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;}
+.boss-hp-fill{height:100%;background:linear-gradient(90deg,#ef4444,#f59e0b,#ef4444);transition:width .45s cubic-bezier(.2,1,.2,1);border-radius:999px;box-shadow:inset 0 -2px 4px rgba(0,0,0,.3);}
+.boss-hp-num{font-size:12px;font-weight:800;color:#fff;flex-shrink:0;min-width:32px;text-align:right;}
+.player-hearts{display:flex;justify-content:center;gap:6px;font-size:22px;margin-top:8px;}
+
+.tower-container{background:linear-gradient(180deg,#0c4a6e 0%,#1e40af 50%,#581c87 100%);border-radius:18px;padding:14px;position:relative;overflow:hidden;height:240px;color:#fff;}
+.tower-floor-label{position:absolute;top:14px;left:14px;font-size:14px;font-weight:800;background:rgba(0,0,0,.4);padding:4px 12px;border-radius:999px;}
+.tower-lives{position:absolute;top:14px;right:14px;font-size:16px;background:rgba(0,0,0,.4);padding:4px 12px;border-radius:999px;}
+.tower-track{position:absolute;left:50%;transform:translateX(-50%);top:50px;bottom:14px;width:50px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;}
+.tower-fill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#fbbf24,#f59e0b,#ef4444);transition:height .55s cubic-bezier(.2,1,.2,1);border-radius:999px;}
+.tower-avatar{position:absolute;left:50%;transform:translateX(-50%);transition:bottom .55s cubic-bezier(.2,1,.2,1);font-size:34px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));z-index:2;}
+.tower-summit{position:absolute;top:50px;left:50%;transform:translateX(-50%);font-size:18px;opacity:.7;}
+
 @media (max-width:380px){
   .celebrate-emoji{font-size:100px;}
   .celebrate-title{font-size:40px;letter-spacing:2px;}
@@ -1247,8 +1273,54 @@ const TROPHIES = [
   { id:"daily_7",       emoji:"🌟", name:"Week Warrior",     desc:"Complete the Daily Challenge 7 days in a row." },
   { id:"daily_30",      emoji:"🏆", name:"Month Maverick",   desc:"Complete the Daily Challenge 30 days in a row." },
   { id:"match_master",  emoji:"🃏", name:"Memory Master",    desc:"Beat a Match Game in under 60 seconds." },
-  { id:"speed_star",    emoji:"💨", name:"Quick Draw",       desc:"Get 20+ correct in a Speed Round." }
+  { id:"speed_star",    emoji:"💨", name:"Quick Draw",       desc:"Get 20+ correct in a Speed Round." },
+  { id:"tower_25",      emoji:"🗼", name:"Halfway Climber",  desc:"Reach floor 25 in Tower Climb." },
+  { id:"tower_50",      emoji:"🏆", name:"Summit Master",    desc:"Reach floor 50 in Tower Climb." },
+  { id:"boss_ela",      emoji:"📖", name:"ELA Champion",     desc:"Defeat all 5 ELA bosses." },
+  { id:"boss_social",   emoji:"🏛️", name:"History Hero",     desc:"Defeat all 7 Social Studies bosses." },
+  { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
+  { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 9 Reading bosses." },
+  { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." }
 ];
+
+const BOSSES = {
+  ela: {
+    vocab:    { emoji: "🧙", name: "Word Wizard" },
+    literary: { emoji: "🎭", name: "Quill Master" },
+    pronouns: { emoji: "🤖", name: "Grammar Bot" },
+    story:    { emoji: "👻", name: "Plot Phantom" },
+    writing:  { emoji: "🦉", name: "Essay Owl" }
+  },
+  social: {
+    mesopotamia: { emoji: "👑", name: "King Hammurabi" },
+    egypt:       { emoji: "🦁", name: "The Sphinx" },
+    africa:      { emoji: "💰", name: "Mansa Musa" },
+    india:       { emoji: "🐅", name: "Vedic Tiger" },
+    china:       { emoji: "🐉", name: "Dragon Emperor" },
+    greece:      { emoji: "🦅", name: "Zeus" },
+    rome:        { emoji: "⚔️", name: "Caesar" }
+  },
+  math: {
+    whole_ops:   { emoji: "🧮", name: "Number Cruncher" },
+    integers:    { emoji: "⚖️", name: "Sign Sorcerer" },
+    decimals:    { emoji: "💎", name: "Decimal Demon" },
+    fractions:   { emoji: "🍰", name: "Pie Phantom" },
+    cards:       { emoji: "🃏", name: "Card Shark" },
+    calendar:    { emoji: "⏰", name: "Time Keeper" },
+    conversions: { emoji: "📐", name: "Measure Master" }
+  },
+  reading: {
+    part1:      { emoji: "🏥", name: "The Hospital" },
+    part2:      { emoji: "🥷", name: "The Hunter" },
+    part3:      { emoji: "⛓️", name: "The Republic" },
+    part4:      { emoji: "💥", name: "The Reckoning" },
+    plot:       { emoji: "📖", name: "Story Sage" },
+    characters: { emoji: "🎭", name: "Character Champion" },
+    themes:     { emoji: "💭", name: "Theme Titan" },
+    figlang:    { emoji: "🎨", name: "Metaphor Master" },
+    cst:        { emoji: "✝️", name: "CST Sage" }
+  }
+};
 
 const LEVELS = [
   { at:5,  emoji:"🌟", name:"SUPERSTAR",      tagline:"You're shining bright!" },
@@ -1872,6 +1944,277 @@ function finishSpeed() {
 }
 function quitSpeed() { clearSpeedTimer(); state.screen = "home"; render(); }
 
+function loadDefeatedBosses() {
+  try { return new Set(JSON.parse(lsGet("g6_bosses","[]"))); } catch(e) { return new Set(); }
+}
+function saveDefeatedBosses(set) { lsSet("g6_bosses", JSON.stringify(Array.from(set))); }
+function isBossDefeated(subjKey, topicKey) {
+  return loadDefeatedBosses().has(subjKey + ":" + topicKey);
+}
+
+function goBossPicker() { clearTimer(); clearSpeedTimer(); state.screen = "boss-picker"; render(); }
+
+function startBossBattle(topicKey) {
+  clearTimer(); clearSpeedTimer();
+  state.bossTopic = topicKey;
+  state.bossSubjectAtStart = state.subject;
+  state.bossHP = 10;
+  state.playerHP = 3;
+  state.bossAttacking = false;
+  state.bossHurt = false;
+  state.bossWon = false;
+  state.bossLost = false;
+  const topic = curSubject().topics[topicKey];
+  state.bossQuestions = shuffle(topic.questions.slice()).map(shuffleOptions);
+  state.bossIndex = 0;
+  state.screen = "boss";
+  chimeStart();
+  render();
+}
+
+function answerBoss(i) {
+  if (state.bossWon || state.bossLost) return;
+  const q = state.bossQuestions[state.bossIndex];
+  if (i === q.a) {
+    state.bossHP--;
+    state.bossHurt = true;
+    chimeCorrect();
+    smallConfetti();
+    if (state.bossHP <= 0) {
+      state.bossWon = true;
+      const defeated = loadDefeatedBosses();
+      defeated.add(state.subject + ":" + state.bossTopic);
+      saveDefeatedBosses(defeated);
+      const earned = loadTrophies(); const newOnes = [];
+      const subjBosses = BOSSES[state.subject] || {};
+      const allInSubj = Object.keys(subjBosses).every(k => defeated.has(state.subject + ":" + k));
+      if (allInSubj) tryEarn(earned, newOnes, "boss_" + state.subject);
+      const allBosses = Object.keys(BOSSES).every(s =>
+        Object.keys(BOSSES[s]).every(k => defeated.has(s + ":" + k))
+      );
+      if (allBosses) tryEarn(earned, newOnes, "grand_champion");
+      saveTrophies(earned);
+      if (newOnes.length) setTimeout(() => queueToasts(newOnes), 800);
+      setTimeout(() => {
+        state.screen = "boss-done";
+        bigConfetti();
+        chimeAchievement();
+        render();
+      }, 1100);
+      render();
+      return;
+    }
+  } else {
+    state.playerHP--;
+    state.bossAttacking = true;
+    toneWrong();
+    if (state.playerHP <= 0) {
+      state.bossLost = true;
+      setTimeout(() => { state.screen = "boss-done"; render(); }, 1100);
+      render();
+      return;
+    }
+  }
+  state.bossIndex = (state.bossIndex + 1) % state.bossQuestions.length;
+  render();
+  setTimeout(() => { state.bossHurt = false; state.bossAttacking = false; }, 500);
+}
+function quitBoss() { state.screen = "boss-picker"; render(); }
+
+function viewBossPicker() {
+  const subj = curSubject();
+  const defeated = loadDefeatedBosses();
+  const bosses = BOSSES[state.subject] || {};
+  const subjKeys = subj.keyOrder.filter(k => bosses[k]);
+  const total = subjKeys.length;
+  const got = subjKeys.filter(k => defeated.has(state.subject + ":" + k)).length;
+  return `
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="card topic-hero" style="background:linear-gradient(135deg,#0f172a,#581c87);color:#fff;">
+      <div class="big-icon" style="background:rgba(255,255,255,.15);color:#fff;">⚔️</div>
+      <h1 style="background:none;-webkit-text-fill-color:#fff;color:#fff;">Boss Battles</h1>
+      <p style="color:#cbd5e1;">Defeat each topic's boss! Progress: ${got}/${total}</p>
+    </div>
+    <div class="topic-grid">
+      ${subjKeys.map(k => {
+        const b = bosses[k];
+        const isDef = defeated.has(state.subject + ":" + k);
+        return `<button class="topic" onclick="startBossBattle('${k}')" style="${isDef?"background:linear-gradient(135deg,#dcfce7,#fff);border-color:#10b981;":""}">
+          <div class="icon" style="background:#1e1b4b;color:#fff;">${b.emoji}</div>
+          <div class="info">
+            <div class="ttl">${esc(b.name)}${isDef?" ✓":""}</div>
+            <div class="sub">${esc(subj.topics[k].title)}${isDef?" · Defeated!":""}</div>
+          </div>
+          <div class="arrow">›</div>
+        </button>`;
+      }).join("")}
+    </div>
+  `;
+}
+
+function viewBoss() {
+  const boss = (BOSSES[state.subject] || {})[state.bossTopic] || {emoji:"👹", name:"Boss"};
+  const q = state.bossQuestions[state.bossIndex];
+  const hpPct = Math.max(0, state.bossHP / 10) * 100;
+  return `
+    <div class="boss-arena">
+      <span class="boss-portrait ${state.bossHurt?"hurt":""} ${state.bossAttacking?"attacking":""}">${boss.emoji}</span>
+      <div class="boss-name">${esc(boss.name)}</div>
+      <div class="boss-hp-row">
+        <span class="lbl">HP</span>
+        <div class="boss-hp-bar"><div class="boss-hp-fill" style="width:${hpPct}%;"></div></div>
+        <span class="boss-hp-num">${state.bossHP}/10</span>
+      </div>
+      <div class="player-hearts">
+        ${[1,2,3].map(n => `<span>${n <= state.playerHP ? "❤️" : "🤍"}</span>`).join("")}
+      </div>
+    </div>
+    <div class="card quiz fade-in" style="margin-top:14px;">
+      <span class="badge" style="background:rgba(124,45,18,.15);color:#7c2d12;">⚔️ Boss Battle</span>
+      <div class="qtext" style="margin-top:10px;">${esc(q.q)}</div>
+      <div class="options">
+        ${q.opts.map((opt, i) => `<button class="option" onclick="answerBoss(${i})">
+          <span class="letter">${letter(i)}</span><span>${esc(opt)}</span>
+        </button>`).join("")}
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-small" onclick="quitBoss()">← Quit Battle</button>
+  `;
+}
+
+function viewBossDone() {
+  const boss = (BOSSES[state.subject] || {})[state.bossTopic] || {emoji:"👹", name:"Boss"};
+  if (state.bossWon) {
+    return `
+      <div class="card score-big">
+        <span class="avatar-celebrate" style="font-size:60px;">${loadAvatar()}</span>
+        <div class="grade" style="font-size:64px;">🏆</div>
+        <div class="label">${esc(boss.name)} Defeated!</div>
+        <div class="pct">${boss.emoji} You earned a victory!</div>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" onclick="goBossPicker()">⚔️ Next Boss</button>
+        <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
+      </div>
+    `;
+  }
+  return `
+    <div class="card score-big">
+      <div class="grade" style="font-size:64px;">💀</div>
+      <div class="label">${esc(boss.name)} wins this round...</div>
+      <div class="pct">Study up and challenge them again!</div>
+      <span class="emoji">😤</span>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" onclick="startBossBattle('${state.bossTopic}')">🔄 Rematch</button>
+      <button class="btn btn-ghost" onclick="goBossPicker()">⚔️ Pick Another</button>
+    </div>
+  `;
+}
+
+function startTowerClimb() {
+  clearTimer(); clearSpeedTimer();
+  state.towerFloor = 0;
+  state.towerLives = 3;
+  state.towerWon = false;
+  const subj = curSubject();
+  const all = [];
+  for (const k of subj.keyOrder) for (const q of subj.topics[k].questions) all.push({...q, _cat: k});
+  state.towerQuestions = shuffle(all).map(shuffleOptions);
+  state.towerIndex = 0;
+  state.towerStart = Date.now();
+  state.screen = "tower";
+  chimeStart();
+  render();
+}
+function answerTower(i) {
+  const q = state.towerQuestions[state.towerIndex];
+  if (i === q.a) {
+    state.towerFloor++;
+    chimeCorrect();
+    smallConfetti();
+    if (state.towerFloor >= 50) {
+      finishTower(true);
+      return;
+    }
+  } else {
+    state.towerFloor = Math.max(0, state.towerFloor - 3);
+    state.towerLives--;
+    toneWrong();
+    if (state.towerLives <= 0) {
+      finishTower(false);
+      return;
+    }
+  }
+  state.towerIndex = (state.towerIndex + 1) % state.towerQuestions.length;
+  render();
+}
+function finishTower(won) {
+  state.towerWon = won;
+  const bestKey = "g6_towerBest_" + state.subject;
+  const best = parseInt(lsGet(bestKey, "0"), 10);
+  if (state.towerFloor > best) lsSet(bestKey, String(state.towerFloor));
+  const earned = loadTrophies(); const newOnes = [];
+  if (state.towerFloor >= 25) tryEarn(earned, newOnes, "tower_25");
+  if (won || state.towerFloor >= 50) tryEarn(earned, newOnes, "tower_50");
+  saveTrophies(earned);
+  if (newOnes.length) setTimeout(() => queueToasts(newOnes), 700);
+  state.screen = "tower-done";
+  if (won) { bigConfetti(); chimeAchievement(); }
+  else { miniConfetti(); }
+  render();
+}
+function quitTower() { state.screen = "home"; render(); }
+
+function viewTower() {
+  const q = state.towerQuestions[state.towerIndex];
+  const fillPct = (state.towerFloor / 50) * 100;
+  return `
+    <div class="tower-container">
+      <div class="tower-floor-label">🗼 Floor ${state.towerFloor}/50</div>
+      <div class="tower-lives">${"❤️".repeat(state.towerLives)}${"🤍".repeat(3-state.towerLives)}</div>
+      <span class="tower-summit">🏔️</span>
+      <div class="tower-track">
+        <div class="tower-fill" style="height:${fillPct}%;"></div>
+        <div class="tower-avatar" style="bottom:${Math.min(95, fillPct + 2)}%;">${loadAvatar()}</div>
+      </div>
+    </div>
+    <div class="card quiz fade-in" style="margin-top:14px;">
+      <span class="badge" style="background:rgba(8,145,178,.15);color:#0e7490;">🗼 Tower Climb</span>
+      <div class="qtext" style="margin-top:10px;">${esc(q.q)}</div>
+      <div class="options">
+        ${q.opts.map((opt, i) => `<button class="option" onclick="answerTower(${i})">
+          <span class="letter">${letter(i)}</span><span>${esc(opt)}</span>
+        </button>`).join("")}
+      </div>
+    </div>
+    <p class="muted" style="text-align:center;font-size:13px;">✅ Correct = +1 floor &nbsp;·&nbsp; ❌ Wrong = -3 floors &nbsp;·&nbsp; 3 lives</p>
+    <button class="btn btn-ghost btn-small" onclick="quitTower()">← Quit Climb</button>
+  `;
+}
+
+function viewTowerDone() {
+  const won = state.towerWon;
+  const floor = state.towerFloor;
+  const label = won ? "Summit Reached! 🏔️"
+              : floor >= 25 ? "Halfway Hero! 🎯"
+              : floor >= 10 ? "Good climb! 💪"
+              : "Keep climbing! 📚";
+  const emoji = won ? "🏆" : floor >= 25 ? "🗼" : "💪";
+  return `
+    <div class="card score-big">
+      <span class="avatar-celebrate" style="font-size:60px;">${loadAvatar()}</span>
+      <div class="grade" style="font-size:64px;">${emoji}</div>
+      <div class="label">${label}</div>
+      <div class="pct">Reached floor ${floor}/50</div>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" onclick="startTowerClimb()">🔄 Climb Again</button>
+      <button class="btn btn-ghost" onclick="goHome()">🏠 Home</button>
+    </div>
+  `;
+}
+
 function startFlashcards(k, set) {
   state.currentCategory = k;
   const source = set === "subobj" ? SUBOBJ.questions : QUIZ[k].questions;
@@ -2120,6 +2463,8 @@ function viewHome() {
       })()}
       <button class="btn match-btn btn-icon" style="margin-top:6px;" onclick="goMatchPicker()">🃏 Match Game <span style="opacity:.85;font-weight:500;">— flip & pair</span></button>
       <button class="btn speed-btn btn-icon" style="margin-top:6px;" onclick="startSpeedRound()">💨 Speed Round <span style="opacity:.85;font-weight:500;">(60 sec)</span></button>
+      <button class="btn boss-btn btn-icon" style="margin-top:6px;" onclick="goBossPicker()">⚔️ Boss Battle <span style="opacity:.85;font-weight:500;">— defeat the topic boss!</span></button>
+      <button class="btn tower-btn btn-icon" style="margin-top:6px;" onclick="startTowerClimb()">🗼 Tower Climb <span style="opacity:.85;font-weight:500;">(50 floors)</span></button>
     </div>
     <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
     <div class="row">
@@ -3103,6 +3448,11 @@ function render() {
     case "match": view = viewMatch(); break;
     case "match-done": view = viewMatchDone(); break;
     case "speed-done": view = viewSpeedDone(); break;
+    case "boss-picker": view = viewBossPicker(); break;
+    case "boss": view = viewBoss(); break;
+    case "boss-done": view = viewBossDone(); break;
+    case "tower": view = viewTower(); break;
+    case "tower-done": view = viewTowerDone(); break;
     default: view = viewHome();
   }
   app.innerHTML = view;
@@ -3148,6 +3498,13 @@ window.goMatchPicker = goMatchPicker;
 window.startMatch = startMatch;
 window.flipMatchCard = flipMatchCard;
 window.quitMatch = quitMatch;
+window.goBossPicker = goBossPicker;
+window.startBossBattle = startBossBattle;
+window.answerBoss = answerBoss;
+window.quitBoss = quitBoss;
+window.startTowerClimb = startTowerClimb;
+window.answerTower = answerTower;
+window.quitTower = quitTower;
 
 migrateData();
 {

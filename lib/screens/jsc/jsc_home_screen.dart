@@ -5,6 +5,7 @@ import '../../models/jsc/jsc_ticket.dart';
 import '../../services/jsc/jsc_api.dart';
 import '../../services/jsc/jsc_auth_service.dart';
 import '../../theme.dart';
+import 'jsc_ticket_detail_screen.dart';
 
 class JscHomeScreen extends StatefulWidget {
   const JscHomeScreen({super.key});
@@ -155,10 +156,13 @@ class _JscHomeScreenState extends State<JscHomeScreen> {
                       ),
                     ),
                     trailing: _StatusChip(status: t.status),
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Ticket detail coming next')),
+                    onTap: () async {
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => JscTicketDetailScreen(ticketId: t.id),
+                        ),
                       );
+                      _refresh();
                     },
                   ),
                 );

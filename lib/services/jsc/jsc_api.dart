@@ -130,5 +130,41 @@ class JscApi {
     return (ticket: ticket, messages: msgs);
   }
 
+  Future<void> replyToTicket(
+    String id, {
+    required bool asClient,
+    required String body,
+    bool isInternal = false,
+  }) async {
+    final path = asClient ? '/tickets/mine/$id/reply' : '/tickets/$id/reply';
+    final payload = <String, dynamic>{'body': body};
+    if (!asClient && isInternal) payload['is_internal'] = true;
+    final res = await _client.post(
+      _u(path),
+      headers: _headers(),
+      body: jsonEncode(payload),
+    );
+    await _decode(res);
+  }
+
+  Future<JscTicket> updateTicket(
+    String id, {
+    String? status,
+    String? priority,
+    String? assigneeId,
+  }) async {
+    final payload = <String, dynamic>{};
+    if (status != null) payload['status'] = status;
+    if (priority != null) payload['priority'] = priority;
+    if (assigneeId != null) payload['assignee_id'] = assigneeId;
+    final res = await _client.patch(
+      _u('/tickets/$id'),
+      headers: _headers(),
+      body: jsonEncode(payload),
+    );
+    final body = await _decode(res) as Map<String, dynamic>;
+    return JscTicket.fromJson((body['ticket'] as Map<String, dynamic>?) ?? const {});
+  }
+
   Future<void> dispose() async => _client.close();
 }

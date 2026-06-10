@@ -15,6 +15,11 @@ import 'theme.dart';
 late final JscAuthService _jscAuth;
 JscFcmService? _fcm;
 
+// Used by the FCM foreground listener so it can surface notifications via a
+// SnackBar even when no screen knows about the message.
+final GlobalKey<ScaffoldMessengerState> _rootMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -37,6 +42,30 @@ Future<void> main() async {
   try {
     _fcm = JscFcmService(_jscAuth);
     _jscAuth.unregisterFcmHook = () => _fcm!.unregisterBeforeSignOut();
+    // Foreground messages: Android won't show a system notification while the
+    // app is in the foreground, so we surface a SnackBar so the user sees
+    // *something*. Background delivery still uses the OS notification UI.
+    _fcm!.onForegroundMessage = (msg) {
+      final title = msg.notification?.title ?? msg.data['title']?.toString();
+      final body = msg.notification?.body ?? msg.data['body']?.toString();
+      final text = [
+        if (title != null && title.isNotEmpty) title,
+        if (body != null && body.isNotEmpty) body,
+      ].join(' — ');
+      if (text.isEmpty) return;
+      _rootMessengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text(text),
+          duration: const Duration(seconds: 6),
+          behavior: SnackBarBehavior.floating,
+          action: SnackBarAction(
+            label: 'Dismiss',
+            onPressed: () =>
+                _rootMessengerKey.currentState?.hideCurrentSnackBar(),
+          ),
+        ),
+      );
+    };
     // Fire-and-forget init; UI doesn't depend on it.
     _fcm!.init();
   } catch (e) {
@@ -68,6 +97,7 @@ class JuiceCommandApp extends StatelessWidget {
       child: MaterialApp(
         title: 'JUICE Command',
         theme: AppTheme.light(),
+        scaffoldMessengerKey: _rootMessengerKey,
         debugShowCheckedModeBanner: false,
         home: const HomeShell(),
       ),

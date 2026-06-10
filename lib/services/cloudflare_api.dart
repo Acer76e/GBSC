@@ -97,15 +97,17 @@ class CloudflareApi {
     }
 
     try {
-      // /user/tokens/verify is the canonical check for API Tokens.
+      // /zones is what the app actually uses on first load, and it works
+      // for both API Token (with Zone:Read) and Global API Key. Avoids
+      // /user which requires a separate User:Read scope that our
+      // recommended token doesn't include.
+      final zonesErr = await probe('/zones?per_page=1');
+      if (zonesErr == null) return null;
+      // Fallback: /user/tokens/verify confirms the token itself is valid
+      // even if the account has zero zones.
       final tokenErr = await probe('/user/tokens/verify');
       if (tokenErr == null) return null;
-      // Fall back to /user which works for Global API Key (and for tokens
-      // with User:Read permission). If this also fails, surface its error
-      // since it's the more permissive check.
-      final userErr = await probe('/user');
-      if (userErr == null) return null;
-      return userErr;
+      return zonesErr;
     } finally {
       if (client == null) c.close();
     }

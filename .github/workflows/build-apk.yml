@@ -42,6 +42,11 @@ jobs:
           # cannot reach api.cloudflare.com (DNS lookup fails).
           sed -i '/^<manifest /a\    <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
           grep -n INTERNET android/app/src/main/AndroidManifest.xml
+          # Override the Android display name. The Dart package stays
+          # 'cloudflare_mobile' so existing app data (saved credentials)
+          # carries over across updates.
+          sed -i 's/android:label="cloudflare_mobile"/android:label="JUICE Command"/' android/app/src/main/AndroidManifest.xml
+          grep -n 'android:label' android/app/src/main/AndroidManifest.xml
 
       - name: Install dependencies
         run: flutter pub get

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'screens/home_shell.dart';
 import 'services/auth_service.dart';
 import 'services/cloudflare_api.dart';
@@ -17,11 +18,12 @@ JscFcmService? _fcm;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Firebase init is best-effort: if google-services.json is missing or the
-  // device lacks Play Services, the rest of the app still works (push just
-  // won't fire).
+  // Firebase init is best-effort: if the device lacks Play Services the rest
+  // of the app still works (push just won't fire). Use explicit options so
+  // init doesn't depend on Gradle plugin processing of google-services.json
+  // — which proved unreliable against Flutter 3.24's scaffold.
   try {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   } catch (e) {
     debugPrint('Firebase.initializeApp failed: $e');
   }

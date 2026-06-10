@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'screens/home_shell.dart';
 import 'services/auth_service.dart';
 import 'services/cloudflare_api.dart';
+import 'services/jsc/jsc_auth_service.dart';
 import 'services/maintenance_config.dart';
 import 'services/maintenance_service.dart';
 import 'theme.dart';
@@ -21,6 +22,7 @@ class JuiceCommandApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()..load()),
+        ChangeNotifierProvider(create: (_) => JscAuthService()..load()),
         ChangeNotifierProvider(create: (_) => MaintenanceConfig()..load()),
         ProxyProvider<AuthService, CloudflareApi>(
           update: (_, auth, previous) => previous ?? CloudflareApi(auth),

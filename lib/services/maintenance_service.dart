@@ -41,6 +41,18 @@ class MaintenanceOverview {
       .toList();
 }
 
+class ZoneRouteStatus {
+  final bool inMaintenance;
+  final bool suspended;
+  final Set<String> otherScripts;
+
+  ZoneRouteStatus({
+    required this.inMaintenance,
+    required this.suspended,
+    required this.otherScripts,
+  });
+}
+
 class ToggleResult {
   final List<String> succeeded;
   final List<({String domain, String message})> failed;
@@ -217,22 +229,77 @@ class MaintenanceService {
     );
   }
 
-  // ── Per-domain suspension ─────────────────────────────────────────────
+  // ── Per-zone status / toggles ─────────────────────────────────────────
 
-  Future<({bool suspended, bool conflict, String? conflictScript})>
-      getSuspendedStatus(String zoneId) async {
+  Future<ZoneRouteStatus> getZoneRouteStatus(String zoneId) async {
     final routes = await api.listWorkerRoutes(zoneId);
+    final hasMaintenance = routes.any((r) => r.script == config.maintenanceScript);
     final hasSuspended = routes.any((r) => r.script == config.suspendedScript);
     final otherScripts = routes
-        .where((r) => r.script != null && r.script != config.suspendedScript)
+        .where((r) =>
+            r.script != null &&
+            r.script != config.maintenanceScript &&
+            r.script != config.suspendedScript)
         .map((r) => r.script!)
         .toSet();
-    return (
+    return ZoneRouteStatus(
+      inMaintenance: hasMaintenance,
       suspended: hasSuspended,
-      conflict: otherScripts.isNotEmpty,
-      conflictScript: otherScripts.isEmpty ? null : otherScripts.first,
+      otherScripts: otherScripts,
     );
   }
+
+  // Backwards-compatible wrapper used by older callers.
+  Future<({bool suspended, bool conflict, String? conflictScript})>
+      getSuspendedStatus(String zoneId) async {
+    final s = await getZoneRouteStatus(zoneId);
+    // A "conflict" here is anything that would block setting the suspended
+    // worker on the same pattern — i.e. another worker (including the
+    // maintenance worker) already attached.
+    final blockers = {
+      ...s.otherScripts,
+      if (s.inMaintenance) config.maintenanceScript,
+    };
+    return (
+      suspended: s.suspended,
+      conflict: blockers.isNotEmpty,
+      conflictScript: blockers.isEmpty ? null : blockers.first,
+    );
+  }
+
+  Future<({bool ok, List<String> skipped})> enableMaintenanceOn(
+    String zoneId,
+    String domain,
+  ) async {
+    final existing = await api.listWorkerRoutes(zoneId);
+    final wantedPatterns = [_patternFor(domain), _wwwPatternFor(domain)];
+    final skipped = <String>[];
+    for (final pattern in wantedPatterns) {
+      final match = existing.where((r) => r.pattern == pattern).toList();
+      if (match.any((r) => r.script == config.maintenanceScript)) continue;
+      if (match.any((r) => r.script != config.maintenanceScript)) {
+        skipped.add('$pattern already attached to ${match.first.script}');
+        continue;
+      }
+      await api.createWorkerRoute(
+        zoneId,
+        pattern: pattern,
+        script: config.maintenanceScript,
+      );
+    }
+    return (ok: true, skipped: skipped);
+  }
+
+  Future<void> disableMaintenanceOn(String zoneId) async {
+    final existing = await api.listWorkerRoutes(zoneId);
+    final toDelete =
+        existing.where((r) => r.script == config.maintenanceScript).toList();
+    for (final r in toDelete) {
+      await api.deleteWorkerRoute(zoneId, r.id);
+    }
+  }
+
+  // ── Per-domain suspension ─────────────────────────────────────────────
 
   Future<({bool ok, List<String> skipped})> suspend(String zoneId, String domain) async {
     final existing = await api.listWorkerRoutes(zoneId);

@@ -18,31 +18,26 @@ class ZoneDetailScreen extends StatefulWidget {
 }
 
 class _ZoneDetailScreenState extends State<ZoneDetailScreen> {
-  bool? _suspended;
-  bool _conflict = false;
-  String? _conflictScript;
+  ZoneRouteStatus? _status;
   bool _loading = true;
-  bool _toggling = false;
+  bool _togglingMaintenance = false;
+  bool _togglingSuspended = false;
   String? _error;
 
   @override
   void initState() {
     super.initState();
-    _loadSuspended();
+    _load();
   }
 
-  Future<void> _loadSuspended() async {
+  Future<void> _load() async {
     setState(() {
       _loading = true;
       _error = null;
     });
     try {
-      final s = await context.read<MaintenanceService>().getSuspendedStatus(widget.zone.id);
-      setState(() {
-        _suspended = s.suspended;
-        _conflict = s.conflict;
-        _conflictScript = s.conflictScript;
-      });
+      final s = await context.read<MaintenanceService>().getZoneRouteStatus(widget.zone.id);
+      setState(() => _status = s);
     } catch (e) {
       setState(() => _error = e.toString());
     } finally {
@@ -50,47 +45,71 @@ class _ZoneDetailScreenState extends State<ZoneDetailScreen> {
     }
   }
 
-  Future<void> _toggleSuspended(bool value) async {
-    setState(() => _toggling = true);
+  Future<void> _showSkipped(String title, List<String> skipped) async {
+    if (skipped.isEmpty || !mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(title),
+        content: Text(
+          'These patterns are already attached to a different Worker on this zone, so they were skipped:\n\n${skipped.join("\n")}\n\nDisable the conflicting toggle first if you want this one to take over.',
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK')),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _toggleMaintenance(bool value) async {
+    setState(() => _togglingMaintenance = true);
     try {
       final svc = context.read<MaintenanceService>();
       if (value) {
-        final r = await svc.suspend(widget.zone.id, widget.zone.name);
-        if (r.skipped.isNotEmpty && mounted) {
-          await showDialog<void>(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('Some routes skipped'),
-              content: Text(
-                'These patterns are already attached to a different Worker:\n\n${r.skipped.join("\n")}',
-              ),
-              actions: [
-                TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK')),
-              ],
-            ),
-          );
-        }
+        final r = await svc.enableMaintenanceOn(widget.zone.id, widget.zone.name);
+        await _showSkipped('Maintenance partially applied', r.skipped);
       } else {
-        await svc.unsuspend(widget.zone.id);
+        await svc.disableMaintenanceOn(widget.zone.id);
       }
-      await _loadSuspended();
+      await _load();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
-      if (mounted) setState(() => _toggling = false);
+      if (mounted) setState(() => _togglingMaintenance = false);
+    }
+  }
+
+  Future<void> _toggleSuspended(bool value) async {
+    setState(() => _togglingSuspended = true);
+    try {
+      final svc = context.read<MaintenanceService>();
+      if (value) {
+        final r = await svc.suspend(widget.zone.id, widget.zone.name);
+        await _showSkipped('Suspension partially applied', r.skipped);
+      } else {
+        await svc.unsuspend(widget.zone.id);
+      }
+      await _load();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    } finally {
+      if (mounted) setState(() => _togglingSuspended = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final s = _status;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.zone.name, style: const TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: RefreshIndicator(
-        onRefresh: _loadSuspended,
+        onRefresh: _load,
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
@@ -102,58 +121,75 @@ class _ZoneDetailScreenState extends State<ZoneDetailScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            _SectionLabel('CLIENT STATE'),
+            _SectionLabel('PAGE OVERRIDE'),
             Card(
               child: Column(
                 children: [
                   if (_loading)
-                    const ListTile(
-                      title: Text('Suspended'),
-                      trailing: SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
+                    const Padding(
+                      padding: EdgeInsets.all(24),
+                      child: Center(child: CircularProgressIndicator()),
                     )
                   else if (_error != null)
                     ListTile(
-                      title: const Text('Suspended'),
+                      title: const Text('Failed to load route status'),
                       subtitle:
                           Text(_error!, style: const TextStyle(color: Colors.red, fontSize: 12)),
                       trailing: IconButton(
                         icon: const Icon(Icons.refresh),
-                        onPressed: _loadSuspended,
+                        onPressed: _load,
                       ),
                     )
-                  else
+                  else ...[
                     SwitchListTile(
-                      value: _suspended ?? false,
-                      onChanged: _toggling ? null : (v) => _toggleSuspended(v),
-                      title: const Text('Suspended (402 page)'),
+                      value: s?.inMaintenance ?? false,
+                      onChanged: _togglingMaintenance ? null : (v) => _toggleMaintenance(v),
+                      title: const Text('Maintenance Mode'),
                       subtitle: Text(
-                        (_suspended ?? false)
-                            ? 'Visitors see the account-suspended page'
+                        (s?.inMaintenance ?? false)
+                            ? 'Visitors see the maintenance page (503)'
                             : 'Site serves normally from origin',
+                      ),
+                      secondary: Icon(
+                        Icons.construction,
+                        color: (s?.inMaintenance ?? false) ? Colors.orange : Colors.black54,
+                      ),
+                      activeColor: Colors.orange,
+                    ),
+                    const Divider(height: 1),
+                    SwitchListTile(
+                      value: s?.suspended ?? false,
+                      onChanged: _togglingSuspended ? null : (v) => _toggleSuspended(v),
+                      title: const Text('Suspended'),
+                      subtitle: Text(
+                        (s?.suspended ?? false)
+                            ? 'Visitors see the account-suspended page (402)'
+                            : 'Site serves normally from origin',
+                      ),
+                      secondary: Icon(
+                        Icons.gavel,
+                        color: (s?.suspended ?? false) ? Colors.red : Colors.black54,
                       ),
                       activeColor: Colors.red,
                     ),
-                  if (_conflict && !(_suspended ?? false))
-                    Container(
-                      color: const Color(0xFFFFF4D6),
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.warning_amber, color: Color(0xFF8A5A00)),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'Routes on this zone are already attached to "${_conflictScript ?? "another worker"}". Enabling suspension will skip conflicting patterns.',
-                              style: const TextStyle(fontSize: 12, color: Color(0xFF8A5A00)),
+                    if (s != null && s.otherScripts.isNotEmpty)
+                      Container(
+                        color: const Color(0xFFFFF4D6),
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.warning_amber, color: Color(0xFF8A5A00)),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Other worker(s) attached on this zone: ${s.otherScripts.join(", ")}. Conflicting route patterns will be skipped when toggling above.',
+                                style: const TextStyle(fontSize: 12, color: Color(0xFF8A5A00)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
+                  ],
                 ],
               ),
             ),

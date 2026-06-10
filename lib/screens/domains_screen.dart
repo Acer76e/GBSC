@@ -5,6 +5,7 @@ import '../models/zone.dart';
 import '../services/auth_service.dart';
 import '../services/cloudflare_api.dart';
 import '../theme.dart';
+import 'maintenance_screen.dart';
 import 'settings_screen.dart';
 import 'zone_detail_screen.dart';
 
@@ -85,6 +86,8 @@ class _DomainsScreenState extends State<DomainsScreen> {
           child: Column(
             children: [
               const SizedBox(height: 8),
+              const _MaintenanceShortcut(),
+              const SizedBox(height: 12),
               TextField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search),
@@ -198,6 +201,26 @@ class _ErrorView extends StatelessWidget {
           child: ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
         ),
       ],
+    );
+  }
+}
+
+class _MaintenanceShortcut extends StatelessWidget {
+  const _MaintenanceShortcut();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.construction, color: AppTheme.primary),
+        title: const Text('Maintenance Mode',
+            style: TextStyle(fontWeight: FontWeight.w600)),
+        subtitle: const Text('Toggle global maintenance page across covered zones'),
+        trailing: const Icon(Icons.chevron_right, color: Colors.black38),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const MaintenanceScreen()),
+        ),
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/dns_record.dart';
 import '../models/ip_access_rule.dart';
+import '../models/worker_route.dart';
 import '../models/zone.dart';
 import 'auth_service.dart';
 
@@ -204,6 +205,91 @@ class CloudflareApi {
   Future<List<Map<String, dynamic>>> listZoneSettings(String zoneId) async {
     final result = await _send('GET', '/zones/$zoneId/settings') as List;
     return result.cast<Map<String, dynamic>>();
+  }
+
+  // ── Worker Routes ──────────────────────────────────────────────────────
+
+  Future<List<WorkerRoute>> listWorkerRoutes(String zoneId) async {
+    final result = await _send('GET', '/zones/$zoneId/workers/routes') as List;
+    return result.map((j) => WorkerRoute.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<WorkerRoute> createWorkerRoute(
+    String zoneId, {
+    required String pattern,
+    required String script,
+  }) async {
+    final result = await _send(
+      'POST',
+      '/zones/$zoneId/workers/routes',
+      body: {'pattern': pattern, 'script': script},
+    );
+    return WorkerRoute.fromJson(result as Map<String, dynamic>);
+  }
+
+  Future<void> deleteWorkerRoute(String zoneId, String routeId) async {
+    await _send('DELETE', '/zones/$zoneId/workers/routes/$routeId');
+  }
+
+  // ── Zones lookup ───────────────────────────────────────────────────────
+
+  Future<Zone?> findZoneByName(String name) async {
+    final result =
+        await _send('GET', '/zones', query: {'name': name, 'per_page': '1'}) as List;
+    if (result.isEmpty) return null;
+    return Zone.fromJson(result.first as Map<String, dynamic>);
+  }
+
+  // ── Workers KV (raw text values) ───────────────────────────────────────
+
+  Future<String?> getKvValue(String accountId, String namespaceId, String key) async {
+    final uri = Uri.parse(
+      '$_base/accounts/$accountId/storage/kv/namespaces/$namespaceId/values/${Uri.encodeComponent(key)}',
+    );
+    final req = http.Request('GET', uri);
+    req.headers.addAll(_headers);
+    final streamed = await _client.send(req);
+    final res = await http.Response.fromStream(streamed);
+    if (res.statusCode == 404) return null;
+    if (res.statusCode >= 200 && res.statusCode < 300) return res.body;
+    Map<String, dynamic> body = {};
+    try {
+      if (res.body.isNotEmpty) body = jsonDecode(res.body) as Map<String, dynamic>;
+    } catch (_) {}
+    final errs = (body['errors'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
+    final msg = errs.isNotEmpty
+        ? errs.map((e) => e['message']).whereType<String>().join('; ')
+        : 'HTTP ${res.statusCode}';
+    throw CloudflareApiException(res.statusCode, msg, errs);
+  }
+
+  Future<void> putKvValue(
+    String accountId,
+    String namespaceId,
+    String key,
+    String value,
+  ) async {
+    final uri = Uri.parse(
+      '$_base/accounts/$accountId/storage/kv/namespaces/$namespaceId/values/${Uri.encodeComponent(key)}',
+    );
+    final req = http.Request('PUT', uri);
+    // Override Content-Type — KV values are raw bytes, not JSON.
+    final headers = Map<String, String>.from(_headers);
+    headers['Content-Type'] = 'text/plain';
+    req.headers.addAll(headers);
+    req.body = value;
+    final streamed = await _client.send(req);
+    final res = await http.Response.fromStream(streamed);
+    if (res.statusCode >= 200 && res.statusCode < 300) return;
+    Map<String, dynamic> body = {};
+    try {
+      if (res.body.isNotEmpty) body = jsonDecode(res.body) as Map<String, dynamic>;
+    } catch (_) {}
+    final errs = (body['errors'] as List?)?.cast<Map<String, dynamic>>() ?? const [];
+    final msg = errs.isNotEmpty
+        ? errs.map((e) => e['message']).whereType<String>().join('; ')
+        : 'HTTP ${res.statusCode}';
+    throw CloudflareApiException(res.statusCode, msg, errs);
   }
 
   void dispose() => _client.close();

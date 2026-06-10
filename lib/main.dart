@@ -5,6 +5,8 @@ import 'screens/auth_screen.dart';
 import 'screens/domains_screen.dart';
 import 'services/auth_service.dart';
 import 'services/cloudflare_api.dart';
+import 'services/maintenance_config.dart';
+import 'services/maintenance_service.dart';
 import 'theme.dart';
 
 void main() {
@@ -20,9 +22,13 @@ class CloudflareMobileApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()..load()),
+        ChangeNotifierProvider(create: (_) => MaintenanceConfig()..load()),
         ProxyProvider<AuthService, CloudflareApi>(
           update: (_, auth, previous) => previous ?? CloudflareApi(auth),
           dispose: (_, api) => api.dispose(),
+        ),
+        ProxyProvider2<CloudflareApi, MaintenanceConfig, MaintenanceService>(
+          update: (_, api, config, __) => MaintenanceService(api: api, config: config),
         ),
       ],
       child: MaterialApp(

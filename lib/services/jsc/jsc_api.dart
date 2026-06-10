@@ -167,6 +167,26 @@ class JscApi {
     return JscTicket.fromJson((body['ticket'] as Map<String, dynamic>?) ?? const {});
   }
 
+  // ── FCM token registration ─────────────────────────────────────────────
+
+  Future<void> registerFcmToken(String token, {String platform = 'android'}) async {
+    final res = await _client.post(
+      _u('/fcm-tokens/register'),
+      headers: _headers(),
+      body: jsonEncode({'fcm_token': token, 'platform': platform}),
+    );
+    await _decode(res);
+  }
+
+  Future<void> unregisterFcmToken(String token) async {
+    final res = await _client.post(
+      _u('/fcm-tokens/unregister'),
+      headers: _headers(),
+      body: jsonEncode({'fcm_token': token}),
+    );
+    await _decode(res);
+  }
+
   // ── Monitors ───────────────────────────────────────────────────────────
 
   Future<List<JscMonitor>> listMonitorsPublic() async {

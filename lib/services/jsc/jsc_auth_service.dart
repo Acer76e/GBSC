@@ -65,7 +65,16 @@ class JscAuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Hook for the FCM service: it sets this so we can unregister the device's
+  /// push token *before* we wipe the JWT. Wired up at app startup.
+  Future<void> Function()? unregisterFcmHook;
+
   Future<void> signOut() async {
+    try {
+      await unregisterFcmHook?.call();
+    } catch (_) {
+      // Don't block sign-out on a failed unregister.
+    }
     _token = null;
     _user = null;
     await _storage.delete(key: _kToken);

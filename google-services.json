@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "918197400502",
+    "project_id": "jsc-notifications",
+    "storage_bucket": "jsc-notifications.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918197400502:android:6339d17cbebc50896f4717",
+        "android_client_info": {
+          "package_name": "com.acer76e.cloudflare_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQjPzsZkwYu5VfCFzQ_TjR-trDTMdHn5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918197400502:android:91f321a4c0ca2f3b6f4717",
+        "android_client_info": {
+          "package_name": "com.kjongsys.jsc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQjPzsZkwYu5VfCFzQ_TjR-trDTMdHn5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

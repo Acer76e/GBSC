@@ -47,6 +47,17 @@ jobs:
           # carries over across updates.
           sed -i 's/android:label="cloudflare_mobile"/android:label="JUICE Command"/' android/app/src/main/AndroidManifest.xml
           grep -n 'android:label' android/app/src/main/AndroidManifest.xml
+          # ─── Firebase / FCM wiring ────────────────────────────────────
+          # Drop google-services.json into the android app dir.
+          cp google-services.json android/app/google-services.json
+          # Declare the Google Services Gradle plugin at the project level…
+          sed -i '/id "org\.jetbrains\.kotlin\.android" version/a\    id "com.google.gms.google-services" version "4.4.2" apply false' android/settings.gradle
+          # …and apply it in the app module so it processes google-services.json.
+          sed -i '/id "dev\.flutter\.flutter-gradle-plugin"/a\    id "com.google.gms.google-services"' android/app/build.gradle
+          grep -n "google-services" android/settings.gradle android/app/build.gradle
+          # firebase_messaging needs minSdk >= 21 (Flutter default), but be
+          # explicit so a future Flutter default change doesn't break us.
+          sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 21/' android/app/build.gradle || true
 
       - name: Install dependencies
         run: flutter pub get

@@ -53,6 +53,7 @@ class JuiceCommandApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()..load()),
         ChangeNotifierProvider<JscAuthService>.value(value: _jscAuth),
+        if (_fcm != null) ChangeNotifierProvider<JscFcmService>.value(value: _fcm!),
         ChangeNotifierProvider(create: (_) => MaintenanceConfig()..load()),
         ProxyProvider<AuthService, CloudflareApi>(
           update: (_, auth, previous) => previous ?? CloudflareApi(auth),

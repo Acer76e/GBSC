@@ -19,12 +19,19 @@ import 'jsc_auth_service.dart';
 ///
 /// Designed as a singleton that listens to [JscAuthService] so screens don't
 /// have to remember to call register/unregister manually.
-class JscFcmService {
+class JscFcmService extends ChangeNotifier {
   final JscAuthService auth;
   String? _currentToken;
   StreamSubscription<String>? _refreshSub;
   StreamSubscription<RemoteMessage>? _msgSub;
   bool _initialized = false;
+
+  // Diagnostic state — surfaced on the Notifications screen so we can see
+  // exactly what's working / failing without ADB logcat.
+  bool firebaseOk = false;
+  String? lastInitError;
+  String permissionStatus = 'unknown';
+  String? lastRegisterResult; // null = never tried; 'ok' = success; else error msg
 
   /// Optional listener for foreground messages (notification arrives while app
   /// is in the foreground — Android won't show a system notification on its
@@ -39,22 +46,37 @@ class JscFcmService {
   String? get currentToken => _currentToken;
 
   Future<void> init() async {
-    if (_initialized) return;
+    if (_initialized) {
+      // Re-init from the diagnostic screen: refresh the token + re-register.
+      try {
+        _currentToken = await FirebaseMessaging.instance.getToken();
+        if (auth.isAuthenticated && _currentToken != null) {
+          await _register(_currentToken!);
+        }
+      } catch (e) {
+        lastInitError = e.toString();
+      }
+      notifyListeners();
+      return;
+    }
     try {
       // Android 13+ runtime permission. iOS prompts via this too.
-      await FirebaseMessaging.instance.requestPermission(
+      final settings = await FirebaseMessaging.instance.requestPermission(
         alert: true,
         badge: true,
         sound: true,
       );
+      permissionStatus = settings.authorizationStatus.name;
 
       _currentToken = await FirebaseMessaging.instance.getToken();
+      firebaseOk = true;
       if (kDebugMode) {
         debugPrint('FCM token: ${_currentToken?.substring(0, 16)}…');
       }
 
       _refreshSub = FirebaseMessaging.instance.onTokenRefresh.listen((t) {
         _currentToken = t;
+        notifyListeners();
         if (auth.isAuthenticated) {
           _register(t);
         }
@@ -69,18 +91,40 @@ class JscFcmService {
       if (auth.isAuthenticated && _currentToken != null) {
         await _register(_currentToken!);
       }
+      notifyListeners();
     } catch (e) {
+      lastInitError = e.toString();
       debugPrint('JscFcmService.init failed: $e');
       _initialized = true; // don't keep retrying
+      notifyListeners();
     }
   }
 
+  /// Force a re-registration even if the auth listener didn't fire. Called by
+  /// the diagnostic screen's "Register now" button, and by the auth flow
+  /// post-login so we don't depend on listener-vs-init ordering.
+  Future<void> registerNow() async {
+    if (!auth.isAuthenticated) {
+      lastRegisterResult = 'Not signed in to JSC';
+      notifyListeners();
+      return;
+    }
+    try {
+      _currentToken ??= await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      lastRegisterResult = 'getToken failed: $e';
+      notifyListeners();
+      return;
+    }
+    if (_currentToken == null) {
+      lastRegisterResult = 'getToken returned null';
+      notifyListeners();
+      return;
+    }
+    await _register(_currentToken!);
+  }
+
   void _onAuthChanged() {
-    // The simplest correctness signal: at the moment a user becomes
-    // authenticated, push our cached FCM token. When they sign out, the auth
-    // service has already cleared the token before we get here, so we can't
-    // call unregister from this listener — sign-out flow calls
-    // [unregisterBeforeSignOut] before clearing.
     if (auth.isAuthenticated && _currentToken != null) {
       _register(_currentToken!);
     }
@@ -90,8 +134,12 @@ class JscFcmService {
     final api = JscApi(auth);
     try {
       await api.registerFcmToken(token, platform: _platform);
+      lastRegisterResult = 'ok';
+      notifyListeners();
       debugPrint('FCM token registered with JSC');
     } catch (e) {
+      lastRegisterResult = e.toString();
+      notifyListeners();
       debugPrint('FCM register failed: $e');
     } finally {
       await api.dispose();

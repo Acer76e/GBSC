@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../services/jsc/jsc_api.dart';
 import '../../services/jsc/jsc_auth_service.dart';
+import '../../services/jsc/jsc_fcm_service.dart';
 import '../../theme.dart';
 
 class JscLoginScreen extends StatefulWidget {
@@ -53,6 +54,11 @@ class _JscLoginScreenState extends State<JscLoginScreen> {
       );
       await api.dispose();
       await auth.saveSession(token: r.token, user: r.user);
+      // Belt-and-suspenders: trigger an explicit register so we don't rely on
+      // the listener-vs-init race when Firebase init is slow.
+      try {
+        await context.read<JscFcmService>().registerNow();
+      } catch (_) {}
     } catch (e) {
       setState(() => _error = e.toString().replaceFirst('Exception: ', ''));
     } finally {

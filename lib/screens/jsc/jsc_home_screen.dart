@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../services/jsc/jsc_auth_service.dart';
 import '../../theme.dart';
+import 'jsc_notifications_debug_screen.dart';
 import 'tabs/jsc_dashboard_tab.dart';
 import 'tabs/jsc_incidents_tab.dart';
 import 'tabs/jsc_monitors_tab.dart';
@@ -51,6 +52,15 @@ class JscHomeScreen extends StatelessWidget {
             ],
           ),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications_outlined, color: AppTheme.primary),
+              tooltip: 'Notifications',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const JscNotificationsDebugScreen(),
+                ));
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.logout, color: Colors.redAccent),
               tooltip: 'Sign out',

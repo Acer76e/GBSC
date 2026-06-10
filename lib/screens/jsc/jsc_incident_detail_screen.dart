@@ -65,12 +65,53 @@ class _JscIncidentDetailScreenState extends State<JscIncidentDetailScreen> {
     }
   }
 
+  Future<void> _delete() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Delete incident?'),
+        content: const Text(
+          'This permanently removes the incident and all timeline updates. '
+          'Subscribers who were already notified will NOT receive a follow-up.',
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Delete', style: TextStyle(color: Colors.red))),
+        ],
+      ),
+    );
+    if (confirm != true || !mounted) return;
+    final api = JscApi(context.read<JscAuthService>());
+    try {
+      await api.deleteIncident(widget.incidentId);
+      if (mounted) Navigator.of(context).pop();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    } finally {
+      await api.dispose();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isAdmin = context.read<JscAuthService>().user?.isAdminOrAgent ?? false;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Incident', style: TextStyle(fontWeight: FontWeight.bold)),
+        actions: [
+          if (isAdmin)
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+              tooltip: 'Delete incident',
+              onPressed: _delete,
+            ),
+        ],
       ),
       body: FutureBuilder<JscIncident>(
         future: _future,

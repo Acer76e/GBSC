@@ -266,5 +266,10 @@ class JscApi {
     await _decode(res);
   }
 
+  Future<void> deleteIncident(String id) async {
+    final res = await _client.delete(_u('/incidents/$id'), headers: _headers());
+    await _decode(res);
+  }
+
   Future<void> dispose() async => _client.close();
 }

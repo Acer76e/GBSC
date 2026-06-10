@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../../models/jsc/jsc_monitor.dart';
 import '../../models/jsc/jsc_ticket.dart';
 import '../../models/jsc/jsc_user.dart';
 import 'jsc_auth_service.dart';
@@ -164,6 +165,85 @@ class JscApi {
     );
     final body = await _decode(res) as Map<String, dynamic>;
     return JscTicket.fromJson((body['ticket'] as Map<String, dynamic>?) ?? const {});
+  }
+
+  // ── Monitors ───────────────────────────────────────────────────────────
+
+  Future<List<JscMonitor>> listMonitorsPublic() async {
+    final res = await _client.get(_u('/monitors'), headers: _headers(needAuth: false));
+    final body = await _decode(res) as Map<String, dynamic>;
+    final list = (body['monitors'] as List?) ?? const [];
+    return list.map((j) => JscMonitor.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<JscMonitor>> listMonitorsAdmin() async {
+    final res = await _client.get(_u('/monitors/admin'), headers: _headers());
+    final body = await _decode(res) as Map<String, dynamic>;
+    final list = (body['monitors'] as List?) ?? const [];
+    return list.map((j) => JscMonitor.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<List<JscMonitor>> listMyMonitors() async {
+    final res = await _client.get(_u('/monitors/mine'), headers: _headers());
+    final body = await _decode(res) as Map<String, dynamic>;
+    final list = (body['monitors'] as List?) ?? const [];
+    return list.map((j) => JscMonitor.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<void> pingMonitor(String id) async {
+    final res = await _client.post(_u('/monitors/$id/ping'), headers: _headers());
+    await _decode(res);
+  }
+
+  // ── Incidents ──────────────────────────────────────────────────────────
+
+  Future<List<JscIncident>> listIncidents() async {
+    final res = await _client.get(_u('/incidents'), headers: _headers(needAuth: false));
+    final body = await _decode(res) as Map<String, dynamic>;
+    final list = (body['incidents'] as List?) ?? const [];
+    return list.map((j) => JscIncident.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<JscIncident> getIncident(String id) async {
+    final res = await _client.get(_u('/incidents/$id'), headers: _headers(needAuth: false));
+    final body = await _decode(res) as Map<String, dynamic>;
+    return JscIncident.fromJson((body['incident'] as Map<String, dynamic>?) ?? const {});
+  }
+
+  Future<JscIncident> createIncident({
+    required String title,
+    required String severity,
+    required String message,
+    List<String> monitorIds = const [],
+  }) async {
+    final res = await _client.post(
+      _u('/incidents'),
+      headers: _headers(),
+      body: jsonEncode({
+        'title': title,
+        'severity': severity,
+        'message': message,
+        if (monitorIds.isNotEmpty) 'monitor_ids': monitorIds,
+      }),
+    );
+    final body = await _decode(res) as Map<String, dynamic>;
+    return JscIncident.fromJson((body['incident'] as Map<String, dynamic>?) ?? const {});
+  }
+
+  Future<void> updateIncident(
+    String id, {
+    String? status,
+    required String message,
+  }) async {
+    final res = await _client.post(
+      _u('/incidents/$id/update'),
+      headers: _headers(),
+      body: jsonEncode({
+        if (status != null) 'status': status,
+        'message': message,
+      }),
+    );
+    await _decode(res);
   }
 
   Future<void> dispose() async => _client.close();

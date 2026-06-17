@@ -119,7 +119,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
         ToggleRow("Voice announcement (reads the offer aloud)", c.voiceEnabled) { v ->
             update { it.copy(voiceEnabled = v) }
         }
-        ToggleRow("Auto-save a screenshot to your gallery", c.screenshotEnabled) { v ->
+        ToggleRow("Auto-save a screenshot to your gallery (Android 11+)", c.screenshotEnabled) { v ->
             update { it.copy(screenshotEnabled = v) }
         }
     }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CherryPick</string>
+    <string name="accessibility_description">Lets CherryPick read incoming Uber Driver trip offers so it can grade them and show the floating card. No screen sharing required — this avoids Android\'s screen-share privacy banner that mutes other app notifications.</string>
 </resources>

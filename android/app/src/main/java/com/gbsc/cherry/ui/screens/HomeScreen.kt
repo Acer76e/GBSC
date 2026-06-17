@@ -21,15 +21,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gbsc.cherry.capture.ProjectionHolder
+import com.gbsc.cherry.capture.OfferEngine
 import com.gbsc.cherry.ui.theme.BrandOrange
 import com.gbsc.cherry.ui.theme.GoodGreen
 
@@ -39,8 +40,10 @@ fun HomeScreen(
     onStart: () -> Unit,
     onStop: () -> Unit,
     hasOverlayPermission: () -> Boolean,
+    isAccessibilityEnabled: () -> Boolean,
+    openAccessibilitySettings: () -> Unit,
 ) {
-    val running by ProjectionHolder.isRunning.collectAsState()
+    val scanning by OfferEngine.scanning.collectAsState()
 
     Column(
         modifier = modifier
@@ -50,34 +53,34 @@ fun HomeScreen(
     ) {
         Text("CherryPick", fontSize = 30.sp, fontWeight = FontWeight.Bold)
         Text(
-            "Know instantly if an Uber trip offer is worth accepting.",
+            "Reads Uber Driver offers in real time — no screen sharing required.",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(20.dp))
 
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = if (running) GoodGreen.copy(alpha = 0.12f)
+                containerColor = if (scanning) GoodGreen.copy(alpha = 0.12f)
                 else MaterialTheme.colorScheme.surfaceVariant
             )
         ) {
             Column(Modifier.padding(20.dp)) {
                 Text(
-                    if (running) "Scanning is ON" else "Scanning is OFF",
+                    if (scanning) "Scanning is ON" else "Scanning is OFF",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = if (running) GoodGreen else MaterialTheme.colorScheme.onSurface,
+                    color = if (scanning) GoodGreen else MaterialTheme.colorScheme.onSurface,
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    if (running)
+                    if (scanning)
                         "Open Uber Driver. When an offer pops up, the card appears on top."
                     else
-                        "Tap start, grant screen capture, then open Uber Driver.",
+                        "Tap Start — you'll grant overlay + accessibility once, then it just works.",
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(16.dp))
-                if (running) {
+                if (scanning) {
                     OutlinedButton(onClick = onStop, modifier = Modifier.fillMaxWidth()) {
                         Text("Stop scanning")
                     }
@@ -94,7 +97,11 @@ fun HomeScreen(
         }
 
         Spacer(Modifier.height(20.dp))
+        Text("Permissions", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        Spacer(Modifier.height(6.dp))
         PermissionRow("Display over other apps", hasOverlayPermission())
+        Spacer(Modifier.height(4.dp))
+        AccessibilityRow(isAccessibilityEnabled(), openAccessibilitySettings)
 
         Spacer(Modifier.height(20.dp))
         Text("How it works", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -103,8 +110,8 @@ fun HomeScreen(
 
         Spacer(Modifier.height(24.dp))
         Text(
-            "Tip: the offer reader is tuned for the US Uber Driver layout. If numbers look off, " +
-                "adjust nothing in Uber — just fine-tune your goals under Filters.",
+            "Because CherryPick reads Uber via the accessibility service (not screen sharing), " +
+                "Android won't grey out your other notifications while you drive.",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 13.sp,
         )
@@ -126,11 +133,32 @@ private fun PermissionRow(label: String, granted: Boolean) {
 }
 
 @Composable
+private fun AccessibilityRow(enabled: Boolean, openSettings: () -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            if (enabled) Icons.Filled.CheckCircle else Icons.Filled.Error,
+            contentDescription = null,
+            tint = if (enabled) GoodGreen else MaterialTheme.colorScheme.error,
+            modifier = Modifier.size(20.dp),
+        )
+        Spacer(Modifier.size(8.dp))
+        Text(
+            if (enabled) "Accessibility service — enabled"
+            else "Accessibility service — needed to read Uber",
+            modifier = Modifier.weight(1f),
+        )
+        if (!enabled) {
+            TextButton(onClick = openSettings) { Text("Enable") }
+        }
+    }
+}
+
+@Composable
 private fun Steps() {
     val steps = listOf(
         "Set your $/mile and $/hour goals in Filters.",
         "Enter your costs in Profit to see net profit per trip.",
-        "Tap Start scanning and allow screen capture.",
+        "Tap Start scanning and grant overlay + accessibility permissions.",
         "Open Uber Driver and drive — the card grades each offer.",
     )
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {

@@ -1,11 +1,9 @@
 package com.gbsc.cherry
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,52 +13,25 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.gbsc.cherry.capture.ProjectionHolder
-import com.gbsc.cherry.capture.ScreenCaptureService
+import com.gbsc.cherry.capture.OfferEngine
 import com.gbsc.cherry.ui.CherryApp
 import com.gbsc.cherry.ui.theme.CherryTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val projectionManager by lazy {
-        getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-    }
-
-    private var pendingStart = false
-    private var awaitingNotif = false
-
     private val overlayLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        if (pendingStart && Settings.canDrawOverlays(this)) {
-            pendingStart = false
-            ensureNotifThenProject()
-        } else if (pendingStart) {
-            pendingStart = false
-            toast("Overlay permission is required to show the trip card")
-        }
+        // No-op: the Start button rechecks the gates each time the user taps it.
     }
 
     private val notifLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {
-        if (awaitingNotif) {
-            awaitingNotif = false
-            launchProjection()
-        }
-    }
+    ) {}
 
-    private val projectionLauncher = registerForActivityResult(
+    private val accessibilityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-            ProjectionHolder.resultCode = result.resultCode
-            ProjectionHolder.data = result.data
-            ScreenCaptureService.start(this)
-        } else {
-            toast("Screen capture permission denied")
-        }
-    }
+    ) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +39,10 @@ class MainActivity : ComponentActivity() {
             CherryTheme {
                 CherryApp(
                     onStart = { startMonitoring() },
-                    onStop = { ScreenCaptureService.stop(this) },
+                    onStop = { OfferEngine.scanning.value = false },
                     hasOverlayPermission = { Settings.canDrawOverlays(this) },
+                    isAccessibilityEnabled = { isAccessibilityServiceEnabled(this) },
+                    openAccessibilitySettings = { openAccessibilitySettings() },
                 )
             }
         }
@@ -77,34 +50,45 @@ class MainActivity : ComponentActivity() {
 
     private fun startMonitoring() {
         if (!Settings.canDrawOverlays(this)) {
-            pendingStart = true
             overlayLauncher.launch(
                 Intent(
                     Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:$packageName")
                 )
             )
-            toast("Allow CherryPick to display over other apps, then return")
+            toast("Allow CherryPick to display over other apps, then tap Start again")
             return
         }
-        ensureNotifThenProject()
-    }
-
-    private fun ensureNotifThenProject() {
+        if (!isAccessibilityServiceEnabled(this)) {
+            openAccessibilitySettings()
+            toast("Turn on CherryPick under Accessibility, then return and tap Start")
+            return
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
         ) {
-            awaitingNotif = true
             notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            launchProjection()
         }
+        OfferEngine.scanning.value = true
     }
 
-    private fun launchProjection() {
-        projectionLauncher.launch(projectionManager.createScreenCaptureIntent())
+    private fun openAccessibilitySettings() {
+        accessibilityLauncher.launch(
+            Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+
+    companion object {
+        private const val SERVICE_ID = "com.gbsc.cherry/com.gbsc.cherry.accessibility.UberAccessibilityService"
+
+        fun isAccessibilityServiceEnabled(context: Context): Boolean {
+            val enabled = Settings.Secure.getString(
+                context.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+            ) ?: return false
+            return enabled.split(':').any { it.equals(SERVICE_ID, ignoreCase = true) }
+        }
+    }
 }

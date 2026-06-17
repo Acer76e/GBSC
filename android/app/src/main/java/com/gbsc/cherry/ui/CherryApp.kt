@@ -38,6 +38,8 @@ fun CherryApp(
     onStart: () -> Unit,
     onStop: () -> Unit,
     hasOverlayPermission: () -> Boolean,
+    isAccessibilityEnabled: () -> Boolean,
+    openAccessibilitySettings: () -> Unit,
 ) {
     var selected by remember { mutableIntStateOf(0) }
     val tabs = Tab.entries
@@ -58,7 +60,10 @@ fun CherryApp(
     ) { padding ->
         val modifier = Modifier.padding(padding)
         when (tabs[selected]) {
-            Tab.HOME -> HomeScreen(modifier, onStart, onStop, hasOverlayPermission)
+            Tab.HOME -> HomeScreen(
+                modifier, onStart, onStop, hasOverlayPermission,
+                isAccessibilityEnabled, openAccessibilitySettings
+            )
             Tab.FILTERS -> FiltersScreen(modifier)
             Tab.PROFIT -> ProfitScreen(modifier)
             Tab.HISTORY -> HistoryScreen(modifier)

@@ -117,6 +117,31 @@ object OfferEngine {
         appContext?.let { notificationManager(it).cancel(NOTIF_OFFER) }
     }
 
+    /** Pushes a synthetic offer through the full pipeline so the user can verify the card,
+     *  notification, and voice without going online in Uber. */
+    fun showTestOffer() {
+        val ctx = appContext ?: return
+        val offer = TripOffer(
+            id = System.currentTimeMillis(),
+            timestamp = System.currentTimeMillis(),
+            fare = 36.24,
+            bonus = 18.00,
+            pickupMiles = 1.4,
+            pickupMinutes = 8.0,
+            tripMiles = 7.6,
+            tripMinutes = 37.0,
+            rating = 4.79,
+            pickupAddress = "N Menard Ave & W Jarvis Ave, Niles",
+            dropoffAddress = "N Leavitt St & W Wilson Ave, Chicago",
+        )
+        val signature = "test-" + System.currentTimeMillis()
+        val settings = Repo.settings.value
+        overlay?.show(buildOverlayData(offer, settings, signature))
+        Repo.addOffer(offer)
+        if (settings.customization.notificationEnabled) postOfferNotification(ctx, offer, settings)
+        if (settings.customization.voiceEnabled) speakOffer(offer, settings)
+    }
+
     fun saveScreenshot(bmp: Bitmap) {
         val ctx = appContext ?: return
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return

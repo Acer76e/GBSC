@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
                 CherryApp(
                     onStart = { startMonitoring() },
                     onStop = { OfferEngine.scanning.value = false },
+                    onTestOffer = { runTestOffer() },
                     hasOverlayPermission = { Settings.canDrawOverlays(this) },
                     isAccessibilityEnabled = { isAccessibilityServiceEnabled(this) },
                     openAccessibilitySettings = { openAccessibilitySettings() },
@@ -71,6 +72,21 @@ class MainActivity : ComponentActivity() {
             notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
         OfferEngine.scanning.value = true
+    }
+
+    private fun runTestOffer() {
+        if (!Settings.canDrawOverlays(this)) {
+            overlayLauncher.launch(
+                Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName")
+                )
+            )
+            toast("Allow CherryPick to display over other apps, then tap the test button again")
+            return
+        }
+        OfferEngine.showTestOffer()
+        toast("Test offer sent — check the floating card and the notification shade")
     }
 
     private fun openAccessibilitySettings() {

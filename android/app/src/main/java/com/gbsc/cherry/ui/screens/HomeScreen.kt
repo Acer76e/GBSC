@@ -39,6 +39,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onStart: () -> Unit,
     onStop: () -> Unit,
+    onTestOffer: () -> Unit,
     hasOverlayPermission: () -> Boolean,
     isAccessibilityEnabled: () -> Boolean,
     openAccessibilitySettings: () -> Unit,
@@ -95,6 +96,17 @@ fun HomeScreen(
                 }
             }
         }
+
+        Spacer(Modifier.height(12.dp))
+        OutlinedButton(onClick = onTestOffer, modifier = Modifier.fillMaxWidth()) {
+            Text("Show test offer")
+        }
+        Text(
+            "Pushes a sample offer through the card, notification, and voice so you can dry-run the look and feel without going online.",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(top = 4.dp),
+        )
 
         Spacer(Modifier.height(20.dp))
         Text("Permissions", fontWeight = FontWeight.Bold, fontSize = 16.sp)

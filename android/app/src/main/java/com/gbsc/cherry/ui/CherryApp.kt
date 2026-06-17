@@ -37,6 +37,7 @@ private enum class Tab(val label: String, val icon: ImageVector) {
 fun CherryApp(
     onStart: () -> Unit,
     onStop: () -> Unit,
+    onTestOffer: () -> Unit,
     hasOverlayPermission: () -> Boolean,
     isAccessibilityEnabled: () -> Boolean,
     openAccessibilitySettings: () -> Unit,
@@ -61,7 +62,7 @@ fun CherryApp(
         val modifier = Modifier.padding(padding)
         when (tabs[selected]) {
             Tab.HOME -> HomeScreen(
-                modifier, onStart, onStop, hasOverlayPermission,
+                modifier, onStart, onStop, onTestOffer, hasOverlayPermission,
                 isAccessibilityEnabled, openAccessibilitySettings
             )
             Tab.FILTERS -> FiltersScreen(modifier)

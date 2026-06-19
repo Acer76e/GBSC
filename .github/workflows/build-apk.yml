@@ -59,6 +59,64 @@ jobs:
           # explicit so a future Flutter default change doesn't break us.
           sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 21/' android/app/build.gradle || true
 
+      - name: Configure release signing
+        # Sign every APK with the SAME persistent keystore (stored as a GitHub
+        # secret) so Android allows in-place upgrades. Without this, each CI run
+        # gets a fresh debug key → INSTALL_FAILED_UPDATE_INCOMPATIBLE and forces
+        # the user to uninstall + reinstall every update.
+        #
+        # Gracefully no-ops if the KEYSTORE_BASE64 secret is missing — in that
+        # case the build falls through to debug signing (existing behavior).
+        env:
+          KEYSTORE_BASE64:  ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_ALIAS:        ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD:     ${{ secrets.KEY_PASSWORD }}
+          STORE_PASSWORD:   ${{ secrets.STORE_PASSWORD }}
+        run: |
+          if [[ -z "$KEYSTORE_BASE64" ]]; then
+            echo "⚠  KEYSTORE_BASE64 secret not set — APK will be debug-signed."
+            echo "   Run generate-keystore.sh locally and add the 4 secrets to enable"
+            echo "   in-place upgrades."
+            exit 0
+          fi
+          # Decode the keystore to android/app/release.keystore
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/release.keystore
+          # key.properties at the android/ root — Gradle reads it via rootProject.
+          cat > android/key.properties <<EOF
+          storeFile=release.keystore
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          storePassword=$STORE_PASSWORD
+          EOF
+          # Append signing config to app/build.gradle. The block is guarded so
+          # an absent key.properties (e.g. fork without secrets) falls back to
+          # debug signing automatically.
+          cat >> android/app/build.gradle <<'EOF'
+
+          // ─── Release signing (appended by CI) ──────────────────────────
+          def __ksProps = new Properties()
+          def __ksFile  = rootProject.file('key.properties')
+          if (__ksFile.exists()) {
+              __ksFile.withInputStream { __ksProps.load(it) }
+              android {
+                  signingConfigs {
+                      release {
+                          keyAlias      __ksProps['keyAlias']
+                          keyPassword   __ksProps['keyPassword']
+                          storeFile     file(__ksProps['storeFile'])
+                          storePassword __ksProps['storePassword']
+                      }
+                  }
+                  buildTypes {
+                      release {
+                          signingConfig signingConfigs.release
+                      }
+                  }
+              }
+          }
+          EOF
+          echo "✓ Release signing wired"
+
       - name: Install dependencies
         run: flutter pub get
 

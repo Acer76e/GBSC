@@ -66,15 +66,22 @@ class UberAccessibilityService : AccessibilityService() {
         lastProcessed = now
 
         val root = rootInActiveWindow ?: return
+        val activePkg = root.packageName?.toString()
+        val debug = Repo.settings.value.customization.debugMode
+        val activeIsUber = isUberPackage(activePkg)
+
+        // Only read text when Uber Driver is actually the foreground window — otherwise
+        // a queued Uber event would have us harvest the launcher / app-switcher tree.
+        if (!activeIsUber && !debug) return
+
         val sb = StringBuilder()
         collectText(root, sb)
         val text = sb.toString()
-        val pkg = event.packageName?.toString()
 
-        OfferEngine.recordDebug(pkg, text)
+        OfferEngine.recordDebug(activePkg, text)
 
         if (!OfferEngine.scanning.value) return
-        if (!isUberPackage(pkg)) return
+        if (!activeIsUber) return
         if (text.isBlank()) return
 
         val isNew = OfferEngine.processText(text)

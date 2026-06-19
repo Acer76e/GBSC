@@ -9,6 +9,14 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.gbsc.cherry.capture.OfferEngine
 import com.gbsc.cherry.data.Repo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancel
 
 /**
  * Reads the live Uber Driver offer card from the accessibility node tree.
@@ -20,24 +28,39 @@ import com.gbsc.cherry.data.Repo
 class UberAccessibilityService : AccessibilityService() {
 
     private var lastProcessed = 0L
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var settingsJob: Job? = null
 
     override fun onServiceConnected() {
         super.onServiceConnected()
         OfferEngine.ensureInit(this)
         OfferEngine.accessibilityConnected.value = true
+        settingsJob?.cancel()
+        settingsJob = scope.launch {
+            Repo.settings
+                .map { it.customization.debugMode }
+                .distinctUntilChanged()
+                .collect { applyServiceInfo(it) }
+        }
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
+        settingsJob?.cancel()
+        settingsJob = null
         OfferEngine.accessibilityConnected.value = false
         OfferEngine.resetState()
         return super.onUnbind(intent)
+    }
+
+    override fun onDestroy() {
+        scope.cancel()
+        super.onDestroy()
     }
 
     override fun onInterrupt() {}
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
-        if (!OfferEngine.scanning.value) return
         val now = System.currentTimeMillis()
         if (now - lastProcessed < THROTTLE_MS) return
         lastProcessed = now
@@ -45,15 +68,28 @@ class UberAccessibilityService : AccessibilityService() {
         val root = rootInActiveWindow ?: return
         val sb = StringBuilder()
         collectText(root, sb)
-        if (sb.isBlank()) return
+        val text = sb.toString()
+        val pkg = event.packageName?.toString()
 
-        val isNew = OfferEngine.processText(sb.toString())
+        OfferEngine.recordDebug(pkg, text)
+
+        if (!OfferEngine.scanning.value) return
+        if (!isUberPackage(pkg)) return
+        if (text.isBlank()) return
+
+        val isNew = OfferEngine.processText(text)
         if (isNew &&
             Repo.settings.value.customization.screenshotEnabled &&
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
         ) {
             captureScreenshot()
         }
+    }
+
+    private fun applyServiceInfo(debugMode: Boolean) {
+        val info = serviceInfo ?: return
+        info.packageNames = if (debugMode) null else UBER_PACKAGES
+        serviceInfo = info
     }
 
     private fun collectText(node: AccessibilityNodeInfo?, sb: StringBuilder) {
@@ -98,5 +134,13 @@ class UberAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val THROTTLE_MS = 500L
+        private val UBER_PACKAGES = arrayOf(
+            "com.ubercab.driver",
+            "com.uber.driver",
+            "com.ubercab.driverapp",
+        )
+
+        private fun isUberPackage(pkg: String?): Boolean =
+            pkg != null && UBER_PACKAGES.any { it == pkg }
     }
 }

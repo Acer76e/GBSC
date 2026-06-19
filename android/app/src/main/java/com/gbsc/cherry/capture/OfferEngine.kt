@@ -39,8 +39,28 @@ object OfferEngine {
     val scanning = MutableStateFlow(false)
     /** True while the AccessibilityService is connected. */
     val accessibilityConnected = MutableStateFlow(false)
-    /** True while the screen-capture service is active. */
-    val screenCaptureRunning = MutableStateFlow(false)
+
+    /** Snapshot of the most recent accessibility event for the in-app diagnostic panel. */
+    data class DebugSnapshot(
+        val timestamp: Long,
+        val pkg: String?,
+        val textChars: Int,
+        val textPreview: String,
+        val parsed: Boolean,
+        val fare: Double,
+    )
+    val lastDebug = MutableStateFlow<DebugSnapshot?>(null)
+
+    fun recordDebug(pkg: String?, text: String) {
+        lastDebug.value = DebugSnapshot(
+            timestamp = System.currentTimeMillis(),
+            pkg = pkg,
+            textChars = text.length,
+            textPreview = text.take(160).replace('\n', ' '),
+            parsed = false,
+            fare = 0.0,
+        )
+    }
 
     private const val MISS_LIMIT = 3
 
@@ -71,6 +91,7 @@ object OfferEngine {
         val ctx = appContext ?: return false
         val parsed = OfferParser.parse(text)
         if (parsed == null) {
+            lastDebug.value = lastDebug.value?.copy(parsed = false)
             missCount++
             if (missCount >= MISS_LIMIT) {
                 currentSignature = null
@@ -79,6 +100,7 @@ object OfferEngine {
             }
             return false
         }
+        lastDebug.value = lastDebug.value?.copy(parsed = true, fare = parsed.fare)
         missCount = 0
         val offer = TripOffer(
             id = System.currentTimeMillis(),

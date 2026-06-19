@@ -59,6 +59,7 @@ data class Customization(
     val voiceEnabled: Boolean = false,
     val screenshotEnabled: Boolean = false,
     val colorblind: Boolean = false,
+    val debugMode: Boolean = false,
     val cardOpacity: Int = 100,
     val fontSize: Int = 16,
     val cardDurationSecs: Int = 8,

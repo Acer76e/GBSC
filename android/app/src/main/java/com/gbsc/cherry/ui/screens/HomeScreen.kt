@@ -116,6 +116,9 @@ fun HomeScreen(
         AccessibilityRow(isAccessibilityEnabled(), openAccessibilitySettings)
 
         Spacer(Modifier.height(20.dp))
+        Diagnostic()
+
+        Spacer(Modifier.height(20.dp))
         Text("How it works", fontWeight = FontWeight.Bold, fontSize = 16.sp)
         Spacer(Modifier.height(6.dp))
         Steps()
@@ -162,6 +165,34 @@ private fun AccessibilityRow(enabled: Boolean, openSettings: () -> Unit) {
         if (!enabled) {
             TextButton(onClick = openSettings) { Text("Enable") }
         }
+    }
+}
+
+@Composable
+private fun Diagnostic() {
+    val debug by OfferEngine.lastDebug.collectAsState()
+    Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    Spacer(Modifier.height(6.dp))
+    if (debug == null) {
+        Text(
+            "No accessibility events yet. Open Uber Driver — if this stays blank, turn on Debug mode in Card → Advanced to see what package shows up.",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 13.sp,
+        )
+    } else {
+        val d = debug!!
+        val parsedLabel = if (d.parsed) "YES (\$%.2f)".format(d.fare) else "NO"
+        Text("Package: ${d.pkg ?: "—"}", fontSize = 13.sp)
+        Text(
+            "Text: ${d.textChars} chars  ·  Parsed: $parsedLabel",
+            fontSize = 13.sp,
+            color = if (d.parsed) GoodGreen else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            "Preview: ${d.textPreview}",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+        )
     }
 }
 

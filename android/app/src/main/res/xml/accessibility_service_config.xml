@@ -6,4 +6,4 @@
     android:canTakeScreenshot="true"
     android:description="@string/accessibility_description"
     android:notificationTimeout="200"
-    android:packageNames="com.ubercab.driver" />
+    android:packageNames="com.ubercab.driver,com.uber.driver,com.ubercab.driverapp" />

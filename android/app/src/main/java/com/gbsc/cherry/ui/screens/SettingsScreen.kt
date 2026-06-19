@@ -122,6 +122,16 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
         ToggleRow("Auto-save a screenshot to your gallery (Android 11+)", c.screenshotEnabled) { v ->
             update { it.copy(screenshotEnabled = v) }
         }
+
+        Spacer(Modifier.height(12.dp))
+        ToggleRow("Debug mode (read all apps so you can find Uber's package)", c.debugMode) { v ->
+            update { it.copy(debugMode = v) }
+        }
+        Text(
+            "Turn this on only while diagnosing. It lets the accessibility service see all apps so the Diagnostic panel on Home can tell you which package Uber Driver uses. Turn it off when done.",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+        )
     }
 }
 

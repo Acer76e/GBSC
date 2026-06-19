@@ -75,8 +75,47 @@ Future<void> main() async {
   runApp(const JuiceCommandApp());
 }
 
-class JuiceCommandApp extends StatelessWidget {
+class JuiceCommandApp extends StatefulWidget {
   const JuiceCommandApp({super.key});
+
+  @override
+  State<JuiceCommandApp> createState() => _JuiceCommandAppState();
+}
+
+class _JuiceCommandAppState extends State<JuiceCommandApp> with WidgetsBindingObserver {
+  // Throttle the lifecycle-driven re-register so a user toggling apps doesn't
+  // hammer /api/fcm-tokens/register. Once an hour is plenty — its purpose is
+  // to catch silent failures (reinstall, data clear, expired token in the
+  // background, OS killed Firebase) within a day of app activity.
+  DateTime? _lastResumeRegister;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) return;
+    final fcm = _fcm;
+    if (fcm == null || !_jscAuth.isAuthenticated) return;
+    final now = DateTime.now();
+    if (_lastResumeRegister != null &&
+        now.difference(_lastResumeRegister!).inHours < 1) {
+      return;
+    }
+    _lastResumeRegister = now;
+    // Fire-and-forget. If the JWT is expired the API client's 401 handler
+    // bounces the user to login automatically (markSessionExpired flow).
+    fcm.registerNow();
+  }
 
   @override
   Widget build(BuildContext context) {

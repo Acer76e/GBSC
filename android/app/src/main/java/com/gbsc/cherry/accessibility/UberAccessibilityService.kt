@@ -65,23 +65,35 @@ class UberAccessibilityService : AccessibilityService() {
         if (now - lastProcessed < THROTTLE_MS) return
         lastProcessed = now
 
-        val root = rootInActiveWindow ?: return
-        val activePkg = root.packageName?.toString()
-        val debug = Repo.settings.value.customization.debugMode
-        val activeIsUber = isUberPackage(activePkg)
-
-        // Only read text when Uber Driver is actually the foreground window — otherwise
-        // a queued Uber event would have us harvest the launcher / app-switcher tree.
-        if (!activeIsUber && !debug) return
-
+        // Gather text from every on-screen window that belongs to Uber Driver. The offer
+        // card sometimes pops as its own overlay window, which rootInActiveWindow can miss.
         val sb = StringBuilder()
-        collectText(root, sb)
-        val text = sb.toString()
+        var activePkg: String? = null
+        var sawUberWindow = false
+        for (w in windows) {
+            val root = w.root ?: continue
+            val pkg = root.packageName?.toString()
+            if (isUberPackage(pkg)) {
+                sawUberWindow = true
+                activePkg = pkg
+                collectText(root, sb)
+            }
+        }
+        val debug = Repo.settings.value.customization.debugMode
+        if (!sawUberWindow) {
+            if (!debug) return
+            // In debug mode, fall back to the active window so the user can see what
+            // package is currently in focus.
+            val root = rootInActiveWindow ?: return
+            activePkg = root.packageName?.toString()
+            collectText(root, sb)
+        }
 
+        val text = sb.toString()
         OfferEngine.recordDebug(activePkg, text)
 
         if (!OfferEngine.scanning.value) return
-        if (!activeIsUber) return
+        if (!sawUberWindow) return
         if (text.isBlank()) return
 
         val isNew = OfferEngine.processText(text)

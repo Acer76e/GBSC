@@ -54,6 +54,13 @@ class JscApi {
       }
     }
     if (res.statusCode >= 200 && res.statusCode < 300) return body;
+    if (res.statusCode == 401) {
+      // Token rejected by the server (expired/revoked). Wipe creds so the
+      // JscTab swaps to the login screen with a "session expired" banner.
+      // Fire-and-forget — we still throw below so callers don't get a
+      // half-populated response.
+      auth.markSessionExpired();
+    }
     final msg = body['error']?.toString() ??
         body['message']?.toString() ??
         'HTTP ${res.statusCode}';

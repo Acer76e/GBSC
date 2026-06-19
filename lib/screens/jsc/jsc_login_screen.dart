@@ -88,6 +88,30 @@ class _JscLoginScreenState extends State<JscLoginScreen> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
+              if (context.watch<JscAuthService>().sessionExpired) ...[
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF4D6),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFEAB949)),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.lock_clock_outlined,
+                          color: Color(0xFF8A5A00), size: 20),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Your session expired. Sign in again to continue.',
+                          style: TextStyle(color: Color(0xFF8A5A00), fontSize: 13),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
               const SizedBox(height: 24),
               SegmentedButton<JscLoginMode>(
                 segments: const [

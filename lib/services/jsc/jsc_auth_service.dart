@@ -18,12 +18,19 @@ class JscAuthService extends ChangeNotifier {
   String? _token;
   JscUser? _user;
   bool _loaded = false;
+  bool _sessionExpired = false;
 
   String get baseUrl => _baseUrl;
   String? get token => _token;
   JscUser? get user => _user;
   bool get isLoaded => _loaded;
   bool get isAuthenticated => _token != null && _user != null;
+
+  /// True when the last sign-out was triggered by a 401 from the server, not
+  /// by the user clicking Sign Out. The login screen reads this and shows a
+  /// "Your session expired" banner. Cleared on the next successful sign-in
+  /// or any user-initiated sign-out.
+  bool get sessionExpired => _sessionExpired;
 
   Future<void> load() async {
     _baseUrl = await _storage.read(key: _kBaseUrl) ?? defaultBaseUrl;
@@ -49,6 +56,7 @@ class JscAuthService extends ChangeNotifier {
   Future<void> saveSession({required String token, required JscUser user}) async {
     _token = token;
     _user = user;
+    _sessionExpired = false;
     await _storage.write(key: _kToken, value: token);
     await _storage.write(
       key: _kUser,
@@ -77,8 +85,19 @@ class JscAuthService extends ChangeNotifier {
     }
     _token = null;
     _user = null;
+    _sessionExpired = false;
     await _storage.delete(key: _kToken);
     await _storage.delete(key: _kUser);
+    notifyListeners();
+  }
+
+  /// Called by [JscApi] when an authenticated call returns 401. Wipes the
+  /// session and sets [sessionExpired] so the login screen can explain why
+  /// the user is back at sign-in.
+  Future<void> markSessionExpired() async {
+    if (_token == null) return; // already signed out, no need to flip again
+    await signOut();
+    _sessionExpired = true;
     notifyListeners();
   }
 }

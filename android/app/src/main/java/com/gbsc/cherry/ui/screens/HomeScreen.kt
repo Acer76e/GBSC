@@ -203,6 +203,18 @@ private fun Diagnostic() {
             fontSize = 12.sp,
         )
     }
+    val recent by OfferEngine.recentPackages.collectAsState()
+    if (recent.isNotEmpty()) {
+        Spacer(Modifier.height(6.dp))
+        Text(
+            "Recent packages seen (newest first):",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+        )
+        recent.forEach { pkg ->
+            Text("• $pkg", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+        }
+    }
 }
 
 @Composable

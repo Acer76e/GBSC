@@ -166,7 +166,7 @@ class UberAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val THROTTLE_MS = 500L
-        private const val SEEN_THROTTLE_MS = 2000L
+        private const val SEEN_THROTTLE_MS = 500L
         private val UBER_PACKAGES = arrayOf(
             "com.ubercab.driver",
             "com.uber.driver",

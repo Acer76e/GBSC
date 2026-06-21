@@ -63,13 +63,28 @@ class UberAccessibilityService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
 
-        // Quick scan: is any Uber window on screen right now?
+        // Primary check: the actively focused window. The getWindows() iteration below
+        // can return empty or stale entries depending on the device, so we trust
+        // rootInActiveWindow as the source of truth and use windows only as a supplement
+        // (e.g. for an offer dialog that pops as its own window).
+        val activeRoot = rootInActiveWindow
         var sawUberWindow = false
+        var activePkg: String? = null
+        val sb = StringBuilder()
+
+        if (activeRoot != null && isUberPackage(activeRoot.packageName?.toString())) {
+            sawUberWindow = true
+            activePkg = activeRoot.packageName?.toString()
+            collectText(activeRoot, sb)
+        }
         for (w in windows) {
-            val root = w.root ?: continue
-            if (isUberPackage(root.packageName?.toString())) {
+            val r = w.root ?: continue
+            if (r === activeRoot) continue
+            val pkg = r.packageName?.toString()
+            if (isUberPackage(pkg)) {
                 sawUberWindow = true
-                break
+                if (activePkg == null) activePkg = pkg
+                collectText(r, sb)
             }
         }
 
@@ -82,17 +97,6 @@ class UberAccessibilityService : AccessibilityService() {
             val forceProcess = event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
             if (!forceProcess && now - lastProcessed < THROTTLE_MS) return
             lastProcessed = now
-
-            val sb = StringBuilder()
-            var activePkg: String? = null
-            for (w in windows) {
-                val root = w.root ?: continue
-                val pkg = root.packageName?.toString()
-                if (isUberPackage(pkg)) {
-                    activePkg = pkg
-                    collectText(root, sb)
-                }
-            }
 
             val text = sb.toString()
             OfferEngine.recordDebug(activePkg, text)
@@ -113,8 +117,7 @@ class UberAccessibilityService : AccessibilityService() {
             // starve real Uber events.
             if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
             lastSeenUpdate = now
-            val root = rootInActiveWindow ?: return
-            OfferEngine.recordSeenPkg(root.packageName?.toString())
+            OfferEngine.recordSeenPkg(activeRoot?.packageName?.toString())
         }
     }
 

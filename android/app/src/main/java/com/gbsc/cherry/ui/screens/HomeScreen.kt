@@ -185,10 +185,17 @@ private fun Diagnostic() {
         val parsedLabel = if (d.parsed) "YES (\$%.2f)".format(d.fare) else "NO"
         Text("Last Uber screen — Package: ${d.pkg ?: "—"}", fontSize = 13.sp)
         Text(
-            "Text: ${d.textChars} chars  ·  Parsed: $parsedLabel",
+            "Nodes: ${d.nodeCount}  ·  Text: ${d.textChars} chars  ·  Parsed: $parsedLabel",
             fontSize = 13.sp,
             color = if (d.parsed) GoodGreen else MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        if (d.classes.isNotEmpty()) {
+            Text(
+                "Classes: ${d.classes}",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 12.sp,
+            )
+        }
         Text(
             "Preview: ${d.textPreview}",
             color = MaterialTheme.colorScheme.onSurfaceVariant,

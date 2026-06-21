@@ -48,6 +48,8 @@ object OfferEngine {
         val textPreview: String,
         val parsed: Boolean,
         val fare: Double,
+        val nodeCount: Int = 0,
+        val classes: String = "",
     )
     val lastDebug = MutableStateFlow<DebugSnapshot?>(null)
     /** Most recent foreground package seen in debug mode that isn't an Uber window. */
@@ -55,14 +57,16 @@ object OfferEngine {
     /** Recent distinct package names seen, most-recent-first, capped at 10. */
     val recentPackages = MutableStateFlow<List<String>>(emptyList())
 
-    fun recordDebug(pkg: String?, text: String) {
+    fun recordDebug(pkg: String?, text: String, nodeCount: Int = 0, classes: String = "") {
         lastDebug.value = DebugSnapshot(
             timestamp = System.currentTimeMillis(),
             pkg = pkg,
             textChars = text.length,
-            textPreview = text.take(160).replace('\n', ' '),
+            textPreview = text.take(200).replace('\n', ' '),
             parsed = false,
             fare = 0.0,
+            nodeCount = nodeCount,
+            classes = classes,
         )
         if (pkg != null) addRecent(pkg)
     }

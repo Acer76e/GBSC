@@ -71,11 +71,13 @@ class UberAccessibilityService : AccessibilityService() {
         var sawUberWindow = false
         var activePkg: String? = null
         val sb = StringBuilder()
+        val classes = linkedSetOf<String>()
+        var nodeCount = 0
 
         if (activeRoot != null && isUberPackage(activeRoot.packageName?.toString())) {
             sawUberWindow = true
             activePkg = activeRoot.packageName?.toString()
-            collectText(activeRoot, sb)
+            nodeCount += collectText(activeRoot, sb, classes)
         }
         for (w in windows) {
             val r = w.root ?: continue
@@ -84,7 +86,7 @@ class UberAccessibilityService : AccessibilityService() {
             if (isUberPackage(pkg)) {
                 sawUberWindow = true
                 if (activePkg == null) activePkg = pkg
-                collectText(r, sb)
+                nodeCount += collectText(r, sb, classes)
             }
         }
 
@@ -99,7 +101,8 @@ class UberAccessibilityService : AccessibilityService() {
             lastProcessed = now
 
             val text = sb.toString()
-            OfferEngine.recordDebug(activePkg, text)
+            val classSummary = classes.take(6).joinToString(", ")
+            OfferEngine.recordDebug(activePkg, text, nodeCount, classSummary)
 
             if (!OfferEngine.scanning.value) return
             if (text.isBlank()) return
@@ -127,8 +130,13 @@ class UberAccessibilityService : AccessibilityService() {
         serviceInfo = info
     }
 
-    private fun collectText(node: AccessibilityNodeInfo?, sb: StringBuilder) {
-        if (node == null) return
+    private fun collectText(
+        node: AccessibilityNodeInfo?,
+        sb: StringBuilder,
+        classes: MutableSet<String> = mutableSetOf(),
+    ): Int {
+        if (node == null) return 0
+        var count = 1
         try {
             node.text?.toString()?.trim().takeUnless { it.isNullOrEmpty() }?.let {
                 sb.append(it).append('\n')
@@ -136,12 +144,22 @@ class UberAccessibilityService : AccessibilityService() {
             node.contentDescription?.toString()?.trim().takeUnless { it.isNullOrEmpty() }?.let {
                 sb.append(it).append('\n')
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                node.hintText?.toString()?.trim().takeUnless { it.isNullOrEmpty() }?.let {
+                    sb.append(it).append('\n')
+                }
+                node.tooltipText?.toString()?.trim().takeUnless { it.isNullOrEmpty() }?.let {
+                    sb.append(it).append('\n')
+                }
+            }
+            node.className?.toString()?.substringAfterLast('.')?.let { classes.add(it) }
             for (i in 0 until node.childCount) {
-                collectText(node.getChild(i), sb)
+                count += collectText(node.getChild(i), sb, classes)
             }
         } catch (_: Throwable) {
             // Nodes can be recycled mid-traversal; the next event will replay.
         }
+        return count
     }
 
     private fun captureScreenshot() {

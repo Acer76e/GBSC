@@ -13,8 +13,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.cancel
 
@@ -31,6 +34,7 @@ class UberAccessibilityService : AccessibilityService() {
     private var lastSeenUpdate = 0L
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var settingsJob: Job? = null
+    private var pollJob: Job? = null
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -43,11 +47,25 @@ class UberAccessibilityService : AccessibilityService() {
                 .distinctUntilChanged()
                 .collect { applyServiceInfo(it) }
         }
+        pollJob?.cancel()
+        pollJob = scope.launch {
+            // Re-read the active Uber window once per second while scanning so we catch
+            // offer cards that never fire accessibility events after the initial pop.
+            OfferEngine.scanning.distinctUntilChanged().collectLatest { isScanning ->
+                if (!isScanning) return@collectLatest
+                while (isActive) {
+                    delay(POLL_MS)
+                    captureAndProcess(forceProcess = false, bypassThrottle = true)
+                }
+            }
+        }
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
         settingsJob?.cancel()
         settingsJob = null
+        pollJob?.cancel()
+        pollJob = null
         OfferEngine.accessibilityConnected.value = false
         OfferEngine.resetState()
         return super.onUnbind(intent)
@@ -62,7 +80,11 @@ class UberAccessibilityService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
+        val force = event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+        captureAndProcess(forceProcess = force, bypassThrottle = false)
+    }
 
+    private fun captureAndProcess(forceProcess: Boolean, bypassThrottle: Boolean) {
         // Primary check: the actively focused window. The getWindows() iteration below
         // can return empty or stale entries depending on the device, so we trust
         // rootInActiveWindow as the source of truth and use windows only as a supplement
@@ -93,11 +115,7 @@ class UberAccessibilityService : AccessibilityService() {
         val now = System.currentTimeMillis()
 
         if (sawUberWindow) {
-            // Never throttle the WINDOW_STATE_CHANGED that fires when the user switches
-            // to Uber or when the offer card pops as a new window — those are exactly
-            // the events we don't want to miss.
-            val forceProcess = event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-            if (!forceProcess && now - lastProcessed < THROTTLE_MS) return
+            if (!forceProcess && !bypassThrottle && now - lastProcessed < THROTTLE_MS) return
             lastProcessed = now
 
             val text = sb.toString()
@@ -115,9 +133,6 @@ class UberAccessibilityService : AccessibilityService() {
                 captureScreenshot()
             }
         } else if (Repo.settings.value.customization.debugMode) {
-            // Non-Uber window — throttle the diagnostic update separately from Uber
-            // processing so a chatty foreground app (incl. CherryPick itself) can't
-            // starve real Uber events.
             if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
             lastSeenUpdate = now
             OfferEngine.recordSeenPkg(activeRoot?.packageName?.toString())
@@ -188,6 +203,7 @@ class UberAccessibilityService : AccessibilityService() {
     companion object {
         private const val THROTTLE_MS = 500L
         private const val SEEN_THROTTLE_MS = 500L
+        private const val POLL_MS = 1000L
         private val UBER_PACKAGES = arrayOf(
             "com.ubercab.driver",
             "com.uber.driver",

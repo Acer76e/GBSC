@@ -51,7 +51,7 @@ class UberAccessibilityService : AccessibilityService() {
         pollJob = scope.launch {
             // Re-read the active Uber window once per second while scanning so we catch
             // offer cards that never fire accessibility events after the initial pop.
-            OfferEngine.scanning.distinctUntilChanged().collectLatest { isScanning ->
+            OfferEngine.scanning.collectLatest { isScanning ->
                 if (!isScanning) return@collectLatest
                 while (isActive) {
                     delay(POLL_MS)

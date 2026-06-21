@@ -28,6 +28,7 @@ import kotlinx.coroutines.cancel
 class UberAccessibilityService : AccessibilityService() {
 
     private var lastProcessed = 0L
+    private var lastSeenUpdate = 0L
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var settingsJob: Job? = null
 
@@ -61,26 +62,38 @@ class UberAccessibilityService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
-        val now = System.currentTimeMillis()
-        if (now - lastProcessed < THROTTLE_MS) return
-        lastProcessed = now
 
-        // Gather text from every on-screen window that belongs to Uber Driver. The offer
-        // card sometimes pops as its own overlay window, which rootInActiveWindow can miss.
-        val sb = StringBuilder()
-        var activePkg: String? = null
+        // Quick scan: is any Uber window on screen right now?
         var sawUberWindow = false
         for (w in windows) {
             val root = w.root ?: continue
-            val pkg = root.packageName?.toString()
-            if (isUberPackage(pkg)) {
+            if (isUberPackage(root.packageName?.toString())) {
                 sawUberWindow = true
-                activePkg = pkg
-                collectText(root, sb)
+                break
             }
         }
 
+        val now = System.currentTimeMillis()
+
         if (sawUberWindow) {
+            // Never throttle the WINDOW_STATE_CHANGED that fires when the user switches
+            // to Uber or when the offer card pops as a new window — those are exactly
+            // the events we don't want to miss.
+            val forceProcess = event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            if (!forceProcess && now - lastProcessed < THROTTLE_MS) return
+            lastProcessed = now
+
+            val sb = StringBuilder()
+            var activePkg: String? = null
+            for (w in windows) {
+                val root = w.root ?: continue
+                val pkg = root.packageName?.toString()
+                if (isUberPackage(pkg)) {
+                    activePkg = pkg
+                    collectText(root, sb)
+                }
+            }
+
             val text = sb.toString()
             OfferEngine.recordDebug(activePkg, text)
 
@@ -95,9 +108,11 @@ class UberAccessibilityService : AccessibilityService() {
                 captureScreenshot()
             }
         } else if (Repo.settings.value.customization.debugMode) {
-            // Non-Uber window — record the package for diagnostics but don't overwrite the
-            // last Uber snapshot. This lets the user identify Uber's package without losing
-            // the most recent Uber capture (e.g. the offer card you just missed).
+            // Non-Uber window — throttle the diagnostic update separately from Uber
+            // processing so a chatty foreground app (incl. CherryPick itself) can't
+            // starve real Uber events.
+            if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
+            lastSeenUpdate = now
             val root = rootInActiveWindow ?: return
             OfferEngine.recordSeenPkg(root.packageName?.toString())
         }
@@ -151,6 +166,7 @@ class UberAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val THROTTLE_MS = 500L
+        private const val SEEN_THROTTLE_MS = 2000L
         private val UBER_PACKAGES = arrayOf(
             "com.ubercab.driver",
             "com.uber.driver",

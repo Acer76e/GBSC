@@ -50,6 +50,8 @@ object OfferEngine {
         val fare: Double,
     )
     val lastDebug = MutableStateFlow<DebugSnapshot?>(null)
+    /** Most recent foreground package seen in debug mode that isn't an Uber window. */
+    val lastSeenPkg = MutableStateFlow<String?>(null)
 
     fun recordDebug(pkg: String?, text: String) {
         lastDebug.value = DebugSnapshot(
@@ -60,6 +62,10 @@ object OfferEngine {
             parsed = false,
             fare = 0.0,
         )
+    }
+
+    fun recordSeenPkg(pkg: String?) {
+        lastSeenPkg.value = pkg
     }
 
     private const val MISS_LIMIT = 3

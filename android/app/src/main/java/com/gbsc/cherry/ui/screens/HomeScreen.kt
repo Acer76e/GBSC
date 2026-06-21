@@ -171,18 +171,19 @@ private fun AccessibilityRow(enabled: Boolean, openSettings: () -> Unit) {
 @Composable
 private fun Diagnostic() {
     val debug by OfferEngine.lastDebug.collectAsState()
+    val seen by OfferEngine.lastSeenPkg.collectAsState()
     Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
     Spacer(Modifier.height(6.dp))
     if (debug == null) {
         Text(
-            "No accessibility events yet. Open Uber Driver — if this stays blank, turn on Debug mode in Card → Advanced to see what package shows up.",
+            "No Uber events captured yet. Open Uber Driver — if this stays blank, turn on Debug mode in Card → Advanced.",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 13.sp,
         )
     } else {
         val d = debug!!
         val parsedLabel = if (d.parsed) "YES (\$%.2f)".format(d.fare) else "NO"
-        Text("Package: ${d.pkg ?: "—"}", fontSize = 13.sp)
+        Text("Last Uber screen — Package: ${d.pkg ?: "—"}", fontSize = 13.sp)
         Text(
             "Text: ${d.textChars} chars  ·  Parsed: $parsedLabel",
             fontSize = 13.sp,
@@ -190,6 +191,14 @@ private fun Diagnostic() {
         )
         Text(
             "Preview: ${d.textPreview}",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+        )
+    }
+    seen?.let {
+        Spacer(Modifier.height(4.dp))
+        Text(
+            "Most recent foreground app: $it",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 12.sp,
         )

@@ -79,29 +79,27 @@ class UberAccessibilityService : AccessibilityService() {
                 collectText(root, sb)
             }
         }
-        val debug = Repo.settings.value.customization.debugMode
-        if (!sawUberWindow) {
-            if (!debug) return
-            // In debug mode, fall back to the active window so the user can see what
-            // package is currently in focus.
+
+        if (sawUberWindow) {
+            val text = sb.toString()
+            OfferEngine.recordDebug(activePkg, text)
+
+            if (!OfferEngine.scanning.value) return
+            if (text.isBlank()) return
+
+            val isNew = OfferEngine.processText(text)
+            if (isNew &&
+                Repo.settings.value.customization.screenshotEnabled &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            ) {
+                captureScreenshot()
+            }
+        } else if (Repo.settings.value.customization.debugMode) {
+            // Non-Uber window — record the package for diagnostics but don't overwrite the
+            // last Uber snapshot. This lets the user identify Uber's package without losing
+            // the most recent Uber capture (e.g. the offer card you just missed).
             val root = rootInActiveWindow ?: return
-            activePkg = root.packageName?.toString()
-            collectText(root, sb)
-        }
-
-        val text = sb.toString()
-        OfferEngine.recordDebug(activePkg, text)
-
-        if (!OfferEngine.scanning.value) return
-        if (!sawUberWindow) return
-        if (text.isBlank()) return
-
-        val isNew = OfferEngine.processText(text)
-        if (isNew &&
-            Repo.settings.value.customization.screenshotEnabled &&
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-        ) {
-            captureScreenshot()
+            OfferEngine.recordSeenPkg(root.packageName?.toString())
         }
     }
 

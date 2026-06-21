@@ -45,12 +45,14 @@ object OfferParser {
 
     private fun dec(raw: String): Double = raw.replace(',', '.').toDoubleOrNull() ?: 0.0
 
+    private val acceptOrMatchRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
+
     fun parse(text: String): ParsedOffer? {
         if (text.isBlank()) return null
-        // An offer card always has an Accept button. In-trip navigation, earnings, and
-        // other Uber screens contain $ amounts and min/mi pairs too — without this gate
-        // the parser would treat them all as new offers.
-        if (!text.contains("accept", ignoreCase = true)) return null
+        // An offer card always has either an "Accept" or a "Match" button. In-trip
+        // navigation, earnings, and other Uber screens contain $ amounts and min/mi
+        // pairs too — without this gate the parser would treat them all as new offers.
+        if (!acceptOrMatchRegex.containsMatchIn(text)) return null
         val lines = text.lines().map { it.trim() }.filter { it.isNotEmpty() }
 
         // --- Bonus first, so we can exclude bonus amounts from the fare detection ---

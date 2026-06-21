@@ -171,6 +171,7 @@ private fun AccessibilityRow(enabled: Boolean, openSettings: () -> Unit) {
 @Composable
 private fun Diagnostic() {
     val debug by OfferEngine.lastDebug.collectAsState()
+    val offerDebug by OfferEngine.lastOfferDebug.collectAsState()
     val seen by OfferEngine.lastSeenPkg.collectAsState()
     Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
     Spacer(Modifier.height(6.dp))
@@ -198,6 +199,21 @@ private fun Diagnostic() {
         }
         Text(
             "Preview: ${d.textPreview}",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+        )
+    }
+    offerDebug?.let { o ->
+        Spacer(Modifier.height(8.dp))
+        val parsedLabel = if (o.parsed) "YES (\$%.2f)".format(o.fare) else "NO"
+        Text(
+            "Last offer-like screen — Parsed: $parsedLabel",
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+            color = if (o.parsed) GoodGreen else MaterialTheme.colorScheme.error,
+        )
+        Text(
+            "Preview: ${o.textPreview}",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 12.sp,
         )

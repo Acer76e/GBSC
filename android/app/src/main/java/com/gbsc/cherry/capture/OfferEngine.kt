@@ -52,13 +52,18 @@ object OfferEngine {
         val classes: String = "",
     )
     val lastDebug = MutableStateFlow<DebugSnapshot?>(null)
+    /** Last Uber screen that looked like an offer card (contained "Accept" or "Match").
+     *  Preserved across non-offer screens so the user can verify what we captured. */
+    val lastOfferDebug = MutableStateFlow<DebugSnapshot?>(null)
     /** Most recent foreground package seen in debug mode that isn't an Uber window. */
     val lastSeenPkg = MutableStateFlow<String?>(null)
     /** Recent distinct package names seen, most-recent-first, capped at 10. */
     val recentPackages = MutableStateFlow<List<String>>(emptyList())
 
+    private val offerLikeRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
+
     fun recordDebug(pkg: String?, text: String, nodeCount: Int = 0, classes: String = "") {
-        lastDebug.value = DebugSnapshot(
+        val snapshot = DebugSnapshot(
             timestamp = System.currentTimeMillis(),
             pkg = pkg,
             textChars = text.length,
@@ -68,6 +73,10 @@ object OfferEngine {
             nodeCount = nodeCount,
             classes = classes,
         )
+        lastDebug.value = snapshot
+        if (offerLikeRegex.containsMatchIn(text)) {
+            lastOfferDebug.value = snapshot
+        }
         if (pkg != null) addRecent(pkg)
     }
 
@@ -114,6 +123,7 @@ object OfferEngine {
         val parsed = OfferParser.parse(text)
         if (parsed == null) {
             lastDebug.value = lastDebug.value?.copy(parsed = false)
+            lastOfferDebug.value = lastOfferDebug.value?.copy(parsed = false)
             missCount++
             if (missCount >= MISS_LIMIT) {
                 currentSignature = null
@@ -123,6 +133,7 @@ object OfferEngine {
             return false
         }
         lastDebug.value = lastDebug.value?.copy(parsed = true, fare = parsed.fare)
+        lastOfferDebug.value = lastOfferDebug.value?.copy(parsed = true, fare = parsed.fare)
         missCount = 0
         val offer = TripOffer(
             id = System.currentTimeMillis(),

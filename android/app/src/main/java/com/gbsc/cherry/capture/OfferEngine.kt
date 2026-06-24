@@ -60,7 +60,14 @@ object OfferEngine {
     /** Recent distinct package names seen, most-recent-first, capped at 10. */
     val recentPackages = MutableStateFlow<List<String>>(emptyList())
 
-    private val offerLikeRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
+    private val offerKeywordRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
+    private val fareRegex = Regex("""\$\s*\d{1,4}[.,]\d{2}""")
+    private val minRegex = Regex("""\d{1,3}\s*min[s]?\b""", RegexOption.IGNORE_CASE)
+
+    private fun looksLikeOffer(text: String): Boolean =
+        offerKeywordRegex.containsMatchIn(text) &&
+            fareRegex.containsMatchIn(text) &&
+            minRegex.containsMatchIn(text)
 
     fun recordDebug(pkg: String?, text: String, nodeCount: Int = 0, classes: String = "") {
         val snapshot = DebugSnapshot(
@@ -74,7 +81,7 @@ object OfferEngine {
             classes = classes,
         )
         lastDebug.value = snapshot
-        if (offerLikeRegex.containsMatchIn(text)) {
+        if (looksLikeOffer(text)) {
             lastOfferDebug.value = snapshot
         }
         if (pkg != null) addRecent(pkg)

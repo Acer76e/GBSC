@@ -173,7 +173,10 @@ private fun Diagnostic() {
     val debug by OfferEngine.lastDebug.collectAsState()
     val offerDebug by OfferEngine.lastOfferDebug.collectAsState()
     val seen by OfferEngine.lastSeenPkg.collectAsState()
+    val polls by OfferEngine.pollCount.collectAsState()
     Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    Spacer(Modifier.height(2.dp))
+    Text("Polls: $polls", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
     Spacer(Modifier.height(6.dp))
     if (debug == null) {
         Text(
@@ -193,6 +196,13 @@ private fun Diagnostic() {
         if (d.classes.isNotEmpty()) {
             Text(
                 "Classes: ${d.classes}",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 12.sp,
+            )
+        }
+        if (d.windowsSummary.isNotEmpty()) {
+            Text(
+                "Windows: ${d.windowsSummary}",
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp,
             )

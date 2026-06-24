@@ -50,6 +50,7 @@ object OfferEngine {
         val fare: Double,
         val nodeCount: Int = 0,
         val classes: String = "",
+        val windowsSummary: String = "",
     )
     val lastDebug = MutableStateFlow<DebugSnapshot?>(null)
     /** Last Uber screen that looked like an offer card (contained "Accept" or "Match").
@@ -59,6 +60,8 @@ object OfferEngine {
     val lastSeenPkg = MutableStateFlow<String?>(null)
     /** Recent distinct package names seen, most-recent-first, capped at 10. */
     val recentPackages = MutableStateFlow<List<String>>(emptyList())
+    /** Number of polling re-reads since the service started. */
+    val pollCount = MutableStateFlow(0)
 
     private val offerKeywordRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
     private val fareRegex = Regex("""\$\s*\d{1,4}[.,]\d{2}""")
@@ -69,7 +72,13 @@ object OfferEngine {
             fareRegex.containsMatchIn(text) &&
             minRegex.containsMatchIn(text)
 
-    fun recordDebug(pkg: String?, text: String, nodeCount: Int = 0, classes: String = "") {
+    fun recordDebug(
+        pkg: String?,
+        text: String,
+        nodeCount: Int = 0,
+        classes: String = "",
+        windowsSummary: String = "",
+    ) {
         val snapshot = DebugSnapshot(
             timestamp = System.currentTimeMillis(),
             pkg = pkg,
@@ -79,6 +88,7 @@ object OfferEngine {
             fare = 0.0,
             nodeCount = nodeCount,
             classes = classes,
+            windowsSummary = windowsSummary,
         )
         lastDebug.value = snapshot
         if (looksLikeOffer(text)) {

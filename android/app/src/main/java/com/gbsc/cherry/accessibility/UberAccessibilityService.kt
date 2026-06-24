@@ -56,6 +56,7 @@ class UberAccessibilityService : AccessibilityService() {
                 while (isActive) {
                     delay(POLL_MS)
                     captureAndProcess(forceProcess = false, bypassThrottle = true)
+                    OfferEngine.pollCount.value = OfferEngine.pollCount.value + 1
                 }
             }
         }
@@ -85,30 +86,51 @@ class UberAccessibilityService : AccessibilityService() {
     }
 
     private fun captureAndProcess(forceProcess: Boolean, bypassThrottle: Boolean) {
-        // Primary check: the actively focused window. The getWindows() iteration below
-        // can return empty or stale entries depending on the device, so we trust
-        // rootInActiveWindow as the source of truth and use windows only as a supplement
-        // (e.g. for an offer dialog that pops as its own window).
         val activeRoot = rootInActiveWindow
         var sawUberWindow = false
         var activePkg: String? = null
         val sb = StringBuilder()
         val classes = linkedSetOf<String>()
         var nodeCount = 0
+        val winSummary = StringBuilder()
+        val seenRoots = mutableListOf<android.view.accessibility.AccessibilityNodeInfo>()
 
-        if (activeRoot != null && isUberPackage(activeRoot.packageName?.toString())) {
-            sawUberWindow = true
-            activePkg = activeRoot.packageName?.toString()
-            nodeCount += collectText(activeRoot, sb, classes)
-        }
+        // 1) Iterate every visible window. Some devices/configurations don't surface the
+        //    offer card via rootInActiveWindow even when it's foreground, so we walk
+        //    everything and collect text from any Uber-package root we find. For
+        //    non-Uber windows we only count nodes (no text read) so we still see what
+        //    else is on screen in the diagnostic without reading other apps.
         for (w in windows) {
             val r = w.root ?: continue
-            if (r === activeRoot) continue
-            val pkg = r.packageName?.toString()
+            val pkg = r.packageName?.toString() ?: "—"
+            val nodes = if (isUberPackage(pkg)) {
+                collectText(r, sb, classes)
+            } else {
+                countNodes(r)
+            }
+            if (winSummary.isNotEmpty()) winSummary.append("  ")
+            winSummary.append("$pkg:$nodes")
+            seenRoots.add(r)
             if (isUberPackage(pkg)) {
                 sawUberWindow = true
                 if (activePkg == null) activePkg = pkg
-                nodeCount += collectText(r, sb, classes)
+                nodeCount += nodes
+            }
+        }
+        // 2) Also pull in the active window if it wasn't already in the windows list.
+        if (activeRoot != null && seenRoots.none { it === activeRoot }) {
+            val pkg = activeRoot.packageName?.toString() ?: "—"
+            val nodes = if (isUberPackage(pkg)) {
+                collectText(activeRoot, sb, classes)
+            } else {
+                countNodes(activeRoot)
+            }
+            if (winSummary.isNotEmpty()) winSummary.append("  ")
+            winSummary.append("active:$pkg:$nodes")
+            if (isUberPackage(pkg)) {
+                sawUberWindow = true
+                if (activePkg == null) activePkg = pkg
+                nodeCount += nodes
             }
         }
 
@@ -120,7 +142,7 @@ class UberAccessibilityService : AccessibilityService() {
 
             val text = sb.toString()
             val classSummary = classes.take(6).joinToString(", ")
-            OfferEngine.recordDebug(activePkg, text, nodeCount, classSummary)
+            OfferEngine.recordDebug(activePkg, text, nodeCount, classSummary, winSummary.toString())
 
             if (!OfferEngine.scanning.value) return
             if (text.isBlank()) return
@@ -136,6 +158,14 @@ class UberAccessibilityService : AccessibilityService() {
             if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
             lastSeenUpdate = now
             OfferEngine.recordSeenPkg(activeRoot?.packageName?.toString())
+            // Even outside of Uber, surface the window list for diagnostics.
+            OfferEngine.recordDebug(
+                pkg = activeRoot?.packageName?.toString(),
+                text = "",
+                nodeCount = 0,
+                classes = "",
+                windowsSummary = winSummary.toString(),
+            )
         }
     }
 
@@ -143,6 +173,18 @@ class UberAccessibilityService : AccessibilityService() {
         val info = serviceInfo ?: return
         info.packageNames = if (debugMode) null else UBER_PACKAGES
         serviceInfo = info
+    }
+
+    private fun countNodes(node: AccessibilityNodeInfo?): Int {
+        if (node == null) return 0
+        var count = 1
+        try {
+            for (i in 0 until node.childCount) {
+                count += countNodes(node.getChild(i))
+            }
+        } catch (_: Throwable) {
+        }
+        return count
     }
 
     private fun collectText(

@@ -28,6 +28,18 @@ android {
         }
     }
 
+    signingConfigs {
+        // Stable debug keystore committed at android/app/debug.keystore so every CI
+        // build signs with the same key and the APK can update in place on the device
+        // (no uninstall required between versions).
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

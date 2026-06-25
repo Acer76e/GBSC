@@ -68,15 +68,24 @@ object OfferEngine {
     val recentPackages = MutableStateFlow<List<String>>(emptyList())
     /** Number of polling re-reads since the service started. */
     val pollCount = MutableStateFlow(0)
+    /** Number of OCR fallbacks performed (when Uber hides the offer card from accessibility). */
+    val ocrCount = MutableStateFlow(0)
+    /** Preview of the last OCR result for diagnostic visibility. */
+    val lastOcrPreview = MutableStateFlow<String?>(null)
 
     private val offerKeywordRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
     private val fareRegex = Regex("""\$\s*\d{1,4}[.,]\d{2}""")
     private val minRegex = Regex("""\d{1,3}\s*min[s]?\b""", RegexOption.IGNORE_CASE)
 
-    private fun looksLikeOffer(text: String): Boolean =
+    fun looksLikeOffer(text: String): Boolean =
         offerKeywordRegex.containsMatchIn(text) &&
             fareRegex.containsMatchIn(text) &&
             minRegex.containsMatchIn(text)
+
+    fun recordOcrText(text: String) {
+        lastOcrPreview.value = text.take(200).replace('\n', ' ')
+        ocrCount.value = ocrCount.value + 1
+    }
 
     fun recordDebug(
         pkg: String?,
@@ -106,13 +115,15 @@ object OfferEngine {
             if (biggest == null || nodeCount > biggest.nodeCount) {
                 biggestUberDebug.value = snapshot
             }
-            // Push to the rolling 5-deep list. Only include if there's any text — we
-            // don't need the floating widget (1 ImageView, 0 chars) cluttering it.
+            // Push to the rolling 10-deep list, deduping consecutive captures with the
+            // same preview so a static dashboard doesn't fill all the slots.
             if (text.isNotBlank()) {
                 val list = recentUberCaptures.value.toMutableList()
-                list.add(0, snapshot)
-                while (list.size > 5) list.removeAt(list.size - 1)
-                recentUberCaptures.value = list
+                if (list.firstOrNull()?.textPreview != snapshot.textPreview) {
+                    list.add(0, snapshot)
+                    while (list.size > 10) list.removeAt(list.size - 1)
+                    recentUberCaptures.value = list
+                }
             }
         }
         if (pkg != null) addRecent(pkg)

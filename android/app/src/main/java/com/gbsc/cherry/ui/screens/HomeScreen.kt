@@ -176,9 +176,22 @@ private fun Diagnostic() {
     val recents by OfferEngine.recentUberCaptures.collectAsState()
     val seen by OfferEngine.lastSeenPkg.collectAsState()
     val polls by OfferEngine.pollCount.collectAsState()
+    val ocrs by OfferEngine.ocrCount.collectAsState()
+    val lastOcr by OfferEngine.lastOcrPreview.collectAsState()
     Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
     Spacer(Modifier.height(2.dp))
-    Text("Polls: $polls", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
+    Text(
+        "Polls: $polls  ·  OCR fallbacks: $ocrs",
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        fontSize = 12.sp,
+    )
+    lastOcr?.let {
+        Text(
+            "Last OCR: $it",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 11.sp,
+        )
+    }
     Spacer(Modifier.height(6.dp))
     if (debug == null) {
         Text(

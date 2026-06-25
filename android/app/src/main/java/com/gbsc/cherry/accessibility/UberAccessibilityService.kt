@@ -9,6 +9,10 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.gbsc.cherry.capture.OfferEngine
 import com.gbsc.cherry.data.Repo
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -32,6 +36,11 @@ class UberAccessibilityService : AccessibilityService() {
 
     private var lastProcessed = 0L
     private var lastSeenUpdate = 0L
+    private var lastOcrTime = 0L
+    @Volatile private var ocrInFlight = false
+    private val recognizer: TextRecognizer by lazy {
+        TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var settingsJob: Job? = null
     private var pollJob: Job? = null
@@ -74,6 +83,7 @@ class UberAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         scope.cancel()
+        runCatching { recognizer.close() }
         super.onDestroy()
     }
 
@@ -152,14 +162,22 @@ class UberAccessibilityService : AccessibilityService() {
             )
 
             if (!OfferEngine.scanning.value) return
-            if (text.isBlank()) return
 
-            val isNew = OfferEngine.processText(text)
-            if (isNew &&
-                Repo.settings.value.customization.screenshotEnabled &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-            ) {
-                captureScreenshot()
+            val accLooksLikeOffer = OfferEngine.looksLikeOffer(text)
+            if (text.isNotBlank() && accLooksLikeOffer) {
+                val isNew = OfferEngine.processText(text)
+                if (isNew &&
+                    Repo.settings.value.customization.screenshotEnabled &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+                ) {
+                    captureScreenshot()
+                }
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // Uber visible but accessibility doesn't have offer-shaped text — most
+                // likely the offer card is hidden from accessibility. Take a silent
+                // screenshot and OCR it. takeScreenshot via AccessibilityService does
+                // NOT trigger Android's screen-share banner.
+                maybeRunOcr()
             }
         } else if (Repo.settings.value.customization.debugMode) {
             if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
@@ -249,10 +267,55 @@ class UberAccessibilityService : AccessibilityService() {
         )
     }
 
+    private fun maybeRunOcr() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        val now = System.currentTimeMillis()
+        if (ocrInFlight) return
+        if (now - lastOcrTime < OCR_THROTTLE_MS) return
+        lastOcrTime = now
+        ocrInFlight = true
+        takeScreenshot(
+            Display.DEFAULT_DISPLAY,
+            mainExecutor,
+            object : TakeScreenshotCallback {
+                override fun onSuccess(screenshot: ScreenshotResult) {
+                    val bmp = Bitmap.wrapHardwareBuffer(
+                        screenshot.hardwareBuffer,
+                        screenshot.colorSpace
+                    )
+                    runCatching { screenshot.hardwareBuffer.close() }
+                    if (bmp == null) {
+                        ocrInFlight = false
+                        return
+                    }
+                    recognizer.process(InputImage.fromBitmap(bmp, 0))
+                        .addOnSuccessListener { result ->
+                            val ocrText = result.text
+                            OfferEngine.recordOcrText(ocrText)
+                            if (OfferEngine.scanning.value && ocrText.isNotBlank()) {
+                                OfferEngine.processText(ocrText)
+                            }
+                            bmp.recycle()
+                            ocrInFlight = false
+                        }
+                        .addOnFailureListener {
+                            bmp.recycle()
+                            ocrInFlight = false
+                        }
+                }
+
+                override fun onFailure(errorCode: Int) {
+                    ocrInFlight = false
+                }
+            }
+        )
+    }
+
     companion object {
         private const val THROTTLE_MS = 500L
         private const val SEEN_THROTTLE_MS = 500L
         private const val POLL_MS = 1000L
+        private const val OCR_THROTTLE_MS = 1500L
         private val UBER_PACKAGES = arrayOf(
             "com.ubercab.driver",
             "com.uber.driver",

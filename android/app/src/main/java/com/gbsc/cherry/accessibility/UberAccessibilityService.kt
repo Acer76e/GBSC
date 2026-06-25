@@ -99,6 +99,7 @@ class UberAccessibilityService : AccessibilityService() {
         val activeRoot = rootInActiveWindow
         var sawUberWindow = false
         var activePkg: String? = null
+        val activeIsUber = activeRoot != null && isUberPackage(activeRoot.packageName?.toString())
         val sb = StringBuilder()
         val classes = linkedSetOf<String>()
         var nodeCount = 0
@@ -172,11 +173,15 @@ class UberAccessibilityService : AccessibilityService() {
                 ) {
                     captureScreenshot()
                 }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                // Uber visible but accessibility doesn't have offer-shaped text — most
-                // likely the offer card is hidden from accessibility. Take a silent
-                // screenshot and OCR it. takeScreenshot via AccessibilityService does
-                // NOT trigger Android's screen-share banner.
+            } else if (
+                activeIsUber &&
+                text.length < OCR_TEXT_THRESHOLD &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            ) {
+                // Uber visible AND in the foreground AND accessibility text is unusually
+                // small (the signature of Uber hiding the offer card from accessibility).
+                // takeScreenshot via AccessibilityService does NOT trigger Android's
+                // screen-share banner. 1.5s throttle.
                 maybeRunOcr()
             }
         } else if (Repo.settings.value.customization.debugMode) {
@@ -316,6 +321,7 @@ class UberAccessibilityService : AccessibilityService() {
         private const val SEEN_THROTTLE_MS = 500L
         private const val POLL_MS = 1000L
         private const val OCR_THROTTLE_MS = 1500L
+        private const val OCR_TEXT_THRESHOLD = 500
         private val UBER_PACKAGES = arrayOf(
             "com.ubercab.driver",
             "com.uber.driver",

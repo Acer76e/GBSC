@@ -59,6 +59,9 @@ object OfferEngine {
     /** Highest-node Uber capture we've ever taken — preserves the offer card after it
      *  closes so we can verify what the tree looked like at peak content. */
     val biggestUberDebug = MutableStateFlow<DebugSnapshot?>(null)
+    /** Last 5 Uber captures (any size) so the user can scroll back to find what was on
+     *  screen during a recent offer, even if it didn't beat the biggest. */
+    val recentUberCaptures = MutableStateFlow<List<DebugSnapshot>>(emptyList())
     /** Most recent foreground package seen in debug mode that isn't an Uber window. */
     val lastSeenPkg = MutableStateFlow<String?>(null)
     /** Recent distinct package names seen, most-recent-first, capped at 10. */
@@ -102,6 +105,14 @@ object OfferEngine {
             val biggest = biggestUberDebug.value
             if (biggest == null || nodeCount > biggest.nodeCount) {
                 biggestUberDebug.value = snapshot
+            }
+            // Push to the rolling 5-deep list. Only include if there's any text — we
+            // don't need the floating widget (1 ImageView, 0 chars) cluttering it.
+            if (text.isNotBlank()) {
+                val list = recentUberCaptures.value.toMutableList()
+                list.add(0, snapshot)
+                while (list.size > 5) list.removeAt(list.size - 1)
+                recentUberCaptures.value = list
             }
         }
         if (pkg != null) addRecent(pkg)

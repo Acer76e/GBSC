@@ -173,6 +173,7 @@ private fun Diagnostic() {
     val debug by OfferEngine.lastDebug.collectAsState()
     val offerDebug by OfferEngine.lastOfferDebug.collectAsState()
     val biggest by OfferEngine.biggestUberDebug.collectAsState()
+    val recents by OfferEngine.recentUberCaptures.collectAsState()
     val seen by OfferEngine.lastSeenPkg.collectAsState()
     val polls by OfferEngine.pollCount.collectAsState()
     Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -248,6 +249,26 @@ private fun Diagnostic() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 12.sp,
         )
+    }
+    if (recents.isNotEmpty()) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "Recent Uber captures (newest first):",
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        recents.forEachIndexed { idx, r ->
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "${idx + 1}. ${r.nodeCount} nodes · ${r.textChars} chars",
+                fontSize = 12.sp,
+            )
+            Text(
+                r.textPreview,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 11.sp,
+            )
+        }
     }
     seen?.let {
         Spacer(Modifier.height(4.dp))

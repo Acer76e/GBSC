@@ -142,7 +142,14 @@ class UberAccessibilityService : AccessibilityService() {
 
             val text = sb.toString()
             val classSummary = classes.take(6).joinToString(", ")
-            OfferEngine.recordDebug(activePkg, text, nodeCount, classSummary, winSummary.toString())
+            OfferEngine.recordDebug(
+                pkg = activePkg,
+                text = text,
+                nodeCount = nodeCount,
+                classes = classSummary,
+                windowsSummary = winSummary.toString(),
+                isUber = true,
+            )
 
             if (!OfferEngine.scanning.value) return
             if (text.isBlank()) return

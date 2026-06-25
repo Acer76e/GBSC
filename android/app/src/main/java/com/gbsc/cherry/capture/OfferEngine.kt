@@ -56,6 +56,9 @@ object OfferEngine {
     /** Last Uber screen that looked like an offer card (contained "Accept" or "Match").
      *  Preserved across non-offer screens so the user can verify what we captured. */
     val lastOfferDebug = MutableStateFlow<DebugSnapshot?>(null)
+    /** Highest-node Uber capture we've ever taken — preserves the offer card after it
+     *  closes so we can verify what the tree looked like at peak content. */
+    val biggestUberDebug = MutableStateFlow<DebugSnapshot?>(null)
     /** Most recent foreground package seen in debug mode that isn't an Uber window. */
     val lastSeenPkg = MutableStateFlow<String?>(null)
     /** Recent distinct package names seen, most-recent-first, capped at 10. */
@@ -78,6 +81,7 @@ object OfferEngine {
         nodeCount: Int = 0,
         classes: String = "",
         windowsSummary: String = "",
+        isUber: Boolean = false,
     ) {
         val snapshot = DebugSnapshot(
             timestamp = System.currentTimeMillis(),
@@ -93,6 +97,12 @@ object OfferEngine {
         lastDebug.value = snapshot
         if (looksLikeOffer(text)) {
             lastOfferDebug.value = snapshot
+        }
+        if (isUber) {
+            val biggest = biggestUberDebug.value
+            if (biggest == null || nodeCount > biggest.nodeCount) {
+                biggestUberDebug.value = snapshot
+            }
         }
         if (pkg != null) addRecent(pkg)
     }

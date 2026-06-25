@@ -172,6 +172,7 @@ private fun AccessibilityRow(enabled: Boolean, openSettings: () -> Unit) {
 private fun Diagnostic() {
     val debug by OfferEngine.lastDebug.collectAsState()
     val offerDebug by OfferEngine.lastOfferDebug.collectAsState()
+    val biggest by OfferEngine.biggestUberDebug.collectAsState()
     val seen by OfferEngine.lastSeenPkg.collectAsState()
     val polls by OfferEngine.pollCount.collectAsState()
     Text("Diagnostic", fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -224,6 +225,26 @@ private fun Diagnostic() {
         )
         Text(
             "Preview: ${o.textPreview}",
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 12.sp,
+        )
+    }
+    biggest?.let { b ->
+        Spacer(Modifier.height(8.dp))
+        Text(
+            "Biggest Uber capture — Nodes: ${b.nodeCount}, Text: ${b.textChars} chars",
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        if (b.classes.isNotEmpty()) {
+            Text(
+                "Classes: ${b.classes}",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 12.sp,
+            )
+        }
+        Text(
+            "Preview: ${b.textPreview}",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 12.sp,
         )

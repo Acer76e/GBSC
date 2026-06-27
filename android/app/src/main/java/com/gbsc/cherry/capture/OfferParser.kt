@@ -31,7 +31,8 @@ object OfferParser {
 
     private val moneyRegex = Regex("""\$\s*(\d{1,4})[.,](\d{2})""")
     private val bonusRegex = Regex("""\+\s*\$?\s*(\d{1,3})(?:[.,](\d{2}))?""")
-    private val pairRegex = Regex("""(\d{1,3})\s*min[s]?\b[^0-9]{0,20}?(\d{1,3}(?:[.,]\d{1,2})?)\s*mi""", RegexOption.IGNORE_CASE)
+    private val pairRegex = Regex("""(\d{1,3})\s*min[s]?\b[^0-9]{0,20}?(\d{1,3}(?:[.,]\d{1,2})?)\s*mi\b""", RegexOption.IGNORE_CASE)
+    private val rateAfterRegex = Regex("""^\s*(/|\s)?\s*(active\s+)?(hr|hour|h|min|minute|per\s+(hour|min))\b""", RegexOption.IGNORE_CASE)
     private val ratingStar = Regex("""[★⭐]\s*(\d)[.,](\d{1,2})""")
     private val ratingWord = Regex("""rating[^0-9]{0,8}(\d)[.,](\d{1,2})""", RegexOption.IGNORE_CASE)
     private val bareRating = Regex("""^[★⭐]?\s*(\d)[.,](\d{2})$""")
@@ -62,11 +63,14 @@ object OfferParser {
             if (v > bonus) bonus = v
         }
 
-        // --- Fare: largest dollar amount that is not immediately preceded by '+' ---
+        // --- Fare: largest dollar amount that isn't a bonus (preceded by '+') or a rate
+        // estimate (followed by "/hr", "active hr", "per hour", "/min", etc.).
         var fare = 0.0
         for (m in moneyRegex.findAll(text)) {
             val before = text.substring(0, m.range.first).trimEnd()
             if (before.endsWith("+")) continue
+            val after = text.substring(m.range.last + 1).take(30)
+            if (rateAfterRegex.containsMatchIn(after)) continue
             val v = num(m.groupValues[1], m.groupValues[2])
             if (v > fare) fare = v
         }

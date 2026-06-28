@@ -1270,6 +1270,387 @@ const TIPS_ALGEBRA = {
 };
 const ALGEBRA_KEY_ORDER = ["vars_expr","one_step","two_step","like_terms","inequalities"];
 
+const QUIZ_CS = {
+  hardware: {
+    title: "Hardware", emoji: "⚙️", color: "#06b6d4",
+    questions: [
+      { q: "What does CPU stand for?", a: 0, opts: ["Central Processing Unit","Computer Power Unit","Central Power Utility","Core Process User"], hint: "The CPU is the \"brain\" of the computer." },
+      { q: "What does RAM stand for?", a: 0, opts: ["Random Access Memory","Real Active Memory","Read Auto Memory","Run All Modules"], hint: "RAM is your computer's short-term working memory." },
+      { q: "What does GPU stand for?", a: 0, opts: ["Graphics Processing Unit","General Power Unit","Game Play Utility","Graphic Pixel Unit"], hint: "Handles images and video — important for games!" },
+      { q: "What's the difference between hardware and software?", a: 0, opts: ["Hardware = physical parts; software = code/programs","Hardware = expensive; software = free","Hardware = old; software = new","No difference"], hint: "Hardware you can touch; software you can't." },
+      { q: "What's the main difference between a hard drive and RAM?", a: 0, opts: ["Hard drive = long-term storage; RAM = short-term/working memory","RAM is bigger","Hard drives are wireless","Same thing"], hint: "RAM is wiped when you shut down; hard drive keeps your files." },
+      { q: "What's the motherboard?", a: 0, opts: ["The main circuit board that connects all computer parts","The main hard drive","The biggest software","A type of monitor"], hint: "It's where all the parts plug in and talk to each other." },
+      { q: "What's the difference between an SSD and an HDD?", a: 0, opts: ["SSD is faster (no moving parts); HDD uses spinning disks","SSD is bigger","HDD is wireless","No difference"], hint: "SSD = Solid State Drive (fast). HDD = Hard Disk Drive (older, slower)." },
+      { q: "Which is an INPUT device?", a: 0, opts: ["Keyboard","Monitor","Speaker","Printer"], hint: "Input sends data INTO the computer." },
+      { q: "Which is an OUTPUT device?", a: 0, opts: ["Monitor","Keyboard","Mouse","Microphone"], hint: "Output sends data OUT of the computer to you." },
+      { q: "What does USB stand for?", a: 0, opts: ["Universal Serial Bus","User System Boot","Ultra Small Battery","Unified Storage Box"], hint: "USB ports connect devices to a computer." }
+    ]
+  },
+  software: {
+    title: "Software", emoji: "💿", color: "#0891b2",
+    questions: [
+      { q: "What does OS stand for?", a: 0, opts: ["Operating System","Open Source","Output Software","Online Server"], hint: "Examples: Windows, macOS, Linux, iOS, Android." },
+      { q: "Which is an OPERATING SYSTEM?", a: 0, opts: ["Windows","Chrome","Microsoft Word","Photoshop"], hint: "The OS runs your whole computer; the others are apps that run ON the OS." },
+      { q: "What's an application (app)?", a: 0, opts: ["Software designed for a specific task","Another word for hardware","A type of USB port","A part of the CPU"], hint: "Like a browser, game, or word processor." },
+      { q: "What's a web browser?", a: 0, opts: ["Software for accessing websites","A type of search engine","A kind of operating system","A hardware device"], hint: "Chrome, Safari, Firefox, Edge are all browsers." },
+      { q: "What does a .jpg file extension mean?", a: 0, opts: ["An image file","A text document","A music file","A video file"], hint: "File extensions tell you the TYPE of file." },
+      { q: "What's open-source software?", a: 0, opts: ["Software whose source code is publicly available","Free software","Software with no bugs","Software that runs on any OS"], hint: "Linux, Python, Firefox are open-source." },
+      { q: "What does a software \"update\" usually do?", a: 0, opts: ["Fix bugs and add features","Slow down your computer","Reset all your files","Switch your OS"], hint: "Always good to keep your software updated for security." },
+      { q: "What's a \"driver\" in computing?", a: 0, opts: ["Software that lets the OS talk to hardware","A person who codes","A type of CPU","A kind of mouse"], hint: "Each hardware device needs a driver." },
+      { q: "What does the kernel do?", a: 0, opts: ["Core part of an OS — controls everything","A type of file","Stores your photos","Runs the internet"], hint: "It's the OS's central control program." },
+      { q: "What's the difference between an app and a website?", a: 0, opts: ["Apps are installed; websites run in a browser","Apps are free; websites cost money","Apps are bigger","No difference"], hint: "Apps live on your device; websites live on the internet." }
+    ]
+  },
+  internet: {
+    title: "The Internet", emoji: "🌐", color: "#0e7490",
+    questions: [
+      { q: "What does URL stand for?", a: 0, opts: ["Uniform Resource Locator","Universal Reading Link","Ultimate Resource Library","User Recently Loaded"], hint: "Like https://www.google.com — that's a URL." },
+      { q: "What does HTTP stand for?", a: 0, opts: ["HyperText Transfer Protocol","High Tech Tech Program","Home Page Transfer Path","Helpful Text Transit Plan"], hint: "It's the language web browsers and servers use to talk." },
+      { q: "What's the S in HTTPS for?", a: 0, opts: ["Secure (encrypted)","Server","Speed","Standard"], hint: "Always look for HTTPS (and the lock icon) for safe browsing." },
+      { q: "What's an IP address?", a: 0, opts: ["A unique number identifying a device on a network","An email address","A web browser","A file name"], hint: "Every device online has one — like a digital phone number." },
+      { q: "What does DNS do?", a: 0, opts: ["Translates URLs (like google.com) into IP addresses","Stores your passwords","Sends emails","Runs your printer"], hint: "Think of DNS as the internet's phone book." },
+      { q: "What's a Wi-Fi router?", a: 0, opts: ["A device that broadcasts the internet wirelessly to your devices","A search engine","A type of OS","A web browser"], hint: "Wi-Fi = wireless way to connect to the router." },
+      { q: "What's the difference between a router and a modem?", a: 0, opts: ["Modem connects your home to the internet; router shares it to your devices","No difference","Routers are wireless; modems are not","Modem stores files"], hint: "Modem talks to your ISP; router talks to your devices." },
+      { q: "What's a server?", a: 0, opts: ["A computer that provides services/data to other computers","A type of file","A waiter at a tech company","A kind of USB"], hint: "Websites live on servers." },
+      { q: "Is the Web the same thing as the Internet?", a: 0, opts: ["No — the Web is just one part of the Internet","Yes, exactly the same","The Web is bigger","The Internet doesn't exist anymore"], hint: "Internet = the whole network. Web = websites you browse. Email and apps also use the Internet." },
+      { q: "What's bandwidth?", a: 0, opts: ["How much data your connection can carry per second","How tall your router is","The price of internet","A type of cable"], hint: "Higher bandwidth = faster downloads." }
+    ]
+  },
+  coding: {
+    title: "Coding Concepts", emoji: "👩‍💻", color: "#0284c7",
+    questions: [
+      { q: "What's a variable in coding?", a: 0, opts: ["A named container that holds a value","A bug in code","A type of mouse","An app"], hint: "Like a labeled box: name = \"Julia\"." },
+      { q: "What's a loop?", a: 0, opts: ["Code that runs multiple times","A bug","A function","A type of USB"], hint: "\"Do this 10 times\" type instructions." },
+      { q: "What's an if-statement?", a: 0, opts: ["Code that runs only when a condition is true","A loop","A type of variable","An error"], hint: "Like: IF it's raining, THEN bring an umbrella." },
+      { q: "What's a function?", a: 0, opts: ["A reusable block of code","A type of variable","Hardware","A web page"], hint: "Define it once, use it over and over (like a recipe)." },
+      { q: "What's a \"bug\"?", a: 0, opts: ["An error in code","A type of CPU","A virus","A web page"], hint: "Real story: the first \"bug\" was an actual moth in a 1947 computer!" },
+      { q: "What's debugging?", a: 0, opts: ["Finding and fixing errors in code","Writing new code","Installing apps","Browsing the web"], hint: "Programmers spend a LOT of time debugging." },
+      { q: "What's an algorithm?", a: 0, opts: ["Step-by-step instructions to solve a problem","A type of computer","A web search","An error"], hint: "A recipe is an algorithm! So is the route your GPS picks." },
+      { q: "What's a comment in code?", a: 0, opts: ["Notes in the code that the computer ignores","An error message","A type of variable","A loop"], hint: "Used to explain what code does — for humans, not the computer." },
+      { q: "Which is a popular coding language?", a: 0, opts: ["Python","Hammer","Microsoft Word","Wi-Fi"], hint: "Named after Monty Python — used everywhere from web to AI." },
+      { q: "What's a \"string\" in programming?", a: 0, opts: ["Text data (usually in quotes)","A type of loop","A bug","A function"], hint: "Like \"Hello, world!\" — that's a string." }
+    ]
+  },
+  binary: {
+    title: "Binary & Digital", emoji: "0️⃣", color: "#0369a1",
+    questions: [
+      { q: "What is binary?", a: 0, opts: ["A number system using only 0s and 1s","Two computers connected","A type of file","A coding language"], hint: "Computers think in OFF (0) and ON (1)." },
+      { q: "What's a bit?", a: 0, opts: ["A single 0 or 1","8 bytes","A small file","A pixel"], hint: "The smallest unit of digital data." },
+      { q: "How many bits make a byte?", a: 0, opts: ["8","1","10","100"], hint: "Memorize: 8 bits = 1 byte." },
+      { q: "Which is bigger: MB or GB?", a: 0, opts: ["GB (Gigabyte)","MB (Megabyte)","They're the same","Depends on the computer"], hint: "Order smallest → biggest: KB, MB, GB, TB." },
+      { q: "What's a pixel?", a: 0, opts: ["The smallest dot on a digital screen","A type of file","A kind of CPU","A storage unit"], hint: "Pictures are made of tiny pixels." },
+      { q: "What does RGB stand for in computing?", a: 0, opts: ["Red, Green, Blue","Really Good Bytes","Rotated Graphic Box","Random Game Bug"], hint: "These three colors mix to make every color on your screen." },
+      { q: "How is text stored on a computer?", a: 0, opts: ["As numbers (like ASCII or Unicode)","As letters","As pictures","As sounds"], hint: "Each letter has a number: 'A' = 65, 'B' = 66..." },
+      { q: "What is 10 in binary equal to in regular (decimal) numbers?", a: 0, opts: ["2","10","100","8"], hint: "Binary is base-2. Reading right to left, place values double: 1, 2, 4, 8. So '10' = 1×2 + 0 = 2." },
+      { q: "How many bytes are in approximately 1 kilobyte (KB)?", a: 0, opts: ["About 1,000 (technically 1,024)","About 100","About 1,000,000","About 8"], hint: "Each step (KB → MB → GB) is roughly 1,000× bigger." },
+      { q: "How is a digital image stored?", a: 0, opts: ["As a grid of pixels, each with a color value","As one big text file","As music","As random numbers"], hint: "Each pixel has RGB values telling the screen what color to display." }
+    ]
+  },
+  cyber: {
+    title: "Cybersecurity", emoji: "🛡️", color: "#155e75",
+    questions: [
+      { q: "What makes a strong password?", a: 0, opts: ["Long, mix of letters/numbers/symbols, unique per site","Your name and birthday","\"password123\"","Always the same one for every site"], hint: "Reusing passwords is risky — if one site is hacked, all your accounts are." },
+      { q: "What is phishing?", a: 0, opts: ["Fake emails/texts that try to trick you into giving up info","Fishing as a hobby","A type of virus","A coding language"], hint: "Always check the sender; don't click suspicious links." },
+      { q: "What's malware?", a: 0, opts: ["Malicious software designed to harm a computer","A type of OS","Helpful software","A web browser"], hint: "MAL = bad. Includes viruses, worms, ransomware." },
+      { q: "What's a computer virus?", a: 0, opts: ["Self-spreading malicious software","Just a regular bug","A type of password","A search engine"], hint: "It \"infects\" other files or computers to spread." },
+      { q: "What's encryption?", a: 0, opts: ["Scrambling data so only authorized people can read it","Deleting data","Making a backup","Speeding up the internet"], hint: "HTTPS uses encryption to protect what you send." },
+      { q: "What's a firewall?", a: 0, opts: ["A system that blocks unauthorized network access","An anti-virus program","A backup tool","A web browser"], hint: "Think of it as a security guard for your network." },
+      { q: "What does 2FA stand for?", a: 0, opts: ["Two-Factor Authentication","Two File Archive","Twice Fast Access","Two Free Apps"], hint: "Need 2 things to log in: a password AND a code on your phone." },
+      { q: "What should you do if you get a suspicious email asking for your password?", a: 0, opts: ["Don't click; delete or report it","Reply with your password","Forward it to friends","Click to investigate"], hint: "Real companies NEVER ask for your password by email." },
+      { q: "Why is reusing the same password everywhere risky?", a: 0, opts: ["If one site is hacked, attackers can try the password elsewhere","It's not risky","It uses more memory","It's slower"], hint: "Use a different password per site (a password manager helps)." },
+      { q: "What's a hacker?", a: 0, opts: ["Someone who breaks into or modifies computer systems","An employee at Apple","A web browser","Anyone who uses a computer"], hint: "Some hackers are good (\"white hat\") and some are bad (\"black hat\")." }
+    ]
+  }
+};
+const TIPS_CS = {
+  hardware: [
+    { h:"CPU = brain 🧠", p:"The <b>CPU</b> (Central Processing Unit) does all the thinking — every instruction your computer runs goes through it." },
+    { h:"RAM vs Hard Drive", p:"<b>RAM</b> = short-term/working memory (wiped when you shut down). <b>Hard drive / SSD</b> = long-term storage (keeps your files forever)." },
+    { h:"Hardware vs Software", p:"<b>Hardware</b> = physical parts you can touch. <b>Software</b> = the code/programs that run on the hardware. The CPU is hardware; Chrome is software." },
+    { h:"Input vs Output", p:"<b>Input</b> = data going IN (keyboard, mouse, microphone). <b>Output</b> = data going OUT to you (monitor, speakers, printer)." }
+  ],
+  software: [
+    { h:"OS = Operating System", p:"The OS runs your whole computer. Common ones: <b>Windows, macOS, Linux</b> (computers) · <b>iOS, Android</b> (phones)." },
+    { h:"Apps run ON the OS", p:"Apps (applications) are software built for a specific job — like Chrome (browsing), Word (writing), Spotify (music). They all need an OS to run on." },
+    { h:"File extensions tell you the type", p:".jpg = image · .mp3 = audio · .mp4 = video · .pdf = document · .py = Python code · .html = web page." },
+    { h:"Updates are good!", p:"Software updates fix bugs and patch security holes. Always keep your apps and OS updated." }
+  ],
+  internet: [
+    { h:"URL = web address", p:"Like <b>https://www.google.com</b>. The HTTPS at the start means it's <b>secure (encrypted)</b> — look for the lock icon 🔒." },
+    { h:"IP address = phone number for devices", p:"Every device online has a unique <b>IP address</b>. <b>DNS</b> is the phone book — it translates URLs (google.com) into IPs." },
+    { h:"Router vs Modem", p:"<b>Modem</b> = connects your house to the internet provider. <b>Router</b> = shares that connection to your devices (often via Wi-Fi)." },
+    { h:"Internet ≠ Web", p:"The <b>Internet</b> is the whole global network. The <b>Web</b> is just one part — the websites you browse. Email and apps also use the Internet but aren't \"the Web.\"" }
+  ],
+  coding: [
+    { h:"Variable = labeled box 📦", p:"<b>name = \"Julia\"</b> creates a variable called <b>name</b> holding the value \"Julia\". You can change what's inside the box later." },
+    { h:"Loops = do this N times 🔁", p:"Loops save you from copying code. \"Print 'Hi' 10 times\" → use a loop instead of writing 10 print statements." },
+    { h:"If-statements = decisions", p:"<b>IF</b> (something is true) <b>THEN</b> (do this) <b>ELSE</b> (do that). How code makes choices." },
+    { h:"Bugs are normal 🐛", p:"Every coder writes bugs. The skill is in <b>debugging</b> — finding and fixing them. Patience and step-by-step thinking are key." },
+    { h:"Algorithms are everywhere", p:"An <b>algorithm</b> is just step-by-step instructions. A cooking recipe, a route on Google Maps, even brushing your teeth in order — all algorithms!" }
+  ],
+  binary: [
+    { h:"Binary = 0 and 1 only", p:"Computers only understand <b>OFF (0)</b> and <b>ON (1)</b>. Everything — text, pictures, videos — gets converted to long strings of 0s and 1s." },
+    { h:"Bit and Byte sizes", p:"<b>1 bit</b> = one 0 or 1. <b>1 byte</b> = 8 bits. Then sizes go up: <b>KB → MB → GB → TB</b> (each about 1,000× bigger)." },
+    { h:"Pixels and RGB 🎨", p:"Screens are made of tiny dots called <b>pixels</b>. Each pixel uses <b>RGB</b> (Red Green Blue) values mixed together to make any color." },
+    { h:"Text = numbers underneath", p:"Letters are stored as numbers using <b>ASCII</b> or <b>Unicode</b>. The letter A = 65, B = 66, C = 67…" }
+  ],
+  cyber: [
+    { h:"Strong passwords 🔒", p:"<b>Long + Mixed + Unique</b>. Long (12+ chars), Mixed (letters/numbers/symbols), Unique (different per site). A password manager helps you remember them." },
+    { h:"Phishing = bait emails 🎣", p:"Fake emails or texts pretending to be banks, schools, or friends — trying to trick you into clicking bad links or giving up passwords. Always check the sender carefully." },
+    { h:"2FA adds a second lock", p:"<b>Two-Factor Authentication</b>: even if someone steals your password, they also need a code on your phone. Turn it on everywhere you can." },
+    { h:"Red flags 🚩", p:"\"Urgent! Click NOW!\" · \"Verify your password\" · Misspelled sender · Weird links · Unexpected attachments. When in doubt, DON'T click." }
+  ]
+};
+const CS_KEY_ORDER = ["hardware","software","internet","coding","binary","cyber"];
+
+const QUIZ_SPACE = {
+  solar: {
+    title: "Solar System", emoji: "☀️", color: "#f59e0b",
+    questions: [
+      { q: "How many planets are in our solar system?", a: 0, opts: ["8","9","7","10"], hint: "Pluto was reclassified as a dwarf planet in 2006." },
+      { q: "Which planet is CLOSEST to the sun?", a: 0, opts: ["Mercury","Venus","Earth","Mars"], hint: "Memory: My Very Educated Mother — M starts the list." },
+      { q: "Which is the LARGEST planet?", a: 0, opts: ["Jupiter","Saturn","Earth","Neptune"], hint: "Jupiter is so big, all other planets could fit inside it." },
+      { q: "Which planet is known as the \"Red Planet\"?", a: 0, opts: ["Mars","Venus","Jupiter","Mercury"], hint: "Its surface is covered in iron oxide (rust)." },
+      { q: "Which planet has the most famous rings?", a: 0, opts: ["Saturn","Jupiter","Neptune","Uranus"], hint: "Saturn's rings are made of ice and rock." },
+      { q: "What's the HOTTEST planet?", a: 0, opts: ["Venus","Mercury","Mars","Jupiter"], hint: "Venus has a thick atmosphere that traps heat — even hotter than Mercury, which is closer to the sun." },
+      { q: "What is the asteroid belt?", a: 0, opts: ["A belt of asteroids between Mars and Jupiter","A ring around Earth","The path of a comet","A constellation"], hint: "It separates the inner rocky planets from the outer gas giants." },
+      { q: "How many moons does Earth have?", a: 0, opts: ["1","2","0","8"], hint: "Just our one moon (which we cleverly named \"The Moon\")." },
+      { q: "What is Pluto NOW classified as?", a: 0, opts: ["A dwarf planet","A regular planet","An asteroid","A moon"], hint: "Demoted in 2006." },
+      { q: "The Sun is a…", a: 0, opts: ["Star","Planet","Moon","Comet"], hint: "Our closest star — about 93 million miles away." }
+    ]
+  },
+  stars: {
+    title: "Stars & Galaxies", emoji: "⭐", color: "#6366f1",
+    questions: [
+      { q: "What galaxy do we live in?", a: 0, opts: ["The Milky Way","Andromeda","Triangulum","Magellanic Cloud"], hint: "Named for its milky-white band of stars visible in the night sky." },
+      { q: "What's a star made of?", a: 0, opts: ["Mostly hot hydrogen and helium gas","Solid rock","Ice","Iron"], hint: "Stars are giant balls of glowing gas powered by nuclear fusion." },
+      { q: "What's a galaxy?", a: 0, opts: ["A huge collection of stars, gas, and dust held together by gravity","One planet and its moons","A type of star","A telescope"], hint: "The Milky Way alone has 100-400 billion stars." },
+      { q: "What happens when a massive star dies in an explosion?", a: 0, opts: ["Supernova","Black hole only","Nebula","Galaxy"], hint: "A supernova can briefly outshine an entire galaxy!" },
+      { q: "What's a black hole?", a: 0, opts: ["A region of space where gravity is so strong nothing escapes — not even light","A dark planet","An empty galaxy","A type of star"], hint: "We have one at the center of our galaxy (Sagittarius A*)." },
+      { q: "What's a nebula?", a: 0, opts: ["A cloud of gas and dust in space (often where stars are born)","A type of moon","A distant galaxy","A small planet"], hint: "The Eagle Nebula's \"Pillars of Creation\" is famous from Hubble photos." },
+      { q: "What's the closest star to Earth?", a: 0, opts: ["The Sun","Polaris (North Star)","Proxima Centauri","Sirius"], hint: "It's so close that we call it \"the Sun\" — but it IS a star!" },
+      { q: "What's a constellation?", a: 0, opts: ["A pattern of stars that form a recognizable shape in the sky","A type of galaxy","A planet","A space probe"], hint: "Examples: Orion, Big Dipper, Cassiopeia." },
+      { q: "What's a light-year a measure of?", a: 0, opts: ["Distance (how far light travels in one year)","Time","Brightness","A type of star"], hint: "One light-year ≈ 6 trillion miles! Used because space is REALLY big." },
+      { q: "Which color stars are the HOTTEST?", a: 0, opts: ["Blue","Red","Yellow","White"], hint: "Surprise: blue is hotter than red, even though red looks \"hot\" to us." }
+    ]
+  },
+  exploration: {
+    title: "Space Exploration", emoji: "🚀", color: "#ef4444",
+    questions: [
+      { q: "What does NASA stand for?", a: 0, opts: ["National Aeronautics and Space Administration","North American Space Agency","Nuclear Astronaut Science Alliance","New Astronomy Studies Association"], hint: "The US space agency, founded in 1958." },
+      { q: "What is the ISS?", a: 0, opts: ["International Space Station — orbits Earth, astronauts live there","Italian Space Satellite","Internet Space System","Intergalactic Star Ship"], hint: "Orbits ~250 miles above Earth, has been continuously occupied since 2000." },
+      { q: "Who was the FIRST person to walk on the moon?", a: 0, opts: ["Neil Armstrong","Buzz Aldrin","Yuri Gagarin","John Glenn"], hint: "July 20, 1969. \"One small step for man…\"" },
+      { q: "What mission first landed humans on the moon?", a: 0, opts: ["Apollo 11","Apollo 13","Mercury 7","Gemini 5"], hint: "Apollo 11 — the famous one." },
+      { q: "What year did humans first land on the moon?", a: 0, opts: ["1969","1957","1989","1999"], hint: "Same year as Woodstock!" },
+      { q: "What private company makes reusable rockets and capsules?", a: 0, opts: ["SpaceX","McDonald's","Microsoft","Adobe"], hint: "Founded by Elon Musk in 2002." },
+      { q: "What's a satellite?", a: 0, opts: ["An object orbiting a planet (natural like the Moon, or artificial like the ISS)","A type of rocket","A space telescope","A planet"], hint: "Earth has thousands of artificial satellites — for GPS, weather, communication, etc." },
+      { q: "Who was Yuri Gagarin?", a: 0, opts: ["First human in space (Soviet cosmonaut, 1961)","The first man on the moon","A NASA director","An astronaut who walked on Mars"], hint: "Beat the Americans into space by 8 years!" },
+      { q: "What do astronauts wear in space outside their spacecraft?", a: 0, opts: ["A spacesuit (EVA suit)","Regular clothes","A wetsuit","Just oxygen masks"], hint: "EVA = Extra-Vehicular Activity. The suit provides air, pressure, and protection." },
+      { q: "What was Sputnik?", a: 0, opts: ["The first artificial satellite (Soviet, 1957)","First moon mission","First Mars rover","First space telescope"], hint: "Its launch kicked off the Space Race." }
+    ]
+  },
+  earth_moon: {
+    title: "Earth & Moon", emoji: "🌍", color: "#10b981",
+    questions: [
+      { q: "What causes Earth's SEASONS?", a: 0, opts: ["Earth's tilt on its axis (about 23.5°)","Earth being closer or farther from the sun","The Moon's gravity","Sunspots"], hint: "Surprise! Distance from the sun barely changes through the year — it's the TILT." },
+      { q: "What causes tides on Earth?", a: 0, opts: ["Mostly the Moon's gravity (and the Sun's)","Wind","Ocean currents","Earthquakes"], hint: "The Moon pulls on Earth's oceans, creating high and low tides." },
+      { q: "What's a LUNAR eclipse?", a: 0, opts: ["Earth's shadow falls on the Moon","Moon blocks the Sun","Sun blocks the Moon","Two moons appear"], hint: "LUNAR = Moon. Sun-Earth-Moon line, Earth in the middle." },
+      { q: "What's a SOLAR eclipse?", a: 0, opts: ["The Moon blocks the Sun from Earth's view","Earth's shadow on the Moon","The Sun goes dim","A meteor shower"], hint: "SOLAR = Sun. Sun-Moon-Earth line, Moon in the middle." },
+      { q: "About how long does the Moon take to orbit Earth?", a: 0, opts: ["About 27–29 days","About 1 day","About 365 days","About 7 days"], hint: "Roughly a month — that's why \"month\" comes from \"moon\"." },
+      { q: "What are moon phases?", a: 0, opts: ["The different shapes the Moon appears in as it orbits Earth","Different colors the Moon turns","Sizes of the Moon as it grows","Stars near the Moon"], hint: "Full → Gibbous → Quarter → Crescent → New, and back again." },
+      { q: "How long is one Earth DAY?", a: 0, opts: ["24 hours","12 hours","1 hour","365 days"], hint: "One full rotation of Earth on its axis." },
+      { q: "How long is one Earth YEAR?", a: 0, opts: ["About 365.25 days","About 100 days","About 30 days","Exactly 360 days"], hint: "One full orbit around the Sun. The .25 is why we need leap years!" },
+      { q: "What's the SUN's role in our solar system?", a: 0, opts: ["A star whose gravity keeps all the planets in orbit","Just another planet","A really big moon","A satellite"], hint: "All 8 planets orbit the Sun because of its huge gravity." },
+      { q: "What are Earth's main layers?", a: 0, opts: ["Crust, mantle, outer core, inner core","Sky, ground, water","Land and ocean only","Just one big layer"], hint: "From outside in: crust → mantle → outer core (liquid) → inner core (solid iron)." }
+    ]
+  },
+  missions: {
+    title: "Famous Missions", emoji: "🛰️", color: "#8b5cf6",
+    questions: [
+      { q: "What was Apollo 11?", a: 0, opts: ["First mission to land humans on the Moon (1969)","First Mars mission","First space station","First satellite"], hint: "The famous \"one small step\" mission." },
+      { q: "What's a Mars rover?", a: 0, opts: ["A robot exploring the surface of Mars","A type of car","A space station","A telescope"], hint: "Examples: Curiosity (2012), Perseverance (2021)." },
+      { q: "What's the Voyager program?", a: 0, opts: ["Probes launched in 1977 that are now in interstellar space","A 2025 Mars mission","First moon program","A failed space station"], hint: "Voyager 1 is the most distant human-made object ever." },
+      { q: "What is the James Webb Space Telescope (JWST)?", a: 0, opts: ["A powerful space telescope launched in 2021","A Mars rover","The first space station","A satellite"], hint: "Hubble's much-more-powerful successor — sees infrared light." },
+      { q: "What's the Hubble Space Telescope?", a: 0, opts: ["A space telescope launched in 1990 — famous for stunning deep-space photos","A planet","A rocket","A NASA director"], hint: "Named after astronomer Edwin Hubble." },
+      { q: "What's the International Space Station's main purpose?", a: 0, opts: ["A research lab in orbit where astronauts conduct science experiments","A weapon platform","A hotel for tourists","A space prison"], hint: "Astronauts from many countries live and work there." },
+      { q: "What's the name of NASA's most recent Mars rover (landed 2021)?", a: 0, opts: ["Perseverance","Curiosity","Spirit","Opportunity"], hint: "It carried the Ingenuity helicopter, the first aircraft to fly on another planet!" },
+      { q: "Why did the Voyager probes leave the solar system?", a: 0, opts: ["They got a gravitational boost from outer planets","They ran out of fuel","Aliens pulled them","They got lost"], hint: "Used the gravity of Jupiter, Saturn, and others as a slingshot." }
+    ]
+  }
+};
+const TIPS_SPACE = {
+  solar: [
+    { h:"Memorize the planet order 🪐", p:"<b>My Very Educated Mother Just Served Us Noodles</b><br>= <b>M</b>ercury, <b>V</b>enus, <b>E</b>arth, <b>M</b>ars, <b>J</b>upiter, <b>S</b>aturn, <b>U</b>ranus, <b>N</b>eptune." },
+    { h:"Inner vs outer planets", p:"<b>Inner (rocky)</b>: Mercury, Venus, Earth, Mars. <b>Outer (gas/ice giants)</b>: Jupiter, Saturn, Uranus, Neptune. The <b>asteroid belt</b> separates them." },
+    { h:"Hottest, biggest, etc.", p:"<b>Hottest</b>: Venus (thick atmosphere traps heat) · <b>Biggest</b>: Jupiter · <b>Smallest</b>: Mercury · <b>Red Planet</b>: Mars · <b>Rings</b>: Saturn (most famous)." },
+    { h:"Pluto's status", p:"Pluto was a planet from 1930 until 2006, when it got reclassified as a <b>dwarf planet</b>. So now there are 8 official planets." }
+  ],
+  stars: [
+    { h:"Our galaxy = the Milky Way", p:"100-400 BILLION stars in just our galaxy. And there are an estimated 2 trillion galaxies in the observable universe! Space is mind-blowingly big." },
+    { h:"Star colors = temperature 🌡️", p:"<b>Blue stars are HOTTEST</b>, then white, yellow (like our Sun), orange, and <b>red stars are COOLEST</b>. Surprising!" },
+    { h:"Light-year = distance, NOT time", p:"A <b>light-year</b> is how far light travels in one year — about 6 TRILLION miles. The nearest star to our Sun is 4 light-years away." },
+    { h:"Cool space stuff to know", p:"<b>Supernova</b> = exploding massive star · <b>Black hole</b> = gravity so strong even light can't escape · <b>Nebula</b> = cloud of gas/dust (star nurseries!) · <b>Constellation</b> = star pattern (Orion, Big Dipper)." }
+  ],
+  exploration: [
+    { h:"Key dates 📅", p:"<b>1957</b>: Sputnik (first satellite) · <b>1961</b>: Yuri Gagarin (first human in space) · <b>1969</b>: Apollo 11 / Neil Armstrong on the Moon · <b>2000</b>: ISS continuously occupied · <b>2021</b>: JWST launched." },
+    { h:"NASA + SpaceX", p:"<b>NASA</b> = National Aeronautics and Space Administration (US government, 1958). <b>SpaceX</b> = private company (Elon Musk, 2002) — pioneered reusable rockets." },
+    { h:"Famous quote", p:"Neil Armstrong: \"<b>That's one small step for man, one giant leap for mankind.</b>\" — said as he became the first human on the Moon." },
+    { h:"The Space Race 🇺🇸🇷🇺", p:"In the 1950s-60s, the US and Soviet Union competed for space achievements. USSR got the first satellite and first human in space; the US got the first moon landing." }
+  ],
+  earth_moon: [
+    { h:"Seasons = TILT, not distance!", p:"Earth is actually CLOSER to the Sun in January (Northern Hemisphere winter). Seasons happen because Earth's <b>tilt</b> (23.5°) makes different parts get more direct sunlight at different times." },
+    { h:"Tides come from the Moon 🌊", p:"The Moon's gravity pulls on Earth's oceans, creating <b>high and low tides</b> roughly twice a day. The Sun helps a bit too." },
+    { h:"Eclipses — memorize the order", p:"<b>SOLAR eclipse</b>: Sun-Moon-Earth (Moon blocks Sun). <b>LUNAR eclipse</b>: Sun-Earth-Moon (Earth's shadow on Moon). Lunar eclipses are way more common." },
+    { h:"Day/Year/Month roots", p:"<b>Day</b> = Earth rotating once (24 hr) · <b>Year</b> = Earth orbiting the Sun once (365.25 days) · <b>Month</b> = roughly one Moon orbit (~29 days)." }
+  ],
+  missions: [
+    { h:"The big four to remember", p:"<b>Apollo 11</b> (1969) — first moon landing · <b>Voyager 1/2</b> (1977) — now in interstellar space · <b>Hubble</b> (1990) — iconic space telescope · <b>JWST</b> (2021) — Hubble's much more powerful successor." },
+    { h:"Mars rovers timeline", p:"<b>Sojourner</b> (1997) · <b>Spirit & Opportunity</b> (2004) · <b>Curiosity</b> (2012) · <b>Perseverance</b> (2021, with the Ingenuity helicopter — first flight on another planet!)." },
+    { h:"The ISS 🛰️", p:"International Space Station — orbits ~250 miles up at 17,500 mph. Continuously occupied since November 2000. Multiple countries cooperate to run it." },
+    { h:"Voyager fun fact", p:"Voyager 1 carries the \"Golden Record\" — sounds and images of Earth meant for any aliens who might find it. It will outlive Earth itself!" }
+  ]
+};
+const SPACE_KEY_ORDER = ["solar","stars","exploration","earth_moon","missions"];
+
+const QUIZ_GEO = {
+  us_states: {
+    title: "US States & Capitals", emoji: "🇺🇸", color: "#0d9488",
+    questions: [
+      { q: "How many states are in the US?", a: 0, opts: ["50","48","52","49"], hint: "Hawaii and Alaska are the most recent (1959)." },
+      { q: "Capital of California?", a: 0, opts: ["Sacramento","Los Angeles","San Francisco","San Diego"], hint: "NOT the biggest city! Many state capitals aren't." },
+      { q: "Capital of Texas?", a: 0, opts: ["Austin","Houston","Dallas","San Antonio"], hint: "Smaller than Houston or Dallas." },
+      { q: "Capital of New York?", a: 0, opts: ["Albany","New York City","Buffalo","Rochester"], hint: "It's NOT NYC! Albany is upstate." },
+      { q: "Capital of Florida?", a: 0, opts: ["Tallahassee","Miami","Orlando","Jacksonville"], hint: "In the northern \"panhandle\" of the state." },
+      { q: "Capital of Illinois?", a: 0, opts: ["Springfield","Chicago","Peoria","Rockford"], hint: "NOT Chicago (which is much bigger)." },
+      { q: "Capital of Washington state?", a: 0, opts: ["Olympia","Seattle","Spokane","Tacoma"], hint: "Don't confuse with Washington, D.C.!" },
+      { q: "Capital of Massachusetts?", a: 0, opts: ["Boston","Cambridge","Salem","Worcester"], hint: "One of the few state capitals that IS the biggest city." },
+      { q: "Capital of Ohio?", a: 0, opts: ["Columbus","Cleveland","Cincinnati","Toledo"], hint: "Named after explorer Christopher Columbus." },
+      { q: "Capital of Georgia?", a: 0, opts: ["Atlanta","Savannah","Augusta","Macon"], hint: "Big city + Olympic host (1996)." },
+      { q: "Capital of Pennsylvania?", a: 0, opts: ["Harrisburg","Philadelphia","Pittsburgh","Lancaster"], hint: "NOT Philly or Pittsburgh!" },
+      { q: "Capital of Michigan?", a: 0, opts: ["Lansing","Detroit","Grand Rapids","Ann Arbor"], hint: "Detroit's much bigger but Lansing is the capital." },
+      { q: "Capital of Colorado?", a: 0, opts: ["Denver","Boulder","Aspen","Colorado Springs"], hint: "The \"Mile-High City\" — exactly 5,280 feet up." },
+      { q: "Capital of Arizona?", a: 0, opts: ["Phoenix","Tucson","Mesa","Flagstaff"], hint: "Named after a mythical bird that rises from ashes." },
+      { q: "Which is NOT a US state?", a: 0, opts: ["Puerto Rico","Hawaii","Alaska","Rhode Island"], hint: "It's a US territory, not a state." }
+    ]
+  },
+  world_caps: {
+    title: "World Capitals", emoji: "🌐", color: "#0f766e",
+    questions: [
+      { q: "Capital of France?", a: 0, opts: ["Paris","Lyon","Marseille","Nice"], hint: "Home of the Eiffel Tower." },
+      { q: "Capital of Japan?", a: 0, opts: ["Tokyo","Osaka","Kyoto","Yokohama"], hint: "Largest metro area in the world." },
+      { q: "Capital of Italy?", a: 0, opts: ["Rome","Milan","Venice","Florence"], hint: "Home of the Colosseum (ancient Roman amphitheater)." },
+      { q: "Capital of the United Kingdom?", a: 0, opts: ["London","Manchester","Edinburgh","Liverpool"], hint: "Home of Big Ben and Buckingham Palace." },
+      { q: "Capital of Spain?", a: 0, opts: ["Madrid","Barcelona","Seville","Valencia"], hint: "In the center of the country." },
+      { q: "Capital of Germany?", a: 0, opts: ["Berlin","Munich","Hamburg","Frankfurt"], hint: "Was divided by a famous Wall (1961-1989)." },
+      { q: "Capital of Russia?", a: 0, opts: ["Moscow","St. Petersburg","Volgograd","Sochi"], hint: "Home of Red Square and the Kremlin." },
+      { q: "Capital of China?", a: 0, opts: ["Beijing","Shanghai","Hong Kong","Guangzhou"], hint: "Home of the Forbidden City and Tiananmen Square." },
+      { q: "Capital of Brazil?", a: 0, opts: ["Brasília","Rio de Janeiro","São Paulo","Salvador"], hint: "TRICKY — not Rio or São Paulo! Brazil built a planned capital in the 1960s." },
+      { q: "Capital of Egypt?", a: 0, opts: ["Cairo","Alexandria","Giza","Luxor"], hint: "Near the famous Pyramids of Giza." },
+      { q: "Capital of Canada?", a: 0, opts: ["Ottawa","Toronto","Montreal","Vancouver"], hint: "TRICKY — not Toronto!" },
+      { q: "Capital of Australia?", a: 0, opts: ["Canberra","Sydney","Melbourne","Brisbane"], hint: "TRICKY — not Sydney! A planned capital built in 1913." }
+    ]
+  },
+  continents: {
+    title: "Continents & Oceans", emoji: "🗺️", color: "#0891b2",
+    questions: [
+      { q: "How many continents are there?", a: 0, opts: ["7","5","6","8"], hint: "Africa, Antarctica, Asia, Australia, Europe, North America, South America." },
+      { q: "Which is the LARGEST continent?", a: 0, opts: ["Asia","Africa","North America","Europe"], hint: "Both by area AND population." },
+      { q: "Which is the COLDEST continent?", a: 0, opts: ["Antarctica","Greenland","Russia","Canada"], hint: "Average temp: −76°F! No permanent human residents." },
+      { q: "Which continent has the MOST PEOPLE?", a: 0, opts: ["Asia","Africa","Europe","North America"], hint: "Over 4.5 billion people — more than half the world." },
+      { q: "How many oceans are there?", a: 0, opts: ["5","4","7","3"], hint: "Pacific, Atlantic, Indian, Arctic, Southern (newest, named 2000)." },
+      { q: "Which is the LARGEST ocean?", a: 0, opts: ["Pacific","Atlantic","Indian","Arctic"], hint: "Bigger than all the land on Earth combined!" },
+      { q: "Which ocean is between the Americas and Europe/Africa?", a: 0, opts: ["Atlantic","Pacific","Indian","Arctic"], hint: "Second largest ocean." },
+      { q: "Which ocean is around Antarctica?", a: 0, opts: ["Southern","Arctic","Indian","Pacific"], hint: "Officially named in 2000 — the newest of the 5 oceans." },
+      { q: "Which continent is Egypt in?", a: 0, opts: ["Africa","Asia","Europe","Middle East"], hint: "Northeast Africa, partly on the Sinai Peninsula." },
+      { q: "Which continent is Brazil in?", a: 0, opts: ["South America","North America","Central America","Latin America"], hint: "Largest country in South America." }
+    ]
+  },
+  rivers_mountains: {
+    title: "Rivers & Mountains", emoji: "⛰️", color: "#16a34a",
+    questions: [
+      { q: "What is the TALLEST mountain in the world?", a: 0, opts: ["Mount Everest","K2","Denali","Mont Blanc"], hint: "29,032 feet tall — in the Himalayas, on the Nepal/Tibet border." },
+      { q: "Which mountain range is Mount Everest in?", a: 0, opts: ["Himalayas","Andes","Rocky Mountains","Alps"], hint: "Asia's massive mountain range." },
+      { q: "Which is the LONGEST river in the world?", a: 0, opts: ["Nile (or Amazon — debated)","Mississippi","Yangtze","Thames"], hint: "Most sources say the Nile (~4,130 miles), but the Amazon is close behind." },
+      { q: "Which river flows through Egypt?", a: 0, opts: ["Nile","Amazon","Thames","Mississippi"], hint: "Ancient Egyptian civilization built around it." },
+      { q: "Longest river in South America?", a: 0, opts: ["Amazon","Paraná","Orinoco","Magdalena"], hint: "Carries more water than any other river on Earth." },
+      { q: "Which river flows through London?", a: 0, opts: ["Thames","Seine","Tiber","Danube"], hint: "Big Ben sits next to it." },
+      { q: "Which river flows through Paris?", a: 0, opts: ["Seine","Thames","Rhine","Loire"], hint: "Famous for romantic boat tours." },
+      { q: "Mountain range running down western South America?", a: 0, opts: ["Andes","Rockies","Atlas","Himalayas"], hint: "The longest mountain range in the world." },
+      { q: "Tallest mountain in North America?", a: 0, opts: ["Denali","Mount Whitney","Mount Rainier","Mauna Kea"], hint: "In Alaska — used to be called Mount McKinley." },
+      { q: "Largest US river by length?", a: 0, opts: ["Missouri (closely followed by the Mississippi)","Colorado","Rio Grande","Hudson"], hint: "Missouri or Mississippi — they're famously close in length." }
+    ]
+  },
+  landmarks: {
+    title: "Famous Landmarks", emoji: "🏛️", color: "#0e7490",
+    questions: [
+      { q: "Where is the EIFFEL TOWER?", a: 0, opts: ["Paris, France","London, UK","Rome, Italy","Berlin, Germany"], hint: "Built for the 1889 World's Fair." },
+      { q: "Where is the STATUE OF LIBERTY?", a: 0, opts: ["New York, USA","London, UK","Paris, France","Berlin, Germany"], hint: "A gift from France to the US." },
+      { q: "Where is the GREAT WALL?", a: 0, opts: ["China","Japan","Mongolia","Korea"], hint: "Over 13,000 miles long total!" },
+      { q: "Where is the TAJ MAHAL?", a: 0, opts: ["India","Pakistan","Iran","Egypt"], hint: "Built in the 1600s as a tomb for the emperor's wife." },
+      { q: "Where is the COLOSSEUM?", a: 0, opts: ["Rome, Italy","Athens, Greece","Cairo, Egypt","Istanbul, Turkey"], hint: "Where ancient Roman gladiator games were held." },
+      { q: "Where are the PYRAMIDS OF GIZA?", a: 0, opts: ["Egypt","Mexico","Sudan","Iraq"], hint: "Near Cairo. Built ~4,500 years ago as tombs for pharaohs." },
+      { q: "Where is the SYDNEY OPERA HOUSE?", a: 0, opts: ["Sydney, Australia","Auckland, New Zealand","Cape Town, South Africa","Hong Kong"], hint: "Iconic sail-shaped roof." },
+      { q: "Where is MACHU PICCHU?", a: 0, opts: ["Peru","Mexico","Bolivia","Brazil"], hint: "Ancient Incan city high in the Andes mountains." },
+      { q: "Where is STONEHENGE?", a: 0, opts: ["England (UK)","Ireland","Scotland","Wales"], hint: "Mysterious stone circle built ~5,000 years ago." },
+      { q: "Where is BIG BEN?", a: 0, opts: ["London, England","Edinburgh, Scotland","Dublin, Ireland","Birmingham, England"], hint: "Technically the bell INSIDE the clock tower at the Houses of Parliament." }
+    ]
+  },
+  flags: {
+    title: "Flags of the World", emoji: "🚩", color: "#059669",
+    questions: [
+      { q: "Which country's flag has a red maple leaf?", a: 0, opts: ["Canada","Lebanon","Sweden","Japan"], hint: "Northern North American country." },
+      { q: "Which flag has a red circle on white?", a: 0, opts: ["Japan","China","South Korea","Vietnam"], hint: "Often called \"Land of the Rising Sun.\"" },
+      { q: "Which country's flag has stars and stripes?", a: 0, opts: ["USA","UK","Australia","Brazil"], hint: "50 stars (one per state) and 13 stripes (original colonies)." },
+      { q: "Which European country has a flag of just red, white, and blue stripes (the original of many)?", a: 0, opts: ["France","Germany","Italy","Spain"], hint: "Blue-white-red vertical stripes." },
+      { q: "Which country has the Union Jack in its flag?", a: 0, opts: ["United Kingdom","France","Spain","Germany"], hint: "Australia and New Zealand also include it." },
+      { q: "Which country's flag is solid green?", a: 0, opts: ["Libya (former)","Italy","Ireland","Brazil"], hint: "Libya's flag was entirely green from 1977-2011 — the only solid-color national flag." },
+      { q: "Which country's flag has a green star on red?", a: 0, opts: ["Morocco","Tunisia","Algeria","Turkey"], hint: "North African country (defeated Songhai in West Africa long ago)." },
+      { q: "Which country's flag has a yellow sun on blue and white?", a: 0, opts: ["Argentina","Uruguay","Brazil","Chile"], hint: "Home of Lionel Messi (soccer star)." },
+      { q: "Which country's flag is just three horizontal stripes: green, white, orange (vertical)?", a: 0, opts: ["Ireland","India","Italy","Mexico"], hint: "Emerald Isle in Europe." },
+      { q: "Which country's flag has a red circle within a white circle on green?", a: 0, opts: ["Bangladesh","Pakistan","India","Sri Lanka"], hint: "Capital is Dhaka — South Asian country." }
+    ]
+  }
+};
+const TIPS_GEO = {
+  us_states: [
+    { h:"Capital ≠ Biggest City", p:"Many state capitals are NOT the biggest city. <b>NY = Albany</b> (not NYC) · <b>CA = Sacramento</b> (not LA) · <b>TX = Austin</b> (not Houston) · <b>FL = Tallahassee</b> (not Miami) · <b>IL = Springfield</b> (not Chicago) · <b>PA = Harrisburg</b> (not Philly)." },
+    { h:"How many states?", p:"<b>50 states</b> (since Hawaii joined in 1959). <b>Washington D.C.</b> is the federal capital but NOT a state. <b>Puerto Rico</b> is a US territory, also not a state." },
+    { h:"Easy-to-remember capitals", p:"Some capitals ARE the biggest city: <b>MA = Boston</b> · <b>RI = Providence</b> · <b>HI = Honolulu</b> · <b>AZ = Phoenix</b> · <b>CO = Denver</b> · <b>UT = Salt Lake City</b> · <b>GA = Atlanta</b>." },
+    { h:"Sneaky pairs to memorize", p:"<b>Washington state = Olympia</b> (NOT Washington D.C.!) · <b>South Dakota = Pierre</b> · <b>North Dakota = Bismarck</b> · <b>Vermont = Montpelier</b> (smallest state capital by population)." }
+  ],
+  world_caps: [
+    { h:"The tricky ones 🚨", p:"<b>Brazil = Brasília</b> (NOT Rio!) · <b>Canada = Ottawa</b> (NOT Toronto!) · <b>Australia = Canberra</b> (NOT Sydney!) · <b>Turkey = Ankara</b> (NOT Istanbul!) · <b>Switzerland = Bern</b> (NOT Zurich!). These trip everyone up." },
+    { h:"Europe capitals", p:"<b>France = Paris</b> · <b>UK = London</b> · <b>Germany = Berlin</b> · <b>Italy = Rome</b> · <b>Spain = Madrid</b> · <b>Russia = Moscow</b> · <b>Netherlands = Amsterdam</b> · <b>Greece = Athens</b>." },
+    { h:"Asia capitals", p:"<b>Japan = Tokyo</b> · <b>China = Beijing</b> · <b>India = New Delhi</b> · <b>South Korea = Seoul</b> · <b>Thailand = Bangkok</b> · <b>Indonesia = Jakarta</b>." },
+    { h:"Africa capitals", p:"<b>Egypt = Cairo</b> · <b>South Africa = Pretoria</b> (administrative) · <b>Nigeria = Abuja</b> · <b>Kenya = Nairobi</b> · <b>Morocco = Rabat</b> · <b>Ethiopia = Addis Ababa</b>." }
+  ],
+  continents: [
+    { h:"The 7 continents", p:"<b>Africa, Antarctica, Asia, Australia, Europe, North America, South America</b>. Memory: each starts with A or A again — no, that doesn't work — just memorize 7 of them!" },
+    { h:"Continent superlatives 🏆", p:"<b>Largest</b>: Asia (also most populous, 4.5B+ people) · <b>Smallest</b>: Australia · <b>Coldest</b>: Antarctica (no permanent residents!) · <b>Hottest</b>: Africa · <b>Highest avg elevation</b>: Antarctica." },
+    { h:"The 5 oceans", p:"<b>Pacific</b> (biggest — bigger than all land combined) · <b>Atlantic</b> · <b>Indian</b> · <b>Arctic</b> · <b>Southern</b> (newest — named 2000 — around Antarctica)." },
+    { h:"Old vs new ocean count", p:"You may have learned <b>4 oceans</b> in school. The <b>5th (Southern)</b> was officially recognized in 2000 — the waters around Antarctica that used to be considered part of the others." }
+  ],
+  rivers_mountains: [
+    { h:"Longest rivers 🌊", p:"<b>Nile</b> (~4,130 mi, Africa) and <b>Amazon</b> (~4,000 mi, S. America) compete for longest. <b>Yangtze</b> (China) is 3rd. <b>Mississippi-Missouri</b> system is the biggest in North America." },
+    { h:"Tallest mountains ⛰️", p:"<b>Mt. Everest</b> (29,032 ft, Himalayas) — tallest in the world. <b>Denali</b> (Alaska) — tallest in N. America. <b>Aconcagua</b> (Argentina, Andes) — tallest in S. America. <b>Kilimanjaro</b> — tallest in Africa." },
+    { h:"Major mountain ranges", p:"<b>Himalayas</b> (Asia — Everest!) · <b>Andes</b> (S. America — LONGEST range in the world) · <b>Rocky Mountains</b> (N. America) · <b>Alps</b> (Europe) · <b>Appalachians</b> (eastern US)." },
+    { h:"River = city", p:"<b>Thames = London</b> · <b>Seine = Paris</b> · <b>Tiber = Rome</b> · <b>Danube = Vienna, Budapest, Belgrade</b> · <b>Nile = Cairo</b> · <b>Mississippi = New Orleans</b>." }
+  ],
+  landmarks: [
+    { h:"Iconic landmarks → countries", p:"<b>Eiffel Tower</b> → France 🇫🇷 · <b>Statue of Liberty</b> → USA 🇺🇸 (gift from France!) · <b>Big Ben / London Eye</b> → UK 🇬🇧 · <b>Colosseum</b> → Italy 🇮🇹 · <b>Pyramids</b> → Egypt 🇪🇬." },
+    { h:"Ancient world wonders", p:"<b>Great Wall of China</b> · <b>Pyramids of Giza</b> · <b>Machu Picchu</b> (Peru, Incan) · <b>Taj Mahal</b> (India, tomb) · <b>Petra</b> (Jordan, rock city) · <b>Stonehenge</b> (England, mystery)." },
+    { h:"Modern icons", p:"<b>Eiffel Tower</b> (Paris, 1889) · <b>Statue of Liberty</b> (NYC, 1886) · <b>Sydney Opera House</b> (Australia) · <b>Burj Khalifa</b> (Dubai — world's tallest building) · <b>Mt. Rushmore</b> (USA)." },
+    { h:"Myth-busting", p:"The Great Wall is NOT visible from space with the naked eye — that's a common myth! The lights of cities are far more visible." }
+  ],
+  flags: [
+    { h:"USA flag: stars + stripes", p:"<b>50 stars</b> = the 50 states. <b>13 stripes</b> = the original 13 colonies. Red, white, and blue stand for valor, purity, and justice." },
+    { h:"Single-symbol flags", p:"<b>Canada</b> = red maple leaf · <b>Japan</b> = red sun circle · <b>South Korea</b> = yin-yang with trigrams · <b>UK</b> = Union Jack (combined crosses)." },
+    { h:"Three-color (tricolor) flags", p:"<b>France</b> = blue-white-red vertical (the original tricolor) · <b>Italy</b> = green-white-red vertical · <b>Germany</b> = black-red-gold horizontal · <b>Ireland</b> = green-white-orange vertical." },
+    { h:"Spotting similar flags", p:"Many Scandinavian flags have a <b>cross</b> design (Sweden, Norway, Denmark, Finland, Iceland). Many South American flags have <b>yellow + blue + red</b> bands (Colombia, Venezuela, Ecuador)." }
+  ]
+};
+const GEO_KEY_ORDER = ["us_states","world_caps","continents","rivers_mountains","landmarks","flags"];
+
 const SUBJECTS = {
   ela: {
     title: "ELA (English)", emoji: "📖", color: "#6366f1",
@@ -1295,9 +1676,24 @@ const SUBJECTS = {
     title: "Summer Reading: Legend", emoji: "📚", color: "#d97706",
     description: "AR test prep for Legend by Marie Lu — plot, characters, themes, figurative language, CST",
     topics: QUIZ_READING, tips: TIPS_READING, keyOrder: READING_KEY_ORDER, hasSubObj: false
+  },
+  cs: {
+    title: "Computer Science", emoji: "💻", color: "#06b6d4",
+    description: "Hardware, software, internet, coding, binary & cybersecurity — how computers actually work.",
+    topics: QUIZ_CS, tips: TIPS_CS, keyOrder: CS_KEY_ORDER, hasSubObj: false
+  },
+  space: {
+    title: "Space & Solar System", emoji: "🪐", color: "#4f46e5",
+    description: "Planets, stars, galaxies, space exploration, famous missions.",
+    topics: QUIZ_SPACE, tips: TIPS_SPACE, keyOrder: SPACE_KEY_ORDER, hasSubObj: false
+  },
+  geo: {
+    title: "Geography Quest", emoji: "🌍", color: "#0d9488",
+    description: "US states & capitals, world capitals, continents, rivers, landmarks, flags.",
+    topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["ela","social","math","algebra","reading"];
+const SUBJECT_ORDER = ["ela","social","math","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -1411,6 +1807,9 @@ const TROPHIES = [
   { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
   { id:"boss_algebra",  emoji:"🎯", name:"Algebra Ace",      desc:"Defeat all 5 Algebra bosses." },
   { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 7 Reading bosses." },
+  { id:"boss_cs",       emoji:"💻", name:"Code Conqueror",   desc:"Defeat all 6 Computer Science bosses." },
+  { id:"boss_space",    emoji:"🪐", name:"Cosmic Champion",  desc:"Defeat all 5 Space bosses." },
+  { id:"boss_geo",      emoji:"🌍", name:"World Explorer",   desc:"Defeat all 6 Geography bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
   { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
@@ -1460,6 +1859,29 @@ const BOSSES = {
     themes:     { emoji: "💭", name: "Theme Titan" },
     figlang:    { emoji: "🎨", name: "Metaphor Master" },
     cst:        { emoji: "✝️", name: "CST Sage" }
+  },
+  cs: {
+    hardware: { emoji: "⚙️", name: "Hardware Hydra" },
+    software: { emoji: "💿", name: "Software Specter" },
+    internet: { emoji: "🌐", name: "Web Wizard" },
+    coding:   { emoji: "🐛", name: "Bug Buster" },
+    binary:   { emoji: "0️⃣", name: "Binary Beast" },
+    cyber:    { emoji: "🛡️", name: "Cyber Sentinel" }
+  },
+  space: {
+    solar:       { emoji: "☀️", name: "Solar Sovereign" },
+    stars:       { emoji: "⭐", name: "Stellar Sage" },
+    exploration: { emoji: "🚀", name: "Rocket Renegade" },
+    earth_moon:  { emoji: "🌙", name: "Lunar Lord" },
+    missions:    { emoji: "🛰️", name: "Mission Master" }
+  },
+  geo: {
+    us_states:        { emoji: "🗽", name: "States Sage" },
+    world_caps:       { emoji: "🌐", name: "World Wanderer" },
+    continents:       { emoji: "🗺️", name: "Continent Cartographer" },
+    rivers_mountains: { emoji: "⛰️", name: "Peak Pioneer" },
+    landmarks:        { emoji: "🏛️", name: "Landmark Legend" },
+    flags:            { emoji: "🚩", name: "Flag Phantom" }
   }
 };
 

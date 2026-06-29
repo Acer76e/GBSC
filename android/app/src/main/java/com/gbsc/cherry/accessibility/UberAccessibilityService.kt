@@ -173,16 +173,17 @@ class UberAccessibilityService : AccessibilityService() {
                 ) {
                     captureScreenshot()
                 }
-            } else if (
-                activeIsUber &&
-                text.length < OCR_TEXT_THRESHOLD &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-            ) {
-                // Uber visible AND in the foreground AND accessibility text is unusually
-                // small (the signature of Uber hiding the offer card from accessibility).
-                // takeScreenshot via AccessibilityService does NOT trigger Android's
-                // screen-share banner. 1.5s throttle.
-                maybeRunOcr()
+            } else if (activeIsUber && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // Uber visible AND in the foreground AND accessibility doesn't have
+                // the offer text. Two trigger paths:
+                //   - WINDOW_STATE_CHANGED (forceProcess=true): an offer card just
+                //     animated in — fire OCR immediately, bypassing the throttle, so
+                //     the user has the full time window to decide.
+                //   - Otherwise: small accessibility text is the signature of Uber
+                //     hiding the offer card, so we throttled-OCR.
+                if (forceProcess || text.length < OCR_TEXT_THRESHOLD) {
+                    maybeRunOcr(force = forceProcess)
+                }
             }
         } else if (Repo.settings.value.customization.debugMode) {
             if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
@@ -272,11 +273,11 @@ class UberAccessibilityService : AccessibilityService() {
         )
     }
 
-    private fun maybeRunOcr() {
+    private fun maybeRunOcr(force: Boolean = false) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
         val now = System.currentTimeMillis()
         if (ocrInFlight) return
-        if (now - lastOcrTime < OCR_THROTTLE_MS) return
+        if (!force && now - lastOcrTime < OCR_THROTTLE_MS) return
         lastOcrTime = now
         ocrInFlight = true
         takeScreenshot(
@@ -320,7 +321,7 @@ class UberAccessibilityService : AccessibilityService() {
         private const val THROTTLE_MS = 500L
         private const val SEEN_THROTTLE_MS = 500L
         private const val POLL_MS = 1000L
-        private const val OCR_THROTTLE_MS = 1500L
+        private const val OCR_THROTTLE_MS = 800L
         private const val OCR_TEXT_THRESHOLD = 500
         private val UBER_PACKAGES = arrayOf(
             "com.ubercab.driver",

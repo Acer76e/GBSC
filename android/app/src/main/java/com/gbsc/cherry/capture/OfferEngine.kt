@@ -150,6 +150,9 @@ object OfferEngine {
     private var ttsReady = false
 
     private var currentSignature: String? = null
+    /** Best-known offer for the current signature. Each new parse fills in null fields
+     *  from this cache so OCR noise doesn't flicker rating/addresses on the card. */
+    private var currentEnrichedOffer: TripOffer? = null
     private var missCount = 0
 
     fun ensureInit(context: Context) {
@@ -176,6 +179,7 @@ object OfferEngine {
             missCount++
             if (missCount >= MISS_LIMIT) {
                 currentSignature = null
+                currentEnrichedOffer = null
                 overlay?.hide()
                 notificationManager(ctx).cancel(NOTIF_OFFER)
             }
@@ -184,7 +188,7 @@ object OfferEngine {
         lastDebug.value = lastDebug.value?.copy(parsed = true, fare = parsed.fare)
         lastOfferDebug.value = lastOfferDebug.value?.copy(parsed = true, fare = parsed.fare)
         missCount = 0
-        val offer = TripOffer(
+        val freshOffer = TripOffer(
             id = System.currentTimeMillis(),
             timestamp = System.currentTimeMillis(),
             fare = parsed.fare,
@@ -199,8 +203,24 @@ object OfferEngine {
         )
         val signature = String.format(
             Locale.US, "%.2f|%.1f|%.0f",
-            offer.fare, offer.totalMiles, offer.totalMinutes
+            freshOffer.fare, freshOffer.totalMiles, freshOffer.totalMinutes
         )
+        // OCR is noisy. If we're still on the same offer (signature matches the cached one),
+        // hold onto any fields we've already detected so partial-read frames don't flicker
+        // the rating, addresses, or bonus on the card.
+        val cached = currentEnrichedOffer
+        val offer = if (signature == currentSignature && cached != null) {
+            freshOffer.copy(
+                rating = freshOffer.rating ?: cached.rating,
+                pickupAddress = freshOffer.pickupAddress ?: cached.pickupAddress,
+                dropoffAddress = freshOffer.dropoffAddress ?: cached.dropoffAddress,
+                bonus = maxOf(freshOffer.bonus, cached.bonus),
+            )
+        } else {
+            freshOffer
+        }
+        currentEnrichedOffer = offer
+
         val settings = Repo.settings.value
         overlay?.show(buildOverlayData(offer, settings, signature))
 
@@ -216,6 +236,7 @@ object OfferEngine {
 
     fun resetState() {
         currentSignature = null
+        currentEnrichedOffer = null
         missCount = 0
         overlay?.hide()
         appContext?.let { notificationManager(it).cancel(NOTIF_OFFER) }

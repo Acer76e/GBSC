@@ -1651,11 +1651,212 @@ const TIPS_GEO = {
 };
 const GEO_KEY_ORDER = ["us_states","world_caps","continents","rivers_mountains","landmarks","flags"];
 
+const QUIZ_GRAMMAR = {
+  parts_speech: {
+    title: "Parts of Speech", emoji: "🎭", color: "#a21caf",
+    questions: [
+      { q: "How many parts of speech are there in English?", a: 0, opts: ["8","6","10","4"], hint: "Noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection." },
+      { q: "What does a NOUN name?", a: 0, opts: ["A person, place, thing, or idea","Only physical things","Only actions","Only feelings"], hint: "Includes abstract things like love and freedom too." },
+      { q: "What does a VERB show?", a: 0, opts: ["Action or state of being","Only movement","Only ownership","Only questions"], hint: "\"Run\" is action. \"Is\" is state of being." },
+      { q: "What does an ADJECTIVE do?", a: 0, opts: ["Describes a noun","Describes a verb","Ends a sentence","Joins words"], hint: "\"Red\" ball, \"tall\" building — describes the noun." },
+      { q: "What does an ADVERB usually do?", a: 0, opts: ["Describes a verb, adjective, or another adverb","Only describes nouns","Only shows possession","Only asks a question"], hint: "Often ends in -ly: quickly, softly, easily." },
+      { q: "In \"The dog ran fast,\" what part of speech is \"ran\"?", a: 0, opts: ["Verb","Noun","Adjective","Adverb"], hint: "It's the action word." },
+      { q: "In \"The RED ball rolled,\" what part of speech is \"red\"?", a: 0, opts: ["Adjective","Noun","Verb","Adverb"], hint: "Describes the ball (a noun)." },
+      { q: "In \"She sings BEAUTIFULLY,\" what is \"beautifully\"?", a: 0, opts: ["Adverb","Adjective","Verb","Noun"], hint: "Describes how she sings — modifies a verb." },
+      { q: "What's a PREPOSITION?", a: 0, opts: ["A word showing relationship or position (in, on, under, above)","A word replacing a noun","An action word","A describing word"], hint: "Often shows where something is." },
+      { q: "What's a CONJUNCTION?", a: 0, opts: ["A word that joins words, phrases, or clauses (and, but, or)","A describing word","A noun","An action word"], hint: "\"And,\" \"but,\" \"or\" are the most common." },
+      { q: "What's an INTERJECTION?", a: 0, opts: ["An exclamation word or phrase (Wow! Ouch!)","A subject of a sentence","A tense of a verb","A type of noun"], hint: "Often followed by an exclamation point." },
+      { q: "What's a PRONOUN?", a: 0, opts: ["A word that replaces a noun (he, she, it, they)","A word that describes a noun","A word that names a place","A joining word"], hint: "Used so you don't repeat the noun over and over." }
+    ]
+  },
+  nouns: {
+    title: "Nouns", emoji: "📛", color: "#c026d3",
+    questions: [
+      { q: "What does a noun name?", a: 0, opts: ["A person, place, thing, or idea","Only actions","Only feelings","Only descriptions"], hint: "Even ideas like \"love\" or \"freedom\" are nouns." },
+      { q: "What's a COMMON noun?", a: 0, opts: ["A general name for something (dog, city, book)","A famous name","A capitalized name","A plural noun"], hint: "\"City\" is common; \"Chicago\" is proper." },
+      { q: "What's a PROPER noun?", a: 0, opts: ["A specific name (Chicago, Julia, Amazon)","Any noun in a sentence","A big noun","A plural noun"], hint: "Always capitalized." },
+      { q: "Which is a PROPER noun?", a: 0, opts: ["Chicago","dog","book","table"], hint: "Specific names of people, places, and things." },
+      { q: "How do you make MOST nouns plural?", a: 0, opts: ["Add -s","Add -ing","Add -ly","Add -er"], hint: "Cat → cats. Book → books." },
+      { q: "What's the plural of \"child\"?", a: 0, opts: ["Children","Childs","Childes","Childs's"], hint: "An IRREGULAR plural — you just memorize it." },
+      { q: "What's the plural of \"mouse\"?", a: 0, opts: ["Mice","Mouses","Mousies","Mouse"], hint: "Another irregular plural (goose → geese too)." },
+      { q: "How do you show possession with a SINGULAR noun?", a: 0, opts: ["Add 's (Julia's book)","Add ' only","Add s'","Add -es"], hint: "Even if the singular noun already ends in s (James's book)." },
+      { q: "How do you show possession with a PLURAL noun ending in s?", a: 0, opts: ["Add just an apostrophe (the dogs' bones)","Add 's","Add nothing","Add -es"], hint: "The kids' toys — belongs to multiple kids." },
+      { q: "What's a COLLECTIVE noun?", a: 0, opts: ["A word for a group (team, family, herd, class)","A noun that collects money","A plural noun","A capitalized noun"], hint: "One word, one group." },
+      { q: "What's an ABSTRACT noun?", a: 0, opts: ["A noun for something you can't touch (love, freedom, courage)","A noun with weird spelling","A short noun","A plural noun"], hint: "Ideas and feelings — no physical form." },
+      { q: "What's a CONCRETE noun?", a: 0, opts: ["Something you can touch or see (dog, chair, apple)","A noun made of concrete","A plural noun","A proper noun"], hint: "Physical, tangible things." }
+    ]
+  },
+  verbs: {
+    title: "Verbs & Tenses", emoji: "🏃", color: "#7e22ce",
+    questions: [
+      { q: "What's a verb?", a: 0, opts: ["A word expressing action or state of being","A word describing a noun","A word joining sentences","A word ending a sentence"], hint: "Every complete sentence needs one." },
+      { q: "What's an ACTION verb?", a: 0, opts: ["Shows what someone or something DOES (run, think, write)","A word ending in -ing","A helping word","A describing word"], hint: "Even mental actions like \"think\" and \"know\" are action verbs." },
+      { q: "What's a LINKING verb?", a: 0, opts: ["Connects the subject to more info (is, am, are, was, were, seem)","Shows physical action","Joins two sentences","Describes a noun"], hint: "Forms of \"to be\" are the most common linking verbs." },
+      { q: "Which is a LINKING verb?", a: 0, opts: ["is","run","jump","sing"], hint: "Forms of \"to be\": is, am, are, was, were, being, been." },
+      { q: "What's the PAST tense of \"run\"?", a: 0, opts: ["ran","runned","running","runs"], hint: "Irregular — just memorize it." },
+      { q: "What's the PAST tense of \"eat\"?", a: 0, opts: ["ate","eated","eaten","eats"], hint: "Irregular verb." },
+      { q: "What's the PAST tense of \"go\"?", a: 0, opts: ["went","goed","gone","goes"], hint: "One of the most irregular verbs in English." },
+      { q: "What's the FUTURE tense of \"play\"?", a: 0, opts: ["will play","played","plays","playing"], hint: "Add \"will\" for simple future tense." },
+      { q: "What's subject-verb AGREEMENT?", a: 0, opts: ["The verb must match the subject in number (singular/plural)","The verb must come first","Verbs need adjectives","Subjects always end in -s"], hint: "Singular subject → singular verb. Plural subject → plural verb." },
+      { q: "Which is correct?", a: 0, opts: ["She walks to school.","She walk to school.","She walks to schools.","She walked walk to school."], hint: "Singular subject (she) → verb ends in -s in present tense." },
+      { q: "Which is correct?", a: 0, opts: ["They were at the park.","They was at the park.","They is at the park.","They were was at the park."], hint: "Plural subject (they) needs plural verb (were)." },
+      { q: "What's a HELPING verb?", a: 0, opts: ["A verb that helps the main verb (has, have, had, will, can, do)","A verb that only exists to help","A very short verb","A confused verb"], hint: "In \"She IS running,\" IS is the helping verb." }
+    ]
+  },
+  adj_adv: {
+    title: "Adjectives & Adverbs", emoji: "🎨", color: "#9333ea",
+    questions: [
+      { q: "What does an ADJECTIVE describe?", a: 0, opts: ["A noun (or pronoun)","A verb","An adverb","Punctuation"], hint: "\"Red\" car, \"tall\" building — describes the thing." },
+      { q: "What does an ADVERB describe?", a: 0, opts: ["A verb, adjective, or another adverb","Only nouns","Only sentences","Only punctuation"], hint: "Often answers HOW, WHEN, WHERE, or HOW MUCH." },
+      { q: "In \"The RED ball,\" what's \"red\"?", a: 0, opts: ["Adjective","Adverb","Verb","Noun"], hint: "Describes the ball." },
+      { q: "In \"She ran QUICKLY,\" what's \"quickly\"?", a: 0, opts: ["Adverb","Adjective","Verb","Noun"], hint: "Describes HOW she ran (a verb)." },
+      { q: "Most adverbs end in which letters?", a: 0, opts: ["-ly","-ed","-ing","-est"], hint: "Quickly, softly, easily, gently." },
+      { q: "What's the COMPARATIVE form of \"big\"?", a: 0, opts: ["bigger","biggest","more big","most big"], hint: "Comparing 2 things: add -er." },
+      { q: "What's the SUPERLATIVE form of \"big\"?", a: 0, opts: ["biggest","bigger","more big","most bigger"], hint: "The MOST big of 3+ things: add -est." },
+      { q: "What's the COMPARATIVE form of \"good\"?", a: 0, opts: ["better","gooder","more good","best"], hint: "Irregular — just memorize: good → better → best." },
+      { q: "What's the SUPERLATIVE form of \"good\"?", a: 0, opts: ["best","goodest","most good","better"], hint: "Good → better → best." },
+      { q: "Which is correct?", a: 0, opts: ["He ran quickly.","He ran quick.","He ran quicker.","He ran the quickly."], hint: "Adverb (quickly) is needed to describe HOW he ran (a verb)." },
+      { q: "Which is the COMPARATIVE of \"bad\"?", a: 0, opts: ["worse","badder","more bad","worst"], hint: "Bad → worse → worst (irregular)." },
+      { q: "Which describes a noun: \"The dog is CUTE\"?", a: 0, opts: ["cute (adjective)","dog (noun)","is (verb)","The (article)"], hint: "\"Cute\" describes what the dog IS." }
+    ]
+  },
+  punctuation: {
+    title: "Punctuation", emoji: "❗", color: "#be185d",
+    questions: [
+      { q: "What punctuation ENDS a statement?", a: 0, opts: ["Period (.)","Question mark (?)","Comma (,)","Colon (:)"], hint: "Full stop." },
+      { q: "What punctuation ends a QUESTION?", a: 0, opts: ["Question mark (?)","Period (.)","Exclamation (!)","Semicolon (;)"], hint: "\"Where are you?\"" },
+      { q: "What punctuation ends an EXCLAMATION?", a: 0, opts: ["Exclamation point (!)","Period (.)","Question mark (?)","Semicolon (;)"], hint: "\"Watch out!\"" },
+      { q: "What separates items in a list?", a: 0, opts: ["Commas","Periods","Semicolons","Colons"], hint: "\"I like apples, bananas, and grapes.\"" },
+      { q: "What's the \"Oxford comma\"?", a: 0, opts: ["The comma BEFORE \"and\" in a list","A period after a name","An extra comma at the end","A comma in the middle"], hint: "\"Apples, bananas, AND grapes\" — the comma before \"and.\"" },
+      { q: "What can join TWO complete sentences without a conjunction?", a: 0, opts: ["Semicolon (;)","Comma (,) only","Colon (:)","Nothing"], hint: "\"I was tired; I went to bed.\"" },
+      { q: "What punctuation often introduces a LIST?", a: 0, opts: ["Colon (:)","Semicolon (;)","Comma (,)","Period (.)"], hint: "\"I need: bread, milk, eggs.\"" },
+      { q: "What shows POSSESSION or a CONTRACTION?", a: 0, opts: ["Apostrophe (')","Comma (,)","Period (.)","Quotation mark (\")"], hint: "Julia's book (possession); don't (contraction of do not)." },
+      { q: "What surrounds a DIRECT QUOTE?", a: 0, opts: ["Quotation marks (\" \")","Parentheses","Commas","Dashes"], hint: "She said, \"Hello.\"" },
+      { q: "Which is correct?", a: 0, opts: ["It's raining outside.","Its raining outside.","Its' raining outside.","Its raining outside'"], hint: "It's = it is (needs apostrophe)." },
+      { q: "Which comma is placed correctly?", a: 0, opts: ["Yes, I will.","Yes I, will.","Yes I will,","Yes I, will."], hint: "Comma after introductory word or phrase." },
+      { q: "When do you use a QUESTION MARK?", a: 0, opts: ["At the end of a question","At the end of any sentence","When something is surprising","When someone shouts"], hint: "Only for direct questions: Where are you? (NOT: I wondered where you were.)" }
+    ]
+  },
+  capitalization: {
+    title: "Capitalization", emoji: "🔠", color: "#d946ef",
+    questions: [
+      { q: "Do you capitalize the FIRST word of a sentence?", a: 0, opts: ["Yes","No","Only sometimes","Only if it's a name"], hint: "Always." },
+      { q: "Do you capitalize PROPER nouns (names of specific people, places)?", a: 0, opts: ["Yes","No","Only sometimes","Only in titles"], hint: "Julia, Chicago, Amazon River — always capitalize." },
+      { q: "Do you capitalize the pronoun \"I\"?", a: 0, opts: ["Yes — always","No","Only at the start of a sentence","Only in dialogue"], hint: "The word \"I\" is ALWAYS capitalized, no matter where it is." },
+      { q: "Do you capitalize DAYS of the week?", a: 0, opts: ["Yes (Monday, Tuesday, etc.)","No","Only in formal writing","Only Mondays"], hint: "Monday, Wednesday, Saturday — all capitalized." },
+      { q: "Do you capitalize MONTHS of the year?", a: 0, opts: ["Yes (January, February, etc.)","No","Only the first letter","Only in dates"], hint: "January through December — always capitalized." },
+      { q: "Do you capitalize SEASONS (summer, winter, etc.)?", a: 0, opts: ["No — normally lowercase","Yes — always","Only in poetry","Only \"Summer\""], hint: "Spring, summer, fall/autumn, winter — usually LOWERCASE (unlike months)." },
+      { q: "Do you capitalize HOLIDAYS?", a: 0, opts: ["Yes (Thanksgiving, Christmas, Hanukkah)","No","Only religious ones","Only US ones"], hint: "All holidays are proper nouns." },
+      { q: "Do you capitalize job titles when used BEFORE a name?", a: 0, opts: ["Yes (Doctor Smith, President Lincoln)","No","Only Doctor","Only for real jobs"], hint: "Doctor Smith (capitalize), but \"the doctor arrived\" (don't)." },
+      { q: "Do you capitalize country names?", a: 0, opts: ["Yes — always","No","Only your own country","Only some"], hint: "USA, France, Japan — all proper nouns." },
+      { q: "Do you capitalize compass DIRECTIONS (north, south)?", a: 0, opts: ["Only when they refer to a specific region (\"the South\")","Yes — always","No — never","Only \"North\""], hint: "\"Drive south\" (direction, lowercase). \"The South\" (region, capital)." }
+    ]
+  },
+  sentences: {
+    title: "Sentence Structure", emoji: "🧱", color: "#a855f7",
+    questions: [
+      { q: "What are the TWO main parts of a sentence?", a: 0, opts: ["Subject and predicate","Noun and verb","Adjective and adverb","Comma and period"], hint: "The subject is WHO/WHAT; the predicate says something ABOUT it." },
+      { q: "What's the SUBJECT of a sentence?", a: 0, opts: ["Who or what the sentence is about","The action","The end","The first word"], hint: "In \"Julia ran fast,\" Julia is the subject." },
+      { q: "What's the PREDICATE?", a: 0, opts: ["What the subject does or is","Just the verb","The last word","The whole sentence"], hint: "In \"Julia ran fast,\" \"ran fast\" is the predicate." },
+      { q: "What's a SIMPLE sentence?", a: 0, opts: ["One complete thought (one independent clause)","A short sentence","A sentence with no verbs","A sentence for kids"], hint: "\"The dog ran.\" — one complete idea." },
+      { q: "What's a COMPOUND sentence?", a: 0, opts: ["Two complete thoughts joined by a conjunction (I ran, and she walked.)","A sentence with many adjectives","A long sentence","A question"], hint: "Two independent clauses joined with a comma + FANBOYS conjunction." },
+      { q: "What's a COMPLEX sentence?", a: 0, opts: ["An independent clause + a dependent clause","A very hard sentence","A sentence with big words","A sentence with three parts"], hint: "\"Because it rained, we stayed inside.\" (Dependent clause + independent clause.)" },
+      { q: "What does FANBOYS stand for?", a: 0, opts: ["For, And, Nor, But, Or, Yet, So","First, After, Next, Because, Or, You, Since","Fine, Adult, Nice, Bad, Old, Yellow, Small","Just a made-up word"], hint: "The 7 coordinating conjunctions used to join independent clauses." },
+      { q: "What's a SENTENCE FRAGMENT?", a: 0, opts: ["An INCOMPLETE sentence","A very short sentence","A sentence with no punctuation","A boring sentence"], hint: "\"Running through the park.\" — no subject, so it's not a complete thought." },
+      { q: "What's a RUN-ON sentence?", a: 0, opts: ["Two or more sentences joined without proper punctuation or conjunctions","A very long sentence","A sentence with too many adjectives","A sentence that ends with -ing"], hint: "\"I ran to school I was late.\" — needs a period, semicolon, or FANBOYS conjunction." },
+      { q: "An INDEPENDENT clause…", a: 0, opts: ["Can stand alone as a sentence","Depends on another clause","Has no verb","Must start with \"because\""], hint: "It's a complete thought all by itself." },
+      { q: "A DEPENDENT clause…", a: 0, opts: ["Cannot stand alone — needs an independent clause","Is a complete sentence","Always contains an adjective","Ends with a period"], hint: "\"Because it rained\" — it's not a complete thought by itself." },
+      { q: "What's the SUBJECT in: \"The excited puppy chased the ball\"?", a: 0, opts: ["The excited puppy","chased the ball","The","puppy"], hint: "Full subject includes any words that describe the noun." }
+    ]
+  },
+  confused: {
+    title: "Commonly Confused Words", emoji: "🤔", color: "#e11d48",
+    questions: [
+      { q: "Which is correct: \"__ raining outside.\"", a: 0, opts: ["It's","Its","Its'","It is'"], hint: "\"It's\" = \"it is\" (contraction, needs apostrophe)." },
+      { q: "Which is correct: \"The dog wagged __ tail.\"", a: 0, opts: ["its","it's","its'","it is"], hint: "\"Its\" = possessive (NO apostrophe). Think: his/hers/its." },
+      { q: "Which one shows POSSESSION: their, there, or they're?", a: 0, opts: ["their","there","they're","all three"], hint: "\"Their\" = belonging to them (their house)." },
+      { q: "Which one means \"in that place\": their, there, or they're?", a: 0, opts: ["there","their","they're","here"], hint: "\"There\" = a location. THERE = HERE + T." },
+      { q: "Which one is a contraction of \"they are\"?", a: 0, opts: ["they're","their","there","there are"], hint: "\"They're\" = they + are (with apostrophe)." },
+      { q: "Which is the contraction of \"you are\"?", a: 0, opts: ["you're","your","yore","yours"], hint: "You're = you + are." },
+      { q: "Which shows POSSESSION: your or you're?", a: 0, opts: ["your","you're","yore","yours'"], hint: "\"Your book\" = the book belonging to you. No apostrophe." },
+      { q: "Which is usually a VERB: affect or effect?", a: 0, opts: ["affect (Verb — Action)","effect","both","neither"], hint: "\"Affect\" (verb) = to influence. Memory: <b>A</b>ffect is an <b>A</b>ction." },
+      { q: "Which is usually a NOUN: affect or effect?", a: 0, opts: ["effect","affect","both","neither"], hint: "\"Effect\" (noun) = the result. Memory: an <b>E</b>ffect is an <b>E</b>nd result." },
+      { q: "Which shows COMPARISON: then or than?", a: 0, opts: ["than","then","either","neither"], hint: "\"Bigger THAN\" — comparison. \"Then\" = time (first this, then that)." },
+      { q: "Which is used for things you can COUNT?", a: 0, opts: ["fewer (fewer apples)","less","less amount","neither"], hint: "Fewer + countable (fewer people). Less + uncountable (less water)." },
+      { q: "Which is used for things you can't count (measure): less or fewer?", a: 0, opts: ["less","fewer","either","both"], hint: "Less water, less time, less money. (Measured, not counted.)" }
+    ]
+  }
+};
+
+const TIPS_GRAMMAR = {
+  parts_speech: [
+    { h:"The 8 parts of speech", p:"<b>Noun</b> (person/place/thing/idea) · <b>Pronoun</b> (replaces a noun) · <b>Verb</b> (action or state) · <b>Adjective</b> (describes a noun) · <b>Adverb</b> (describes a verb, adj., or other adv.) · <b>Preposition</b> (in, on, under) · <b>Conjunction</b> (and, but, or) · <b>Interjection</b> (Wow! Ouch!)" },
+    { h:"Adjective vs Adverb quick test", p:"<b>Adjectives</b> describe THINGS (red ball, tall building). <b>Adverbs</b> describe ACTIONS or degrees (ran quickly, very tall). Most adverbs end in -ly." },
+    { h:"Prepositions show relationship", p:"Often position or time: <b>in, on, under, over, above, below, before, after, between, through, with, without</b>. \"The cat sat <b>on</b> the mat.\"" },
+    { h:"Same word, different jobs", p:"Some words act as multiple parts of speech! <b>Run</b> can be a noun (a run) or a verb (to run). <b>Fast</b> can be an adjective (fast car) or an adverb (drove fast). Look at HOW it's used in the sentence." }
+  ],
+  nouns: [
+    { h:"Common vs Proper", p:"<b>Common</b> = general name (dog, city, book). <b>Proper</b> = specific name (Rex, Chicago, Legend). Proper nouns are ALWAYS capitalized." },
+    { h:"Making plurals", p:"Most nouns: <b>add -s</b> (books). Ending in s/x/z/ch/sh: <b>add -es</b> (boxes, dishes). Ending in consonant + y: <b>change y to i, add -es</b> (baby → babies). <b>Irregular</b> plurals: child → children, mouse → mice, foot → feet." },
+    { h:"Possessive rules", p:"<b>Singular</b>: add <b>'s</b> (Julia's book). <b>Plural ending in s</b>: add just <b>'</b> (the dogs' bones). <b>Plural NOT ending in s</b>: add <b>'s</b> (the children's toys)." },
+    { h:"Abstract vs Concrete", p:"<b>Concrete</b> = you can sense it (dog, chair, music). <b>Abstract</b> = ideas and feelings (love, freedom, courage, honesty). Both are nouns!" },
+    { h:"Collective nouns", p:"One word for a group: <b>team, family, herd, class, band, jury</b>. Sometimes tricky with verb agreement — is a family \"is\" or \"are\"? (Usually \"is\" in American English.)" }
+  ],
+  verbs: [
+    { h:"Action vs Linking", p:"<b>Action verbs</b> show doing (run, jump, think, know). <b>Linking verbs</b> connect the subject to more info — forms of \"to be\" (is, am, are, was, were) plus seem, become, look, feel, appear." },
+    { h:"Common irregular past tenses", p:"<b>Run → ran</b> · <b>Eat → ate</b> · <b>Go → went</b> · <b>Come → came</b> · <b>See → saw</b> · <b>Give → gave</b> · <b>Take → took</b> · <b>Write → wrote</b>. You just memorize these!" },
+    { h:"Subject-verb agreement", p:"Singular subject → singular verb (usually ends in -s in present tense): <b>She walks</b>. Plural subject → plural verb: <b>They walk</b>. Tricky: <b>Everyone IS</b> (everyone is singular!)." },
+    { h:"The 3 simple tenses", p:"<b>Past</b>: I ran (already happened). <b>Present</b>: I run (happening now / general). <b>Future</b>: I will run (going to happen). Add helping verbs for perfect and progressive tenses." },
+    { h:"Helping verbs", p:"<b>Have/has/had</b>, <b>will</b>, <b>can/could</b>, <b>may/might</b>, <b>should/would</b>, <b>do/does/did</b>, forms of <b>be</b>. Pair with a main verb: \"She <b>has been</b> studying.\"" }
+  ],
+  adj_adv: [
+    { h:"Adjectives describe NOUNS", p:"They tell what kind, how many, or which one. \"The <b>tall</b> boy,\" \"<b>three</b> books,\" \"<b>that</b> car.\"" },
+    { h:"Adverbs modify V/Adj/Adv", p:"Adverbs describe <b>verbs, adjectives, or other adverbs</b>. They answer <b>how, when, where, why</b>, or <b>how much</b>. \"She sang <b>loudly</b>\" · \"<b>Very</b> tall\" · \"She sang <b>quite</b> loudly.\"" },
+    { h:"Comparative vs Superlative", p:"<b>Comparative</b> (2 things): add <b>-er</b> or use <b>more</b> (bigger, more careful). <b>Superlative</b> (3+ things): add <b>-est</b> or use <b>most</b> (biggest, most careful)." },
+    { h:"Irregular comparisons", p:"<b>Good → better → best</b> · <b>Bad → worse → worst</b> · <b>Far → farther → farthest</b> · <b>Little → less → least</b> · <b>Much/many → more → most</b>. Memorize these!" },
+    { h:"Common mistake", p:"❌ \"He ran quick.\" — needs an adverb. ✅ \"He ran <b>quickly</b>.\" But: \"He is quick\" ✅ (linking verb + adjective is fine)." }
+  ],
+  punctuation: [
+    { h:"End marks 🛑", p:"<b>Period (.)</b> ends a statement. <b>Question mark (?)</b> ends a question. <b>Exclamation point (!)</b> ends an exclamation. Every sentence gets exactly ONE." },
+    { h:"Comma uses", p:"<b>Separate list items</b>: apples, bananas, and grapes. <b>After intro word/phrase</b>: Yes, I will. Well, that's odd. <b>Between adjectives</b>: a bright, sunny day. <b>Before FANBOYS</b> in compound sentence: I ran, and she walked." },
+    { h:"Semicolon vs Colon", p:"<b>Semicolon (;)</b> joins two closely related complete sentences: \"I was tired; I went to bed.\" <b>Colon (:)</b> introduces a list or quote: \"I need three things: bread, milk, eggs.\"" },
+    { h:"Apostrophes 📝", p:"<b>Contractions</b>: don't (do not), can't (cannot), it's (it is). <b>Possession</b>: Julia's book, the dogs' bones. <b>NEVER</b> use apostrophes for regular plurals (\"apple's\" is WRONG for more than one apple)." },
+    { h:"Quotation marks", p:"Around <b>direct quotes</b>: She said, \"Hello.\" Punctuation goes <b>INSIDE</b> the quotation marks in American English: \"Come here,\" he said." }
+  ],
+  capitalization: [
+    { h:"Always capitalize", p:"1. <b>First word of every sentence</b><br>2. The pronoun <b>I</b> (always!)<br>3. <b>Proper nouns</b> (names of specific people, places, things)<br>4. <b>Days of the week</b> (Monday, Tuesday…)<br>5. <b>Months</b> (January…)<br>6. <b>Holidays</b> (Thanksgiving)" },
+    { h:"Don't capitalize", p:"<b>Seasons</b> (summer, winter) — surprisingly! <b>Common nouns</b> (dog, book, city). <b>Compass directions</b> as directions (\"drive south\") — but DO capitalize when a region (\"the South\")." },
+    { h:"Titles and names", p:"Capitalize titles used <b>with</b> a name: <b>Doctor Smith</b>, <b>President Lincoln</b>. Don't when used alone: \"the doctor said…\" Capitalize <b>Mom/Dad</b> when used as a name: \"Where's Mom?\" but \"My mom is here.\"" },
+    { h:"Titles of works", p:"Capitalize the <b>first, last, and all major words</b> in titles (books, movies, songs). Don't capitalize small words like <b>a, an, the, and, but, or, of, in</b> unless they're first or last. \"<b>The Boy Who Walks in the Light</b>.\"" }
+  ],
+  sentences: [
+    { h:"Subject + Predicate", p:"Every complete sentence has both. <b>Subject</b> = who/what the sentence is about. <b>Predicate</b> = what the subject does or is. Missing either? It's a fragment." },
+    { h:"Simple, Compound, Complex", p:"<b>Simple</b> = 1 complete thought (\"The dog ran.\"). <b>Compound</b> = 2 complete thoughts joined by FANBOYS (\"The dog ran, and the cat slept.\"). <b>Complex</b> = 1 complete + 1 dependent (\"When the dog ran, the cat woke up.\")." },
+    { h:"FANBOYS", p:"The 7 coordinating conjunctions: <b>F</b>or, <b>A</b>nd, <b>N</b>or, <b>B</b>ut, <b>O</b>r, <b>Y</b>et, <b>S</b>o. Use one (with a comma before it) to join two independent clauses." },
+    { h:"Fragment vs Run-on", p:"<b>Fragment</b> = incomplete thought (\"Running through the park.\"). Fix by adding subject or verb. <b>Run-on</b> = too many joined without proper punctuation (\"I ran to school I was late.\"). Fix with a period, semicolon, or FANBOYS conjunction." },
+    { h:"Independent vs Dependent", p:"<b>Independent</b> clause: complete thought, stands alone. <b>Dependent</b> clause: starts with a subordinating conjunction (because, when, if, although, since), can't stand alone." }
+  ],
+  confused: [
+    { h:"It's vs Its", p:"<b>It's</b> = <b>it is</b> or <b>it has</b> (ALWAYS with apostrophe as a contraction). <b>Its</b> = possessive (like his/hers, NO apostrophe). Trick: if you can substitute \"it is,\" use <b>it's</b>." },
+    { h:"There / Their / They're", p:"<b>There</b> = a place (over there). Contains \"HERE.\" <b>Their</b> = possessive (their house). \"HEIR\" hidden inside — an heir owns. <b>They're</b> = they are (contraction)." },
+    { h:"Your vs You're", p:"<b>Your</b> = possessive (your book). <b>You're</b> = you are. Trick: can you swap in \"you are\"? Then use <b>you're</b>." },
+    { h:"Affect vs Effect", p:"<b>Affect</b> = usually a VERB (to influence). Trick: <b>A</b>ffect is an <b>A</b>ction. <b>Effect</b> = usually a NOUN (the result). Trick: an <b>E</b>ffect is the <b>E</b>nd result." },
+    { h:"Then vs Than", p:"<b>Then</b> = TIME (first this, then that). <b>Than</b> = comparison (bigger than). Trick: comp<b>a</b>rison = th<b>a</b>n." },
+    { h:"Fewer vs Less", p:"<b>Fewer</b> = countable (fewer apples, fewer people). <b>Less</b> = uncountable / measured (less water, less time, less money)." }
+  ]
+};
+const GRAMMAR_KEY_ORDER = ["parts_speech","nouns","verbs","adj_adv","punctuation","capitalization","sentences","confused"];
+
 const SUBJECTS = {
   ela: {
     title: "ELA (English)", emoji: "📖", color: "#6366f1",
     description: "Vocabulary, literary terms, pronouns, story structure, writing",
     topics: QUIZ_ELA, tips: TIPS_ELA, keyOrder: ELA_KEY_ORDER, hasSubObj: true
+  },
+  grammar: {
+    title: "Middle School Grammar", emoji: "📝", color: "#a21caf",
+    description: "Parts of speech, nouns, verbs, punctuation, capitalization, sentence structure & commonly confused words.",
+    topics: QUIZ_GRAMMAR, tips: TIPS_GRAMMAR, keyOrder: GRAMMAR_KEY_ORDER, hasSubObj: false
   },
   social: {
     title: "Social Studies", emoji: "🏛️", color: "#dc2626",
@@ -1693,7 +1894,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["ela","social","math","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["ela","grammar","social","math","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -1806,6 +2007,7 @@ const TROPHIES = [
   { id:"boss_social",   emoji:"🏛️", name:"History Hero",     desc:"Defeat all 7 Social Studies bosses." },
   { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
   { id:"boss_algebra",  emoji:"🎯", name:"Algebra Ace",      desc:"Defeat all 5 Algebra bosses." },
+  { id:"boss_grammar",  emoji:"📝", name:"Grammar Guardian", desc:"Defeat all 8 Middle School Grammar bosses." },
   { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 7 Reading bosses." },
   { id:"boss_cs",       emoji:"💻", name:"Code Conqueror",   desc:"Defeat all 6 Computer Science bosses." },
   { id:"boss_space",    emoji:"🪐", name:"Cosmic Champion",  desc:"Defeat all 5 Space bosses." },
@@ -1825,6 +2027,16 @@ const BOSSES = {
     pronouns: { emoji: "🤖", name: "Grammar Bot" },
     story:    { emoji: "👻", name: "Plot Phantom" },
     writing:  { emoji: "🦉", name: "Essay Owl" }
+  },
+  grammar: {
+    parts_speech:   { emoji: "🎭", name: "Speech Sultan" },
+    nouns:          { emoji: "📛", name: "Noun Nemesis" },
+    verbs:          { emoji: "🏃", name: "Verb Villain" },
+    adj_adv:        { emoji: "🎨", name: "Descriptor Duke" },
+    punctuation:    { emoji: "❗", name: "Punctuation Prowler" },
+    capitalization: { emoji: "🔠", name: "Capital Crusher" },
+    sentences:      { emoji: "🧱", name: "Sentence Sentinel" },
+    confused:       { emoji: "🤔", name: "Confusion Conjurer" }
   },
   social: {
     mesopotamia: { emoji: "👑", name: "King Hammurabi" },

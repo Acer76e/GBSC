@@ -89,7 +89,7 @@ string. This subsumes the enrichment cache. Keep it conservative so distinct
 back-to-back offers aren't merged — bias toward "same offer" only when all
 three are close AND recent.
 
-### [ ] 7. Non-US decimal locales corrupt Profit inputs (lower priority)
+### [x] 7. Non-US decimal locales corrupt Profit inputs (lower priority) — fixed in c207ea2
 **File:** `app/src/main/java/com/gbsc/cherry/ui/screens/ProfitScreen.kt:169`
 **Problem:** The input filter keeps only digits and `.`, dropping the comma
 separator that Decimal keyboards emit in comma-decimal locales, so "312,50"

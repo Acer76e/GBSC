@@ -104,7 +104,7 @@ class UberAccessibilityService : AccessibilityService() {
         val classes = linkedSetOf<String>()
         var nodeCount = 0
         val winSummary = StringBuilder()
-        val seenRoots = mutableListOf<android.view.accessibility.AccessibilityNodeInfo>()
+        val seenWindowIds = mutableSetOf<Int>()
 
         // 1) Iterate every visible window. Some devices/configurations don't surface the
         //    offer card via rootInActiveWindow even when it's foreground, so we walk
@@ -121,7 +121,7 @@ class UberAccessibilityService : AccessibilityService() {
             }
             if (winSummary.isNotEmpty()) winSummary.append("  ")
             winSummary.append("$pkg:$nodes")
-            seenRoots.add(r)
+            seenWindowIds.add(w.id)
             if (isUberPackage(pkg)) {
                 sawUberWindow = true
                 if (activePkg == null) activePkg = pkg
@@ -129,7 +129,10 @@ class UberAccessibilityService : AccessibilityService() {
             }
         }
         // 2) Also pull in the active window if it wasn't already in the windows list.
-        if (activeRoot != null && seenRoots.none { it === activeRoot }) {
+        //    Dedupe by window id: fresh AccessibilityNodeInfo instances for the same
+        //    window are never identical references, so an identity check would read
+        //    (and count) the active window's text twice.
+        if (activeRoot != null && activeRoot.windowId !in seenWindowIds) {
             val pkg = activeRoot.packageName?.toString() ?: "—"
             val nodes = if (isUberPackage(pkg)) {
                 collectText(activeRoot, sb, classes)

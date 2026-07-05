@@ -128,7 +128,7 @@ lives unencrypted in `filesDir` and is backed up to the cloud / extractable via
 
 ## Efficiency
 
-### [ ] 10. Full node-tree walk on every event before the throttle; typeAllMask
+### [x] 10. Full node-tree walk on every event before the throttle; typeAllMask — fixed in d4d9c4d
 **File:** `app/src/main/java/com/gbsc/cherry/accessibility/UberAccessibilityService.kt:114`
 and `app/src/main/res/xml/accessibility_service_config.xml:3`
 **Problem:** `captureAndProcess` walks every window's full node tree (one binder

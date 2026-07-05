@@ -222,9 +222,13 @@ object OfferEngine {
         currentEnrichedOffer = offer
 
         val settings = Repo.settings.value
+        val isNew = signature != currentSignature
+        // A brand-new offer must never be suppressed by the dismissal of a previous
+        // identical-signature offer (auto-hide timer or the X button).
+        if (isNew) overlay?.clearDismissed()
         overlay?.show(buildOverlayData(offer, settings, signature))
 
-        if (signature != currentSignature) {
+        if (isNew) {
             currentSignature = signature
             Repo.addOffer(offer)
             if (settings.customization.notificationEnabled) postOfferNotification(ctx, offer, settings)
@@ -238,6 +242,7 @@ object OfferEngine {
         currentSignature = null
         currentEnrichedOffer = null
         missCount = 0
+        overlay?.clearDismissed()
         overlay?.hide()
         appContext?.let { notificationManager(it).cancel(NOTIF_OFFER) }
     }

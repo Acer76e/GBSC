@@ -42,6 +42,7 @@ class OverlayController(private val context: Context) {
     private var added = false
     private var dismissedSignature: String? = null
     private var scheduledForSignature: String? = null
+    private var hideRunnable: Runnable? = null
 
     private fun dp(value: Int): Int =
         (value * context.resources.displayMetrics.density).toInt()
@@ -84,17 +85,36 @@ class OverlayController(private val context: Context) {
         if (data.durationMs > 0 && scheduledForSignature != data.signature) {
             scheduledForSignature = data.signature
             val sig = data.signature
-            main.postDelayed({
+            hideRunnable?.let { main.removeCallbacks(it) }
+            val r = Runnable {
                 if (root?.tag == sig) {
                     root?.visibility = View.GONE
                     dismissedSignature = sig
                 }
-            }, data.durationMs)
+            }
+            hideRunnable = r
+            main.postDelayed(r, data.durationMs)
         }
     }
 
     fun hide() = main.post {
         root?.visibility = View.GONE
+        // The offer is gone: forget the dismissal so an identical future offer
+        // (same fare|miles|minutes) is allowed to show again.
+        clearDismissedState()
+    }
+
+    /** Called by the engine when a brand-new offer arrives (or state resets) so a
+     *  previously dismissed identical signature doesn't suppress the new card.
+     *  The intra-offer auto-hide still holds: while the SAME offer keeps being
+     *  re-parsed, nothing calls this, so [dismissedSignature] keeps it hidden. */
+    fun clearDismissed() = main.post { clearDismissedState() }
+
+    private fun clearDismissedState() {
+        dismissedSignature = null
+        scheduledForSignature = null
+        hideRunnable?.let { main.removeCallbacks(it) }
+        hideRunnable = null
     }
 
     fun destroy() = main.post {

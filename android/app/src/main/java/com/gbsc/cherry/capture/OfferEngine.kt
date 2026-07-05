@@ -149,14 +149,34 @@ object OfferEngine {
     private var tts: TextToSpeech? = null
     private var ttsReady = false
 
+    /** Stable overlay identity for the offer currently on screen (includes a timestamp
+     *  so two logical offers can never share a signature). */
     private var currentSignature: String? = null
-    /** Best-known offer for the current signature. Each new parse fills in null fields
-     *  from this cache so OCR noise doesn't flicker rating/addresses on the card. */
-    private var currentEnrichedOffer: TripOffer? = null
+    /** Structured record of the offer currently on screen. Same-offer detection is
+     *  tolerance-based (OCR wobbles cents and decimals frame to frame), and each new
+     *  parse fills in null fields from this record so noise doesn't flicker the
+     *  rating/addresses/bonus on the card. */
+    private var currentOffer: TripOffer? = null
+    /** When the current offer was last seen; same-offer matching is time-bounded. */
+    private var currentOfferSeenAt = 0L
     private var missCount = 0
     /** Consecutive non-offer Uber frames reported by the service (see [onNoOffer]). */
     private var noOfferFrames = 0
     private const val NO_OFFER_DEBOUNCE = 2
+
+    // Conservative same-offer tolerances: only treat two parses as the SAME offer when
+    // fare AND miles AND minutes are all close and the previous sighting is recent.
+    // Distinct back-to-back offers almost always differ well beyond these bounds.
+    private const val SAME_FARE_TOLERANCE = 0.25
+    private const val SAME_MILES_TOLERANCE = 0.3
+    private const val SAME_MINUTES_TOLERANCE = 1.0
+    private const val SAME_OFFER_WINDOW_MS = 90_000L
+
+    private fun isSameOffer(current: TripOffer, fresh: TripOffer, now: Long): Boolean =
+        now - currentOfferSeenAt <= SAME_OFFER_WINDOW_MS &&
+            kotlin.math.abs(fresh.fare - current.fare) <= SAME_FARE_TOLERANCE &&
+            kotlin.math.abs(fresh.totalMiles - current.totalMiles) <= SAME_MILES_TOLERANCE &&
+            kotlin.math.abs(fresh.totalMinutes - current.totalMinutes) <= SAME_MINUTES_TOLERANCE
 
     fun ensureInit(context: Context) {
         if (appContext != null) return
@@ -182,7 +202,7 @@ object OfferEngine {
             missCount++
             if (missCount >= MISS_LIMIT) {
                 currentSignature = null
-                currentEnrichedOffer = null
+                currentOffer = null
                 overlay?.hide()
                 notificationManager(ctx).cancel(NOTIF_OFFER)
             }
@@ -205,15 +225,15 @@ object OfferEngine {
             pickupAddress = parsed.pickupAddress,
             dropoffAddress = parsed.dropoffAddress,
         )
-        val signature = String.format(
-            Locale.US, "%.2f|%.1f|%.0f",
-            freshOffer.fare, freshOffer.totalMiles, freshOffer.totalMinutes
-        )
-        // OCR is noisy. If we're still on the same offer (signature matches the cached one),
-        // hold onto any fields we've already detected so partial-read frames don't flicker
-        // the rating, addresses, or bonus on the card.
-        val cached = currentEnrichedOffer
-        val offer = if (signature == currentSignature && cached != null) {
+        val now = System.currentTimeMillis()
+        // OCR is noisy: a one-cent fare wobble or a 0.1mi jitter must not count as a
+        // brand-new offer (duplicate history row, re-notify, TTS over itself). Compare
+        // against the current offer with tolerances instead of an exact string, and if
+        // it's the same offer, hold onto fields we've already detected so partial-read
+        // frames don't flicker the rating, addresses, or bonus on the card.
+        val cached = currentOffer
+        val isNew = cached == null || currentSignature == null || !isSameOffer(cached, freshOffer, now)
+        val offer = if (!isNew && cached != null) {
             freshOffer.copy(
                 rating = freshOffer.rating ?: cached.rating,
                 pickupAddress = freshOffer.pickupAddress ?: cached.pickupAddress,
@@ -223,17 +243,27 @@ object OfferEngine {
         } else {
             freshOffer
         }
-        currentEnrichedOffer = offer
+        currentOffer = offer
+        currentOfferSeenAt = now
+
+        val signature: String
+        if (isNew) {
+            signature = String.format(
+                Locale.US, "%.2f|%.1f|%.0f|%d",
+                offer.fare, offer.totalMiles, offer.totalMinutes, now
+            )
+            currentSignature = signature
+        } else {
+            signature = currentSignature ?: return false // never null when !isNew
+        }
 
         val settings = Repo.settings.value
-        val isNew = signature != currentSignature
         // A brand-new offer must never be suppressed by the dismissal of a previous
         // identical-signature offer (auto-hide timer or the X button).
         if (isNew) overlay?.clearDismissed()
         overlay?.show(buildOverlayData(offer, settings, signature))
 
         if (isNew) {
-            currentSignature = signature
             Repo.addOffer(offer)
             if (settings.customization.notificationEnabled) postOfferNotification(ctx, offer, settings)
             if (settings.customization.voiceEnabled) speakOffer(offer, settings)
@@ -244,7 +274,8 @@ object OfferEngine {
 
     fun resetState() {
         currentSignature = null
-        currentEnrichedOffer = null
+        currentOffer = null
+        currentOfferSeenAt = 0L
         missCount = 0
         noOfferFrames = 0
         overlay?.clearDismissed()
@@ -258,7 +289,7 @@ object OfferEngine {
      *  middle of an offer doesn't flap the card, then hides the overlay and cancels the
      *  offer notification. */
     fun onNoOffer() {
-        if (currentSignature == null && currentEnrichedOffer == null) {
+        if (currentSignature == null && currentOffer == null) {
             noOfferFrames = 0
             return
         }
@@ -266,7 +297,8 @@ object OfferEngine {
         if (noOfferFrames < NO_OFFER_DEBOUNCE) return
         noOfferFrames = 0
         currentSignature = null
-        currentEnrichedOffer = null
+        currentOffer = null
+        currentOfferSeenAt = 0L
         missCount = 0
         overlay?.hide()
         appContext?.let { notificationManager(it).cancel(NOTIF_OFFER) }

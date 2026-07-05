@@ -23,7 +23,7 @@ long-haul/airport offer shows a $1.05 fare and grades red.
 `toDouble`. Keep the existing `+bonus` and `/hr` rate-suffix exclusions working.
 Add unit-style reasoning: `$1,050.25`→1050.25, `$20.08`→20.08, `$7.08`→7.08.
 
-### [ ] 2. New offer identical to a just-dismissed one shows no card
+### [x] 2. New offer identical to a just-dismissed one shows no card — fixed in 2589e2a
 **File:** `app/src/main/java/com/gbsc/cherry/overlay/OverlayController.kt:70`
 **Problem:** `dismissedSignature` is set by the auto-hide timer and the ✕ button
 but is only cleared inside `show()` when a *different* signature arrives. After

@@ -115,7 +115,7 @@ keys without noting the reinstall. Lowest-effort acceptable action: add a
 comment in `build.gradle.kts` and this doc stating the tradeoff; no code change
 required if the repo stays private.
 
-### [ ] 9. allowBackup=true exposes unencrypted location history
+### [x] 9. allowBackup=true exposes unencrypted location history — fixed in d9d95d9
 **File:** `app/src/main/AndroidManifest.xml:9`
 **Problem:** `history.json` (up to 500 pickup/dropoff addresses + timestamps)
 lives unencrypted in `filesDir` and is backed up to the cloud / extractable via

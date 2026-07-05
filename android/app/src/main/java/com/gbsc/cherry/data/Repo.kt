@@ -3,8 +3,10 @@ package com.gbsc.cherry.data
 import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,6 +15,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.util.concurrent.Executors
 
 /**
  * Single source of truth for settings + trip history.
@@ -22,7 +25,10 @@ object Repo {
 
     private const val TAG = "Repo"
     private val json = Json { ignoreUnknownKeys = true; prettyPrint = false }
-    private val ioScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    // Single-threaded writer: launches run FIFO, so a stale settings/history snapshot
+    // can never be written after a newer one, and writes never interleave.
+    private val ioScope =
+        CoroutineScope(SupervisorJob() + Executors.newSingleThreadExecutor().asCoroutineDispatcher())
 
     private lateinit var settingsFile: File
     private lateinit var historyFile: File
@@ -61,11 +67,19 @@ object Repo {
         }.onFailure { Log.w(TAG, "loadHistory failed", it) }
     }
 
+    private var settingsSaveJob: Job? = null
+
     fun updateSettings(transform: (AppSettings) -> AppSettings) {
         val updated = transform(_settings.value)
         _settings.value = updated
-        ioScope.launch {
-            runCatching { settingsFile.writeText(json.encodeToString(updated)) }
+        // Debounce: slider drags call this dozens of times per second. The in-memory
+        // state above is always immediate; the file write happens once the value has
+        // been stable for a moment, and always snapshots the LATEST settings.
+        settingsSaveJob?.cancel()
+        settingsSaveJob = ioScope.launch {
+            delay(SETTINGS_SAVE_DEBOUNCE_MS)
+            val snapshot = _settings.value
+            runCatching { writeAtomically(settingsFile, json.encodeToString(snapshot)) }
                 .onFailure { Log.w(TAG, "saveSettings failed", it) }
         }
     }
@@ -89,10 +103,23 @@ object Repo {
 
     private fun persistHistory(list: List<TripOffer>) {
         ioScope.launch {
-            runCatching { historyFile.writeText(json.encodeToString(list)) }
+            runCatching { writeAtomically(historyFile, json.encodeToString(list)) }
                 .onFailure { Log.w(TAG, "saveHistory failed", it) }
         }
     }
 
+    /** Write to a sibling temp file, then rename over the target, so a crash or kill
+     *  mid-write can never leave truncated/corrupt JSON that resets everything on load. */
+    private fun writeAtomically(file: File, content: String) {
+        val tmp = File(file.parentFile, file.name + ".tmp")
+        tmp.writeText(content)
+        if (!tmp.renameTo(file)) {
+            // renameTo should always succeed within filesDir; fall back just in case.
+            file.writeText(content)
+            tmp.delete()
+        }
+    }
+
     private const val MAX_HISTORY = 500
+    private const val SETTINGS_SAVE_DEBOUNCE_MS = 300L
 }

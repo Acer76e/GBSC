@@ -36,7 +36,7 @@ each brand-new offer (when `signature != currentSignature`). The intra-offer
 auto-hide (same offer re-parsed by the 1s poll after it hid) must still stay
 hidden — only a NEW offer signature should re-enable showing.
 
-### [ ] 3. Offer notification (and card) never clear on normal expiry
+### [x] 3. Offer notification (and card) never clear on normal expiry — fixed in 1c1b011
 **File:** `app/src/main/java/com/gbsc/cherry/capture/OfferEngine.kt:184`
 **Problem:** `cancel(NOTIF_OFFER)` and `overlay?.hide()` live only inside the
 `missCount >= MISS_LIMIT` branch of `processText`. When an offer expires and

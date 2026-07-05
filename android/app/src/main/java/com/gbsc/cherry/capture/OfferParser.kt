@@ -29,7 +29,12 @@ object OfferParser {
         val dropoffAddress: String?,
     )
 
-    private val moneyRegex = Regex("""\$\s*(\d{1,4})[.,](\d{2})""")
+    // Fare amounts. Two alternatives, tried in order:
+    //   1) thousands-grouped: "1,050.25" or "1,050" (comma is a separator, dot is decimal)
+    //   2) plain: "1050.25", "20.08", or OCR comma-decimal "7,08"
+    // The alternation keeps "$1,050.25" from being cut at the comma ("$1,05" → $1.05).
+    private val moneyRegex = Regex("""\$\s*(\d{1,3}(?:,\d{3})+(?:\.\d{2})?|\d{1,4}[.,]\d{2})""")
+    private val thousandsOnlyRegex = Regex("""\d{1,3}(?:,\d{3})+""")
     private val bonusRegex = Regex("""\+\s*\$?\s*(\d{1,3})(?:[.,](\d{2}))?""")
     private val pairRegex = Regex("""(\d{1,3})\s*min[s]?\b[^0-9]{0,20}?(\d{1,3}(?:[.,]\d{1,2})?)\s*mi\b""", RegexOption.IGNORE_CASE)
     private val rateAfterRegex = Regex("""^\s*(/|\s)?\s*(active\s+)?(hr|hour|h|min|minute|per\s+(hour|min))\b""", RegexOption.IGNORE_CASE)
@@ -45,6 +50,17 @@ object OfferParser {
         "$intPart.$decPart".toDoubleOrNull() ?: 0.0
 
     private fun dec(raw: String): Double = raw.replace(',', '.').toDoubleOrNull() ?: 0.0
+
+    /** Normalizes a moneyRegex capture: "1,050.25"→1050.25, "1,050"→1050.0,
+     *  "20.08"→20.08, and OCR comma-decimal "7,08"→7.08. */
+    private fun money(raw: String): Double {
+        val cleaned = when {
+            raw.contains('.') -> raw.replace(",", "")          // dot is the decimal; commas are thousands
+            thousandsOnlyRegex.matches(raw) -> raw.replace(",", "") // "1,050" — comma is thousands
+            else -> raw.replace(',', '.')                       // "7,08" — OCR comma decimal
+        }
+        return cleaned.toDoubleOrNull() ?: 0.0
+    }
 
     private val acceptOrMatchRegex = Regex("""\b(accept|match)\b""", RegexOption.IGNORE_CASE)
 
@@ -71,7 +87,7 @@ object OfferParser {
             if (before.endsWith("+")) continue
             val after = text.substring(m.range.last + 1).take(30)
             if (rateAfterRegex.containsMatchIn(after)) continue
-            val v = num(m.groupValues[1], m.groupValues[2])
+            val v = money(m.groupValues[1])
             if (v > fare) fare = v
         }
         if (fare <= 0.0) return null

@@ -64,7 +64,7 @@ update the in-memory `_settings` immediately on every tick but persist on a
 short conflated delay (or on `onValueChangeFinished`). Apply the same
 single-writer + atomic-rename to `persistHistory`.
 
-### [ ] 5. Active Uber window is read twice per frame
+### [x] 5. Active Uber window is read twice per frame — fixed in 12d2646
 **File:** `app/src/main/java/com/gbsc/cherry/accessibility/UberAccessibilityService.kt:132`
 **Problem:** `seenRoots.none { it === activeRoot }` uses reference equality
 against freshly obtained `AccessibilityNodeInfo` instances, which are never

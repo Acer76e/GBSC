@@ -13,7 +13,7 @@ re-read the touched function end-to-end to confirm you didn't break a caller.
 
 ## Correctness
 
-### [ ] 1. Fares over $999 misparse as $1.xx
+### [x] 1. Fares over $999 misparse as $1.xx — fixed in d0163f3
 **File:** `app/src/main/java/com/gbsc/cherry/capture/OfferParser.kt:32`
 **Problem:** `moneyRegex = \$\s*(\d{1,4})[.,](\d{2})` treats a thousands comma as
 the decimal separator. `$1,050.25` matches as `$1,05` → `$1.05`. A lucrative

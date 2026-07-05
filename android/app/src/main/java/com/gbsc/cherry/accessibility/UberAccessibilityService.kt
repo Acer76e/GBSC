@@ -173,7 +173,7 @@ class UberAccessibilityService : AccessibilityService() {
                 ) {
                     captureScreenshot()
                 }
-            } else if (activeIsUber && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            } else if (activeIsUber) {
                 // Uber visible AND in the foreground AND accessibility doesn't have
                 // the offer text. Two trigger paths:
                 //   - WINDOW_STATE_CHANGED (forceProcess=true): an offer card just
@@ -181,8 +181,15 @@ class UberAccessibilityService : AccessibilityService() {
                 //     the user has the full time window to decide.
                 //   - Otherwise: small accessibility text is the signature of Uber
                 //     hiding the offer card, so we throttled-OCR.
-                if (forceProcess || text.length < OCR_TEXT_THRESHOLD) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
+                    (forceProcess || text.length < OCR_TEXT_THRESHOLD)
+                ) {
                     maybeRunOcr(force = forceProcess)
+                } else if (text.isNotBlank()) {
+                    // Substantial accessibility text with no offer shape — Uber is back
+                    // on a normal screen (dashboard/map), so the offer expired. Tell the
+                    // engine (debounced there) to drop the card and notification.
+                    OfferEngine.onNoOffer()
                 }
             }
         } else if (Repo.settings.value.customization.debugMode) {
@@ -298,8 +305,13 @@ class UberAccessibilityService : AccessibilityService() {
                         .addOnSuccessListener { result ->
                             val ocrText = result.text
                             OfferEngine.recordOcrText(ocrText)
-                            if (OfferEngine.scanning.value && ocrText.isNotBlank()) {
-                                OfferEngine.processText(ocrText)
+                            if (OfferEngine.scanning.value) {
+                                if (OfferEngine.looksLikeOffer(ocrText)) {
+                                    OfferEngine.processText(ocrText)
+                                } else {
+                                    // OCR confirms there's no offer on screen either.
+                                    OfferEngine.onNoOffer()
+                                }
                             }
                             bmp.recycle()
                             ocrInFlight = false

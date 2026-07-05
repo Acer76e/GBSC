@@ -154,6 +154,9 @@ object OfferEngine {
      *  from this cache so OCR noise doesn't flicker rating/addresses on the card. */
     private var currentEnrichedOffer: TripOffer? = null
     private var missCount = 0
+    /** Consecutive non-offer Uber frames reported by the service (see [onNoOffer]). */
+    private var noOfferFrames = 0
+    private const val NO_OFFER_DEBOUNCE = 2
 
     fun ensureInit(context: Context) {
         if (appContext != null) return
@@ -188,6 +191,7 @@ object OfferEngine {
         lastDebug.value = lastDebug.value?.copy(parsed = true, fare = parsed.fare)
         lastOfferDebug.value = lastOfferDebug.value?.copy(parsed = true, fare = parsed.fare)
         missCount = 0
+        noOfferFrames = 0
         val freshOffer = TripOffer(
             id = System.currentTimeMillis(),
             timestamp = System.currentTimeMillis(),
@@ -242,7 +246,28 @@ object OfferEngine {
         currentSignature = null
         currentEnrichedOffer = null
         missCount = 0
+        noOfferFrames = 0
         overlay?.clearDismissed()
+        overlay?.hide()
+        appContext?.let { notificationManager(it).cancel(NOTIF_OFFER) }
+    }
+
+    /** Called by the accessibility service when Uber is on screen but the current frame
+     *  is not offer-shaped (e.g. the dashboard after an offer expires). Debounced over
+     *  [NO_OFFER_DEBOUNCE] consecutive frames so a single dropped/partial frame in the
+     *  middle of an offer doesn't flap the card, then hides the overlay and cancels the
+     *  offer notification. */
+    fun onNoOffer() {
+        if (currentSignature == null && currentEnrichedOffer == null) {
+            noOfferFrames = 0
+            return
+        }
+        noOfferFrames++
+        if (noOfferFrames < NO_OFFER_DEBOUNCE) return
+        noOfferFrames = 0
+        currentSignature = null
+        currentEnrichedOffer = null
+        missCount = 0
         overlay?.hide()
         appContext?.let { notificationManager(it).cancel(NOTIF_OFFER) }
     }

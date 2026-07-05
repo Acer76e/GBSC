@@ -96,6 +96,13 @@ class UberAccessibilityService : AccessibilityService() {
     }
 
     private fun captureAndProcess(forceProcess: Boolean, bypassThrottle: Boolean) {
+        // Throttle BEFORE any node-tree traversal: every node read is a binder IPC, and
+        // events can arrive far faster than THROTTLE_MS. Forced (window-state-changed)
+        // and poll (bypassThrottle) calls still go through.
+        val now = System.currentTimeMillis()
+        if (!forceProcess && !bypassThrottle && now - lastProcessed < THROTTLE_MS) return
+
+        val debugMode = Repo.settings.value.customization.debugMode
         val activeRoot = rootInActiveWindow
         var sawUberWindow = false
         var activePkg: String? = null
@@ -109,15 +116,15 @@ class UberAccessibilityService : AccessibilityService() {
         // 1) Iterate every visible window. Some devices/configurations don't surface the
         //    offer card via rootInActiveWindow even when it's foreground, so we walk
         //    everything and collect text from any Uber-package root we find. For
-        //    non-Uber windows we only count nodes (no text read) so we still see what
-        //    else is on screen in the diagnostic without reading other apps.
+        //    non-Uber windows we only count nodes (no text read), and only in debug
+        //    mode — the count is purely diagnostic and each node costs a binder call.
         for (w in windows) {
             val r = w.root ?: continue
             val pkg = r.packageName?.toString() ?: "—"
-            val nodes = if (isUberPackage(pkg)) {
-                collectText(r, sb, classes)
-            } else {
-                countNodes(r)
+            val nodes = when {
+                isUberPackage(pkg) -> collectText(r, sb, classes)
+                debugMode -> countNodes(r)
+                else -> 0
             }
             if (winSummary.isNotEmpty()) winSummary.append("  ")
             winSummary.append("$pkg:$nodes")
@@ -134,10 +141,10 @@ class UberAccessibilityService : AccessibilityService() {
         //    (and count) the active window's text twice.
         if (activeRoot != null && activeRoot.windowId !in seenWindowIds) {
             val pkg = activeRoot.packageName?.toString() ?: "—"
-            val nodes = if (isUberPackage(pkg)) {
-                collectText(activeRoot, sb, classes)
-            } else {
-                countNodes(activeRoot)
+            val nodes = when {
+                isUberPackage(pkg) -> collectText(activeRoot, sb, classes)
+                debugMode -> countNodes(activeRoot)
+                else -> 0
             }
             if (winSummary.isNotEmpty()) winSummary.append("  ")
             winSummary.append("active:$pkg:$nodes")
@@ -148,10 +155,7 @@ class UberAccessibilityService : AccessibilityService() {
             }
         }
 
-        val now = System.currentTimeMillis()
-
         if (sawUberWindow) {
-            if (!forceProcess && !bypassThrottle && now - lastProcessed < THROTTLE_MS) return
             lastProcessed = now
 
             val text = sb.toString()
@@ -195,7 +199,7 @@ class UberAccessibilityService : AccessibilityService() {
                     OfferEngine.onNoOffer()
                 }
             }
-        } else if (Repo.settings.value.customization.debugMode) {
+        } else if (debugMode) {
             if (now - lastSeenUpdate < SEEN_THROTTLE_MS) return
             lastSeenUpdate = now
             OfferEngine.recordSeenPkg(activeRoot?.packageName?.toString())

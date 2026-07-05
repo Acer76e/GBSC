@@ -279,6 +279,27 @@ h3{font-size:15px;line-height:1.3;}
 .settings-icon:active{transform:rotate(60deg);}
 .settings-icon:hover{background:rgba(0,0,0,.12);}
 
+.music-toggle{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.06);width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:none;transition:background .2s,transform .2s;z-index:5;}
+.music-toggle:active{transform:scale(.85);}
+.music-toggle:hover{background:rgba(0,0,0,.12);}
+
+.welcome-banner{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:none;cursor:pointer;
+  background:linear-gradient(120deg,#009246 0%,#009246 32%,#f1f2f1 33%,#f1f2f1 66%,#ce2b37 67%,#ce2b37 100%);
+  padding:0;border-radius:18px;box-shadow:0 8px 26px rgba(0,0,0,.18);overflow:hidden;position:relative;
+  animation:wbPop .5s cubic-bezier(.2,1.3,.4,1);}
+@keyframes wbPop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+.welcome-banner::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.82);}
+.welcome-banner > *{position:relative;z-index:1;}
+.welcome-banner .wb-flag{font-size:44px;padding:16px 4px 16px 18px;animation:wbWave 2.5s ease-in-out infinite;}
+@keyframes wbWave{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.welcome-banner .wb-text{flex:1;padding:14px 4px;}
+.welcome-banner .wb-title{font-weight:800;font-size:17px;color:#0b3d2e;}
+.welcome-banner .wb-sub{font-size:13px;color:#374151;margin-top:3px;line-height:1.35;}
+.welcome-banner .wb-arrow{font-size:28px;color:#ce2b37;padding-right:16px;}
+.italy-card{border-color:#009246 !important;box-shadow:0 6px 20px rgba(0,146,70,.22);}
+.new-tag{display:inline-block;background:#ce2b37;color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;vertical-align:middle;margin-left:4px;letter-spacing:.5px;animation:newPulse 1.4s ease-in-out infinite;}
+@keyframes newPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
 .mom-card{background:linear-gradient(135deg,#fef3c7,#fed7aa);border-radius:18px;padding:16px;border:2px dashed #fbbf24;}
 .mom-card h3{color:#92400e;font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;font-weight:800;}
 .mom-note{font-size:15px;line-height:1.5;color:#78350f;font-weight:600;font-style:italic;}
@@ -1847,7 +1868,145 @@ const TIPS_GRAMMAR = {
 };
 const GRAMMAR_KEY_ORDER = ["parts_speech","nouns","verbs","adj_adv","punctuation","capitalization","sentences","confused"];
 
+const QUIZ_ITALY = {
+  landmarks: {
+    title: "Landmarks & Cities", emoji: "🏛️", color: "#059669",
+    questions: [
+      { q: "What is the capital of Italy?", a: 0, opts: ["Rome","Venice","Milan","Florence"], hint: "The Eternal City — home of the Colosseum!" },
+      { q: "The famous LEANING TOWER is in which city?", a: 0, opts: ["Pisa","Rome","Naples","Turin"], hint: "It leans because the ground beneath it was too soft." },
+      { q: "Which city is famous for its CANALS and gondolas?", a: 0, opts: ["Venice","Rome","Milan","Florence"], hint: "Built on 100+ small islands — you get around by boat!" },
+      { q: "The COLOSSEUM, where gladiators fought, is in…", a: 0, opts: ["Rome","Venice","Pisa","Naples"], hint: "An ancient Roman amphitheater, nearly 2,000 years old." },
+      { q: "Which tiny country sits INSIDE the city of Rome?", a: 0, opts: ["Vatican City","San Marino","Monaco","Malta"], hint: "The smallest country in the world — home of the Pope." },
+      { q: "Florence is the birthplace of which famous period of art?", a: 0, opts: ["The Renaissance","The Ice Age","The Space Age","The Bronze Age"], hint: "A 'rebirth' of art and learning — think Michelangelo and Leonardo." },
+      { q: "Which famous fountain in Rome do people throw coins into?", a: 0, opts: ["Trevi Fountain","Niagara Falls","Buckingham Fountain","Old Faithful"], hint: "Legend says a coin tossed in means you'll return to Rome!" },
+      { q: "The ancient city of POMPEII was buried by which volcano?", a: 0, opts: ["Mount Vesuvius","Mount Etna","Mount Fuji","Mount Everest"], hint: "It erupted in 79 AD, preserving the whole city in ash." },
+      { q: "Which city is Italy's fashion and business capital?", a: 0, opts: ["Milan","Rome","Pisa","Venice"], hint: "Home to famous fashion houses and the La Scala opera house." },
+      { q: "St. Peter's Basilica is located in…", a: 0, opts: ["Vatican City","Florence","Milan","Pisa"], hint: "One of the largest churches in the world, in the Pope's home." }
+    ]
+  },
+  food: {
+    title: "Italian Food", emoji: "🍕", color: "#dc2626",
+    questions: [
+      { q: "Which food was INVENTED in Naples, Italy?", a: 0, opts: ["Pizza","Hamburger","Sushi","Tacos"], hint: "The classic Margherita has tomato, mozzarella, and basil — the colors of the Italian flag!" },
+      { q: "'Gelato' is the Italian word for…", a: 0, opts: ["Ice cream","Pizza","Bread","Cheese"], hint: "Smoother and denser than regular ice cream — a must-try in Italy!" },
+      { q: "Which of these is a type of PASTA?", a: 0, opts: ["Spaghetti","Baguette","Croissant","Pretzel"], hint: "Long, thin noodles — one of hundreds of pasta shapes." },
+      { q: "'Formaggio' is the Italian word for…", a: 0, opts: ["Cheese","Bread","Meat","Water"], hint: "Parmigiano (Parmesan) is a famous Italian one." },
+      { q: "Which sauce is made from basil, garlic, pine nuts, and olive oil?", a: 0, opts: ["Pesto","Ketchup","Ranch","BBQ"], hint: "It's bright green and comes from the Genoa region." },
+      { q: "What is 'prosciutto'?", a: 0, opts: ["A thin-sliced dry-cured ham","A dessert","A type of pasta","A cheese"], hint: "Often served with melon as an appetizer." },
+      { q: "A 'cappuccino' is a drink made with…", a: 0, opts: ["Espresso and steamed milk foam","Just orange juice","Hot chocolate only","Green tea"], hint: "Italians usually only drink it in the morning!" },
+      { q: "'Tiramisu' is a famous Italian…", a: 0, opts: ["Dessert","Soup","Salad","Pizza"], hint: "Made with coffee-soaked ladyfingers and mascarpone. The name means 'pick me up.'" },
+      { q: "Which color is NOT in the Margherita pizza (or Italian flag)?", a: 0, opts: ["Blue","Red","White","Green"], hint: "The flag and the pizza are red, white, and green." },
+      { q: "'Pane' is the Italian word for…", a: 0, opts: ["Bread","Butter","Salt","Sugar"], hint: "Focaccia and ciabatta are famous Italian types." }
+    ]
+  },
+  language: {
+    title: "Italian Phrases", emoji: "🗣️", color: "#f59e0b",
+    questions: [
+      { q: "What does 'Ciao' mean?", a: 0, opts: ["Hello / Goodbye","Thank you","Please","Sorry"], hint: "A friendly greeting that works both ways!" },
+      { q: "'Grazie' means…", a: 0, opts: ["Thank you","Hello","Goodbye","Yes"], hint: "Say it when someone helps you. (GRAH-tsee-eh)" },
+      { q: "'Per favore' means…", a: 0, opts: ["Please","Thank you","Excuse me","Goodbye"], hint: "Add it to be polite when asking for something." },
+      { q: "How do you say 'yes' in Italian?", a: 0, opts: ["Sì","No","Ciao","Bene"], hint: "Just one little word with an accent!" },
+      { q: "'Buongiorno' means…", a: 0, opts: ["Good morning / Good day","Good night","Goodbye","See you later"], hint: "'Buon' = good, 'giorno' = day." },
+      { q: "'Arrivederci' means…", a: 0, opts: ["Goodbye","Hello","Please","Welcome"], hint: "A more formal way to say farewell." },
+      { q: "'Gelato, per favore!' means…", a: 0, opts: ["Ice cream, please!","Where is the bathroom?","How much is it?","I am lost"], hint: "A very useful phrase in Italy!" },
+      { q: "'Come stai?' means…", a: 0, opts: ["How are you?","What time is it?","Where are you?","What's your name?"], hint: "You'd answer 'Bene!' (well/good)." },
+      { q: "'Bene' means…", a: 0, opts: ["Good / Well","Bad","Maybe","Never"], hint: "The answer to 'Come stai?'" },
+      { q: "'Amore' means…", a: 0, opts: ["Love","Friend","Family","Money"], hint: "As in the song 'That's Amore'!" }
+    ]
+  },
+  culture: {
+    title: "Culture & Fun Facts", emoji: "🎨", color: "#7c3aed",
+    questions: [
+      { q: "Who painted the ceiling of the Sistine Chapel?", a: 0, opts: ["Michelangelo","Leonardo da Vinci","Picasso","Van Gogh"], hint: "He spent 4 years lying on his back to paint it!" },
+      { q: "Who painted the 'Mona Lisa'?", a: 0, opts: ["Leonardo da Vinci","Michelangelo","Raphael","Donatello"], hint: "An Italian genius — also an inventor and scientist." },
+      { q: "The Renaissance began in which Italian city?", a: 0, opts: ["Florence","Venice","Naples","Turin"], hint: "A 'rebirth' of art, science, and learning in the 1400s." },
+      { q: "Which sport are Italians extremely passionate about?", a: 0, opts: ["Soccer (calcio)","Cricket","Baseball","Ice hockey"], hint: "Italy has won the World Cup four times!" },
+      { q: "What is a 'gondola'?", a: 0, opts: ["A traditional Venetian boat","A type of pasta","An Italian dance","A mountain"], hint: "Rowed by a gondolier through the canals of Venice." },
+      { q: "The Italian sports car brand with a prancing horse logo is…", a: 0, opts: ["Ferrari","Toyota","Ford","Tesla"], hint: "Bright red and very fast — made in Maranello, Italy." },
+      { q: "What is 'opera'?", a: 0, opts: ["A dramatic play set to music and singing","A type of pizza","A dance","A painting style"], hint: "Italy is the birthplace of it — think Pavarotti singing!" },
+      { q: "'Carnevale' in Venice is famous for people wearing…", a: 0, opts: ["Elaborate masks and costumes","Superhero capes","Sports jerseys","Pajamas"], hint: "A festival before Lent with beautiful decorated masks." },
+      { q: "Which of these famous artists was Italian?", a: 0, opts: ["Raphael","Rembrandt","Monet","Picasso"], hint: "One of the three great Renaissance masters (with Michelangelo and Leonardo)." },
+      { q: "What common hand gesture are Italians famous for using?", a: 0, opts: ["Talking with their hands","Thumbs down","Waving goodbye constantly","Saluting"], hint: "Gestures are a big part of Italian conversation!" }
+    ]
+  },
+  geography: {
+    title: "Geography", emoji: "🗺️", color: "#0891b2",
+    questions: [
+      { q: "What SHAPE is Italy famous for looking like?", a: 0, opts: ["A boot","A hat","A star","A circle"], hint: "It even looks like it's 'kicking' the island of Sicily!" },
+      { q: "Which large island is at the 'toe' of Italy's boot?", a: 0, opts: ["Sicily","Hawaii","Cuba","Iceland"], hint: "Home of Mount Etna, an active volcano." },
+      { q: "Which SEA surrounds most of Italy?", a: 0, opts: ["Mediterranean Sea","Atlantic Ocean","Pacific Ocean","Arctic Ocean"], hint: "Warm and blue — great for beaches!" },
+      { q: "Which mountain range runs down the middle of Italy?", a: 0, opts: ["The Apennines","The Rockies","The Andes","The Himalayas"], hint: "Like a 'spine' down the boot." },
+      { q: "Which tall mountain range forms Italy's northern border?", a: 0, opts: ["The Alps","The Andes","The Ural Mountains","The Atlas Mountains"], hint: "Snowy peaks shared with France, Switzerland, and Austria." },
+      { q: "What is the LONGEST river in Italy?", a: 0, opts: ["The Po","The Nile","The Amazon","The Tiber"], hint: "It flows across northern Italy." },
+      { q: "Which river flows through the city of Rome?", a: 0, opts: ["The Tiber","The Thames","The Seine","The Po"], hint: "Ancient Rome was founded on its banks." },
+      { q: "Italy is part of which continent?", a: 0, opts: ["Europe","Asia","Africa","Australia"], hint: "It's in the southern part, reaching into the Mediterranean." },
+      { q: "Which two tiny independent countries are located inside Italy?", a: 0, opts: ["Vatican City and San Marino","Monaco and Malta","Andorra and Liechtenstein","Cyprus and Crete"], hint: "One is the Pope's home; the other is one of the world's oldest republics." },
+      { q: "The famous canal city of Venice is in which part of Italy?", a: 0, opts: ["Northeast","Southwest","Center","Far south"], hint: "Up in the north, on the Adriatic coast." }
+    ]
+  },
+  history: {
+    title: "Ancient Rome & History", emoji: "⚔️", color: "#b45309",
+    questions: [
+      { q: "Ancient Rome was, according to legend, founded by two brothers named…", a: 0, opts: ["Romulus and Remus","Mario and Luigi","Castor and Pollux","Cain and Abel"], hint: "Legend says they were raised by a wolf!" },
+      { q: "What were Roman soldiers organized into?", a: 0, opts: ["Legions","Squads","Fleets","Clans"], hint: "You may remember this from Social Studies — Roman army units." },
+      { q: "The Colosseum was used mainly for…", a: 0, opts: ["Gladiator games and public spectacles","Growing crops","Storing water","Church services"], hint: "It could hold 50,000+ spectators." },
+      { q: "'Julius Caesar' was a famous Roman…", a: 0, opts: ["General and leader","Painter","Chef","Musician"], hint: "A salad AND a month (July) are named after him!" },
+      { q: "The ancient Romans built long roads and aqueducts. Aqueducts carried…", a: 0, opts: ["Water","Fire","Gold","Soldiers"], hint: "'Aqua' means water in Latin." },
+      { q: "Which language did the ancient Romans speak?", a: 0, opts: ["Latin","Greek","Italian","English"], hint: "Modern Italian, Spanish, and French all grew from it!" },
+      { q: "What was a Roman 'forum'?", a: 0, opts: ["A public gathering and marketplace","A prison","A private house","A farm"], hint: "You saw this word in the Roman Republic unit!" },
+      { q: "Pompeii was preserved for centuries because it was buried in…", a: 0, opts: ["Volcanic ash","Ocean water","Desert sand","Snow"], hint: "Mount Vesuvius erupted in 79 AD." },
+      { q: "The saying 'When in Rome, do as the ___ do' fills in with…", a: 0, opts: ["Romans","tourists","kings","artists"], hint: "It means: follow local customs when you visit!" },
+      { q: "'All roads lead to ___' — the famous saying about ancient Rome.", a: 0, opts: ["Rome","home","gold","war"], hint: "Rome was the center of a huge road network." }
+    ]
+  }
+};
+
+const TIPS_ITALY = {
+  landmarks: [
+    { h:"Rome — the Eternal City 🏛️", p:"Italy's capital. Home of the <b>Colosseum</b>, the <b>Trevi Fountain</b> (toss a coin to return!), the <b>Roman Forum</b>, and <b>Vatican City</b> tucked inside it." },
+    { h:"Venice — city on water 🚤", p:"Built on 100+ islands with <b>canals</b> instead of streets. You travel by <b>gondola</b> or water bus. No cars at all!" },
+    { h:"The Leaning Tower of Pisa", p:"It leans because the soft ground sank on one side while it was being built. It's a <b>bell tower</b> and still stands today!" },
+    { h:"Florence — home of the Renaissance 🎨", p:"Where the 'rebirth' of art and learning began in the 1400s. Michelangelo's <b>David</b> statue lives here." }
+  ],
+  food: [
+    { h:"Pizza was born in Naples 🍕", p:"The classic <b>Margherita</b> (tomato, mozzarella, basil) matches the Italian flag: red, white, green. Real Neapolitan pizza is cooked in seconds in a super-hot oven!" },
+    { h:"Gelato vs ice cream 🍨", p:"<b>Gelato</b> is Italian ice cream — denser, silkier, and with more intense flavor. 'Gelateria' = an ice cream shop." },
+    { h:"Handy food words", p:"<b>Pane</b> = bread · <b>Formaggio</b> = cheese · <b>Gelato</b> = ice cream · <b>Pesto</b> = basil sauce · <b>Prosciutto</b> = cured ham." },
+    { h:"Coffee culture ☕", p:"<b>Cappuccino</b> (espresso + milk foam) is a morning-only drink for Italians. After lunch, they drink plain <b>espresso</b>. <b>Tiramisu</b> ('pick me up') is a coffee dessert." }
+  ],
+  language: [
+    { h:"The essential greetings 👋", p:"<b>Ciao</b> = hi/bye (casual) · <b>Buongiorno</b> = good morning · <b>Arrivederci</b> = goodbye (formal). Try them out!" },
+    { h:"Being polite 🙏", p:"<b>Per favore</b> = please · <b>Grazie</b> = thank you · <b>Prego</b> = you're welcome. These three go a long way!" },
+    { h:"Yes, no, and feelings", p:"<b>Sì</b> = yes · <b>No</b> = no · <b>Bene</b> = good/well · <b>Amore</b> = love. 'Come stai?' = How are you? → answer 'Bene!'" },
+    { h:"Order like a local", p:"'<b>Un gelato, per favore!</b>' = 'An ice cream, please!' Point, smile, and say grazie. You'll do great!" }
+  ],
+  culture: [
+    { h:"The three Renaissance masters 🎨", p:"<b>Leonardo da Vinci</b> (Mona Lisa), <b>Michelangelo</b> (Sistine Chapel ceiling + David), and <b>Raphael</b> — all Italian geniuses from the 1400-1500s." },
+    { h:"Italy loves soccer ⚽", p:"They call it <b>calcio</b>. Italy has won the FIFA World Cup <b>four times</b> — one of the most successful teams ever." },
+    { h:"Opera & music 🎵", p:"Italy invented <b>opera</b> — dramatic stories told through singing. The music terms you see (piano, forte, tempo, allegro) are Italian words!" },
+    { h:"Venice Carnevale masks 🎭", p:"A famous festival where people wear beautiful, elaborate <b>masks</b> and costumes. It happens before Lent each year." }
+  ],
+  geography: [
+    { h:"Italy is shaped like a BOOT 👢", p:"It's a peninsula sticking into the Mediterranean Sea, looking like a boot 'kicking' the island of <b>Sicily</b> (a soccer ball!)." },
+    { h:"Mountains and seas", p:"The <b>Alps</b> form the snowy northern border. The <b>Apennines</b> run down the middle like a spine. The <b>Mediterranean Sea</b> wraps around the rest." },
+    { h:"Rivers 🏞️", p:"The <b>Po</b> is Italy's longest river (in the north). The <b>Tiber</b> flows through Rome — ancient Rome was founded on its banks." },
+    { h:"Countries inside a country", p:"<b>Vatican City</b> (the Pope's home, smallest country on Earth) and <b>San Marino</b> are both fully surrounded by Italy!" }
+  ],
+  history: [
+    { h:"The wolf legend 🐺", p:"Legend says Rome was founded by twin brothers <b>Romulus and Remus</b>, who were raised by a she-wolf. Romulus became the first king." },
+    { h:"You already know some of this!", p:"Your Social Studies Roman Republic unit connects here: <b>legions</b> (army units), the <b>forum</b> (marketplace), <b>consuls</b>, and the <b>Senate</b>." },
+    { h:"Roman engineering 🏗️", p:"Romans built <b>aqueducts</b> to carry water ('aqua' = water) and <b>roads</b> across their empire — 'All roads lead to Rome.'" },
+    { h:"Latin lives on", p:"Romans spoke <b>Latin</b>. Modern <b>Italian, Spanish, French, Portuguese, and Romanian</b> all grew out of it! Even July (Julius Caesar) is named for a Roman." }
+  ]
+};
+const ITALY_KEY_ORDER = ["landmarks","food","language","culture","geography","history"];
+
 const SUBJECTS = {
+  italy: {
+    title: "My Trip to Italy", emoji: "🇮🇹", color: "#059669",
+    description: "Landmarks, food, Italian phrases, culture, geography & ancient Rome — relive your adventure! 🍕",
+    topics: QUIZ_ITALY, tips: TIPS_ITALY, keyOrder: ITALY_KEY_ORDER, hasSubObj: false
+  },
   ela: {
     title: "ELA (English)", emoji: "📖", color: "#6366f1",
     description: "Vocabulary, literary terms, pronouns, story structure, writing",
@@ -1894,7 +2053,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["ela","grammar","social","math","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","social","math","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2007,6 +2166,8 @@ const TROPHIES = [
   { id:"boss_social",   emoji:"🏛️", name:"History Hero",     desc:"Defeat all 7 Social Studies bosses." },
   { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
   { id:"boss_algebra",  emoji:"🎯", name:"Algebra Ace",      desc:"Defeat all 5 Algebra bosses." },
+  { id:"boss_italy",    emoji:"🇮🇹", name:"Italian Explorer",  desc:"Defeat all 6 Italy Trip bosses. Bravissima!" },
+  { id:"welcome_home",  emoji:"✈️", name:"Welcome Home!",     desc:"Play the Italy Trip quiz for the first time." },
   { id:"boss_grammar",  emoji:"📝", name:"Grammar Guardian", desc:"Defeat all 8 Middle School Grammar bosses." },
   { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 7 Reading bosses." },
   { id:"boss_cs",       emoji:"💻", name:"Code Conqueror",   desc:"Defeat all 6 Computer Science bosses." },
@@ -2021,6 +2182,14 @@ const TROPHIES = [
 ];
 
 const BOSSES = {
+  italy: {
+    landmarks:  { emoji: "🗼", name: "The Leaning Tower" },
+    food:       { emoji: "🍕", name: "Pizza Padrone" },
+    language:   { emoji: "🗣️", name: "The Chatterbox" },
+    culture:    { emoji: "🎭", name: "Carnevale Mask" },
+    geography:  { emoji: "👢", name: "The Big Boot" },
+    history:    { emoji: "🐺", name: "The Roman Wolf" }
+  },
   ela: {
     vocab:    { emoji: "🧙", name: "Word Wizard" },
     literary: { emoji: "🎭", name: "Quill Master" },
@@ -3464,6 +3633,90 @@ function chimeAchievement() {
 }
 function chimeStart() { tone(523, 0.1, "sine", 0.12); setTimeout(() => tone(784, 0.14, "sine", 0.12), 90); }
 
+/* ---------- Background music (self-contained, Web Audio) ---------- */
+let musicOn = lsGet("g6_music", "off") === "on";
+let musicTimer = null;
+let musicStep = 0;
+let musicMasterGain = null;
+
+// A cheerful, bouncy Italian-tarantella-style loop in A minor / C major.
+// Note frequencies (Hz). 0 = rest.
+const NOTE = {
+  0:0, A3:220.00, B3:246.94, C4:261.63, D4:293.66, E4:329.63, F4:349.23,
+  G4:392.00, A4:440.00, B4:493.88, C5:523.25, D5:587.33, E5:659.25, F5:698.46, G5:783.99, A5:880.00
+};
+// Lively melody (each entry = one eighth-note step)
+const MUSIC_MELODY = [
+  "A4","C5","E5","C5","A4","E5","D5","C5",
+  "B4","D5","F5","D5","B4","G4","B4","D5",
+  "C5","E5","G5","E5","C5","A4","C5","E5",
+  "D5","B4","G4","B4","A4","0","A4","0",
+  "E5","E5","F5","E5","D5","C5","B4","A4",
+  "C5","C5","D5","C5","B4","A4","G4","E4",
+  "A4","B4","C5","D5","E5","F5","E5","D5",
+  "C5","B4","A4","B4","A4","0","0","0"
+];
+// Simple bass line (root notes, one per two steps)
+const MUSIC_BASS = [
+  "A3","A3","G4","G4","F4","F4","E4","E4",
+  "A3","A3","G4","G4","F4","F4","E4","E4",
+  "A3","A3","F4","F4","C4","C4","E4","E4",
+  "A3","A3","E4","E4","A3","A3","A3","A3"
+];
+const MUSIC_STEP_MS = 175;
+
+function musicNote(freq, dur, type, gain, dest) {
+  const ctx = getCtx(); if (!ctx || !freq) return;
+  const o = ctx.createOscillator(); const g = ctx.createGain();
+  o.connect(g); g.connect(dest || ctx.destination);
+  o.type = type || "triangle"; o.frequency.value = freq;
+  const t = ctx.currentTime;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(gain, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.start(t); o.stop(t + dur + 0.02);
+}
+function musicTick() {
+  const ctx = getCtx(); if (!ctx) return;
+  const mIdx = musicStep % MUSIC_MELODY.length;
+  const bIdx = Math.floor(musicStep / 2) % MUSIC_BASS.length;
+  const mel = NOTE[MUSIC_MELODY[mIdx]] || 0;
+  if (mel) musicNote(mel, 0.22, "triangle", 0.10, musicMasterGain);
+  if (musicStep % 2 === 0) {
+    const bass = NOTE[MUSIC_BASS[bIdx]] || 0;
+    if (bass) musicNote(bass / 2, 0.34, "sine", 0.09, musicMasterGain);
+  }
+  // little tambourine-ish tick on the offbeat for that Italian bounce
+  if (musicStep % 2 === 1) musicNote(2200, 0.03, "square", 0.015, musicMasterGain);
+  musicStep++;
+}
+function startMusic() {
+  const ctx = getCtx(); if (!ctx) return;
+  if (ctx.state === "suspended") ctx.resume();
+  if (!musicMasterGain) {
+    musicMasterGain = ctx.createGain();
+    musicMasterGain.gain.value = 0.55;
+    musicMasterGain.connect(ctx.destination);
+  }
+  if (musicTimer) return;
+  musicStep = 0;
+  musicTick();
+  musicTimer = setInterval(musicTick, MUSIC_STEP_MS);
+}
+function stopMusic() {
+  if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+}
+function toggleMusic() {
+  musicOn = !musicOn;
+  lsSet("g6_music", musicOn ? "on" : "off");
+  if (musicOn) startMusic(); else stopMusic();
+  render();
+}
+function maybeAutoMusic() {
+  // resume music on any user interaction if it was left on
+  if (musicOn && !musicTimer) startMusic();
+}
+
 let timerInterval = null;
 let lastBeepSec = 99;
 
@@ -3569,12 +3822,13 @@ function viewHome() {
     </div>
     <div class="card hero">
       <button class="settings-icon" onclick="promptAdmin()" title="Parent dashboard" aria-label="Parent dashboard">⚙️</button>
+      <button class="music-toggle" onclick="toggleMusic()" title="Music on/off" aria-label="Toggle music">${musicOn ? "🎵" : "🔇"}</button>
       <button class="avatar-btn" onclick="nextAvatar()" aria-label="Change avatar">
         <span class="avatar">${avatar}</span>
       </button>
       <span class="avatar-tap">tap to change</span>
       <h1>Hi ${esc(name)}! 👋</h1>
-      <p>Studying ${esc(subj.title)} today!</p>
+      <p>${state.subject === "italy" ? "Relive your Italian adventure! 🇮🇹" : "Studying " + esc(subj.title) + " today!"}</p>
     </div>
     ${(note || focus.size > 0) ? `
       <div class="mom-card">
@@ -4579,9 +4833,11 @@ function viewHistory() {
 function viewPicker() {
   const name = loadName(); const avatar = loadAvatar();
   const hist = loadHistory();
+  const italyPlayed = hist.some(h => (h.subject) === "italy");
   return `
     <div class="card hero">
       <button class="settings-icon" onclick="promptAdmin()" title="Parent dashboard" aria-label="Parent dashboard">⚙️</button>
+      <button class="music-toggle" onclick="toggleMusic()" title="Music on/off" aria-label="Toggle music">${musicOn ? "🎵" : "🔇"}</button>
       <button class="avatar-btn" onclick="nextAvatar()" aria-label="Change avatar">
         <span class="avatar">${avatar}</span>
       </button>
@@ -4589,6 +4845,16 @@ function viewPicker() {
       <h1>Hi ${esc(name)}! 👋</h1>
       <p>What do you want to study today?</p>
     </div>
+    ${!italyPlayed ? `
+      <button class="welcome-banner" onclick="enterSubject('italy')">
+        <div class="wb-flag">🇮🇹</div>
+        <div class="wb-text">
+          <div class="wb-title">Welcome back from Italy! 🎉</div>
+          <div class="wb-sub">Tap here for a special surprise quiz about your trip! 🍕🗼🎨</div>
+        </div>
+        <div class="wb-arrow">›</div>
+      </button>
+    ` : ""}
     ${SUBJECT_ORDER.map(s => {
       const sub = SUBJECTS[s];
       const subjHist = hist.filter(h => (h.subject || "ela") === s);
@@ -4596,20 +4862,36 @@ function viewPicker() {
       const avg = cnt ? Math.round(subjHist.reduce((sum,h)=>sum+h.pct,0)/cnt) : 0;
       const topicCount = sub.keyOrder.length;
       const qCount = sub.keyOrder.reduce((n,k)=>n+sub.topics[k].questions.length,0);
-      return `<button class="subject-card" onclick="enterSubject('${s}')">
+      const isItaly = s === "italy";
+      return `<button class="subject-card${isItaly ? " italy-card" : ""}" onclick="enterSubject('${s}')">
         <div class="subject-icon" style="background:${sub.color}22;">${sub.emoji}</div>
         <div class="subject-info">
-          <div class="subject-title" style="color:${sub.color};">${esc(sub.title)}</div>
+          <div class="subject-title" style="color:${sub.color};">${esc(sub.title)}${isItaly && !italyPlayed ? ' <span class="new-tag">NEW!</span>' : ""}</div>
           <div class="subject-desc">${esc(sub.description)}</div>
           <div class="subject-stats">${topicCount} topics · ${qCount} questions${cnt ? ` · avg ${avg}%` : ""}</div>
         </div>
         <div class="subject-arrow">›</div>
       </button>`;
     }).join("")}
-    <p class="muted" style="text-align:center;padding:8px;">📱 Tip: add this to her home screen via the browser menu → "Install app".</p>
+    <p class="muted" style="text-align:center;padding:8px;">🎵 Tap the music note to turn the fun tune on or off!</p>
   `;
 }
-function enterSubject(s) { setSubject(s); state.screen = "home"; chimePop(); render(); }
+function enterSubject(s) {
+  setSubject(s); state.screen = "home"; chimePop();
+  if (s === "italy") {
+    const earned = loadTrophies(); const newOnes = [];
+    const firstTime = !newOnes.length && !earned.has("welcome_home");
+    tryEarn(earned, newOnes, "welcome_home");
+    saveTrophies(earned);
+    if (newOnes.length) {
+      // Surprise! Kick off the music + a little celebration the first time.
+      if (!musicOn) { musicOn = true; lsSet("g6_music", "on"); startMusic(); }
+      setTimeout(() => { bigConfetti(); tada(); }, 200);
+      setTimeout(() => queueToasts(newOnes), 900);
+    }
+  }
+  render();
+}
 function goPicker() { clearTimer(); state.screen = "picker"; render(); }
 
 function render() {
@@ -4677,6 +4959,7 @@ window.syncNow = syncNow;
 window.disconnectSync = disconnectSync;
 window.enterSubject = enterSubject;
 window.goPicker = goPicker;
+window.toggleMusic = toggleMusic;
 window.startDailyChallenge = startDailyChallenge;
 window.startSpeedRound = startSpeedRound;
 window.quitSpeed = quitSpeed;
@@ -4717,6 +5000,10 @@ migrateData();
 }
 
 render();
+
+// Browsers require a user gesture before audio can play.
+// If music was left on, resume it on the first tap/click.
+document.addEventListener("pointerdown", maybeAutoMusic, { passive: true });
 
 if (syncEnabled()) {
   setTimeout(() => syncNow(true).catch(()=>{}), 800);

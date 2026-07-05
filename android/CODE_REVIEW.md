@@ -75,7 +75,7 @@ whether the active window's package/root was already covered by the `windows`
 loop with a boolean, not a node-identity list. Ensure each on-screen Uber
 window contributes its text exactly once.
 
-### [ ] 6. Offer identity is an exact string → OCR jitter re-fires; value collisions drop offers
+### [x] 6. Offer identity is an exact string → OCR jitter re-fires; value collisions drop offers — fixed in a8cdbdb
 **File:** `app/src/main/java/com/gbsc/cherry/capture/OfferEngine.kt:204`
 **Problem:** `signature = "%.2f|%.1f|%.0f"(fare, miles, minutes)` compared with
 `==`. A one-cent OCR wobble ($20.08 vs $20.03) makes a NEW signature → duplicate

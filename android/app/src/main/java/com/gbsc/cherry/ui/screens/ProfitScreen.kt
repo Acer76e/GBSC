@@ -166,12 +166,30 @@ private fun Metric(label: String, value: String) {
 private fun NumberField(label: String, value: String, onChange: (String) -> Unit) {
     OutlinedTextField(
         value = value,
-        onValueChange = { onChange(it.filter { c -> c.isDigit() || c == '.' }) },
+        onValueChange = { onChange(sanitizeDecimal(it)) },
         label = { Text(label) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
     )
+}
+
+/** Keeps digits plus a single decimal separator. Decimal keyboards emit ',' in
+ *  comma-decimal locales — accept it and normalize to '.' so "312,50" parses as
+ *  312.50 (not 31250). US input with '.' is unchanged. */
+private fun sanitizeDecimal(raw: String): String {
+    val sb = StringBuilder()
+    var seenSeparator = false
+    for (c in raw) {
+        when {
+            c.isDigit() -> sb.append(c)
+            (c == '.' || c == ',') && !seenSeparator -> {
+                sb.append('.')
+                seenSeparator = true
+            }
+        }
+    }
+    return sb.toString()
 }
 
 private fun String.d(): Double = toDoubleOrNull() ?: 0.0

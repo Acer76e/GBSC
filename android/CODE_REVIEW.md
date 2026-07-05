@@ -1,8 +1,9 @@
 # CherryPick — Code Review Findings
 
-Status: **open** — none of these are fixed yet. Ranked most-impactful first.
-Each item lists the location, the concrete failure, and the intended fix. When
-you fix one, change its checkbox to `[x]` and note the commit.
+Status: **all 10 addressed** — findings #1–#7, #9, #10 code-fixed and verified by
+a green CI build (assembleDebug); #8 accepted as a documented trade-off. Ranked
+most-impactful first. Each item lists the location, the concrete failure, and the
+intended fix.
 
 The overarching goal is **stability**: correct offer math, a card that always
 shows when it should, no silent data loss, and no lingering stale UI. Make each
@@ -101,19 +102,19 @@ before `toDouble` (allow a single separator). US behavior unchanged.
 
 ## Security / setup
 
-### [ ] 8. Committed debug keystore signs the installed APK
+### [x] 8. Committed debug keystore signs the installed APK — accepted risk, documented in build.gradle.kts
 **File:** `app/build.gradle.kts:35`, `app/debug.keystore`
 **Problem:** The repo-committed `debug.keystore` (password `android`) is the real
 key signing the CI `assembleDebug` APK you sideload. Anyone with repo access can
 build a trojaned in-place update that inherits the granted accessibility +
 screen-capture permissions.
-**Fix (personal-use pragmatic):** Keep in-place updates working but document the
-risk and keep the repo private. If you want to harden: move signing creds to CI
-secrets / a gradle property and stop committing the keystore, accepting that a
-one-time reinstall is needed when the key changes. Do **not** silently switch
-keys without noting the reinstall. Lowest-effort acceptable action: add a
-comment in `build.gradle.kts` and this doc stating the tradeoff; no code change
-required if the repo stays private.
+**Resolution:** Accepted as a deliberate trade-off for single-user, private-repo,
+sideloaded in-place updates (removing the committed key would force a reinstall on
+every version, which is the whole thing the stable key was added to avoid). The
+signing block in `build.gradle.kts` now documents the trade-off explicitly and the
+conditions under which it holds: the repo must stay private, and no `release` build
+distributed to other people may use this key. No code/signing change — doing so
+would break in-place updates without improving security for a private repo.
 
 ### [x] 9. allowBackup=true exposes unencrypted location history — fixed in d9d95d9
 **File:** `app/src/main/AndroidManifest.xml:9`

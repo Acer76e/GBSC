@@ -32,6 +32,18 @@ android {
         // Stable debug keystore committed at android/app/debug.keystore so every CI
         // build signs with the same key and the APK can update in place on the device
         // (no uninstall required between versions).
+        //
+        // SECURITY TRADE-OFF (review finding #8 — accepted, not code-fixed):
+        // This keystore and its passwords are public (they live in the repo). Anyone
+        // with read access to this repository can therefore sign an APK that Android
+        // will accept as an in-place update to CherryPick, inheriting the already-
+        // granted Accessibility + screenshot + overlay permissions. This is acceptable
+        // ONLY because the repo is private and single-user; it is the price of keeping
+        // sideloaded in-place updates working without a reinstall every version.
+        //   - Keep this repository private.
+        //   - Do NOT reuse this key, or ship a `release` build signed with it, for any
+        //     app distributed to other people. A real release must use a separate key
+        //     supplied via CI secrets / a keystore that is never committed.
         getByName("debug") {
             storeFile = file("debug.keystore")
             storePassword = "android"

@@ -51,7 +51,7 @@ A small `OfferEngine.onNoOffer()` called from the service's non-offer Uber
 branch is enough. Keep a short debounce (e.g. 2 consecutive non-offer frames)
 so a single dropped frame mid-offer doesn't flap the card.
 
-### [ ] 4. Settings/history can silently reset to defaults (unordered writes)
+### [x] 4. Settings/history can silently reset to defaults (unordered writes) — fixed in 368f604
 **File:** `app/src/main/java/com/gbsc/cherry/data/Repo.kt:67` (and `:91`)
 **Problem:** `updateSettings`/`persistHistory` each `ioScope.launch { file.writeText(...) }`
 on multi-threaded `Dispatchers.IO`. Slider drags fire dozens/sec. Writes can

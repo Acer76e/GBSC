@@ -7,12 +7,12 @@ A fun multiple-choice study app for 7th grade review and test prep.
 | Subject | Topics |
 |---|---|
 | 🇺🇸 **US History 7** | Exploration & Colonization · The 13 Colonies · Road to Revolution · The American Revolution · Constitution & New Nation · Westward Expansion · The Civil War · Reconstruction |
-| ✝️ **Religion 7** | The Bible · Jesus & the Gospels · The Seven Sacraments · The Mass & Prayer · Commandments & Morality · The Creed & Our Beliefs · Saints & Holy People · The Liturgical Year |
+| ✝️ **Religion 7** | The Bible · Jesus & the Gospels · The Seven Sacraments · The Mass & Prayer · Commandments & Morality · The Creed & Our Beliefs · Saints & Holy People · The Liturgical Year · Catholic Social Teaching |
 | 📖 ELA (English) | Vocabulary & roots, literary terms, pronouns, story structure, writing |
 | 📝 Middle School Grammar | Parts of speech, nouns, verbs, adjectives/adverbs, punctuation, capitalization, sentence structure, confused words |
 | 🔢 Math 7 | Whole numbers, integers, decimals, fractions, cards, calendar, unit conversions |
 | 🎯 Algebra | Variables, one- and two-step equations, like terms, inequalities |
-| 📚 Summer Reading: *Legend* | Plot, characters, themes, figurative language, Catholic Social Teachings |
+| 📚 Summer Reading: *Legend* | Plot, characters, themes, figurative language |
 | 💻 Computer Science | Hardware, software, internet, coding, binary, cybersecurity |
 | 🪐 Space & Solar System | Planets, stars, exploration, Earth & Moon, famous missions |
 | 🌍 Geography Quest | US & world capitals, continents, rivers, landmarks, flags |

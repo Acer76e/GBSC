@@ -960,6 +960,23 @@ const QUIZ_RELIGION = {
       { q: "What color is used at Pentecost and on the feasts of martyrs?", a: 0, opts: ["Red","White","Green","Gold"], hint: "The color of fire and of blood." },
       { q: "What color is used at Christmas and Easter?", a: 0, opts: ["White or gold","Violet","Green","Red"], hint: "The color of joy, light, and glory." }
     ]
+  },
+  cst: {
+    title: "Catholic Social Teaching", emoji: "🤝", color: "#e11d48",
+    questions: [
+      { q: "How many key themes of Catholic Social Teaching are there?", a: 0, opts: ["Seven","Five","Ten","Twelve"], hint: "The seven CST themes." },
+      { q: "Which theme says every person is sacred and made in God's image?", a: 0, opts: ["Life and Dignity of the Human Person","Solidarity","Care for God's Creation","Rights and Responsibilities"], hint: "The foundational theme — all human life is sacred, from beginning to end." },
+      { q: "Which theme says we are made for community and family?", a: 0, opts: ["Call to Family, Community, and Participation","Solidarity","Option for the Poor and Vulnerable","Care for God's Creation"], hint: "We are social by nature; the family is the basic cell of society." },
+      { q: "Which theme says we should help those most in need first?", a: 0, opts: ["Option for the Poor and Vulnerable","Solidarity","Rights and Responsibilities","The Dignity of Work"], hint: "Jesus said whatever you did for the least of these, you did for me." },
+      { q: "Which theme says work has dignity and workers have rights?", a: 0, opts: ["The Dignity of Work and the Rights of Workers","Solidarity","Care for God's Creation","Rights and Responsibilities"], hint: "Work is a way of sharing in God's creation — the worker matters more than the work." },
+      { q: "Which theme says we are one human family worldwide?", a: 0, opts: ["Solidarity","Subsidiarity","Stewardship","Sanctity"], hint: "We are our brothers' and sisters' keepers, wherever they live." },
+      { q: "Which theme is about caring for the environment?", a: 0, opts: ["Care for God's Creation","Solidarity","Subsidiarity","The Dignity of Work"], hint: "Stewardship — creation is a gift we are meant to protect." },
+      { q: "Which theme balances personal rights with duties to others?", a: 0, opts: ["Rights and Responsibilities","Solidarity","Care for God's Creation","The Dignity of Work"], hint: "Every right carries a matching responsibility." },
+      { q: "What is the common good?", a: 0, opts: ["The conditions that let every person and group flourish together","Whatever the majority votes for","The wealth a country produces","The good that benefits the most people"], hint: "Not “the greatest number” — every single person is included." },
+      { q: "What is the principle of subsidiarity?", a: 0, opts: ["Decisions should be made at the most local level capable of handling them","Larger governments should decide everything","Only the Church may settle social questions","Communities should never accept outside help"], hint: "Help from a higher level, yes — but don't take over what a smaller community can do itself." },
+      { q: "What is solidarity in practice?", a: 0, opts: ["Standing with others across differences of nation, race, and wealth because we are one family","Giving money to charity once a year","Agreeing with your community's opinions","Praying privately for people in need"], hint: "St. John Paul II called it a firm commitment to the good of all." },
+      { q: "Where does Catholic Social Teaching mainly come from?", a: 0, opts: ["Scripture and Church documents, especially papal encyclicals","The Ten Commandments alone","The writings of one saint","National laws about charity"], hint: "It grew from the Gospel and from letters like Rerum Novarum and Laudato Si'." }
+    ]
   }
 };
 
@@ -1019,10 +1036,18 @@ const TIPS_RELIGION = {
     { h:"Count the days 🔢", p:"<b>Lent</b> = 40 days · <b>Easter to Ascension</b> = 40 days · <b>Easter to Pentecost</b> = 50 days. Forty is the biblical number for preparation." },
     { h:"Triduum = ONE celebration 🕯️", p:"Holy Thursday evening through Easter Vigil is a single liturgy in three parts — that's why there's no dismissal on Holy Thursday or Good Friday." },
     { h:"Lent's three pillars ⛪", p:"<b>Prayer</b> (toward God) · <b>Fasting</b> (toward self) · <b>Almsgiving</b> (toward others). Giving something up is only one of the three." }
+  ],
+  cst: [
+    { h:"The 7 CST themes ✝️", p:"1. Life and Dignity of the Human Person<br>2. Call to Family, Community, and Participation<br>3. Rights and Responsibilities<br>4. Option for the Poor and Vulnerable<br>5. The Dignity of Work and the Rights of Workers<br>6. Solidarity<br>7. Care for God's Creation" },
+    { h:"Start with dignity 👤", p:"Theme 1 holds up all the others. If every person is made in <b>God's image</b>, then the poor must be defended, workers must be respected, and no one is disposable. Every other theme is that idea applied somewhere." },
+    { h:"Solidarity vs. subsidiarity 🤝", p:"<b>Solidarity</b> = we are ONE human family, so their problem is my problem. <b>Subsidiarity</b> = solve it at the SMALLEST level that can — family, parish, town — before handing it upward. They balance each other." },
+    { h:"Common good ≠ majority rule 🗳️", p:"The <b>common good</b> means conditions where <b>everyone</b> can flourish — not “whatever helps the most people.” A vote that leaves the vulnerable behind fails it." },
+    { h:"Where it comes from 📜", p:"CST grows out of the Gospel and out of papal <b>encyclicals</b> — letters like <b>Rerum Novarum</b> (1891, workers' rights) and <b>Laudato Si'</b> (2015, care for creation)." },
+    { h:"Applying a theme in an essay ✍️", p:"Pick <b>ONE</b> theme, name it exactly, then give <b>3–4 specific</b> examples — a news story, a service project, a passage of Scripture. Strong answers are specific, not general." }
   ]
 };
 
-const RELIGION_KEY_ORDER = ["bible","jesus","sacraments","mass","commandments","creed","saints","liturgical"];
+const RELIGION_KEY_ORDER = ["bible","jesus","sacraments","mass","commandments","creed","saints","liturgical","cst"];
 
 const QUIZ_MATH = {
   whole_ops: {
@@ -1284,21 +1309,6 @@ const QUIZ_READING = {
       { q: "When annotating, what's a good way to mark figurative language?", a: 0, opts: ["A short code like 'FL' or 🎨 in the margin","A red X","No mark","Just underline it"], hint: "Use a consistent symbol so you can find them later." }
     ]
   },
-  cst: {
-    title: "Catholic Social Teachings", emoji: "✝️", color: "#7c3aed",
-    questions: [
-      { q: "How many key themes of Catholic Social Teaching are there?", a: 0, opts: ["7","5","10","12"], hint: "The seven CST themes." },
-      { q: "Which theme says every person is sacred and made in God's image?", a: 0, opts: ["Life and Dignity of the Human Person","Solidarity","Care for God's Creation","Rights and Responsibilities"], hint: "The foundational theme — all life is sacred." },
-      { q: "Which theme says we are made for community?", a: 0, opts: ["Call to Family, Community, and Participation","Solidarity","Option for the Poor","Care for Creation"], hint: "We're social beings; family is the basic unit." },
-      { q: "Which theme says to help those most in need FIRST?", a: 0, opts: ["Option for the Poor and Vulnerable","Solidarity","Rights and Responsibilities","Dignity of Work"], hint: "Putting the poor and vulnerable first." },
-      { q: "Which theme says workers have rights and work has dignity?", a: 0, opts: ["The Dignity of Work and the Rights of Workers","Solidarity","Care for Creation","Rights and Responsibilities"], hint: "Work participates in God's creation." },
-      { q: "Which theme says we are ONE HUMAN FAMILY worldwide?", a: 0, opts: ["Solidarity","Subsidiarity","Stewardship","Sanctity"], hint: "Peace and global responsibility — connected across all borders." },
-      { q: "Which theme is about caring for the environment?", a: 0, opts: ["Care for God's Creation","Solidarity","Subsidiarity","Dignity of Work"], hint: "Stewardship of the earth God created." },
-      { q: "Which theme balances rights with duties to others?", a: 0, opts: ["Rights and Responsibilities","Solidarity","Care for Creation","Dignity of Work"], hint: "Every right has a corresponding responsibility." },
-      { q: "In Legend, characters helping the poor and sick connects to which CST theme?", a: 0, opts: ["Option for the Poor and Vulnerable","Care for Creation","Dignity of Work","Subsidiarity"], hint: "Day risking himself for Eden and the slum residents." },
-      { q: "In Legend, when June seeks the truth about her brother's death, this connects to which CST theme?", a: 0, opts: ["Rights and Responsibilities","Care for Creation","Dignity of Work","Subsidiarity"], hint: "Every person has a right to truth; we have a duty to seek it." }
-    ]
-  }
 };
 
 const TIPS_READING = {
@@ -1342,14 +1352,8 @@ const TIPS_READING = {
     { h:"Why it matters", p:"Figurative language reveals MOOD, CHARACTER, and THEME. \"The Republic was a cage\" (metaphor) tells you the narrator's view of the government." },
     { h:"Imagery 5-senses checklist", p:"Look for words appealing to: <b>sight</b> (colors, shapes), <b>sound</b> (loud/soft), <b>smell</b>, <b>taste</b>, <b>touch</b> (cold, rough). Imagery makes scenes feel REAL." }
   ],
-  cst: [
-    { h:"The 7 CST themes ✝️", p:"1. Life and Dignity of the Human Person<br>2. Call to Family, Community, and Participation<br>3. Rights and Responsibilities<br>4. Option for the Poor and Vulnerable<br>5. The Dignity of Work and the Rights of Workers<br>6. Solidarity<br>7. Care for God's Creation" },
-    { h:"Spot CST in Legend", p:"When characters help the poor (Tess and the homeless), seek truth (June questioning the Republic), or show the dignity of every person — mark it with 'CST' and the theme number." },
-    { h:"Connect specific themes", p:"Day risking life for Eden → <b>Option for the Poor / Family</b>. June discovering the corrupt system → <b>Rights and Responsibilities</b>. Republic propaganda dehumanizing the slums → violation of <b>Life and Dignity</b>." },
-    { h:"For the Theme Project", p:"Pick ONE CST theme that connects most strongly to Legend. Use 3–4 specific quotes/events from the book as evidence. Strong essays are SPECIFIC, not general." }
-  ]
 };
-const READING_KEY_ORDER = ["part1","part2","plot","characters","themes","figlang","cst"];
+const READING_KEY_ORDER = ["part1","part2","plot","characters","themes","figlang"];
 
 const QUIZ_ALGEBRA = {
   vars_expr: {
@@ -1930,7 +1934,7 @@ const QUIZ_GRAMMAR = {
       { q: "What shows POSSESSION or a CONTRACTION?", a: 0, opts: ["Apostrophe (')","Comma (,)","Period (.)","Quotation mark (\")"], hint: "Julia's book (possession); don't (contraction of do not)." },
       { q: "What surrounds a DIRECT QUOTE?", a: 0, opts: ["Quotation marks (\" \")","Parentheses","Commas","Dashes"], hint: "She said, \"Hello.\"" },
       { q: "Which is correct?", a: 0, opts: ["It's raining outside.","Its raining outside.","Its' raining outside.","Its raining outside'"], hint: "It's = it is (needs apostrophe)." },
-      { q: "Which comma is placed correctly?", a: 0, opts: ["Yes, I will.","Yes I, will.","Yes I will,","Yes I, will."], hint: "Comma after introductory word or phrase." },
+      { q: "Which comma is placed correctly?", a: 0, opts: ["Yes, I will.","Yes I, will.","Yes I will,","Yes, I, will."], hint: "Comma after introductory word or phrase." },
       { q: "When do you use a QUESTION MARK?", a: 0, opts: ["At the end of a question","At the end of any sentence","When something is surprising","When someone shouts"], hint: "Only for direct questions: Where are you? (NOT: I wondered where you were.)" }
     ]
   },
@@ -2200,7 +2204,7 @@ const SUBJECTS = {
   },
   religion: {
     title: "Religion 7", emoji: "✝️", color: "#7c3aed",
-    description: "Scripture, Jesus & the Gospels, the seven sacraments, the Mass, morality, the Creed, saints & the Church year.",
+    description: "Scripture, Jesus & the Gospels, the seven sacraments, the Mass, morality, the Creed, saints, the Church year & Catholic Social Teaching.",
     topics: QUIZ_RELIGION, tips: TIPS_RELIGION, keyOrder: RELIGION_KEY_ORDER, hasSubObj: false
   },
   math: {
@@ -2215,7 +2219,7 @@ const SUBJECTS = {
   },
   reading: {
     title: "Summer Reading: Legend", emoji: "📚", color: "#d97706",
-    description: "AR test prep for Legend by Marie Lu — plot, characters, themes, figurative language, CST",
+    description: "AR test prep for Legend by Marie Lu — plot, characters, themes & figurative language",
     topics: QUIZ_READING, tips: TIPS_READING, keyOrder: READING_KEY_ORDER, hasSubObj: false
   },
   cs: {
@@ -2345,13 +2349,13 @@ const TROPHIES = [
   { id:"tower_50",      emoji:"🏆", name:"Summit Master",    desc:"Reach floor 50 in Tower Climb." },
   { id:"boss_ela",      emoji:"📖", name:"ELA Champion",     desc:"Defeat all 5 ELA bosses." },
   { id:"boss_ushistory",emoji:"🇺🇸", name:"History Hero",     desc:"Defeat all 8 US History bosses." },
-  { id:"boss_religion", emoji:"✝️", name:"Faith Champion",   desc:"Defeat all 8 Religion bosses." },
+  { id:"boss_religion", emoji:"✝️", name:"Faith Champion",   desc:"Defeat all 9 Religion bosses." },
   { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
   { id:"boss_algebra",  emoji:"🎯", name:"Algebra Ace",      desc:"Defeat all 5 Algebra bosses." },
   { id:"boss_italy",    emoji:"🇮🇹", name:"Italian Explorer",  desc:"Defeat all 6 Italy Trip bosses. Bravissima!" },
   { id:"welcome_home",  emoji:"✈️", name:"Welcome Home!",     desc:"Play the Italy Trip quiz for the first time." },
   { id:"boss_grammar",  emoji:"📝", name:"Grammar Guardian", desc:"Defeat all 8 Middle School Grammar bosses." },
-  { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 7 Reading bosses." },
+  { id:"boss_reading",  emoji:"📚", name:"Reading Royalty",  desc:"Defeat all 6 Reading bosses." },
   { id:"boss_cs",       emoji:"💻", name:"Code Conqueror",   desc:"Defeat all 6 Computer Science bosses." },
   { id:"boss_space",    emoji:"🪐", name:"Cosmic Champion",  desc:"Defeat all 5 Space bosses." },
   { id:"boss_geo",      emoji:"🌍", name:"World Explorer",   desc:"Defeat all 6 Geography bosses." },
@@ -2407,7 +2411,8 @@ const BOSSES = {
     commandments: { emoji: "📜", name: "The Lawgiver" },
     creed:        { emoji: "🕯️", name: "The Creed Keeper" },
     saints:       { emoji: "😇", name: "The Hall of Saints" },
-    liturgical:   { emoji: "🕰️", name: "Warden of Seasons" }
+    liturgical:   { emoji: "🕰️", name: "Warden of Seasons" },
+    cst:          { emoji: "🤝", name: "CST Sage" }
   },
   math: {
     whole_ops:   { emoji: "🧮", name: "Number Cruncher" },
@@ -2431,8 +2436,7 @@ const BOSSES = {
     plot:       { emoji: "📖", name: "Story Sage" },
     characters: { emoji: "🎭", name: "Character Champion" },
     themes:     { emoji: "💭", name: "Theme Titan" },
-    figlang:    { emoji: "🎨", name: "Metaphor Master" },
-    cst:        { emoji: "✝️", name: "CST Sage" }
+    figlang:    { emoji: "🎨", name: "Metaphor Master" }
   },
   cs: {
     hardware: { emoji: "⚙️", name: "Hardware Hydra" },

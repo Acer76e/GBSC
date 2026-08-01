@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Study Quiz">
-<title>Grade 6 Study Quiz</title>
+<title>Julia's Study Quiz</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -623,230 +623,406 @@ const TIPS_ELA = {
 
 const ELA_KEY_ORDER = ["vocab","literary","pronouns","story","writing"];
 
-const SOCIAL_RAW = {
-  mesopotamia: {
-    title: "Mesopotamia", emoji: "🏺", color: "#a16207",
-    terms: [
-      { term: "Pictographs", def: "Picture symbols used for communication" },
-      { term: "Fertile Crescent", def: "Arc of rich farmland in Southwest Asia where early civilizations developed" },
-      { term: "Polytheism", def: "Belief in many gods" },
-      { term: "Irrigation", def: "Supplying water to crops through canals or systems" },
-      { term: "Empire", def: "A group of territories ruled by one leader or government" },
-      { term: "Monarch", def: "A king or queen who rules a kingdom" },
-      { term: "Urban", def: "Related to cities" },
-      { term: "Rural", def: "Related to countryside or farming areas" },
-      { term: "Epics", def: "Long poems or stories about heroes and important events" },
-      { term: "Alphabet", def: "System of letters used in writing" },
-      { term: "Cuneiform", def: "Mesopotamian wedge-shaped writing system" },
-      { term: "Social Hierarchy", def: "Ranking of people in society by status or power" },
-      { term: "Chariot", def: "Two-wheeled vehicle often used in warfare" }
+const QUIZ_USHIST = {
+  exploration: {
+    title: "Exploration & Colonization", emoji: "🧭", color: "#b45309",
+    questions: [
+      { q: "Which explorer sailed for Spain in 1492 and reached the Caribbean?", a: 0, opts: ["Christopher Columbus","John Cabot","Henry Hudson","Ferdinand Magellan"], hint: "He was looking for a westward route to Asia and landed in the Bahamas." },
+      { q: "What was the Columbian Exchange?", a: 0, opts: ["The transfer of plants, animals, people, and diseases between the Americas and Europe","A Spanish trade fair held in Madrid","A treaty splitting the New World in half","A shipping route around Africa"], hint: "Horses and wheat went west; corn, potatoes, and tomatoes went east — and disease went both ways." },
+      { q: "Which conquistador defeated the Aztec Empire in Mexico?", a: 0, opts: ["Hernán Cortés","Francisco Pizarro","Juan Ponce de León","Vasco Núñez de Balboa"], hint: "Pizarro took the Inca; this man took the Aztec." },
+      { q: "What was the first permanent English settlement in North America?", a: 0, opts: ["Jamestown, Virginia (1607)","Plymouth, Massachusetts","Roanoke, North Carolina","St. Augustine, Florida"], hint: "Named for King James I, founded thirteen years before the Pilgrims arrived." },
+      { q: "Which cash crop rescued Jamestown's economy?", a: 0, opts: ["Tobacco","Cotton","Sugar","Indigo"], hint: "John Rolfe introduced a sweeter West Indian strain that Europe could not get enough of." },
+      { q: "Which colony did the Pilgrims found in 1620 seeking religious freedom?", a: 0, opts: ["Plymouth","Jamestown","Maryland","Georgia"], hint: "They landed far north of where their charter allowed." },
+      { q: "What document did the Pilgrims sign to govern themselves?", a: 0, opts: ["The Mayflower Compact","The Magna Carta","The Articles of Confederation","The Fundamental Orders"], hint: "Signed aboard ship — an early agreement to make and obey their own laws." },
+      { q: "What was the Virginia House of Burgesses?", a: 0, opts: ["The first representative assembly in the English colonies","The governor's mansion in Jamestown","A trading company in London","A colonial court system"], hint: "Founded 1619 — the seed of American self-government." },
+      { q: "What was the Middle Passage?", a: 0, opts: ["The brutal Atlantic voyage that carried enslaved Africans to the Americas","A trade route through the Appalachian Mountains","The middle leg of Columbus's second voyage","A canal linking two colonial rivers"], hint: "It was the middle leg of the triangular trade — and the deadliest." },
+      { q: "What is mercantilism?", a: 0, opts: ["An economic system in which colonies exist to enrich the mother country","A system of trading only with Native nations","Free trade between all European powers","A religious philosophy about wealth"], hint: "Ship raw materials to the mother country, buy back finished goods — profit flows one direction." },
+      { q: "What is a joint-stock company?", a: 0, opts: ["A business in which many investors share the costs, risks, and profits","A company owned entirely by the king","A partnership between two colonies","A guild of colonial craftsmen"], hint: "The Virginia Company funded Jamestown this way — spreading the risk across investors." },
+      { q: "Which Jamestown leader enforced the rule “He who does not work, shall not eat”?", a: 0, opts: ["John Smith","John Rolfe","William Bradford","Lord De La Warr"], hint: "His discipline pulled the starving colony through its first winters." }
     ]
   },
-  egypt: {
-    title: "Ancient Egypt", emoji: "🐫", color: "#ca8a04",
-    terms: [
-      { term: "Piankhi", def: "Nubian king who conquered Egypt" },
-      { term: "Queen Hatshepsut", def: "Female pharaoh known for expanding trade" },
-      { term: "Mummies", def: "Preserved bodies prepared for burial" },
-      { term: "Sphinx", def: "Statue with a human head and lion body" },
-      { term: "Khufu", def: "Pharaoh who built the Great Pyramid at Giza" },
-      { term: "Trade Network", def: "System used to exchange goods and ideas" },
-      { term: "Papyrus", def: "Plant used to make writing material" },
-      { term: "Menes", def: "King credited with uniting Upper and Lower Egypt" },
-      { term: "Hieroglyphics", def: "Egyptian writing using symbols and pictures" },
-      { term: "Obelisk", def: "Tall stone monument with four sides and a pointed top" },
-      { term: "Ahmose of Thebes", def: "Pharaoh who drove out the Hyksos invaders" },
-      { term: "Mentuhotep II", def: "Pharaoh who reunited Egypt" },
-      { term: "Meroitic", def: "Writing system and culture of Kush" }
+  colonies: {
+    title: "The 13 Colonies", emoji: "🏘️", color: "#0891b2",
+    questions: [
+      { q: "Which colonial region had rocky soil and relied on fishing, shipbuilding, and trade?", a: 0, opts: ["The New England Colonies","The Middle Colonies","The Southern Colonies","The Backcountry"], hint: "Short growing season, long coastline — you fish and build ships instead of farming." },
+      { q: "Which region was called the “breadbasket” for its wheat and grain?", a: 0, opts: ["The Middle Colonies","The New England Colonies","The Southern Colonies","The Carolinas"], hint: "New York, New Jersey, Pennsylvania, Delaware — rich soil, big harvests." },
+      { q: "Which region depended on plantations and enslaved labor?", a: 0, opts: ["The Southern Colonies","The Middle Colonies","The New England Colonies","New France"], hint: "Warm climate, long growing season, cash crops like tobacco, rice, and indigo." },
+      { q: "Who founded Pennsylvania as a haven for Quakers?", a: 0, opts: ["William Penn","Roger Williams","Lord Baltimore","James Oglethorpe"], hint: "Penn's Woods — the colony carries his name." },
+      { q: "Which colony did Lord Baltimore found as a refuge for Catholics?", a: 0, opts: ["Maryland","Rhode Island","Connecticut","Delaware"], hint: "Its Toleration Act of 1649 protected Christian worship." },
+      { q: "Who founded Rhode Island after being banished from Massachusetts?", a: 0, opts: ["Roger Williams","Anne Hutchinson","John Winthrop","Thomas Hooker"], hint: "He argued for separating church and state — which got him exiled." },
+      { q: "What was the Great Awakening?", a: 0, opts: ["A religious revival that swept the colonies in the 1730s and 1740s","A colonial school reform movement","The rebirth of colonial trade after a depression","A Native American spiritual movement"], hint: "Fiery traveling preachers like Jonathan Edwards and George Whitefield drew huge crowds." },
+      { q: "What was the triangular trade?", a: 0, opts: ["A three-way Atlantic trade route linking the colonies, Africa, and Europe or the West Indies","Trade among the three colonial regions","A treaty among three European powers","A three-city trade fair in New England"], hint: "Rum, enslaved people, and sugar moved along three legs of the triangle." },
+      { q: "What were indentured servants?", a: 0, opts: ["People who worked several years without pay in exchange for passage to America","Enslaved people brought from Africa","Apprentices in colonial trade guilds","Soldiers who served in the colonial militia"], hint: "Sign a contract, work off your ticket, then go free." },
+      { q: "What did the John Peter Zenger trial help establish?", a: 0, opts: ["Freedom of the press","Freedom of religion","The right to a jury of peers","The right to bear arms"], hint: "The jury decided that printing the truth is not libel." },
+      { q: "What is a colonial charter?", a: 0, opts: ["A written grant from the king giving permission to settle and govern a colony","A map of colonial boundaries","A tax agreement with Parliament","A treaty with a Native nation"], hint: "The legal paperwork that made a colony official." },
+      { q: "Which war between Britain and France was fought over the Ohio River Valley?", a: 0, opts: ["The French and Indian War","The Revolutionary War","King Philip's War","The War of 1812"], hint: "Britain won, but the debt from it led straight to colonial taxes." }
     ]
   },
-  africa: {
-    title: "Ancient Africa (Ghana / Mali / Songhai)", emoji: "🌍", color: "#16a34a",
-    terms: [
-      { term: "Griot", def: "Storyteller and keeper of history" },
-      { term: "Animism", def: "Belief that spirits exist in nature" },
-      { term: "Oral Tradition", def: "Passing stories and history by speaking" },
-      { term: "Bantu Migration", def: "Movement of Bantu-speaking people through Africa" },
-      { term: "Extended Family", def: "Family group including relatives beyond parents and children" },
-      { term: "Clan", def: "Group of related families" },
-      { term: "Savanna", def: "Tropical grassland region" },
-      { term: "Desertification", def: "Process where land becomes desert" },
-      { term: "Trade Routes", def: "Paths used to transport and trade goods" },
-      { term: "Gold-Salt Trade", def: "Exchange of gold and salt that made kingdoms wealthy" },
-      { term: "Silent Barter", def: "Trading without speaking face to face" },
-      { term: "Tunka Manin", def: "Powerful ruler of Ghana" },
-      { term: "Ghana Empire", def: "Wealthy West African kingdom built on trade" },
-      { term: "Ghana Empire Decline", def: "Loss of trade, invasions, and weakened power" },
-      { term: "Sundiata", def: "Founder of Mali Empire" },
-      { term: "Mansa", def: "Title meaning emperor or king" },
-      { term: "Mansa Musa", def: "Wealthy ruler of Mali famous for pilgrimage to Mecca" },
-      { term: "Mecca", def: "Holy city of Islam" },
-      { term: "Timbuktu", def: "Major center of trade and learning" },
-      { term: "Fall of Mali", def: "Weak rulers and loss of trade routes" },
-      { term: "Tuareg", def: "Nomadic desert traders" },
-      { term: "Songhai", def: "Large West African empire after Mali" },
-      { term: "Sunni Ali", def: "Military leader who expanded Songhai" },
-      { term: "Sunni Baru", def: "Ruler replaced by Askia the Great" },
-      { term: "Askia the Great", def: "Leader who strengthened Songhai government and trade" },
-      { term: "Berbers", def: "North African desert traders" },
-      { term: "Morocco", def: "Kingdom that defeated Songhai" },
-      { term: "Arquebus", def: "Early firearm or gun" },
-      { term: "Great Zimbabwe", def: "Wealthy African trading city known for stone structures" }
+  road_rev: {
+    title: "Road to Revolution", emoji: "🔥", color: "#dc2626",
+    questions: [
+      { q: "What did the Proclamation of 1763 do?", a: 0, opts: ["Banned colonists from settling west of the Appalachian Mountains","Taxed all imported tea","Closed Boston Harbor","Required colonists to house British troops"], hint: "Britain wanted to avoid another costly war with Native nations." },
+      { q: "What was the Stamp Act?", a: 0, opts: ["A tax on all paper goods, from newspapers to playing cards","A tax on imported sugar","A tax on tea only","A law requiring passports for travel"], hint: "Everything printed needed a stamp proving the tax was paid." },
+      { q: "What does “No taxation without representation” mean?", a: 0, opts: ["Colonists should not be taxed by a Parliament in which they had no elected representatives","Taxes should be voluntary","Only landowners should pay taxes","Colonies should never be taxed at all"], hint: "The complaint was not the money — it was who got to vote on it." },
+      { q: "What happened at the Boston Massacre in 1770?", a: 0, opts: ["British soldiers fired into an angry crowd, killing five colonists","Colonists burned a British warship","Parliament closed Boston Harbor","A mob destroyed the governor's house"], hint: "Paul Revere's engraving of it became powerful propaganda." },
+      { q: "What was the Boston Tea Party?", a: 0, opts: ["Colonists dumped 342 chests of British tea into Boston Harbor to protest the Tea Act","A dinner honoring the royal governor","A boycott of British tea shops","A meeting of the Sons of Liberty over tea"], hint: "December 1773 — protesters disguised as Mohawk men." },
+      { q: "What were the Intolerable Acts?", a: 0, opts: ["Harsh punishment laws Britain passed after the Boston Tea Party","Taxes on sugar and molasses","Laws protecting Native land","Rules for colonial elections"], hint: "Britain called them the Coercive Acts; the colonists picked a stronger word." },
+      { q: "What is a boycott?", a: 0, opts: ["Refusing to buy certain goods as a form of protest","A violent uprising against a government","A tax placed on imports","A petition signed by citizens"], hint: "Hit them in the wallet, not with weapons." },
+      { q: "Who were the Sons of Liberty?", a: 0, opts: ["A protest group that organized resistance to British taxes","The colonial militia of Virginia","A group of loyal British officers","A merchants' trading association"], hint: "Samuel Adams was one of the leaders." },
+      { q: "What did the First Continental Congress do in 1774?", a: 0, opts: ["Met in Philadelphia to organize a united colonial response to the Intolerable Acts","Declared independence from Britain","Wrote the Constitution","Elected George Washington president"], hint: "Twelve of the thirteen colonies sent delegates — not yet a break, but a united voice." },
+      { q: "Who wrote the pamphlet “Common Sense”?", a: 0, opts: ["Thomas Paine","Thomas Jefferson","Patrick Henry","Benjamin Franklin"], hint: "It argued in plain language that independence was simply obvious." },
+      { q: "What were the Townshend Acts?", a: 0, opts: ["Taxes on imported glass, paper, paint, lead, and tea","A ban on colonial newspapers","A law closing colonial ports","A requirement to quarter soldiers"], hint: "Named for the British official who proposed them." },
+      { q: "What were the Committees of Correspondence?", a: 0, opts: ["Networks that spread news and coordinated protest between the colonies","Royal offices that delivered the mail","Committees that wrote colonial laws","Groups that negotiated with France"], hint: "Colonial group chat — by letter." }
     ]
   },
-  india: {
-    title: "Ancient India", emoji: "🕉️", color: "#ea580c",
-    terms: [
-      { term: "Indus", def: "Major river valley where early Indian civilization developed" },
-      { term: "Caste System", def: "Social class system in India" },
-      { term: "Reincarnation", def: "Belief that a person is reborn after death" },
-      { term: "Jainism", def: "Religion focused on nonviolence" },
-      { term: "Metallurgy", def: "Science of working with metals" },
-      { term: "Subcontinent", def: "Large landmass smaller than a continent" },
-      { term: "Vedic", def: "Related to ancient religious texts called Vedas" },
-      { term: "Karma", def: "Belief that actions have consequences" },
-      { term: "Dharma", def: "Moral duties and responsibilities" },
-      { term: "Sutra", def: "Religious teaching or text" }
+  revolution: {
+    title: "The American Revolution", emoji: "🎖️", color: "#1d4ed8",
+    questions: [
+      { q: "Where were the first shots of the Revolutionary War fired in 1775?", a: 0, opts: ["Lexington and Concord, Massachusetts","Bunker Hill","Fort Ticonderoga","Saratoga, New York"], hint: "“The shot heard round the world.”" },
+      { q: "Who commanded the Continental Army?", a: 0, opts: ["George Washington","Nathanael Greene","Benedict Arnold","John Adams"], hint: "A Virginian chosen partly to unite North and South." },
+      { q: "Who was the main author of the Declaration of Independence?", a: 0, opts: ["Thomas Jefferson","John Adams","Benjamin Franklin","James Madison"], hint: "He was 33 and wrote the draft in about two weeks." },
+      { q: "When was the Declaration of Independence adopted?", a: 0, opts: ["July 4, 1776","July 4, 1775","September 17, 1787","April 19, 1775"], hint: "The date on the fireworks." },
+      { q: "Which idea in the Declaration says government gets its power from the people?", a: 0, opts: ["Consent of the governed","Divine right of kings","Judicial review","Manifest destiny"], hint: "Governments derive their just powers from those they govern." },
+      { q: "Which battle was the turning point that convinced France to join the Americans?", a: 0, opts: ["Saratoga (1777)","Bunker Hill (1775)","Trenton (1776)","Yorktown (1781)"], hint: "A full British army surrendered in upstate New York." },
+      { q: "Where did Washington's army endure the brutal winter of 1777–78?", a: 0, opts: ["Valley Forge, Pennsylvania","Morristown, New Jersey","West Point, New York","Boston, Massachusetts"], hint: "Baron von Steuben turned it into a training camp." },
+      { q: "Which battle ended the war when Cornwallis surrendered?", a: 0, opts: ["Yorktown (1781)","Saratoga (1777)","Camden (1780)","Princeton (1777)"], hint: "The French fleet blocked his escape by sea." },
+      { q: "Which treaty officially ended the Revolutionary War?", a: 0, opts: ["The Treaty of Paris (1783)","The Treaty of Ghent","The Treaty of Versailles","The Treaty of Utrecht"], hint: "Britain recognized American independence and gave up land east of the Mississippi." },
+      { q: "Who were the Loyalists?", a: 0, opts: ["Colonists who stayed loyal to Britain and the king","Soldiers loyal to Washington","French officers serving in America","Colonists who refused to take sides"], hint: "Also called Tories — many fled to Canada after the war." },
+      { q: "Which French nobleman volunteered and became a trusted general under Washington?", a: 0, opts: ["The Marquis de Lafayette","Baron von Steuben","Count Rochambeau","Casimir Pulaski"], hint: "He arrived at nineteen and paid his own way." },
+      { q: "Who said “I only regret that I have but one life to lose for my country”?", a: 0, opts: ["Nathan Hale","Patrick Henry","Paul Revere","Ethan Allen"], hint: "A young schoolteacher hanged by the British as a spy." }
     ]
   },
-  china: {
-    title: "Ancient China", emoji: "🐉", color: "#dc2626",
-    terms: [
-      { term: "Shi Huangdi", def: "First emperor of China" },
-      { term: "Laozi", def: "Founder of Daoism" },
-      { term: "Confucius", def: "Chinese teacher who promoted respect and order" },
-      { term: "Jade", def: "Valuable stone used in art and jewelry" },
-      { term: "Shiji", def: "Historical record of China" },
-      { term: "Silk Road", def: "Trade route connecting Asia and Europe" },
-      { term: "Daoism", def: "Belief system focused on harmony with nature" },
-      { term: "Diffusion", def: "Spread of ideas and culture" },
-      { term: "Lord", def: "Powerful landowner" }
+  constitution: {
+    title: "Constitution & New Nation", emoji: "📜", color: "#7c3aed",
+    questions: [
+      { q: "What was America's first national government?", a: 0, opts: ["The Articles of Confederation","The Constitution","The Bill of Rights","The Mayflower Compact"], hint: "A “firm league of friendship” between the states — and not much more." },
+      { q: "What was the biggest weakness of the Articles of Confederation?", a: 0, opts: ["The national government was too weak — it could not tax or raise an army","The president had too much power","There were too many federal courts","States had no legislatures"], hint: "Congress could ask the states for money, but never make them pay." },
+      { q: "Which uprising by Massachusetts farmers showed the Articles were failing?", a: 0, opts: ["Shays' Rebellion","The Whiskey Rebellion","Bacon's Rebellion","The Boston Massacre"], hint: "Debt-ridden veterans shut down courts; the government could barely respond." },
+      { q: "Which compromise created a two-house Congress?", a: 0, opts: ["The Great Compromise (Connecticut Compromise)","The Three-Fifths Compromise","The Missouri Compromise","The Compromise of 1850"], hint: "The Senate gives every state two; the House goes by population." },
+      { q: "What did the Three-Fifths Compromise do?", a: 0, opts: ["Counted three of every five enslaved people when figuring representation and taxes","Gave three fifths of Congress to the large states","Required a three-fifths vote to pass laws","Divided western land into three-fifths sections"], hint: "A shameful bargain that gave slave states extra power in the House." },
+      { q: "What are the three branches of the federal government?", a: 0, opts: ["Legislative, Executive, Judicial","Federal, State, Local","Senate, House, President","Congress, Cabinet, Courts"], hint: "Make the laws, carry out the laws, interpret the laws." },
+      { q: "What system lets each branch limit the power of the others?", a: 0, opts: ["Checks and balances","Popular sovereignty","Judicial review","Due process"], hint: "The president can veto; Congress can override; the Court can strike down." },
+      { q: "Who were the Federalists?", a: 0, opts: ["Supporters of a strong national government who backed ratifying the Constitution","Opponents of the Constitution","A group demanding a king","Farmers who protested taxes"], hint: "Hamilton, Madison, and Jay argued their case in a famous set of essays." },
+      { q: "What are the first ten amendments to the Constitution called?", a: 0, opts: ["The Bill of Rights","The Articles","The Preamble","The Federalist Papers"], hint: "Anti-Federalists insisted on them before agreeing to ratify." },
+      { q: "What five freedoms does the First Amendment protect?", a: 0, opts: ["Religion, speech, press, assembly, and petition","Speech, guns, privacy, voting, and trial","Religion, voting, travel, work, and property","Press, protest, property, privacy, and prayer"], hint: "R-A-P-P-S: religion, assembly, press, petition, speech." },
+      { q: "What is federalism?", a: 0, opts: ["Power divided between the national government and the state governments","Rule by a single strong central government","Government run by political parties","A system where states can ignore federal law"], hint: "Two levels of government, each with its own powers." },
+      { q: "Who was the first President of the United States?", a: 0, opts: ["George Washington","John Adams","Thomas Jefferson","Benjamin Franklin"], hint: "He set the two-term tradition by simply stepping down." }
     ]
   },
-  greece: {
-    title: "Ancient Greece", emoji: "🏛️", color: "#0891b2",
-    terms: [
-      { term: "Oligarchy", def: "Government ruled by a few powerful people" },
-      { term: "Tyrant", def: "Leader who takes power by force" },
-      { term: "Homer", def: "Greek poet who wrote the Iliad and Odyssey" },
-      { term: "Polis", def: "Greek city-state" },
-      { term: "Citizens", def: "People with legal rights and responsibilities" },
-      { term: "Mythology", def: "Stories about gods and heroes" },
-      { term: "Acropolis", def: "Hilltop area with temples and important buildings" },
-      { term: "Aristocrats", def: "Wealthy upper-class landowners" },
-      { term: "Aesop", def: "Writer of fables" },
-      { term: "Classical Greece", def: "Time of great achievements in Greece" },
-      { term: "Democracy", def: "Government where citizens participate" },
-      { term: "Pericles", def: "Leader who expanded democracy in Athens" },
-      { term: "Apollo", def: "Greek god of music, healing, and the sun" },
-      { term: "Iliad", def: "Story about the Trojan War" },
-      { term: "Odyssey", def: "Story of Odysseus's journey home" }
+  expansion: {
+    title: "Westward Expansion", emoji: "🐎", color: "#ca8a04",
+    questions: [
+      { q: "What was Manifest Destiny?", a: 0, opts: ["The belief that the United States was destined to expand across the continent","A law granting free land to settlers","A treaty with Mexico over Texas","A plan to build transcontinental railroads"], hint: "“Manifest” = obvious; “destiny” = fate. Obvious fate." },
+      { q: "What purchase doubled the size of the United States in 1803?", a: 0, opts: ["The Louisiana Purchase","The Gadsden Purchase","The Alaska Purchase","The Florida Cession"], hint: "Jefferson bought it from Napoleon for about $15 million." },
+      { q: "Who led the expedition sent to explore the Louisiana Territory?", a: 0, opts: ["Lewis and Clark","Zebulon Pike","John C. Frémont","Daniel Boone"], hint: "Two captains and the Corps of Discovery." },
+      { q: "Which Shoshone woman guided and interpreted for the Corps of Discovery?", a: 0, opts: ["Sacagawea","Pocahontas","Nancy Ward","Mary Musgrove"], hint: "She traveled the whole route carrying her infant son." },
+      { q: "What was the Trail of Tears?", a: 0, opts: ["The forced removal of the Cherokee and other nations west to Indian Territory","A wagon route to Oregon","A retreat during the War of 1812","A gold-rush path over the Sierra Nevada"], hint: "Thousands died on the march to present-day Oklahoma." },
+      { q: "Which 1830 law authorized removing Native nations from the Southeast?", a: 0, opts: ["The Indian Removal Act","The Homestead Act","The Northwest Ordinance","The Dawes Act"], hint: "Signed by Andrew Jackson." },
+      { q: "Which war added California and the Southwest to the United States?", a: 0, opts: ["The Mexican-American War","The Spanish-American War","The War of 1812","The Texas Revolution"], hint: "Ended by the Treaty of Guadalupe Hidalgo in 1848." },
+      { q: "What drew hundreds of thousands to California in 1849?", a: 0, opts: ["The Gold Rush","Free farmland","The transcontinental railroad","Silver mining in Nevada"], hint: "The people who rushed there got a nickname from the year." },
+      { q: "What was the Monroe Doctrine?", a: 0, opts: ["A warning that European powers should not colonize or interfere in the Americas","A plan to annex Texas","A ban on slavery in new territories","A trade agreement with Britain"], hint: "The Western Hemisphere is closed for new colonizing." },
+      { q: "Which invention made cotton hugely profitable and deepened slavery in the South?", a: 0, opts: ["The cotton gin","The steamboat","The reaper","The spinning jenny"], hint: "Eli Whitney's machine separated seeds from fiber fifty times faster." },
+      { q: "Which trail did settlers follow to reach the Pacific Northwest?", a: 0, opts: ["The Oregon Trail","The Santa Fe Trail","The Chisholm Trail","The Wilderness Road"], hint: "Two thousand miles of wagon ruts starting in Missouri." },
+      { q: "What did the Missouri Compromise of 1820 do?", a: 0, opts: ["Admitted Missouri as a slave state and Maine as free, banning slavery north of 36°30′","Ended slavery in all territories","Allowed each territory to vote on slavery","Returned escaped slaves to their owners"], hint: "One in, one out — keeping the Senate balanced." }
     ]
   },
-  rome: {
-    title: "Roman Republic", emoji: "⚔️", color: "#9333ea",
-    terms: [
-      { term: "Tripartite", def: "Divided into three parts" },
-      { term: "Senate", def: "Group of Roman leaders and advisors" },
-      { term: "Patricians", def: "Wealthy upper-class citizens" },
-      { term: "Consuls", def: "Elected leaders of Rome" },
-      { term: "Checks and Balances", def: "System where branches limit one another's power" },
-      { term: "Legions", def: "Roman army units" },
-      { term: "Veto", def: "Power to reject a decision" },
-      { term: "Purpose of Government", def: "To maintain order and protect citizens" },
-      { term: "Primary", def: "Election to choose candidates" },
-      { term: "Republic", def: "Government with elected representatives" },
-      { term: "Plebeians", def: "Common citizens of Rome" },
-      { term: "Forum", def: "Marketplace and meeting center" },
-      { term: "Dictators", def: "Temporary rulers during emergencies" }
+  civilwar: {
+    title: "The Civil War", emoji: "⚔️", color: "#4b5563",
+    questions: [
+      { q: "What was the central cause of the Civil War?", a: 0, opts: ["Slavery and the disputes over its expansion into new states and territories","A disagreement over tariffs alone","A border argument with Mexico","Competition over railroad routes"], hint: "Every other quarrel — states' rights, tariffs, territory — traced back to this one." },
+      { q: "Who was President of the United States during the Civil War?", a: 0, opts: ["Abraham Lincoln","Andrew Johnson","James Buchanan","Ulysses S. Grant"], hint: "His election in 1860 triggered secession." },
+      { q: "What were the eleven Southern states that seceded called?", a: 0, opts: ["The Confederacy (Confederate States of America)","The Union","The Republic of the South","The Southern Alliance"], hint: "Jefferson Davis was their president." },
+      { q: "Where did the Civil War begin in April 1861?", a: 0, opts: ["Fort Sumter, South Carolina","Bull Run, Virginia","Harpers Ferry","Fort Monroe"], hint: "A federal fort in Charleston Harbor was fired upon." },
+      { q: "What did the Emancipation Proclamation declare?", a: 0, opts: ["That enslaved people in the rebelling Confederate states were free","That slavery was abolished everywhere in the nation","That the South must surrender","That Black men could vote"], hint: "It changed what the war was about — and invited Black soldiers into the Union army." },
+      { q: "Which 1863 battle was the turning point of the Civil War?", a: 0, opts: ["Gettysburg","Bull Run","Shiloh","Fredericksburg"], hint: "Lee's invasion of the North was stopped in Pennsylvania." },
+      { q: "Who commanded the Confederate Army of Northern Virginia?", a: 0, opts: ["Robert E. Lee","Stonewall Jackson","Jefferson Davis","James Longstreet"], hint: "Lincoln offered him Union command first; he chose Virginia." },
+      { q: "Which Union general accepted Lee's surrender?", a: 0, opts: ["Ulysses S. Grant","William T. Sherman","George McClellan","George Meade"], hint: "He later became president." },
+      { q: "Where did Lee surrender in April 1865?", a: 0, opts: ["Appomattox Court House, Virginia","Richmond, Virginia","Atlanta, Georgia","Vicksburg, Mississippi"], hint: "A quiet village courthouse — the terms were generous." },
+      { q: "Who led hundreds of enslaved people to freedom on the Underground Railroad?", a: 0, opts: ["Harriet Tubman","Sojourner Truth","Frederick Douglass","Harriet Beecher Stowe"], hint: "They called her Moses; she never lost a passenger." },
+      { q: "What was the Union's Anaconda Plan?", a: 0, opts: ["Blockade Southern ports and seize the Mississippi River to squeeze the Confederacy","Attack Richmond directly in one strike","Arm enslaved people across the South","Invade Mexico to cut off Confederate supplies"], hint: "Named for a snake that crushes its prey." },
+      { q: "Which 1862 battle was the deadliest single day in American history?", a: 0, opts: ["Antietam","Gettysburg","Chancellorsville","Cold Harbor"], hint: "About 23,000 casualties in one day in Maryland — it gave Lincoln the moment to issue the Emancipation Proclamation." }
+    ]
+  },
+  reconstruction: {
+    title: "Reconstruction", emoji: "🔨", color: "#0d9488",
+    questions: [
+      { q: "What was Reconstruction?", a: 0, opts: ["The period of rebuilding the South and readmitting Confederate states after the Civil War","The rebuilding of Northern factories","A plan to move freed people to Africa","The construction of the transcontinental railroad"], hint: "1865–1877 — putting the nation back together, and deciding on what terms." },
+      { q: "What did the 13th Amendment do?", a: 0, opts: ["Abolished slavery throughout the United States","Granted citizenship to freed people","Gave Black men the right to vote","Guaranteed equal schools"], hint: "First of the three Reconstruction Amendments — it ended the institution itself." },
+      { q: "What did the 14th Amendment do?", a: 0, opts: ["Granted citizenship and equal protection under the law to all born in the United States","Ended slavery","Gave women the vote","Created the Freedmen's Bureau"], hint: "“Equal protection of the laws” comes from this one." },
+      { q: "What did the 15th Amendment do?", a: 0, opts: ["Gave Black men the right to vote","Ended segregation in schools","Abolished poll taxes","Granted citizenship to freed people"], hint: "Voting rights could not be denied because of race or previous condition of servitude." },
+      { q: "Which agency helped formerly enslaved people with food, schools, and legal help?", a: 0, opts: ["The Freedmen's Bureau","The Homestead Office","The Union Relief Society","The Reconstruction Commission"], hint: "It founded thousands of schools, including several Black colleges." },
+      { q: "What were the Black Codes?", a: 0, opts: ["Southern laws passed right after the war to restrict the rights of freed Black Americans","Secret messages used on the Underground Railroad","Rules for Black soldiers in the Union army","Voting regulations in Northern states"], hint: "They tried to recreate slavery's control by another name." },
+      { q: "What were Jim Crow laws?", a: 0, opts: ["Laws that enforced racial segregation across the South","Laws protecting freed people's property","Federal civil rights laws","Rules governing sharecropping contracts"], hint: "Named after a mocking minstrel-show character." },
+      { q: "What is sharecropping?", a: 0, opts: ["Farming someone else's land in exchange for a share of the crop, often trapping families in debt","Farmers sharing equipment cooperatively","Dividing plantations among freed families","A government land-grant program"], hint: "You never quite earn enough to get out from under the landowner." },
+      { q: "Which president was impeached during Reconstruction?", a: 0, opts: ["Andrew Johnson","Ulysses S. Grant","Abraham Lincoln","Rutherford B. Hayes"], hint: "He survived removal in the Senate by a single vote." },
+      { q: "What effectively ended Reconstruction?", a: 0, opts: ["The Compromise of 1877, which withdrew federal troops from the South","The 15th Amendment","Lincoln's assassination","The Panic of 1873"], hint: "A disputed presidential election was settled by a political bargain." },
+      { q: "Which Supreme Court case allowed “separate but equal” segregation?", a: 0, opts: ["Plessy v. Ferguson (1896)","Dred Scott v. Sandford","Brown v. Board of Education","Marbury v. Madison"], hint: "A Louisiana railroad car case that stood for nearly sixty years." },
+      { q: "What were poll taxes, literacy tests, and grandfather clauses used to do?", a: 0, opts: ["Keep Black citizens from voting despite the 15th Amendment","Raise money for Southern schools","Register new immigrants to vote","Measure the education level of voters"], hint: "Legal-looking tools built for one purpose: blocking the ballot box." }
     ]
   }
 };
 
-function buildSocialQuiz(raw) {
-  const out = {};
-  for (const k in raw) {
-    const r = raw[k];
-    const n = r.terms.length;
-    const questions = r.terms.map((t, i) => {
-      const distractors = [];
-      for (let off = 1; distractors.length < 3 && off < n; off++) {
-        distractors.push(r.terms[(i + off) % n].term);
-      }
-      return {
-        q: 'Which term means: "' + t.def + '"?',
-        a: 0,
-        opts: [t.term].concat(distractors),
-        hint: t.term + " — " + t.def
-      };
-    });
-    out[k] = { title: r.title, emoji: r.emoji, color: r.color, questions: questions };
-  }
-  return out;
-}
-const QUIZ_SOCIAL = buildSocialQuiz(SOCIAL_RAW);
-
-const TIPS_SOCIAL = {
-  mesopotamia: [
-    { h:"Cradle of Civilization 🏺", p:"Mesopotamia was the FIRST big civilization, between the Tigris and Euphrates rivers in the Fertile Crescent." },
-    { h:"Cuneiform = wedge-shaped", p:"<b>Cuneiform</b> wedges were pressed into clay. It came AFTER pictographs as writing got more abstract." },
-    { h:"Polytheism vs Monarch", p:"<b>Poly</b> = many (polytheism = many gods). <b>Mon</b> = one (monarch = ONE ruler — a king or queen)." },
-    { h:"Urban vs Rural", p:"<b>Urban</b> = city. <b>Rural</b> = countryside / farms. (Think \"Uber drives in URBAN areas.\")" },
-    { h:"Irrigation 💧", p:"Canals carried river water to crops — that's what let farming feed those first cities." },
-    { h:"Social Hierarchy", p:"<b>Hierarchy</b> = ranking. People at the top had more power than people at the bottom." }
+const TIPS_USHIST = {
+  exploration: [
+    { h:"1492 → 1607 → 1620 🗓️", p:"Three anchor dates: <b>Columbus</b> lands (1492), <b>Jamestown</b> founded (1607), <b>Plymouth</b> founded (1620). Everything else in this unit hangs off those." },
+    { h:"Cortés vs. Pizarro", p:"<b>Cortés</b> → the <b>Aztec</b> (Mexico). <b>Pizarro</b> → the <b>Inca</b> (Peru). C comes before P; Aztec comes before Inca alphabetically too." },
+    { h:"Columbian Exchange goes BOTH ways ↔️", p:"To the Americas: horses, cattle, wheat, sugar — and smallpox. To Europe: corn, potatoes, tomatoes, cacao. The disease is the part people forget." },
+    { h:"Mercantilism = one-way profit 💰", p:"Colonies send <b>raw materials</b> out and buy <b>finished goods</b> back. The mother country wins on both trips. That's the whole system." },
+    { h:"1619 was a huge year", p:"The <b>House of Burgesses</b> (first representative assembly) AND the first enslaved Africans arriving in Virginia — both in 1619. Self-government and slavery started together." }
   ],
-  egypt: [
-    { h:"Khufu = Great Pyramid 🔺", p:"<b>Khufu</b> built the Great Pyramid at Giza. (Easy: KHUFU = the name on the biggest tomb.)" },
-    { h:"Menes united Egypt 👑", p:"<b>Menes</b> = Merged Egypt. He united Upper + Lower Egypt into one kingdom." },
-    { h:"Hatshepsut = trade queen", p:"Female pharaoh famous for EXPANDING TRADE (not war). Remember: <b>Hat</b>shepsut wore the pharaoh's hat." },
-    { h:"Hieroglyphics = sacred pictures", p:"<b>Hiero</b> = sacred, <b>glyph</b> = carving. Sacred picture carvings on temples and tombs." },
-    { h:"Mummies, Sphinx, Obelisk", p:"<b>Mummies</b> = preserved bodies. <b>Sphinx</b> = human HEAD + lion BODY. <b>Obelisk</b> = tall 4-sided pointed monument." },
-    { h:"Piankhi vs Hyksos", p:"<b>Piankhi</b> = Nubian king who CONQUERED Egypt. <b>Ahmose of Thebes</b> DROVE OUT the Hyksos invaders earlier." }
+  colonies: [
+    { h:"Three regions, three economies 🗺️", p:"<b>New England</b> = rocky soil → ships, fish, trade. <b>Middle</b> = good soil → grain (“breadbasket”). <b>South</b> = warm + long season → plantations and enslaved labor." },
+    { h:"Founder → colony 👤", p:"<b>W</b>illiam Penn → Penn<b>sylvania</b> (Quakers). <b>Lord Baltimore</b> → <b>Maryland</b> (Catholics — Mary = Catholic hint). <b>Roger Williams</b> → <b>Rhode Island</b> (religious freedom). <b>Oglethorpe</b> → <b>Georgia</b> (debtors)." },
+    { h:"Triangular trade, three legs 🔺", p:"Colonies send rum/goods → Africa; enslaved people forced across the <b>Middle Passage</b> → West Indies; sugar and molasses → back to the colonies." },
+    { h:"Indentured servant ≠ enslaved", p:"An indentured servant signed a <b>contract</b> and went free after the term. Slavery was permanent and inherited. Don't blur them." },
+    { h:"Zenger = free press 📰", p:"Printing the <b>truth</b> is not libel. That's the takeaway — freedom of the <b>press</b>, not speech." },
+    { h:"French and Indian War → debt → taxes", p:"Britain wins the war, but goes broke doing it. Who pays? The colonies. That single chain causes the whole next unit." }
   ],
-  africa: [
-    { h:"Three Empires in Order 📜", p:"<b>Ghana → Mali → Songhai</b> (G-M-S). Each empire rose AFTER the last one fell." },
-    { h:"Mansa Musa = wealthy Mali king 🕌", p:"Famous for his <b>pilgrimage to Mecca</b> with so much gold he caused inflation in cities he passed through!" },
-    { h:"Sundiata FOUNDED Mali 🦁", p:"\"Sun started Mali\" — <b>Sundiata</b> is the lion king who founded the Mali Empire." },
-    { h:"Songhai's leaders", p:"<b>Sunni Ali</b> EXPANDED Songhai. <b>Askia the Great</b> STRENGTHENED its government and trade after him." },
-    { h:"Gold-Salt Trade 💰🧂", p:"West Africa had GOLD, North Africa had SALT. The exchange made the empires super wealthy." },
-    { h:"Griots = living history", p:"<b>Griots</b> memorized history and passed it on by speaking — that's <b>oral tradition</b>." },
-    { h:"Desert traders", p:"<b>Tuareg</b> and <b>Berbers</b> = nomadic North African desert traders who crossed the Sahara." }
+  road_rev: [
+    { h:"The chain of events ⛓️", p:"Proclamation 1763 → Stamp Act → Townshend Acts → Boston Massacre (1770) → Tea Party (1773) → Intolerable Acts (1774) → First Continental Congress (1774) → Lexington (1775). Learn the ORDER, not just the events." },
+    { h:"Which act taxed what? 📋", p:"<b>Stamp Act</b> = paper goods. <b>Townshend</b> = imported glass, paper, paint, lead, tea. <b>Tea Act</b> = tea (and a monopoly for the British East India Company)." },
+    { h:"The real complaint 🗳️", p:"“No taxation without <b>representation</b>” — colonists objected to who VOTED on the tax, not to taxes existing." },
+    { h:"Intolerable = punishment", p:"They came AFTER the Tea Party, to punish Boston: harbor closed, self-government suspended, troops quartered. Britain called them the <b>Coercive</b> Acts." },
+    { h:"Paine's “Common Sense” 📖", p:"Published January 1776 — six months before the Declaration. It made independence feel like plain common sense to ordinary colonists." }
   ],
-  india: [
-    { h:"Indus = India's river 🏞️", p:"The name <b>India</b> comes from the <b>Indus</b> river, where Indian civilization began." },
-    { h:"Reincarnation = REborn", p:"<b>Re</b> = again. Reincarnation = born again in a new life." },
-    { h:"Karma vs Dharma", p:"<b>Karma</b> = actions have consequences (what you do affects your future). <b>Dharma</b> = your DUTY (what you should do)." },
-    { h:"Caste System", p:"A rigid social class system — the family you're born into determined your role for life." },
-    { h:"Jainism = nonviolence ☮️", p:"Religion focused on harmlessness to ALL living things. Jain followers won't even harm insects." },
-    { h:"Vedas = sacred texts", p:"<b>Vedic</b> means \"related to the Vedas\" — ancient Indian religious texts. A <b>Sutra</b> is a religious teaching." }
+  revolution: [
+    { h:"Three battles, three jobs ⚔️", p:"<b>Lexington & Concord</b> = it STARTS. <b>Saratoga</b> = the TURNING POINT (France joins). <b>Yorktown</b> = it ENDS. Then the <b>Treaty of Paris 1783</b> makes it official." },
+    { h:"Saratoga bought us France 🇫🇷", p:"Beating a whole British army proved the Americans could actually win — that's what convinced France to sign on with money, troops, and a navy." },
+    { h:"Valley Forge wasn't a battle 🥶", p:"It was the winter camp of 1777–78. Von Steuben drilled the ragged army into a real one. The suffering is famous; the TRAINING is the point." },
+    { h:"Patriots vs. Loyalists", p:"<b>Patriots</b> wanted independence. <b>Loyalists</b> (Tories) stayed with the king. Roughly a third, a third, and a third undecided." },
+    { h:"The Declaration's big idea 💡", p:"All men are created equal, with <b>unalienable rights</b>, and government gets its power from the <b>consent of the governed</b>. If it violates that, people may change it." }
   ],
-  china: [
-    { h:"Shi Huangdi = FIRST emperor 👑", p:"<b>Shi Huangdi</b> built the early Great Wall and started the Qin dynasty. \"Shi\" sounds like \"first.\"" },
-    { h:"Confucius = order and respect", p:"Teacher who promoted respect for elders, family, and government." },
-    { h:"Laozi = Daoism 🌿", p:"<b>Laozi</b> founded <b>Daoism</b>, which teaches harmony with nature. Dao means \"the way.\"" },
-    { h:"Silk Road 🐪", p:"A trade route connecting China to Europe — spread silk, spices, and IDEAS." },
-    { h:"Diffusion = spread", p:"When cultures meet through trade or migration, ideas spread. That's <b>diffusion</b>." }
+  constitution: [
+    { h:"Articles = too weak 🪶", p:"No power to <b>tax</b>, no power to raise an <b>army</b>, no national <b>courts</b>, and every state had one vote. <b>Shays' Rebellion</b> proved it couldn't cope." },
+    { h:"The two big compromises 🤝", p:"<b>Great Compromise</b> = two houses (Senate equal, House by population). <b>Three-Fifths Compromise</b> = counting enslaved people for representation and taxes." },
+    { h:"Three branches 🏛️", p:"<b>Legislative</b> makes laws (Congress) · <b>Executive</b> carries them out (President) · <b>Judicial</b> interprets them (Courts). Checks and balances keep any one from taking over." },
+    { h:"Federalists vs. Anti-Federalists", p:"<b>Federalists</b> = FOR the Constitution, strong national government (Hamilton, Madison, Jay). <b>Anti-Federalists</b> = feared it, demanded a <b>Bill of Rights</b> — and got one." },
+    { h:"First Amendment: RAPPS 🖐️", p:"<b>R</b>eligion · <b>A</b>ssembly · <b>P</b>ress · <b>P</b>etition · <b>S</b>peech. Five freedoms, one amendment." }
   ],
-  greece: [
-    { h:"Polis = city-state 🏛️", p:"A <b>polis</b> was a Greek city-state — like a tiny country. (Poli = city, like POLIce.)" },
-    { h:"Democracy = people power 🗳️", p:"<b>Demos</b> = people, <b>kratos</b> = power. <b>Pericles</b> expanded democracy in Athens." },
-    { h:"Oligarchy vs Tyrant", p:"<b>Oligarchy</b> = ruled by a FEW (oligo = few). <b>Tyrant</b> = one ruler who took power by FORCE." },
-    { h:"Homer's epics 📜", p:"<b>Homer</b> wrote two famous stories: <b>Iliad</b> (Trojan WAR) and <b>Odyssey</b> (Odysseus's JOURNEY home)." },
-    { h:"Acropolis = high city", p:"<b>Acro</b> = high (like acrobat). The Acropolis was the hilltop with temples and important buildings." },
-    { h:"Aesop = fables 🦊", p:"Aesop wrote short stories with morals (the Tortoise and the Hare, etc.)." }
+  expansion: [
+    { h:"Manifest Destiny in two words 🌅", p:"<b>Manifest</b> = obvious. <b>Destiny</b> = fate. “Obviously meant to be” — the belief used to justify expanding from ocean to ocean." },
+    { h:"1803: Louisiana Purchase 🗺️", p:"Jefferson bought it from Napoleon and DOUBLED the country. Then <b>Lewis and Clark</b> (with <b>Sacagawea</b>) went to see what he'd bought." },
+    { h:"Removal Act → Trail of Tears 😔", p:"The <b>Indian Removal Act</b> (1830) was the LAW; the <b>Trail of Tears</b> was what it did — the forced march west in which thousands died." },
+    { h:"Missouri Compromise math 🧮", p:"Missouri in as SLAVE, Maine in as FREE — Senate stays balanced. And no slavery north of the <b>36°30′</b> line." },
+    { h:"Cotton gin backfired 🌱", p:"Whitney's machine was supposed to save labor. Instead it made cotton so profitable that slavery expanded massively across the Deep South." }
   ],
-  rome: [
-    { h:"Tripartite = THREE parts 3️⃣", p:"<b>Tri</b> = 3. Rome's government had three parts. Checks and balances kept any one from getting too powerful." },
-    { h:"Patricians vs Plebeians", p:"<b>Patricians</b> = wealthy upper class (\"fathers\"). <b>Plebeians</b> = common citizens. Pleb = people." },
-    { h:"Consuls + Senate", p:"<b>Consuls</b> = the TWO elected leaders. <b>Senate</b> = the group of advisors (senators)." },
-    { h:"Veto = \"I forbid\" 🚫", p:"In Latin, <b>veto</b> literally means \"I forbid.\" It's the power to REJECT a decision." },
-    { h:"Republic = elected reps 🗳️", p:"Re-public = \"of the people.\" A <b>republic</b> has elected representatives — NOT direct democracy." },
-    { h:"Dictators = TEMPORARY (in Rome)", p:"In Roman times, a <b>dictator</b> was an emergency leader given temporary power. Different from the modern meaning!" },
-    { h:"Forum = meeting place 🏛️", p:"Like a public square — Romans met in the Forum to trade, debate, and gather." }
+  civilwar: [
+    { h:"Union vs. Confederacy 🔵🔴", p:"<b>Union</b> = the North, President <b>Lincoln</b>, General <b>Grant</b>. <b>Confederacy</b> = the South, President <b>Jefferson Davis</b>, General <b>Lee</b>." },
+    { h:"Start → turn → end 📍", p:"<b>Fort Sumter</b> (1861) starts it · <b>Gettysburg</b> + <b>Vicksburg</b> (1863) turn it · <b>Appomattox</b> (1865) ends it." },
+    { h:"What the Proclamation actually did 📜", p:"The <b>Emancipation Proclamation</b> freed enslaved people in the REBELLING states only. It changed the war's purpose and opened the army to Black soldiers. The <b>13th Amendment</b> is what ended slavery everywhere." },
+    { h:"Anaconda Plan 🐍", p:"Squeeze, don't strike: <b>blockade</b> the ports and take the <b>Mississippi</b> to cut the Confederacy in half." },
+    { h:"Antietam = one terrible day", p:"Deadliest SINGLE DAY (1862). <b>Gettysburg</b> was the deadliest BATTLE (three days) and the turning point. Different superlatives — don't swap them." }
+  ],
+  reconstruction: [
+    { h:"13 · 14 · 15 in order 🔢", p:"<b>13th</b> = free (abolishes slavery) · <b>14th</b> = citizen (citizenship + equal protection) · <b>15th</b> = vote (for Black men). Free, citizen, vote — in that order." },
+    { h:"Black Codes → Jim Crow", p:"<b>Black Codes</b> came right after the war to control freed people's labor. <b>Jim Crow</b> laws came later and enforced <b>segregation</b> across the South." },
+    { h:"Sharecropping = debt trap 🌾", p:"Work someone else's land for a share of the crop, borrow for seed and tools, never quite break even. Freedom on paper, dependence in practice." },
+    { h:"1877 ends it 🏁", p:"The <b>Compromise of 1877</b> settled a disputed election by pulling federal troops out of the South — and Reconstruction collapsed." },
+    { h:"Plessy vs. Brown ⚖️", p:"<b>Plessy v. Ferguson</b> (1896) ALLOWED “separate but equal.” <b>Brown v. Board</b> (1954) OVERTURNED it. Plessy = problem, Brown = fix." }
   ]
 };
 
-const SOCIAL_KEY_ORDER = ["mesopotamia","egypt","africa","india","china","greece","rome"];
+const USHIST_KEY_ORDER = ["exploration","colonies","road_rev","revolution","constitution","expansion","civilwar","reconstruction"];
+
+const QUIZ_RELIGION = {
+  bible: {
+    title: "The Bible", emoji: "📖", color: "#b45309",
+    questions: [
+      { q: "How many books are in the Catholic Bible?", a: 0, opts: ["73","66","50","100"], hint: "46 in the Old Testament plus 27 in the New Testament." },
+      { q: "What are the first five books of the Old Testament called?", a: 0, opts: ["The Pentateuch (the Torah)","The Prophets","The Gospels","The Psalms"], hint: "“Penta” means five." },
+      { q: "What does the word “Gospel” mean?", a: 0, opts: ["Good News","Holy Book","Teaching of God","Word of Life"], hint: "Old English “god spell” — good news." },
+      { q: "Who are the four Evangelists?", a: 0, opts: ["Matthew, Mark, Luke, and John","Peter, Paul, James, and John","Moses, David, Isaiah, and Jeremiah","Matthew, Mark, Peter, and Paul"], hint: "The four Gospel writers." },
+      { q: "What is a covenant?", a: 0, opts: ["A sacred, binding agreement between God and His people","A prayer said before meals","A rule made by the pope","A promise between two nations"], hint: "God makes them with Noah, Abraham, Moses — and finally with all people in Jesus." },
+      { q: "Which Old Testament book is a collection of 150 prayers and songs?", a: 0, opts: ["Psalms","Proverbs","Genesis","Isaiah"], hint: "Many were written by King David, and we still sing them at Mass." },
+      { q: "What is Divine Revelation?", a: 0, opts: ["God making Himself and His plan of love known to us","A vision given to a saint","The last book of the Bible","The Church's teaching authority"], hint: "God reveals; we respond in faith." },
+      { q: "What term means the Bible was written by human authors guided by the Holy Spirit?", a: 0, opts: ["Inspiration","Interpretation","Tradition","Revelation"], hint: "“In-spirit-ation” — the Spirit is in it." },
+      { q: "Which three Gospels are called “synoptic” because they see events similarly?", a: 0, opts: ["Matthew, Mark, and Luke","Mark, Luke, and John","Matthew, Luke, and John","Matthew, Mark, and John"], hint: "“Syn-optic” = seen together. John is the outlier." },
+      { q: "What is the Exodus?", a: 0, opts: ["God freeing the Israelites from slavery in Egypt through Moses","The creation of the world","The Israelites' return from Babylon","Abraham's journey to Canaan"], hint: "“Ex” = out. The way out of Egypt." },
+      { q: "What is a parable?", a: 0, opts: ["A short story Jesus told that teaches a spiritual lesson","A miracle performed by Jesus","A prayer of thanksgiving","A prophecy about the Messiah"], hint: "The Good Samaritan and the Prodigal Son are two of them." },
+      { q: "What is the last book of the New Testament?", a: 0, opts: ["Revelation","Acts of the Apostles","Jude","Hebrews"], hint: "Also called the Apocalypse — full of vivid symbols and hope." }
+    ]
+  },
+  jesus: {
+    title: "Jesus & the Gospels", emoji: "✝️", color: "#7c3aed",
+    questions: [
+      { q: "What does the Incarnation mean?", a: 0, opts: ["God the Son took on human nature and became man in Jesus Christ","Jesus rose from the dead","Mary was conceived without sin","The Holy Spirit came at Pentecost"], hint: "“Carne” means flesh — the Word became flesh." },
+      { q: "What does the name “Jesus” mean?", a: 0, opts: ["God saves","Anointed One","Son of Man","Prince of Peace"], hint: "The angel told Joseph the name because He would save people from their sins." },
+      { q: "What is the Paschal Mystery?", a: 0, opts: ["Christ's passion, death, resurrection, and ascension","The mystery of the Trinity","The virgin birth of Jesus","The changing of bread and wine"], hint: "“Paschal” comes from Passover — the passing from death to life." },
+      { q: "What is the Annunciation?", a: 0, opts: ["The angel Gabriel announcing to Mary that she would be the mother of the Son of God","Mary's visit to Elizabeth","The birth of Jesus in Bethlehem","The presentation of Jesus in the Temple"], hint: "“Announce” is right there in the word." },
+      { q: "What are the Beatitudes?", a: 0, opts: ["Jesus' teachings on true happiness, beginning “Blessed are…”","The Ten Commandments restated","The seven sacraments","The works of mercy"], hint: "“Beatitude” comes from the Latin for blessed or happy." },
+      { q: "Where did Jesus give the Beatitudes?", a: 0, opts: ["The Sermon on the Mount","The Last Supper","The Temple in Jerusalem","The shore of the Sea of Galilee"], hint: "Matthew places it on a mountainside — echoing Moses on Sinai." },
+      { q: "What was Jesus' first public miracle?", a: 0, opts: ["Turning water into wine at the wedding at Cana","Healing a blind man","Calming the storm","Feeding the five thousand"], hint: "His mother noticed the problem first." },
+      { q: "What happened at the Transfiguration?", a: 0, opts: ["Jesus was revealed in glory before Peter, James, and John on the mountain","Jesus was baptized in the Jordan","Jesus rose from the tomb","Jesus ascended into heaven"], hint: "Moses and Elijah appeared with Him, and His face shone." },
+      { q: "How many apostles did Jesus choose?", a: 0, opts: ["Twelve","Ten","Seven","Seventy-two"], hint: "One for each tribe of Israel." },
+      { q: "What is the Ascension?", a: 0, opts: ["Jesus returning to the Father in heaven forty days after the Resurrection","Mary being taken up into heaven","The Holy Spirit descending on the apostles","Jesus rising from the dead"], hint: "Forty days after Easter — don't confuse it with Mary's Assumption." },
+      { q: "What happened at Pentecost?", a: 0, opts: ["The Holy Spirit came upon the apostles — the birthday of the Church","Jesus rose from the dead","The apostles chose Matthias","Jesus was born in Bethlehem"], hint: "Tongues of fire, a rushing wind, and suddenly they could be understood by everyone." },
+      { q: "What does the title “Messiah” (Christ) mean?", a: 0, opts: ["Anointed One","Savior of the World","Son of David","Teacher"], hint: "Kings and priests were anointed with oil — Jesus is the promised Anointed One." }
+    ]
+  },
+  sacraments: {
+    title: "The Seven Sacraments", emoji: "🕊️", color: "#0891b2",
+    questions: [
+      { q: "What is a sacrament?", a: 0, opts: ["An outward sign instituted by Christ to give grace","A prayer said at Mass","A rule the Church requires","A blessing given by a priest"], hint: "Sign + instituted by Christ + gives grace — all three parts." },
+      { q: "How many sacraments are there?", a: 0, opts: ["Seven","Five","Ten","Three"], hint: "Three of initiation, two of healing, two of service." },
+      { q: "Which are the three Sacraments of Initiation?", a: 0, opts: ["Baptism, Confirmation, and Eucharist","Baptism, Reconciliation, and Eucharist","Confirmation, Matrimony, and Holy Orders","Baptism, Confirmation, and Anointing of the Sick"], hint: "The three that make you a full member of the Church." },
+      { q: "Which are the two Sacraments of Healing?", a: 0, opts: ["Reconciliation and Anointing of the Sick","Baptism and Confirmation","Matrimony and Holy Orders","Eucharist and Reconciliation"], hint: "One heals the soul, one strengthens the sick and suffering." },
+      { q: "Which are the two Sacraments at the Service of Communion?", a: 0, opts: ["Matrimony and Holy Orders","Baptism and Eucharist","Confirmation and Reconciliation","Anointing of the Sick and Matrimony"], hint: "Both are vocations lived for others." },
+      { q: "Which sacrament frees us from original sin and makes us members of the Church?", a: 0, opts: ["Baptism","Confirmation","Eucharist","Reconciliation"], hint: "Water, and the words “in the name of the Father, and of the Son, and of the Holy Spirit.”" },
+      { q: "Which sacrament strengthens us with the gifts of the Holy Spirit?", a: 0, opts: ["Confirmation","Baptism","Holy Orders","Anointing of the Sick"], hint: "Sealed with sacred chrism by the bishop." },
+      { q: "What do the bread and wine become at Mass?", a: 0, opts: ["The Body and Blood of Christ","A symbol of Christ's sacrifice","A reminder of the Last Supper","Blessed food for the community"], hint: "Truly, really, and substantially present — not just a symbol." },
+      { q: "What is the change of bread and wine into Christ's Body and Blood called?", a: 0, opts: ["Transubstantiation","Consecration of the faithful","Communion","Transfiguration"], hint: "The substance changes even though the appearances stay the same." },
+      { q: "What are the four parts of the Sacrament of Reconciliation?", a: 0, opts: ["Contrition, confession, penance, and absolution","Prayer, fasting, almsgiving, and mercy","Sorrow, silence, sacrifice, and service","Confession, communion, blessing, and dismissal"], hint: "Be sorry, tell it, make it right, be forgiven." },
+      { q: "What is the seal of confession?", a: 0, opts: ["The priest's absolute duty never to reveal anything confessed to him","The sign of the cross made at the end","The penance the priest assigns","The screen in the confessional"], hint: "There is no exception to it — ever." },
+      { q: "In the Sacrament of Matrimony, who are the ministers of the sacrament?", a: 0, opts: ["The bride and groom, who give the sacrament to each other","The priest who officiates","The bishop of the diocese","The witnesses at the wedding"], hint: "The priest witnesses and blesses; the couple confer it on one another." }
+    ]
+  },
+  mass: {
+    title: "The Mass & Prayer", emoji: "🙏", color: "#ca8a04",
+    questions: [
+      { q: "What are the two main parts of the Mass?", a: 0, opts: ["The Liturgy of the Word and the Liturgy of the Eucharist","The entrance rite and the closing rite","The homily and the communion","The Gloria and the Creed"], hint: "First we are fed at the table of the Word, then at the table of the Eucharist." },
+      { q: "What does the word “liturgy” mean?", a: 0, opts: ["The public, official worship of the Church","A private devotion","A song sung during Mass","The reading of Scripture"], hint: "From a Greek word meaning “work of the people.”" },
+      { q: "Which prayer did Jesus Himself teach us?", a: 0, opts: ["The Our Father (the Lord's Prayer)","The Hail Mary","The Apostles' Creed","The Glory Be"], hint: "The disciples asked, “Lord, teach us to pray.”" },
+      { q: "In the ACTS method of prayer, what do the letters stand for?", a: 0, opts: ["Adoration, Contrition, Thanksgiving, Supplication","Asking, Caring, Trusting, Serving","Adoration, Communion, Trust, Silence","Amen, Christ, Trinity, Spirit"], hint: "Praise, sorrow, thanks, and asking — four moves of prayer." },
+      { q: "How many Scripture readings are proclaimed at a typical Sunday Mass?", a: 0, opts: ["Three, plus a responsorial psalm","Two, plus a psalm","One from each Testament","Four, plus a psalm"], hint: "Old Testament, New Testament letter, and Gospel." },
+      { q: "What is the homily?", a: 0, opts: ["The priest's or deacon's reflection that breaks open the Scripture readings","The opening prayer of the Mass","The prayer over the gifts","The final blessing"], hint: "It follows the Gospel and applies it to our lives." },
+      { q: "What is the Liturgy of the Hours?", a: 0, opts: ["The Church's official daily prayer, prayed at set times throughout the day","The hour before Sunday Mass","Adoration before the Blessed Sacrament","The prayers said during a funeral"], hint: "Also called the Divine Office or the Breviary." },
+      { q: "What are the four sets of Mysteries of the Rosary?", a: 0, opts: ["Joyful, Luminous, Sorrowful, and Glorious","Joyful, Holy, Sorrowful, and Glorious","Luminous, Sacred, Sorrowful, and Eternal","Joyful, Sorrowful, Glorious, and Marian"], hint: "St. John Paul II added the Luminous Mysteries in 2002." },
+      { q: "What is contemplative prayer?", a: 0, opts: ["Resting silently in God's presence, simply being with Him","Reading Scripture aloud","Praying the rosary in a group","Singing hymns at Mass"], hint: "Fewer words, more listening." },
+      { q: "What is the Eucharistic Prayer?", a: 0, opts: ["The great prayer of thanksgiving and consecration at the heart of the Mass","The prayer said before receiving communion","The prayer of the faithful","The prayer after the homily"], hint: "It includes the words of institution from the Last Supper." },
+      { q: "What is an examination of conscience?", a: 0, opts: ["Prayerfully reviewing your choices to see where you followed or failed to follow God","A test given before Confirmation","The priest's questions in confession","A list of sins read aloud at Mass"], hint: "Usually done before going to Reconciliation, or at the end of the day." },
+      { q: "What does “Amen” mean?", a: 0, opts: ["So be it — I believe, I agree","Praise God","Peace be with you","Let us pray"], hint: "It's how we make a prayer our own." }
+    ]
+  },
+  commandments: {
+    title: "Commandments & Morality", emoji: "📜", color: "#dc2626",
+    questions: [
+      { q: "Who received the Ten Commandments, and where?", a: 0, opts: ["Moses, on Mount Sinai","Abraham, in Canaan","David, in Jerusalem","Noah, after the flood"], hint: "Two stone tablets, on a mountain, after the Exodus." },
+      { q: "How are the Ten Commandments divided?", a: 0, opts: ["The first three concern love of God; the last seven concern love of neighbor","Five about worship and five about family","Half for adults and half for children","Three about sin and seven about virtue"], hint: "Two tablets, two loves." },
+      { q: "What is the Great Commandment?", a: 0, opts: ["Love God with all your heart, soul, and mind, and love your neighbor as yourself","Honor your father and your mother","Do unto others as you would have them do unto you","Keep holy the Lord's Day"], hint: "Jesus said all the law and the prophets hang on these two." },
+      { q: "What is conscience?", a: 0, opts: ["The inner judgment that helps us know right from wrong and choose good","A feeling of guilt after sinning","The teaching of the Church","A rule made by parents"], hint: "It needs to be formed well — by Scripture, the Church, and prayer." },
+      { q: "What is mortal sin?", a: 0, opts: ["A grave sin committed freely and with full knowledge that breaks our relationship with God","Any sin we commit more than once","A sin we forget to confess","A sin against the Church only"], hint: "Three conditions: grave matter, full knowledge, and full consent." },
+      { q: "What is venial sin?", a: 0, opts: ["A less serious sin that weakens but does not destroy our relationship with God","A sin that cannot be forgiven","A sin committed by accident only","A sin against the commandments of the Church"], hint: "It wounds the friendship rather than ending it." },
+      { q: "What are the three theological virtues?", a: 0, opts: ["Faith, hope, and charity (love)","Prudence, justice, and temperance","Wisdom, understanding, and counsel","Poverty, chastity, and obedience"], hint: "St. Paul: “And the greatest of these is love.”" },
+      { q: "What are the four cardinal virtues?", a: 0, opts: ["Prudence, justice, fortitude, and temperance","Faith, hope, love, and mercy","Honesty, courage, patience, and kindness","Wisdom, knowledge, piety, and fear of the Lord"], hint: "“Cardinal” comes from the Latin for hinge — the others turn on them." },
+      { q: "What is the Golden Rule?", a: 0, opts: ["Do to others as you would have them do to you","Love God above all things","Forgive seventy times seven times","Judge not, that you be not judged"], hint: "Jesus states it in the Sermon on the Mount." },
+      { q: "What are the Corporal Works of Mercy?", a: 0, opts: ["Actions that meet people's bodily needs, like feeding the hungry and sheltering the homeless","Prayers said for the souls in purgatory","Acts of penance during Lent","Teachings about social justice"], hint: "“Corporal” relates to the body; the Spiritual Works meet needs of the soul." },
+      { q: "What does the Fourth Commandment ask of us?", a: 0, opts: ["Honor your father and your mother","Keep holy the Lord's Day","You shall not steal","You shall not bear false witness"], hint: "It's the first commandment of the second tablet — love of neighbor starts at home." },
+      { q: "What are the seven gifts of the Holy Spirit?", a: 0, opts: ["Wisdom, understanding, counsel, fortitude, knowledge, piety, and fear of the Lord","Faith, hope, love, joy, peace, patience, and kindness","Prudence, justice, fortitude, temperance, faith, hope, and love","Prophecy, healing, tongues, teaching, service, giving, and mercy"], hint: "They are strengthened in you at Confirmation." }
+    ]
+  },
+  creed: {
+    title: "The Creed & Our Beliefs", emoji: "🕯️", color: "#4f46e5",
+    questions: [
+      { q: "What is the Nicene Creed?", a: 0, opts: ["The statement of core Catholic beliefs professed together at Sunday Mass","A prayer to the Blessed Mother","The list of the sacraments","The Church's moral law"], hint: "“Credo” in Latin means “I believe.”" },
+      { q: "What is the mystery of the Holy Trinity?", a: 0, opts: ["One God in three Divine Persons: Father, Son, and Holy Spirit","Three gods who work together","God appearing in three different forms","The union of Jesus' divine and human natures"], hint: "Three Persons, one God — not three gods, and not one God wearing masks." },
+      { q: "What are the four marks of the Church?", a: 0, opts: ["One, holy, catholic, and apostolic","Faithful, loving, merciful, and just","Sacred, universal, ancient, and true","United, blessed, global, and enduring"], hint: "You say all four every Sunday in the Creed." },
+      { q: "What does the word “catholic” mean?", a: 0, opts: ["Universal","Ancient","Holy","Faithful"], hint: "The Church is for all people, in all places, in all times." },
+      { q: "What is grace?", a: 0, opts: ["God's free and undeserved gift of His own life and help within us","A prayer said before meals","A reward earned by good works","Forgiveness given in confession only"], hint: "You can't earn it — that's what makes it grace." },
+      { q: "What is the Communion of Saints?", a: 0, opts: ["The union of all the faithful — on earth, in purgatory, and in heaven","The reception of holy communion at Mass","A gathering of canonized saints in heaven","The community of a parish"], hint: "Three parts: the pilgrim Church, the Church being purified, and the Church in glory." },
+      { q: "What is the Immaculate Conception?", a: 0, opts: ["Mary was conceived without original sin from the first moment of her existence","Mary conceived Jesus by the Holy Spirit","Jesus was born without sin","Mary remained sinless her whole life only after the Annunciation"], hint: "It's about MARY's conception, not Jesus' — the most commonly mixed-up doctrine." },
+      { q: "What is the Assumption?", a: 0, opts: ["Mary was taken body and soul into heaven at the end of her earthly life","Mary appeared to the apostles after the Resurrection","Jesus ascended into heaven","Mary was conceived without sin"], hint: "Jesus ASCENDED by His own power; Mary was ASSUMED — taken up by God." },
+      { q: "What is original sin?", a: 0, opts: ["The first sin of Adam and Eve, whose effects every human being inherits","The first sin a person commits personally","A sin that can never be forgiven","A sin committed against the Church"], hint: "Baptism removes it; the tendency to sin (concupiscence) remains." },
+      { q: "What is the Magisterium?", a: 0, opts: ["The teaching authority of the Church, exercised by the pope and bishops","The collection of Church laws","The Vatican's governing offices","The body of Church tradition"], hint: "From the Latin “magister” — teacher." },
+      { q: "What is apostolic succession?", a: 0, opts: ["The unbroken line of bishops handing on authority from the apostles to today","The order in which the apostles died","The succession of popes named Peter","The passing of Scripture from generation to generation"], hint: "It's why the Church is called “apostolic.”" },
+      { q: "What is salvation?", a: 0, opts: ["Being freed from sin and given new life with God through Jesus Christ","Being a member of the Catholic Church","Living a morally good life","Receiving all seven sacraments"], hint: "The name Jesus literally means “God saves.”" }
+    ]
+  },
+  saints: {
+    title: "Saints & Holy People", emoji: "😇", color: "#059669",
+    questions: [
+      { q: "What is a saint?", a: 0, opts: ["A person now in heaven whom the Church holds up as a model of holiness","Anyone who has been baptized","A person who performed a miracle","A member of a religious order"], hint: "Their lives show us that holiness is actually possible." },
+      { q: "What is canonization?", a: 0, opts: ["The Church's official declaration that a person is a saint in heaven","The writing of a saint's biography","The naming of a church after a saint","The blessing of a saint's relics"], hint: "It comes after being declared Venerable and then Blessed." },
+      { q: "Who was the first pope?", a: 0, opts: ["Saint Peter","Saint Paul","Saint James","Saint Linus"], hint: "Jesus said, “You are Rock, and on this rock I will build my Church.”" },
+      { q: "Which apostle, once called Saul, became the great missionary to the Gentiles?", a: 0, opts: ["Saint Paul","Saint Peter","Saint Andrew","Saint Barnabas"], hint: "He was knocked to the ground on the road to Damascus." },
+      { q: "Who is the patron saint of animals and of ecology?", a: 0, opts: ["Saint Francis of Assisi","Saint Anthony of Padua","Saint Dominic","Saint Benedict"], hint: "He preached to birds and called the sun his brother." },
+      { q: "Who founded the Missionaries of Charity to serve the poorest in Calcutta?", a: 0, opts: ["Saint Teresa of Calcutta (Mother Teresa)","Saint Thérèse of Lisieux","Saint Katharine Drexel","Saint Elizabeth Ann Seton"], hint: "A tiny Albanian nun in a white and blue sari." },
+      { q: "Who is the patron saint invoked when something is lost?", a: 0, opts: ["Saint Anthony of Padua","Saint Jude","Saint Christopher","Saint Nicholas"], hint: "“Tony, Tony, look around…”" },
+      { q: "Which teenage French saint led an army and was burned at the stake?", a: 0, opts: ["Saint Joan of Arc","Saint Bernadette","Saint Catherine of Siena","Saint Clare of Assisi"], hint: "She heard voices telling her to save France, and was declared innocent long after her death." },
+      { q: "Which modern saint is known for using the internet to catalog Eucharistic miracles?", a: 0, opts: ["Saint Carlo Acutis","Saint John Paul II","Saint Padre Pio","Saint Maximilian Kolbe"], hint: "An Italian teenager who died of leukemia in 2006 — the first millennial saint." },
+      { q: "What is a martyr?", a: 0, opts: ["Someone who is killed because of their faith in Christ","A saint who founded a religious order","A person who performs miracles","A missionary who travels far from home"], hint: "The Greek word means “witness.”" },
+      { q: "Who is the patron saint of Ireland?", a: 0, opts: ["Saint Patrick","Saint Brigid","Saint Columba","Saint Kevin"], hint: "He used the shamrock to explain the Trinity." },
+      { q: "What do Catholics celebrate on All Saints Day, November 1?", a: 0, opts: ["All the saints in heaven, known and unknown","Only the canonized saints","The souls in purgatory","The founding of the Church"], hint: "The next day, November 2, is All Souls Day." }
+    ]
+  },
+  liturgical: {
+    title: "The Liturgical Year", emoji: "🕰️", color: "#0d9488",
+    questions: [
+      { q: "Which season begins the Church's liturgical year?", a: 0, opts: ["Advent","Christmas","Lent","Ordinary Time"], hint: "Four Sundays of waiting and preparing before Christmas." },
+      { q: "What color are the vestments during Advent and Lent?", a: 0, opts: ["Violet (purple)","Green","White","Red"], hint: "The color of preparation and penance." },
+      { q: "How long is the season of Lent?", a: 0, opts: ["Forty days","Thirty days","Fifty days","Twenty-eight days"], hint: "Same number as Jesus' time in the desert." },
+      { q: "What are the three pillars of Lent?", a: 0, opts: ["Prayer, fasting, and almsgiving","Confession, communion, and charity","Silence, sacrifice, and study","Repentance, reading, and rest"], hint: "Go deeper with God, go without, and give to others." },
+      { q: "Which day begins the season of Lent?", a: 0, opts: ["Ash Wednesday","Palm Sunday","Holy Thursday","The First Sunday of Advent"], hint: "“Remember that you are dust…”" },
+      { q: "What is the Easter Triduum?", a: 0, opts: ["The three holiest days: Holy Thursday, Good Friday, and Holy Saturday into Easter","The three weeks before Easter","The first three days of Lent","The three days Jesus lay in the tomb only"], hint: "“Tri” = three. One single celebration stretched over three days." },
+      { q: "What do Catholics celebrate at Easter?", a: 0, opts: ["The Resurrection of Jesus from the dead","The birth of Jesus","The coming of the Holy Spirit","The Last Supper"], hint: "The greatest feast of the entire year." },
+      { q: "What is Ordinary Time?", a: 0, opts: ["The season for growing in everyday discipleship, marked by green vestments","The weeks with no Mass obligation","The time between Advent and Christmas","A season of penance"], hint: "“Ordinary” comes from “ordinal” — the counted weeks, not “boring.”" },
+      { q: "What is Pentecost?", a: 0, opts: ["The coming of the Holy Spirit upon the apostles, fifty days after Easter","The ascension of Jesus into heaven","The last Sunday of Ordinary Time","The feast of the Holy Trinity"], hint: "“Pente” = fifty. Red vestments and tongues of fire." },
+      { q: "What is a Holy Day of Obligation?", a: 0, opts: ["A feast day on which Catholics are required to participate in Mass","A day of fasting and abstinence","Any feast honoring a saint","A day when confession is required"], hint: "Christmas and the Assumption are two of them." },
+      { q: "What color is used at Pentecost and on the feasts of martyrs?", a: 0, opts: ["Red","White","Green","Gold"], hint: "The color of fire and of blood." },
+      { q: "What color is used at Christmas and Easter?", a: 0, opts: ["White or gold","Violet","Green","Red"], hint: "The color of joy, light, and glory." }
+    ]
+  }
+};
+
+const TIPS_RELIGION = {
+  bible: [
+    { h:"73 books, two Testaments 📚", p:"<b>46</b> Old Testament + <b>27</b> New Testament = <b>73</b>. (Protestant Bibles have 66 — the difference is the deuterocanonical books.)" },
+    { h:"Pentateuch = five 5️⃣", p:"<b>Penta</b> = five. Genesis, Exodus, Leviticus, Numbers, Deuteronomy — also called the <b>Torah</b>." },
+    { h:"Synoptic = “seen together” 👀", p:"<b>Matthew, Mark, Luke</b> tell the story in similar ways. <b>John</b> is the different one — more theological, longer discourses." },
+    { h:"Revelation vs. Inspiration", p:"<b>Revelation</b> = God making Himself known. <b>Inspiration</b> = the Holy Spirit guiding the human authors who wrote it down. God reveals; the Spirit inspires." },
+    { h:"Parable vs. miracle", p:"A <b>parable</b> is a STORY Jesus told. A <b>miracle</b> is something He DID. Both teach — but one is words, one is action." }
+  ],
+  jesus: [
+    { h:"Incarnation = in the flesh 🤲", p:"<b>Carne</b> = flesh (like chili con carne). The Incarnation is God the Son becoming <b>truly human</b> while remaining <b>truly God</b>." },
+    { h:"Paschal Mystery — four parts ✝️", p:"<b>Passion → Death → Resurrection → Ascension</b>. “Paschal” comes from Passover: passing from death into life." },
+    { h:"Ascension vs. Assumption ☁️", p:"<b>Jesus ASCENDED</b> — by His own divine power. <b>Mary was ASSUMED</b> — taken up by God. Same direction, very different reason." },
+    { h:"Easter → Ascension → Pentecost 📅", p:"<b>40</b> days from Easter to the <b>Ascension</b>. <b>50</b> days from Easter to <b>Pentecost</b> (pente = fifty). Ten days of waiting in between." },
+    { h:"Messiah = Anointed One 👑", p:"<b>Messiah</b> (Hebrew) and <b>Christ</b> (Greek) mean the same thing: Anointed One. “Christ” isn't a last name — it's a title." }
+  ],
+  sacraments: [
+    { h:"3 + 2 + 2 = 7 🕊️", p:"<b>Initiation</b>: Baptism, Confirmation, Eucharist. <b>Healing</b>: Reconciliation, Anointing of the Sick. <b>Service</b>: Matrimony, Holy Orders." },
+    { h:"Definition worth memorizing 📌", p:"A sacrament is an <b>outward sign</b>, <b>instituted by Christ</b>, to <b>give grace</b>. Graders look for all three parts." },
+    { h:"Reconciliation in four steps", p:"<b>C</b>ontrition (be sorry) → <b>C</b>onfession (say it) → <b>P</b>enance (make it right) → <b>A</b>bsolution (be forgiven)." },
+    { h:"Transubstantiation vs. Transfiguration", p:"<b>TransSUBSTANTiation</b> = the SUBSTANCE of bread and wine becomes Christ's Body and Blood. <b>Transfiguration</b> = Jesus shining in glory on the mountain. Similar word, totally different event." },
+    { h:"Who ministers Matrimony? 💍", p:"The <b>couple</b> confer the sacrament on each other. The priest or deacon <b>witnesses and blesses</b>. This one surprises people on tests." }
+  ],
+  mass: [
+    { h:"Two tables 🍞", p:"<b>Liturgy of the Word</b> (fed by Scripture) then <b>Liturgy of the Eucharist</b> (fed by Christ Himself). Two halves, one meal." },
+    { h:"ACTS 🙏", p:"<b>A</b>doration · <b>C</b>ontrition · <b>T</b>hanksgiving · <b>S</b>upplication. Praise, sorry, thanks, please." },
+    { h:"Sunday readings, in order 📖", p:"<b>1st</b> — Old Testament · <b>Psalm</b> · <b>2nd</b> — a New Testament letter · <b>Gospel</b>. Three readings plus the psalm." },
+    { h:"Four sets of Mysteries 📿", p:"<b>Joyful</b> (Mon/Sat) · <b>Luminous</b> (Thu) · <b>Sorrowful</b> (Tue/Fri) · <b>Glorious</b> (Wed/Sun). St. John Paul II added the Luminous in 2002." },
+    { h:"Liturgy = work of the people", p:"It's <b>public</b> and <b>official</b> worship — not private devotion. That's the distinction to remember." }
+  ],
+  commandments: [
+    { h:"Two tablets, two loves 🪨🪨", p:"Commandments <b>1–3</b> = love of <b>God</b>. Commandments <b>4–10</b> = love of <b>neighbor</b>. That's exactly the Great Commandment split in two." },
+    { h:"Mortal sin needs all three ⚠️", p:"<b>Grave matter</b> + <b>full knowledge</b> + <b>full consent</b>. Miss any one and it isn't mortal. <b>Venial</b> sin wounds the relationship without breaking it." },
+    { h:"3 theological + 4 cardinal = 7 virtues", p:"<b>Theological</b> (gifts from God): faith, hope, love. <b>Cardinal</b> (built by practice): prudence, justice, fortitude, temperance. “Cardinal” = hinge." },
+    { h:"Corporal vs. Spiritual works 🤝", p:"<b>Corporal</b> = body needs (feed, shelter, clothe, visit). <b>Spiritual</b> = soul needs (counsel, comfort, forgive, pray for). “Corpse/corporal” = body." },
+    { h:"Seven gifts of the Spirit 🕊️", p:"Wisdom · Understanding · Counsel · Fortitude · Knowledge · Piety · Fear of the Lord. Strengthened in you at <b>Confirmation</b>." }
+  ],
+  creed: [
+    { h:"Four marks: OHCA ✝️", p:"<b>O</b>ne · <b>H</b>oly · <b>C</b>atholic · <b>A</b>postolic. You profess all four every Sunday without noticing." },
+    { h:"The most-confused doctrine 🌹", p:"<b>Immaculate Conception</b> = <b>MARY</b> conceived without original sin. It is NOT about Jesus' conception. Test writers love this one." },
+    { h:"Trinity in one line", p:"<b>One God, three Persons</b> — Father, Son, Holy Spirit. Not three gods; not one God in three costumes. A mystery we accept, not a puzzle we solve." },
+    { h:"Grace is free 🎁", p:"<b>Grace</b> is God's own life shared with us — <b>unearned</b> and undeserved. If you could earn it, it wouldn't be grace." },
+    { h:"Magisterium = teachers 👨‍🏫", p:"Latin <b>magister</b> = teacher. The <b>pope and bishops in union with him</b> hold the Church's teaching authority — passed down through <b>apostolic succession</b>." }
+  ],
+  saints: [
+    { h:"The road to sainthood 🛤️", p:"<b>Servant of God → Venerable → Blessed (beatified) → Saint (canonized)</b>. Four steps, in that order." },
+    { h:"Patron saint shortcuts 🔎", p:"<b>Anthony</b> = lost things · <b>Francis</b> = animals & ecology · <b>Patrick</b> = Ireland · <b>Joan of Arc</b> = France & soldiers · <b>Carlo Acutis</b> = the internet & young people." },
+    { h:"Peter and Paul 🗝️", p:"<b>Peter</b> = the rock, the first pope, the keys. <b>Paul</b> = the convert on the Damascus road, apostle to the <b>Gentiles</b>, writer of many letters." },
+    { h:"Martyr = witness 🕊️", p:"The Greek word literally means <b>witness</b>. A martyr witnesses to Christ with their whole life — including their death." },
+    { h:"All Saints vs. All Souls 🕯️", p:"<b>Nov 1 — All Saints</b>: everyone in heaven. <b>Nov 2 — All Souls</b>: the faithful departed being purified. Saints first, souls second." }
+  ],
+  liturgical: [
+    { h:"The year in order 🔄", p:"<b>Advent → Christmas → Ordinary Time → Lent → Triduum → Easter → Pentecost → Ordinary Time</b>. The year starts with Advent, not January." },
+    { h:"Color code 🎨", p:"<b>Violet</b> = Advent & Lent (prepare) · <b>White/Gold</b> = Christmas & Easter (joy) · <b>Red</b> = Pentecost & martyrs (fire & blood) · <b>Green</b> = Ordinary Time (growth)." },
+    { h:"Count the days 🔢", p:"<b>Lent</b> = 40 days · <b>Easter to Ascension</b> = 40 days · <b>Easter to Pentecost</b> = 50 days. Forty is the biblical number for preparation." },
+    { h:"Triduum = ONE celebration 🕯️", p:"Holy Thursday evening through Easter Vigil is a single liturgy in three parts — that's why there's no dismissal on Holy Thursday or Good Friday." },
+    { h:"Lent's three pillars ⛪", p:"<b>Prayer</b> (toward God) · <b>Fasting</b> (toward self) · <b>Almsgiving</b> (toward others). Giving something up is only one of the three." }
+  ]
+};
+
+const RELIGION_KEY_ORDER = ["bible","jesus","sacraments","mass","commandments","creed","saints","liturgical"];
 
 const QUIZ_MATH = {
   whole_ops: {
@@ -1948,7 +2124,7 @@ const QUIZ_ITALY = {
     title: "Ancient Rome & History", emoji: "⚔️", color: "#b45309",
     questions: [
       { q: "Ancient Rome was, according to legend, founded by two brothers named…", a: 0, opts: ["Romulus and Remus","Mario and Luigi","Castor and Pollux","Cain and Abel"], hint: "Legend says they were raised by a wolf!" },
-      { q: "What were Roman soldiers organized into?", a: 0, opts: ["Legions","Squads","Fleets","Clans"], hint: "You may remember this from Social Studies — Roman army units." },
+      { q: "What were Roman soldiers organized into?", a: 0, opts: ["Legions","Squads","Fleets","Clans"], hint: "Roman army units of about 5,000 soldiers." },
       { q: "The Colosseum was used mainly for…", a: 0, opts: ["Gladiator games and public spectacles","Growing crops","Storing water","Church services"], hint: "It could hold 50,000+ spectators." },
       { q: "'Julius Caesar' was a famous Roman…", a: 0, opts: ["General and leader","Painter","Chef","Musician"], hint: "A salad AND a month (July) are named after him!" },
       { q: "The ancient Romans built long roads and aqueducts. Aqueducts carried…", a: 0, opts: ["Water","Fire","Gold","Soldiers"], hint: "'Aqua' means water in Latin." },
@@ -1994,7 +2170,7 @@ const TIPS_ITALY = {
   ],
   history: [
     { h:"The wolf legend 🐺", p:"Legend says Rome was founded by twin brothers <b>Romulus and Remus</b>, who were raised by a she-wolf. Romulus became the first king." },
-    { h:"You already know some of this!", p:"Your Social Studies Roman Republic unit connects here: <b>legions</b> (army units), the <b>forum</b> (marketplace), <b>consuls</b>, and the <b>Senate</b>." },
+    { h:"Rome invented the blueprint 🏛️", p:"The Roman Republic gave us ideas the U.S. Constitution borrowed: a <b>Senate</b>, elected <b>consuls</b>, a <b>veto</b>, and checks and balances. Look for them again in US History 7!" },
     { h:"Roman engineering 🏗️", p:"Romans built <b>aqueducts</b> to carry water ('aqua' = water) and <b>roads</b> across their empire — 'All roads lead to Rome.'" },
     { h:"Latin lives on", p:"Romans spoke <b>Latin</b>. Modern <b>Italian, Spanish, French, Portuguese, and Romanian</b> all grew out of it! Even July (Julius Caesar) is named for a Roman." }
   ]
@@ -2017,10 +2193,15 @@ const SUBJECTS = {
     description: "Parts of speech, nouns, verbs, punctuation, capitalization, sentence structure & commonly confused words.",
     topics: QUIZ_GRAMMAR, tips: TIPS_GRAMMAR, keyOrder: GRAMMAR_KEY_ORDER, hasSubObj: false
   },
-  social: {
-    title: "Social Studies", emoji: "🏛️", color: "#dc2626",
-    description: "Ancient civilizations: Mesopotamia, Egypt, Africa, India, China, Greece, Rome",
-    topics: QUIZ_SOCIAL, tips: TIPS_SOCIAL, keyOrder: SOCIAL_KEY_ORDER, hasSubObj: false
+  ushistory: {
+    title: "US History 7", emoji: "🇺🇸", color: "#dc2626",
+    description: "Exploration through Reconstruction — colonies, revolution, the Constitution, expansion & the Civil War.",
+    topics: QUIZ_USHIST, tips: TIPS_USHIST, keyOrder: USHIST_KEY_ORDER, hasSubObj: false
+  },
+  religion: {
+    title: "Religion 7", emoji: "✝️", color: "#7c3aed",
+    description: "Scripture, Jesus & the Gospels, the seven sacraments, the Mass, morality, the Creed, saints & the Church year.",
+    topics: QUIZ_RELIGION, tips: TIPS_RELIGION, keyOrder: RELIGION_KEY_ORDER, hasSubObj: false
   },
   math: {
     title: "Math 7", emoji: "🔢", color: "#10b981",
@@ -2053,7 +2234,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","social","math","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","ushistory","religion","math","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2163,7 +2344,8 @@ const TROPHIES = [
   { id:"tower_25",      emoji:"🗼", name:"Halfway Climber",  desc:"Reach floor 25 in Tower Climb." },
   { id:"tower_50",      emoji:"🏆", name:"Summit Master",    desc:"Reach floor 50 in Tower Climb." },
   { id:"boss_ela",      emoji:"📖", name:"ELA Champion",     desc:"Defeat all 5 ELA bosses." },
-  { id:"boss_social",   emoji:"🏛️", name:"History Hero",     desc:"Defeat all 7 Social Studies bosses." },
+  { id:"boss_ushistory",emoji:"🇺🇸", name:"History Hero",     desc:"Defeat all 8 US History bosses." },
+  { id:"boss_religion", emoji:"✝️", name:"Faith Champion",   desc:"Defeat all 8 Religion bosses." },
   { id:"boss_math",     emoji:"🔢", name:"Math Master",      desc:"Defeat all 7 Math bosses." },
   { id:"boss_algebra",  emoji:"🎯", name:"Algebra Ace",      desc:"Defeat all 5 Algebra bosses." },
   { id:"boss_italy",    emoji:"🇮🇹", name:"Italian Explorer",  desc:"Defeat all 6 Italy Trip bosses. Bravissima!" },
@@ -2207,14 +2389,25 @@ const BOSSES = {
     sentences:      { emoji: "🧱", name: "Sentence Sentinel" },
     confused:       { emoji: "🤔", name: "Confusion Conjurer" }
   },
-  social: {
-    mesopotamia: { emoji: "👑", name: "King Hammurabi" },
-    egypt:       { emoji: "🦁", name: "The Sphinx" },
-    africa:      { emoji: "💰", name: "Mansa Musa" },
-    india:       { emoji: "🐅", name: "Vedic Tiger" },
-    china:       { emoji: "🐉", name: "Dragon Emperor" },
-    greece:      { emoji: "🦅", name: "Zeus" },
-    rome:        { emoji: "⚔️", name: "Caesar" }
+  ushistory: {
+    exploration:    { emoji: "⛵", name: "The Conquistador" },
+    colonies:       { emoji: "🏘️", name: "The Colonial Governor" },
+    road_rev:       { emoji: "🫖", name: "The Tea Tyrant" },
+    revolution:     { emoji: "🎖️", name: "General Cornwallis" },
+    constitution:   { emoji: "📜", name: "The Framer" },
+    expansion:      { emoji: "🐎", name: "The Frontier Phantom" },
+    civilwar:       { emoji: "⚔️", name: "The Blue & Gray" },
+    reconstruction: { emoji: "🔨", name: "The Carpetbagger" }
+  },
+  religion: {
+    bible:        { emoji: "📖", name: "Scripture Scholar" },
+    jesus:        { emoji: "✝️", name: "The Gospel Guardian" },
+    sacraments:   { emoji: "🕊️", name: "Keeper of the Seven" },
+    mass:         { emoji: "🙏", name: "The Cantor" },
+    commandments: { emoji: "📜", name: "The Lawgiver" },
+    creed:        { emoji: "🕯️", name: "The Creed Keeper" },
+    saints:       { emoji: "😇", name: "The Hall of Saints" },
+    liturgical:   { emoji: "🕰️", name: "Warden of Seasons" }
   },
   math: {
     whole_ops:   { emoji: "🧮", name: "Number Cruncher" },
@@ -2728,9 +2921,6 @@ function updateDailyStreak() {
 
 function makeMatchPairs(subjKey, topicKey, count) {
   count = count || 6;
-  if (subjKey === "social" && SOCIAL_RAW[topicKey]) {
-    return shuffle(SOCIAL_RAW[topicKey].terms).slice(0, count).map(t => ({ a: t.term, b: t.def }));
-  }
   const topic = SUBJECTS[subjKey].topics[topicKey];
   const pairs = topic.questions.map(q => {
     let label = q.q;
@@ -3299,9 +3489,6 @@ function startTwoTruths() {
   doNextTTL();
 }
 function getTopicTerms(subjKey, topicKey) {
-  if (subjKey === "social" && SOCIAL_RAW[topicKey]) {
-    return SOCIAL_RAW[topicKey].terms.slice();
-  }
   const topic = SUBJECTS[subjKey].topics[topicKey];
   return topic.questions.map(q => {
     let def = q.q;
@@ -4147,9 +4334,9 @@ function collectLocal() {
     high: loadHigh(), plays: loadPlays(), streak: loadBestStreak(),
     examBest: loadBestExam(), correctTotal: loadCorrectTotal(),
     lastStats_ela: parseLS("g6_lastStats_ela", null),
-    lastStats_social: parseLS("g6_lastStats_social", null),
+    lastStats_ushistory: parseLS("g6_lastStats_ushistory", null),
     focus_ela: parseLS("g6_focus_ela", []),
-    focus_social: parseLS("g6_focus_social", []),
+    focus_ushistory: parseLS("g6_focus_ushistory", []),
     note: loadNote(), name: loadName(), avatar: loadAvatar(), pin: loadPin()
   };
 }
@@ -4162,9 +4349,9 @@ function applyMerged(m) {
   lsSet("g6_examBest", String(m.examBest || 0));
   lsSet("g6_correctTotal", String(m.correctTotal || 0));
   if (m.lastStats_ela) lsSet("g6_lastStats_ela", JSON.stringify(m.lastStats_ela));
-  if (m.lastStats_social) lsSet("g6_lastStats_social", JSON.stringify(m.lastStats_social));
+  if (m.lastStats_ushistory) lsSet("g6_lastStats_ushistory", JSON.stringify(m.lastStats_ushistory));
   if (m.focus_ela) lsSet("g6_focus_ela", JSON.stringify(m.focus_ela));
-  if (m.focus_social) lsSet("g6_focus_social", JSON.stringify(m.focus_social));
+  if (m.focus_ushistory) lsSet("g6_focus_ushistory", JSON.stringify(m.focus_ushistory));
   lsSet("g6_note", m.note || "");
   lsSet("g6_name", m.name || "Julia");
   lsSet("g6_avatar", m.avatar || "🦄");
@@ -4182,8 +4369,8 @@ function mergeData(local, remote) {
   const rTime = remote.settingsAt || 0;
   const newer = rTime > lTime ? remote : local;
   // Back-compat: older payloads may have flat lastStats/focus — fold them into ELA
-  const fallbackStatsEla = local.lastStats_ela || (local.lastStats && !local.lastStats_social ? local.lastStats : null);
-  const fallbackStatsElaR = remote.lastStats_ela || (remote.lastStats && !remote.lastStats_social ? remote.lastStats : null);
+  const fallbackStatsEla = local.lastStats_ela || (local.lastStats && !local.lastStats_ushistory ? local.lastStats : null);
+  const fallbackStatsElaR = remote.lastStats_ela || (remote.lastStats && !remote.lastStats_ushistory ? remote.lastStats : null);
   const fallbackFocusEla = local.focus_ela || (Array.isArray(local.focus) ? local.focus : []);
   const fallbackFocusElaR = remote.focus_ela || (Array.isArray(remote.focus) ? remote.focus : []);
   return {
@@ -4196,9 +4383,9 @@ function mergeData(local, remote) {
     examBest: Math.max(local.examBest||0, remote.examBest||0),
     correctTotal: Math.max(local.correctTotal||0, remote.correctTotal||0),
     lastStats_ela: (newer === remote ? fallbackStatsElaR : fallbackStatsEla) || fallbackStatsEla || fallbackStatsElaR,
-    lastStats_social: newer.lastStats_social || local.lastStats_social || remote.lastStats_social || null,
+    lastStats_ushistory: newer.lastStats_ushistory || local.lastStats_ushistory || remote.lastStats_ushistory || null,
     focus_ela: (newer === remote ? fallbackFocusElaR : fallbackFocusEla) || [],
-    focus_social: newer.focus_social || local.focus_social || remote.focus_social || [],
+    focus_ushistory: newer.focus_ushistory || local.focus_ushistory || remote.focus_ushistory || [],
     note: newer.note || "",
     name: newer.name || "Julia",
     avatar: newer.avatar || "🦄",
@@ -4256,7 +4443,7 @@ function ghErrorMsg(status, statusText) {
 async function createSyncGist(token) {
   lsSet("g6_syncToken", token);
   const j = await ghPost("/gists", {
-    description: "Grade 6 Study App — Julia's progress sync",
+    description: "Julia's Study App — progress sync",
     public: false,
     files: { "progress.json": { content: "{}" } }
   });

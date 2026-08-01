@@ -1,8 +1,22 @@
-# Grade 6 Study Quiz 🎓
+# Julia's Study Quiz 🎓
 
-A fun multiple-choice study app to help prepare for the 6th grade final exam.
+A fun multiple-choice study app for 7th grade review and test prep.
 
-Covers vocabulary & roots, literary terms, pronouns, story structure, and writing.
+## Subjects
+
+| Subject | Topics |
+|---|---|
+| 🇺🇸 **US History 7** | Exploration & Colonization · The 13 Colonies · Road to Revolution · The American Revolution · Constitution & New Nation · Westward Expansion · The Civil War · Reconstruction |
+| ✝️ **Religion 7** | The Bible · Jesus & the Gospels · The Seven Sacraments · The Mass & Prayer · Commandments & Morality · The Creed & Our Beliefs · Saints & Holy People · The Liturgical Year |
+| 📖 ELA (English) | Vocabulary & roots, literary terms, pronouns, story structure, writing |
+| 📝 Middle School Grammar | Parts of speech, nouns, verbs, adjectives/adverbs, punctuation, capitalization, sentence structure, confused words |
+| 🔢 Math 7 | Whole numbers, integers, decimals, fractions, cards, calendar, unit conversions |
+| 🎯 Algebra | Variables, one- and two-step equations, like terms, inequalities |
+| 📚 Summer Reading: *Legend* | Plot, characters, themes, figurative language, Catholic Social Teachings |
+| 💻 Computer Science | Hardware, software, internet, coding, binary, cybersecurity |
+| 🪐 Space & Solar System | Planets, stars, exploration, Earth & Moon, famous missions |
+| 🌍 Geography Quest | US & world capitals, continents, rivers, landmarks, flags |
+| 🇮🇹 My Trip to Italy | Landmarks, food, Italian phrases, culture, geography, ancient Rome |
 
 ## How to use it (3 ways)
 
@@ -20,12 +34,13 @@ Just open `index.html` in any modern web browser (Chrome, Safari, Firefox, Edge)
 Open the GitHub Pages URL in **Safari** → Share button → **Add to Home Screen**.
 
 ## Features
-- 🚀 Full quiz (all questions, shuffled) or ⚡ Quick 10-question quiz
-- 📂 Study one topic at a time
-- 🔥 Streak counter and high-score tracking (saved on the device)
-- 📊 Score breakdown by topic
-- 🎉 Confetti for great scores
-- 🔊 Subtle sound effects for correct / wrong answers
+- 🚀 Practice Quiz, 🔴 Final Exam Mode, ⏱️ Timed Challenge, ⚡ Quick 10
+- 📂 Study one topic at a time, with memory tricks and flashcards
+- 🎯 Trouble Topics — auto-targets whatever she missed last time
+- 🎮 Games: Daily Challenge, Match Game, Speed Round, Boss Battles, Tower Climb, Termle, Two Truths & a Lie, Spin the Wheel
+- 🏆 43 trophies, streak counter, and high-score tracking (saved on the device)
+- 📊 Score breakdown by topic + Parent Dashboard
+- 🎉 Confetti and sound effects
 - 📱 Works offline after first load (PWA)
 
 ## Note about APK

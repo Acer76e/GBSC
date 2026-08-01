@@ -1,7 +1,7 @@
 {
-  "name": "Grade 6 Study Quiz",
+  "name": "Julia's Study Quiz",
   "short_name": "Study Quiz",
-  "description": "Fun multiple-choice quiz to study for the 6th grade final exam.",
+  "description": "Fun multiple-choice quiz app for 7th grade study and review.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

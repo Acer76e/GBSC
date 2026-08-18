@@ -19,6 +19,18 @@ Just open `index.html` in any modern web browser (Chrome, Safari, Firefox, Edge)
 ### 3. Install it on iPhone/iPad
 Open the GitHub Pages URL in **Safari** → Share button → **Add to Home Screen**.
 
+## Subjects
+🗽 50 State Capitals · 🇮🇹 My Trip to Italy · 📖 ELA · 📝 Grammar · 🏛️ Social Studies · 🔢 Math 7 · 🎯 Algebra · 📚 Summer Reading (Legend) · 💻 Computer Science · 🪐 Space · 🌍 Geography
+
+### 50 State Capitals 🗽
+All 50 states, grouped the way they're taught so they're easier to memorize:
+
+- **By region** — Northeast (9), Southeast (14), Midwest (12), Southwest (4 + bonus), West (11)
+- **🚨 Tricky Capitals** — the ones people miss most (NY = Albany, not NYC; CA = Sacramento, not LA)
+- **🔄 Capital → State** — reverse practice, since tests often ask it the other way around
+
+Every topic has flashcards (tap to flip, "Got It" vs. "Review Again"), a quiz, and memory tricks.
+
 ## Features
 - 🚀 Full quiz (all questions, shuffled) or ⚡ Quick 10-question quiz
 - 📂 Study one topic at a time

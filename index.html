@@ -1754,7 +1754,7 @@ const QUIZ_GRAMMAR = {
       { q: "What shows POSSESSION or a CONTRACTION?", a: 0, opts: ["Apostrophe (')","Comma (,)","Period (.)","Quotation mark (\")"], hint: "Julia's book (possession); don't (contraction of do not)." },
       { q: "What surrounds a DIRECT QUOTE?", a: 0, opts: ["Quotation marks (\" \")","Parentheses","Commas","Dashes"], hint: "She said, \"Hello.\"" },
       { q: "Which is correct?", a: 0, opts: ["It's raining outside.","Its raining outside.","Its' raining outside.","Its raining outside'"], hint: "It's = it is (needs apostrophe)." },
-      { q: "Which comma is placed correctly?", a: 0, opts: ["Yes, I will.","Yes I, will.","Yes I will,","Yes I, will."], hint: "Comma after introductory word or phrase." },
+      { q: "Which comma is placed correctly?", a: 0, opts: ["Yes, I will.","Yes I, will.","Yes I will,","Yes I will."], hint: "Comma after introductory word or phrase." },
       { q: "When do you use a QUESTION MARK?", a: 0, opts: ["At the end of a question","At the end of any sentence","When something is surprising","When someone shouts"], hint: "Only for direct questions: Where are you? (NOT: I wondered where you were.)" }
     ]
   },
@@ -2001,6 +2001,179 @@ const TIPS_ITALY = {
 };
 const ITALY_KEY_ORDER = ["landmarks","food","language","culture","geography","history"];
 
+const QUIZ_CAPITALS = {
+  northeast: {
+    title: "Northeast Capitals", emoji: "🍁", color: "#0ea5e9",
+    questions: [
+      { q: "Capital of Maine?", a: 0, opts: ["Augusta","Portland","Bangor","Lewiston"], hint: "Portland is Maine's biggest city, but <b>Augusta</b> is the capital." },
+      { q: "Capital of New Hampshire?", a: 0, opts: ["Concord","Manchester","Nashua","Portsmouth"], hint: "Think of the word <i>concord</i> — agreement. Manchester is bigger." },
+      { q: "Capital of Vermont?", a: 0, opts: ["Montpelier","Burlington","Rutland","Stowe"], hint: "The <b>smallest</b> state capital by population — under 8,000 people!" },
+      { q: "Capital of Massachusetts?", a: 0, opts: ["Boston","Worcester","Springfield","Cambridge"], hint: "One of the few capitals that IS the biggest city in its state." },
+      { q: "Capital of Rhode Island?", a: 0, opts: ["Providence","Newport","Warwick","Cranston"], hint: "Biggest city in the smallest state." },
+      { q: "Capital of Connecticut?", a: 0, opts: ["Hartford","New Haven","Bridgeport","Stamford"], hint: "Known as the insurance capital of the US. New Haven has Yale." },
+      { q: "Capital of New York?", a: 0, opts: ["Albany","New York City","Buffalo","Rochester"], hint: "It is NOT New York City! <b>Albany</b> is upstate on the Hudson River." },
+      { q: "Capital of New Jersey?", a: 0, opts: ["Trenton","Newark","Jersey City","Atlantic City"], hint: "Its old slogan: <i>Trenton Makes, the World Takes</i>." },
+      { q: "Capital of Pennsylvania?", a: 0, opts: ["Harrisburg","Philadelphia","Pittsburgh","Erie"], hint: "NOT Philly and NOT Pittsburgh — <b>Harrisburg</b>, on the Susquehanna River." }
+    ]
+  },
+  southeast: {
+    title: "Southeast Capitals", emoji: "🌴", color: "#f59e0b",
+    questions: [
+      { q: "Capital of Delaware?", a: 0, opts: ["Dover","Wilmington","Newark","Rehoboth Beach"], hint: "First state to ratify the Constitution. Think Dover = door (first one in)." },
+      { q: "Capital of Maryland?", a: 0, opts: ["Annapolis","Baltimore","Rockville","Frederick"], hint: "Home of the US Naval Academy. Baltimore is much bigger." },
+      { q: "Capital of Virginia?", a: 0, opts: ["Richmond","Virginia Beach","Norfolk","Arlington"], hint: "Was the Confederate capital during the Civil War." },
+      { q: "Capital of West Virginia?", a: 0, opts: ["Charleston","Huntington","Morgantown","Wheeling"], hint: "Careful — there is also a Charleston in <b>South Carolina</b> (not a capital)." },
+      { q: "Capital of North Carolina?", a: 0, opts: ["Raleigh","Charlotte","Greensboro","Durham"], hint: "The City of Oaks, named for Sir Walter Raleigh. Charlotte is bigger." },
+      { q: "Capital of South Carolina?", a: 0, opts: ["Columbia","Charleston","Greenville","Myrtle Beach"], hint: "NOT Charleston! <b>Columbia</b> sits in the middle of the state." },
+      { q: "Capital of Georgia?", a: 0, opts: ["Atlanta","Savannah","Augusta","Macon"], hint: "Hosted the 1996 Summer Olympics." },
+      { q: "Capital of Florida?", a: 0, opts: ["Tallahassee","Miami","Orlando","Jacksonville"], hint: "Way up in the northern panhandle — nowhere near Miami." },
+      { q: "Capital of Kentucky?", a: 0, opts: ["Frankfort","Louisville","Lexington","Bowling Green"], hint: "<b>Frankfort</b> (not Frankfurt, Germany!). Louisville is far bigger." },
+      { q: "Capital of Tennessee?", a: 0, opts: ["Nashville","Memphis","Knoxville","Chattanooga"], hint: "Music City — home of country music." },
+      { q: "Capital of Alabama?", a: 0, opts: ["Montgomery","Birmingham","Mobile","Huntsville"], hint: "Where Rosa Parks refused to give up her bus seat in 1955." },
+      { q: "Capital of Mississippi?", a: 0, opts: ["Jackson","Biloxi","Gulfport","Hattiesburg"], hint: "Named after President Andrew Jackson." },
+      { q: "Capital of Arkansas?", a: 0, opts: ["Little Rock","Fayetteville","Fort Smith","Hot Springs"], hint: "Named for a small rock outcrop on the Arkansas River." },
+      { q: "Capital of Louisiana?", a: 0, opts: ["Baton Rouge","New Orleans","Shreveport","Lafayette"], hint: "French for <i>red stick</i>. NOT New Orleans!" }
+    ]
+  },
+  midwest: {
+    title: "Midwest Capitals", emoji: "🌾", color: "#84cc16",
+    questions: [
+      { q: "Capital of Ohio?", a: 0, opts: ["Columbus","Cleveland","Cincinnati","Toledo"], hint: "Named after explorer Christopher Columbus." },
+      { q: "Capital of Michigan?", a: 0, opts: ["Lansing","Detroit","Grand Rapids","Ann Arbor"], hint: "Detroit is much bigger, but <b>Lansing</b> is the capital." },
+      { q: "Capital of Indiana?", a: 0, opts: ["Indianapolis","Fort Wayne","Evansville","Gary"], hint: "Easy one — the capital has the state name inside it. Home of the Indy 500." },
+      { q: "Capital of Illinois?", a: 0, opts: ["Springfield","Chicago","Peoria","Naperville"], hint: "NOT Chicago! <b>Springfield</b> was Abraham Lincoln's hometown." },
+      { q: "Capital of Wisconsin?", a: 0, opts: ["Madison","Milwaukee","Green Bay","Kenosha"], hint: "Named for President James Madison. Milwaukee is bigger." },
+      { q: "Capital of Minnesota?", a: 0, opts: ["St. Paul","Minneapolis","Duluth","Rochester"], hint: "The Twin Cities are St. Paul + Minneapolis — <b>St. Paul</b> is the capital twin." },
+      { q: "Capital of Iowa?", a: 0, opts: ["Des Moines","Cedar Rapids","Davenport","Iowa City"], hint: "French-sounding name, pronounced <i>duh-MOIN</i>." },
+      { q: "Capital of Missouri?", a: 0, opts: ["Jefferson City","Kansas City","St. Louis","Springfield"], hint: "Named for President Thomas Jefferson. Both KC and St. Louis are far bigger." },
+      { q: "Capital of North Dakota?", a: 0, opts: ["Bismarck","Fargo","Grand Forks","Minot"], hint: "Named after a German chancellor. Remember: <b>N</b>orth = <b>B</b>ismarck." },
+      { q: "Capital of South Dakota?", a: 0, opts: ["Pierre","Sioux Falls","Rapid City","Deadwood"], hint: "Pronounced <i>peer</i>. One of the smallest state capitals." },
+      { q: "Capital of Nebraska?", a: 0, opts: ["Lincoln","Omaha","Bellevue","Grand Island"], hint: "Named for President Abraham Lincoln. Omaha is bigger." },
+      { q: "Capital of Kansas?", a: 0, opts: ["Topeka","Wichita","Kansas City","Overland Park"], hint: "NOT Kansas City! <b>Topeka</b> is the capital." }
+    ]
+  },
+  southwest: {
+    title: "Southwest Capitals", emoji: "🌵", color: "#f97316",
+    questions: [
+      { q: "Capital of Texas?", a: 0, opts: ["Austin","Houston","Dallas","San Antonio"], hint: "Smaller than Houston, Dallas, AND San Antonio — but still the capital." },
+      { q: "Capital of Oklahoma?", a: 0, opts: ["Oklahoma City","Tulsa","Norman","Lawton"], hint: "The easiest one on the list — the capital has the state name in it." },
+      { q: "Capital of New Mexico?", a: 0, opts: ["Santa Fe","Albuquerque","Las Cruces","Roswell"], hint: "The <b>oldest</b> state capital in the US (founded 1610) and the highest in elevation." },
+      { q: "Capital of Arizona?", a: 0, opts: ["Phoenix","Tucson","Mesa","Flagstaff"], hint: "Named for the mythical bird that rises from its own ashes." },
+      { q: "Which state's capital is also its largest city: Oklahoma or New Mexico?", a: 0, opts: ["Oklahoma (Oklahoma City)","New Mexico (Santa Fe)","Both of them","Neither of them"], hint: "Oklahoma City is Oklahoma's biggest city. Santa Fe is much smaller than Albuquerque." },
+      { q: "Which Southwest capital is the OLDEST in the United States?", a: 0, opts: ["Santa Fe, New Mexico","Austin, Texas","Phoenix, Arizona","Oklahoma City, Oklahoma"], hint: "Santa Fe was founded in <b>1610</b> — older than the country itself." },
+      { q: "Austin is the capital of which state?", a: 0, opts: ["Texas","Oklahoma","Arizona","New Mexico"], hint: "Home of the Texas State Capitol, which is taller than the US Capitol." },
+      { q: "Which of these is NOT a Southwest state?", a: 0, opts: ["Nevada","Texas","Arizona","New Mexico"], hint: "The four Southwest states are <b>Texas, Oklahoma, New Mexico, and Arizona</b>. Nevada is in the West." }
+    ]
+  },
+  west: {
+    title: "Western Capitals", emoji: "🏔️", color: "#8b5cf6",
+    questions: [
+      { q: "Capital of Colorado?", a: 0, opts: ["Denver","Colorado Springs","Boulder","Aspen"], hint: "The Mile-High City — exactly 5,280 feet above sea level." },
+      { q: "Capital of Wyoming?", a: 0, opts: ["Cheyenne","Casper","Jackson","Laramie"], hint: "Named after the Cheyenne people." },
+      { q: "Capital of Montana?", a: 0, opts: ["Helena","Billings","Missoula","Bozeman"], hint: "Started as a gold-rush camp called Last Chance Gulch." },
+      { q: "Capital of Idaho?", a: 0, opts: ["Boise","Idaho Falls","Pocatello","Coeur d'Alene"], hint: "Pronounced <i>BOY-see</i>. It IS the biggest city in Idaho." },
+      { q: "Capital of Utah?", a: 0, opts: ["Salt Lake City","Provo","Ogden","Park City"], hint: "Hosted the 2002 Winter Olympics. Near the Great Salt Lake." },
+      { q: "Capital of Nevada?", a: 0, opts: ["Carson City","Las Vegas","Reno","Henderson"], hint: "NOT Las Vegas! <b>Carson City</b> is small and near Lake Tahoe." },
+      { q: "Capital of California?", a: 0, opts: ["Sacramento","Los Angeles","San Francisco","San Diego"], hint: "NOT LA and NOT San Francisco — <b>Sacramento</b>, from Gold Rush days." },
+      { q: "Capital of Oregon?", a: 0, opts: ["Salem","Portland","Eugene","Bend"], hint: "NOT Portland! And not the Salem in Massachusetts either." },
+      { q: "Capital of Washington?", a: 0, opts: ["Olympia","Seattle","Spokane","Tacoma"], hint: "NOT Seattle, and NOT Washington D.C.! <b>Olympia</b> is on Puget Sound." },
+      { q: "Capital of Alaska?", a: 0, opts: ["Juneau","Anchorage","Fairbanks","Nome"], hint: "The only state capital you <b>cannot drive to</b> — reachable by boat or plane only." },
+      { q: "Capital of Hawaii?", a: 0, opts: ["Honolulu","Hilo","Kailua","Lahaina"], hint: "On the island of Oahu. It IS the biggest city in Hawaii." }
+    ]
+  },
+  tricky: {
+    title: "Tricky Capitals", emoji: "🚨", color: "#dc2626",
+    questions: [
+      { q: "Capital of New York — the trap answer is which city?", a: 0, opts: ["New York City (the capital is Albany)","Buffalo (the capital is Albany)","Albany (the capital is NYC)","Rochester (the capital is Albany)"], hint: "Everyone guesses NYC. The capital is <b>Albany</b>." },
+      { q: "Which is the capital of Washington STATE?", a: 0, opts: ["Olympia","Washington, D.C.","Seattle","Spokane"], hint: "Washington D.C. is the country's capital, not the state's. The state capital is <b>Olympia</b>." },
+      { q: "Nevada's capital is Carson City. Which city do people wrongly guess?", a: 0, opts: ["Las Vegas","Reno","Henderson","Sparks"], hint: "Las Vegas is much bigger, but <b>Carson City</b> is the capital." },
+      { q: "Which city is the capital of South Carolina?", a: 0, opts: ["Columbia","Charleston","Greenville","Myrtle Beach"], hint: "Charleston is famous and historic, but <b>Columbia</b> is the capital." },
+      { q: "Which city is the capital of Illinois?", a: 0, opts: ["Springfield","Chicago","Peoria","Naperville"], hint: "Chicago is one of the biggest cities in America — and still not the capital." },
+      { q: "Which city is the capital of Oregon?", a: 0, opts: ["Salem","Portland","Eugene","Bend"], hint: "Portland is the famous one. <b>Salem</b> is the capital." },
+      { q: "Which city is the capital of Missouri?", a: 0, opts: ["Jefferson City","Kansas City","St. Louis","Branson"], hint: "Both Kansas City and St. Louis are bigger than <b>Jefferson City</b>." },
+      { q: "Which city is the capital of Pennsylvania?", a: 0, opts: ["Harrisburg","Philadelphia","Pittsburgh","Allentown"], hint: "Philadelphia was once the nation's capital — but the state capital is <b>Harrisburg</b>." },
+      { q: "Which city is the capital of Alaska?", a: 0, opts: ["Juneau","Anchorage","Fairbanks","Sitka"], hint: "Anchorage is much bigger, but <b>Juneau</b> is the capital — and has no roads in or out." },
+      { q: "Which city is the capital of Kentucky?", a: 0, opts: ["Frankfort","Louisville","Lexington","Owensboro"], hint: "Louisville hosts the Kentucky Derby, but <b>Frankfort</b> is the capital." },
+      { q: "Which city is the capital of Florida?", a: 0, opts: ["Tallahassee","Miami","Orlando","Tampa"], hint: "<b>Tallahassee</b> is in the panhandle, far from the theme parks and beaches." },
+      { q: "Which state capital is the SMALLEST by population?", a: 0, opts: ["Montpelier, Vermont","Pierre, South Dakota","Juneau, Alaska","Augusta, Maine"], hint: "<b>Montpelier, VT</b> has fewer than 8,000 residents." },
+      { q: "Which state capital is the OLDEST in the US?", a: 0, opts: ["Santa Fe, New Mexico","Boston, Massachusetts","Annapolis, Maryland","Richmond, Virginia"], hint: "<b>Santa Fe</b> was founded in 1610." },
+      { q: "How many US state capitals are ALSO the largest city in their state?", a: 0, opts: ["About 17 of the 50","All 50 of them","Exactly 25","Only 3"], hint: "Fewer than half! That is why capitals are so easy to miss." },
+      { q: "Which of these cities is NOT a state capital?", a: 0, opts: ["Portland, Oregon","Salem, Oregon","Boise, Idaho","Helena, Montana"], hint: "Portland is Oregon's biggest city; <b>Salem</b> is its capital." },
+      { q: "Charleston is the capital of which state?", a: 0, opts: ["West Virginia","South Carolina","North Carolina","Virginia"], hint: "<b>Charleston, West Virginia</b> is a capital. Charleston, South Carolina is not." }
+    ]
+  },
+  reverse: {
+    title: "Capital → State", emoji: "🔄", color: "#0891b2",
+    questions: [
+      { q: "Sacramento is the capital of which state?", a: 0, opts: ["California","Nevada","Oregon","Arizona"], hint: "Gold Rush city on the Sacramento River." },
+      { q: "Albany is the capital of which state?", a: 0, opts: ["New York","New Jersey","Vermont","Connecticut"], hint: "Upstate on the Hudson River." },
+      { q: "Austin is the capital of which state?", a: 0, opts: ["Texas","Oklahoma","Arkansas","Louisiana"], hint: "Famous for live music and the state capitol dome." },
+      { q: "Tallahassee is the capital of which state?", a: 0, opts: ["Florida","Georgia","Alabama","Mississippi"], hint: "In the northern panhandle." },
+      { q: "Olympia is the capital of which state?", a: 0, opts: ["Washington","Oregon","Idaho","Montana"], hint: "On Puget Sound, near the Olympic Mountains." },
+      { q: "Boise is the capital of which state?", a: 0, opts: ["Idaho","Montana","Wyoming","Utah"], hint: "Pronounced BOY-see." },
+      { q: "Helena is the capital of which state?", a: 0, opts: ["Montana","Wyoming","North Dakota","Idaho"], hint: "Founded during a gold rush." },
+      { q: "Pierre is the capital of which state?", a: 0, opts: ["South Dakota","North Dakota","Nebraska","Iowa"], hint: "Pronounced <i>peer</i>." },
+      { q: "Bismarck is the capital of which state?", a: 0, opts: ["North Dakota","South Dakota","Minnesota","Montana"], hint: "Remember: <b>N</b>orth Dakota = <b>B</b>ismarck." },
+      { q: "Frankfort is the capital of which state?", a: 0, opts: ["Kentucky","Tennessee","Indiana","Ohio"], hint: "Not Frankfurt, Germany!" },
+      { q: "Baton Rouge is the capital of which state?", a: 0, opts: ["Louisiana","Mississippi","Alabama","Arkansas"], hint: "French for <i>red stick</i>." },
+      { q: "Annapolis is the capital of which state?", a: 0, opts: ["Maryland","Delaware","Virginia","New Jersey"], hint: "Home of the US Naval Academy." },
+      { q: "Montpelier is the capital of which state?", a: 0, opts: ["Vermont","New Hampshire","Maine","Massachusetts"], hint: "The smallest state capital by population." },
+      { q: "Juneau is the capital of which state?", a: 0, opts: ["Alaska","Hawaii","Washington","Oregon"], hint: "You cannot drive there." },
+      { q: "Topeka is the capital of which state?", a: 0, opts: ["Kansas","Nebraska","Missouri","Iowa"], hint: "Not Kansas City!" },
+      { q: "Des Moines is the capital of which state?", a: 0, opts: ["Iowa","Illinois","Indiana","Ohio"], hint: "Pronounced duh-MOIN." },
+      { q: "Carson City is the capital of which state?", a: 0, opts: ["Nevada","Utah","Arizona","California"], hint: "Near Lake Tahoe, not Las Vegas." },
+      { q: "Harrisburg is the capital of which state?", a: 0, opts: ["Pennsylvania","Ohio","Maryland","New Jersey"], hint: "On the Susquehanna River." },
+      { q: "Santa Fe is the capital of which state?", a: 0, opts: ["New Mexico","Arizona","Nevada","Colorado"], hint: "The oldest state capital in the country." },
+      { q: "Trenton is the capital of which state?", a: 0, opts: ["New Jersey","Delaware","New York","Connecticut"], hint: "Trenton Makes, the World Takes." }
+    ]
+  }
+};
+const TIPS_CAPITALS = {
+  northeast: [
+    { h:"The 9 Northeast states", p:"<b>ME</b>=Augusta · <b>NH</b>=Concord · <b>VT</b>=Montpelier · <b>MA</b>=Boston · <b>RI</b>=Providence · <b>CT</b>=Hartford · <b>NY</b>=Albany · <b>NJ</b>=Trenton · <b>PA</b>=Harrisburg." },
+    { h:"The two big traps 🚨", p:"<b>New York = Albany</b> (NOT New York City) and <b>Pennsylvania = Harrisburg</b> (NOT Philadelphia or Pittsburgh). These are the two most-missed capitals in the whole country." },
+    { h:"The easy ones", p:"<b>Massachusetts = Boston</b> and <b>Rhode Island = Providence</b> are both the biggest city in their state, so they feel natural." },
+    { h:"Memory trick", p:"Three northern New England capitals start with A, C, M going down the map: <b>A</b>ugusta (ME), <b>C</b>oncord (NH), <b>M</b>ontpelier (VT)." }
+  ],
+  southeast: [
+    { h:"The 14 Southeast states", p:"<b>DE</b>=Dover · <b>MD</b>=Annapolis · <b>VA</b>=Richmond · <b>WV</b>=Charleston · <b>NC</b>=Raleigh · <b>SC</b>=Columbia · <b>GA</b>=Atlanta · <b>FL</b>=Tallahassee · <b>KY</b>=Frankfort · <b>TN</b>=Nashville · <b>AL</b>=Montgomery · <b>MS</b>=Jackson · <b>AR</b>=Little Rock · <b>LA</b>=Baton Rouge." },
+    { h:"The Charleston/Columbia mix-up 🚨", p:"<b>Charleston</b> is the capital of <b>West Virginia</b>. The famous Charleston in <b>South Carolina</b> is NOT a capital — South Carolina's capital is <b>Columbia</b>." },
+    { h:"Named after presidents", p:"<b>Jackson, MS</b> (Andrew Jackson) and <b>Madison, WI</b> and <b>Lincoln, NE</b> follow the same pattern — capitals often honor presidents." },
+    { h:"Big city ≠ capital", p:"<b>Florida</b> = Tallahassee (not Miami) · <b>Kentucky</b> = Frankfort (not Louisville) · <b>Louisiana</b> = Baton Rouge (not New Orleans) · <b>Maryland</b> = Annapolis (not Baltimore)." }
+  ],
+  midwest: [
+    { h:"The 12 Midwest states", p:"<b>OH</b>=Columbus · <b>MI</b>=Lansing · <b>IN</b>=Indianapolis · <b>IL</b>=Springfield · <b>WI</b>=Madison · <b>MN</b>=St. Paul · <b>IA</b>=Des Moines · <b>MO</b>=Jefferson City · <b>ND</b>=Bismarck · <b>SD</b>=Pierre · <b>NE</b>=Lincoln · <b>KS</b>=Topeka." },
+    { h:"The Dakotas 🤝", p:"Easy pair: <b>N</b>orth Dakota = <b>B</b>ismarck, <b>S</b>outh Dakota = <b>P</b>ierre. Both are small cities — Fargo and Sioux Falls are the big ones." },
+    { h:"Capitals named for presidents", p:"<b>Jefferson City, MO</b> · <b>Lincoln, NE</b> · <b>Madison, WI</b> · <b>Jackson, MS</b>. Four presidents, four capitals." },
+    { h:"Twin Cities warning", p:"Minneapolis and St. Paul are the Twin Cities, but only <b>St. Paul</b> is the capital. Minneapolis is bigger." }
+  ],
+  southwest: [
+    { h:"Just 4 states — the easiest region", p:"<b>TX</b>=Austin · <b>OK</b>=Oklahoma City · <b>NM</b>=Santa Fe · <b>AZ</b>=Phoenix. Learn these four and you have a whole region done." },
+    { h:"The freebie", p:"<b>Oklahoma City</b> literally contains its state name. If you can spell Oklahoma, you know its capital." },
+    { h:"Santa Fe facts", p:"<b>Santa Fe, NM</b> is the <b>oldest</b> state capital (1610) and the <b>highest</b> in elevation (about 7,200 feet). Albuquerque is bigger but is not the capital." },
+    { h:"Texas trap", p:"Houston, Dallas, and San Antonio are ALL bigger than <b>Austin</b> — and Austin is still the capital." }
+  ],
+  west: [
+    { h:"The 11 Western states", p:"<b>CO</b>=Denver · <b>WY</b>=Cheyenne · <b>MT</b>=Helena · <b>ID</b>=Boise · <b>UT</b>=Salt Lake City · <b>NV</b>=Carson City · <b>CA</b>=Sacramento · <b>OR</b>=Salem · <b>WA</b>=Olympia · <b>AK</b>=Juneau · <b>HI</b>=Honolulu." },
+    { h:"The Pacific coast traps 🚨", p:"The three coastal states all hide their capital behind a famous city: <b>CA</b> = Sacramento (not LA) · <b>OR</b> = Salem (not Portland) · <b>WA</b> = Olympia (not Seattle)." },
+    { h:"Nevada and Alaska", p:"<b>Nevada = Carson City</b>, not Las Vegas. <b>Alaska = Juneau</b>, not Anchorage — and Juneau is the only capital with no road connecting it to the rest of the country." },
+    { h:"The ones that ARE the biggest city", p:"<b>Denver, CO</b> · <b>Boise, ID</b> · <b>Salt Lake City, UT</b> · <b>Honolulu, HI</b> · <b>Phoenix, AZ</b>. When in doubt on these five, the famous city IS the answer." }
+  ],
+  tricky: [
+    { h:"The 10 most-missed capitals", p:"<b>NY</b>=Albany · <b>PA</b>=Harrisburg · <b>CA</b>=Sacramento · <b>IL</b>=Springfield · <b>FL</b>=Tallahassee · <b>WA</b>=Olympia · <b>OR</b>=Salem · <b>NV</b>=Carson City · <b>MO</b>=Jefferson City · <b>AK</b>=Juneau. Master these and you have beaten the hardest part." },
+    { h:"The rule that saves you", p:"When a state has one super-famous city, that city is usually NOT the capital. Fewer than half of state capitals are their state's largest city." },
+    { h:"Same-name confusions", p:"<b>Washington</b> state = Olympia, but <b>Washington D.C.</b> is the national capital. <b>Charleston</b> = capital of West Virginia, not South Carolina. <b>Salem</b> = capital of Oregon, not the Salem in Massachusetts. <b>Columbia</b> = capital of South Carolina; <b>Columbus</b> = capital of Ohio." },
+    { h:"Record holders 🏆", p:"<b>Smallest</b>: Montpelier, VT · <b>Oldest</b>: Santa Fe, NM (1610) · <b>Highest</b>: Santa Fe, NM · <b>No roads in</b>: Juneau, AK · <b>Most northern</b>: Juneau, AK." }
+  ],
+  reverse: [
+    { h:"Study both directions", p:"Flashcards usually go state → capital. Tests often go the other way. Practice <b>capital → state</b> until it is just as fast." },
+    { h:"Unique-sounding capitals", p:"Some capitals belong to only one possible state because the name is so distinctive: <b>Tallahassee</b>, <b>Albuquerque</b> (not a capital!), <b>Montpelier</b>, <b>Bismarck</b>, <b>Juneau</b>, <b>Topeka</b>, <b>Cheyenne</b>." },
+    { h:"Watch the look-alike pairs", p:"<b>Columbus</b> = Ohio but <b>Columbia</b> = South Carolina. <b>Jackson</b> = Mississippi but <b>Jacksonville</b> = a Florida city, not a capital. <b>Springfield</b> = Illinois, though many states have a Springfield." },
+    { h:"French-named capitals", p:"<b>Baton Rouge</b> (LA), <b>Des Moines</b> (IA), <b>Pierre</b> (SD), and <b>Juneau</b> (AK) all come from French roots — a leftover from French exploration." }
+  ]
+};
+const CAPITALS_KEY_ORDER = ["northeast","southeast","midwest","southwest","west","tricky","reverse"];
+
 const SUBJECTS = {
   italy: {
     title: "My Trip to Italy", emoji: "🇮🇹", color: "#059669",
@@ -2051,9 +2224,14 @@ const SUBJECTS = {
     title: "Geography Quest", emoji: "🌍", color: "#0d9488",
     description: "US states & capitals, world capitals, continents, rivers, landmarks, flags.",
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
+  },
+  capitals: {
+    title: "50 State Capitals", emoji: "🗽", color: "#e11d48",
+    description: "All 50 states and their capitals — by region, plus the tricky ones and reverse practice.",
+    topics: QUIZ_CAPITALS, tips: TIPS_CAPITALS, keyOrder: CAPITALS_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","social","math","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["capitals","italy","ela","grammar","social","math","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2263,6 +2441,15 @@ const BOSSES = {
     rivers_mountains: { emoji: "⛰️", name: "Peak Pioneer" },
     landmarks:        { emoji: "🏛️", name: "Landmark Legend" },
     flags:            { emoji: "🚩", name: "Flag Phantom" }
+  },
+  capitals: {
+    northeast:  { emoji: "🍁", name: "The Northeast Nemesis" },
+    southeast:  { emoji: "🌴", name: "Dixie Dominator" },
+    midwest:    { emoji: "🌾", name: "Heartland Hulk" },
+    southwest:  { emoji: "🌵", name: "Desert Duelist" },
+    west:       { emoji: "🏔️", name: "Rocky Mountain Rival" },
+    tricky:     { emoji: "🚨", name: "The Trickster" },
+    reverse:    { emoji: "🔄", name: "The Mirror Master" }
   }
 };
 

@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [claude/grade-6-study-app-4QBBw]
+    branches: [claude/grade-6-study-app-4QBBw, claude/julia-mobile-app-eh1vym]
   workflow_dispatch:
 
 permissions:

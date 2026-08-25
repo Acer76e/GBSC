@@ -83,7 +83,11 @@ class WooApi {
     }
 
     final query = <String, dynamic>{
-      'status': _settings.activeStatuses,
+      // Comma-joined, NOT a list: Dart encodes a list as a repeated key
+      // (status=a&status=b), and PHP keeps only the last one — so a repeated
+      // key silently narrows the request to one status. WordPress splits a
+      // comma-separated string into an array for array-typed parameters.
+      'status': _settings.activeStatuses.join(','),
       'per_page': '50',
       'orderby': 'date',
       'order': _settings.oldestFirst ? 'asc' : 'desc',
@@ -143,7 +147,8 @@ class WooApi {
                 _uri(
                   '/orders',
                   query: {
-                    'status': _settings.activeStatuses,
+                    // Comma-joined for the same reason as fetchPendingOrders.
+                    'status': _settings.activeStatuses.join(','),
                     'per_page': '1',
                     '_fields': 'id',
                   },

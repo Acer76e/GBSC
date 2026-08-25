@@ -112,7 +112,9 @@ class _OrdersScreenState extends State<OrdersScreen> with WidgetsBindingObserver
             ],
             if (visible.isEmpty && orders.hasLoadedOnce && orders.error == null) ...[
               const SizedBox(height: 40),
-              const _AllCaughtUp(),
+              _AllCaughtUp(
+                statuses: settings.activeStatuses.map(statusLabel).join(', '),
+              ),
             ],
             if (!orders.hasLoadedOnce && orders.isLoading) ...[
               const SizedBox(height: 60),
@@ -271,7 +273,11 @@ class _ErrorNotice extends StatelessWidget {
 }
 
 class _AllCaughtUp extends StatelessWidget {
-  const _AllCaughtUp();
+  /// Named so an empty list is never ambiguous — "nothing waiting" and
+  /// "looking for the wrong thing" look identical otherwise.
+  final String statuses;
+
+  const _AllCaughtUp({required this.statuses});
 
   @override
   Widget build(BuildContext context) {
@@ -299,6 +305,12 @@ class _AllCaughtUp extends StatelessWidget {
         const Text(
           'Nothing is waiting to go out.',
           style: TextStyle(color: AppTheme.muted),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Checking for: $statuses',
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 12, color: AppTheme.muted),
         ),
       ],
     );

@@ -135,6 +135,8 @@ void main() {
 
     expect(find.text('All caught up'), findsOneWidget);
     expect(find.text('0'), findsOneWidget);
+    // Says what it looked for, so "empty" can't be confused with "wrong filter".
+    expect(find.text('Checking for: Processing, On hold'), findsOneWidget);
 
     await teardown(tester);
   });

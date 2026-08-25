@@ -52,7 +52,11 @@ void main() {
 
     expect(captured.url.origin, 'https://shop.example');
     expect(captured.url.path, '/wp-json/wc/v3/orders');
-    expect(captured.url.queryParametersAll['status'], ['processing', 'on-hold']);
+    // Comma-joined into ONE parameter. A repeated key (status=a&status=b) is
+    // what Dart produces from a list, and PHP keeps only the last one — which
+    // silently asked the store for on-hold orders only and returned nothing.
+    expect(captured.url.queryParameters['status'], 'processing,on-hold');
+    expect(captured.url.queryParametersAll['status'], hasLength(1));
     expect(captured.url.queryParameters['order'], 'asc');
     expect(captured.url.queryParameters['per_page'], '50');
     expect(captured.url.queryParameters['_fields'], contains('line_items'));
@@ -169,13 +173,19 @@ void main() {
   });
 
   test('reads the order count out of the WP total header', () async {
+    late http.Request captured;
     final api = WooApi(
       settings,
-      client: MockClient((_) async =>
-          http.Response('[]', 200, headers: {'x-wp-total': '7'})),
+      client: MockClient((request) async {
+        captured = request;
+        return http.Response('[]', 200, headers: {'x-wp-total': '7'});
+      }),
     );
 
     expect(await api.testConnection(), 7);
+    // The count shown in Settings has to be counting the same statuses the
+    // list screen asks for, or "connected, 0 orders" means nothing.
+    expect(captured.url.queryParameters['status'], 'processing,on-hold');
   });
 
   test('refuses to test an incomplete credential set', () async {

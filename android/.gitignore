@@ -1,0 +1,5 @@
+.gradle/
+build/
+local.properties
+# Generated from the repo-root index.html by tools/make-sample.py
+app/src/main/assets/index.html

@@ -1,0 +1,94 @@
+name: Build Study Quiz sample APK
+
+on:
+  push:
+    branches: ["claude/julia-6th-grade-apk-ung6d6"]
+    paths:
+      - "android/**"
+      - "index.html"
+      - ".github/workflows/study-apk.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build sample APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK components
+        run: yes | sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Bundle the app into the APK's assets
+        # index.html at the repo root is the app. This copies it into
+        # android/app/src/main/assets/ with the parent dashboard removed —
+        # see android/tools/make-sample.py.
+        run: python3 android/tools/make-sample.py
+
+      - name: Build debug APK
+        working-directory: android
+        run: ./gradlew --no-daemon assembleDebug
+
+      - name: Publish the APK as a downloadable release
+        # An Actions artifact needs a signed-in download and arrives zipped,
+        # which a phone browser can't unpack. A release asset is a plain .apk
+        # on a permanent URL:
+        #   https://github.com/<owner>/<repo>/releases/download/study-app-sample/study-quiz-sample.apk
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk study-quiz-sample.apk
+
+          cat > notes.md <<'NOTES'
+          **A sample of the student app — everything runs on the phone, with no account and no internet.**
+
+          On the phone: tap `study-quiz-sample.apk` below, then open the download.
+          Android asks for permission to install from your browser the first time —
+          allow it, then tap Install.
+
+          What's in it:
+
+          - All 10 subjects — ELA, Grammar, Social Studies, Math 7, Algebra, Reading,
+            Computer Science, Space, Geography and the Italy trip
+          - All 8 games — Daily Challenge, Match, Speed Round, Boss Battle, Tower Climb,
+            Termle, Two Truths & a Lie, Spin the Wheel
+          - Trophies, streaks and progress history, saved on the device
+
+          This is the student side only: the parent dashboard and cloud sync are left
+          out, so nothing on it is tied to a real student. Scores start empty and stay
+          on whatever phone it is installed on.
+          NOTES
+
+          if gh release view study-app-sample --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload study-app-sample study-quiz-sample.apk \
+              --clobber --repo "$GITHUB_REPOSITORY"
+            gh release edit study-app-sample \
+              --notes-file notes.md --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create study-app-sample study-quiz-sample.apk \
+              --title "Study Quiz — sample APK" \
+              --notes-file notes.md \
+              --target "$GITHUB_SHA" \
+              --repo "$GITHUB_REPOSITORY"
+          fi
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: study-quiz-sample-apk
+          path: study-quiz-sample.apk
+          if-no-files-found: error

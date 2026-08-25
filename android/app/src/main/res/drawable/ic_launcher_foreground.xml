@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Graduation cap, traced from the web app's icon.svg so the phone icon and
+     the browser icon match. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <group
+        android:pivotX="256"
+        android:pivotY="256"
+        android:scaleX="0.68"
+        android:scaleY="0.68">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M256,110 L80,200 L256,290 L432,200 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M150,240 V330 C150,360 200,380 256,380 C312,380 362,360 362,330 V240 L256,290 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M420,195 h14 v120 h-14 z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M427,312 a18,18 0 1 1 -0.1,0 z" />
+        <path
+            android:fillColor="#FDE68A"
+            android:pathData="M140,120 a10,10 0 1 1 -0.1,0 z" />
+        <path
+            android:fillColor="#FDE68A"
+            android:pathData="M390,372 a8,8 0 1 1 -0.1,0 z" />
+    </group>
+</vector>

@@ -28,5 +28,20 @@ Open the GitHub Pages URL in **Safari** → Share button → **Add to Home Scree
 - 🔊 Subtle sound effects for correct / wrong answers
 - 📱 Works offline after first load (PWA)
 
-## Note about APK
-A true `.apk` build requires the Android SDK, which isn't available in this build environment. The PWA approach above delivers the same on-phone experience — full-screen, offline, home-screen icon — without needing to sideload a `.apk`.
+## Android APK (sample build to show someone)
+
+A real, installable `.apk` of the student app is built by GitHub Actions and published here:
+
+**https://github.com/Acer76e/GBSC/releases/download/study-app-sample/study-quiz-sample.apk**
+
+Open that link on the Android phone, allow the browser to install apps once, then tap Install.
+The whole app is bundled inside the APK, so it needs no account, no login and no internet.
+
+What the sample build leaves out (see `android/tools/make-sample.py`):
+- the parent dashboard (the ⚙️ button) and its PIN
+- cloud sync — nothing on the sample is tied to a real student
+
+Everything else — all 10 subjects, all 8 games, trophies, streaks, progress history — is the app as it is on the web.
+
+To rebuild it: push to `claude/julia-6th-grade-apk-ung6d6`, or run the **Build Study Quiz sample APK** workflow
+from the Actions tab. The APK is a WebView wrapper (`android/`) around this repo's `index.html`.

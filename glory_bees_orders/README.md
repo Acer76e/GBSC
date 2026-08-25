@@ -63,22 +63,29 @@ affected.
 
 ## Getting the APK onto the phone
 
-The APK is built by GitHub Actions; nothing needs to be installed on a
-computer.
+**On the phone, open this link and tap the file:**
 
-1. Open the repository on GitHub → **Actions** tab.
-2. Pick the latest **Build Orders APK** run (or press **Run workflow** on that
-   workflow to start one).
-3. When it finishes, download the **glory-bees-orders-apk** artifact. It is a
-   zip containing:
-   - `app-arm64-v8a-release.apk` — any phone from the last several years.
-   - `app-armeabi-v7a-release.apk` — older 32-bit phones.
-   - `app-release.apk` — universal, works everywhere, larger file.
-   If unsure, use `app-release.apk`.
-4. Move the APK to the phone (email it to yourself, or open the download on the
-   phone directly) and tap it.
-5. Android will ask permission to install from this source the first time —
-   allow it, then tap Install.
+https://github.com/Acer76e/GBSC/releases/latest/download/glory-bees-orders.apk
+
+That is a permanent link — it always serves the most recent build, so it is
+worth bookmarking. Chrome will download the APK; open the download and tap
+Install. Android asks for permission to install from the browser the first
+time, which only has to be granted once.
+
+There is also `glory-bees-orders-arm64.apk` on the
+[releases page](https://github.com/Acer76e/GBSC/releases/tag/orders-latest) —
+same app, smaller download, for phones from the last few years. If unsure, use
+the plain one.
+
+Every push to the app's branch rebuilds and replaces both files on that
+release.
+
+### The Actions artifact
+
+The same APKs are also attached to each workflow run under **Actions → Build
+Orders APK → glory-bees-orders-apk**. That copy needs a signed-in browser and
+comes down as a zip, so it is really only useful on a computer — on a phone,
+use the release link above.
 
 ### Installing updates over the top
 

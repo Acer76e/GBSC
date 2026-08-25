@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build release APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: glory_bees_orders
@@ -165,6 +167,47 @@ jobs:
 
       - name: Build universal APK (release)
         run: flutter build apk --release
+
+      - name: Publish the APK as a downloadable release
+        # Actions artifacts need a signed-in download and arrive as a zip,
+        # which a phone browser can't unpack. A release asset is a plain .apk
+        # on a permanent URL:
+        #   https://github.com/<owner>/<repo>/releases/latest/download/glory-bees-orders.apk
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd build/app/outputs/flutter-apk
+          cp app-release.apk glory-bees-orders.apk
+          cp app-arm64-v8a-release.apk glory-bees-orders-arm64.apk
+
+          cat > notes.md <<'EOF'
+          **On the phone: tap `glory-bees-orders.apk` below, then open the download.**
+
+          Android will ask for permission to install from your browser the first
+          time — allow it, then tap Install.
+
+          - `glory-bees-orders.apk` — works on any phone. Use this one if unsure.
+          - `glory-bees-orders-arm64.apk` — smaller, for phones from the last few years.
+
+          After installing, open the app and paste in a WooCommerce API key
+          (WooCommerce → Settings → Advanced → REST API → Add key). The store
+          address is already filled in.
+          EOF
+
+          if gh release view orders-latest --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload orders-latest \
+              glory-bees-orders.apk glory-bees-orders-arm64.apk \
+              --clobber --repo "$GITHUB_REPOSITORY"
+            gh release edit orders-latest \
+              --notes-file notes.md --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create orders-latest \
+              glory-bees-orders.apk glory-bees-orders-arm64.apk \
+              --title "Glory Bees Orders" \
+              --notes-file notes.md \
+              --target "$GITHUB_SHA" \
+              --repo "$GITHUB_REPOSITORY"
+          fi
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4

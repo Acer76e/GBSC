@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Foreground layer of the adaptive launcher icon: a taped parcel.
+     108dp canvas; the launcher may mask anything outside the centre 72dp,
+     so all artwork stays within roughly 26..82. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Box body -->
+    <path
+        android:pathData="M30,42 L78,42 L78,80 L30,80 Z"
+        android:fillColor="#FFF7E8"
+        android:strokeColor="#5C3A04"
+        android:strokeWidth="3.5"
+        android:strokeLineJoin="round" />
+
+    <!-- Packing tape running down the front -->
+    <path
+        android:pathData="M50,42 L58,42 L58,80 L50,80 Z"
+        android:fillColor="#B9770E" />
+
+    <!-- Lid seam -->
+    <path
+        android:pathData="M30,56 L78,56"
+        android:strokeColor="#5C3A04"
+        android:strokeWidth="3.5" />
+
+    <!-- Box outline redrawn on top so the tape sits inside it -->
+    <path
+        android:pathData="M30,42 L78,42 L78,80 L30,80 Z"
+        android:strokeColor="#5C3A04"
+        android:strokeWidth="3.5"
+        android:strokeLineJoin="round" />
+
+    <!-- Honeycomb cell, for the bees -->
+    <path
+        android:pathData="M74,26 L79.5,29.2 L79.5,35.5 L74,38.7 L68.5,35.5 L68.5,29.2 Z"
+        android:fillColor="#5C3A04" />
+</vector>

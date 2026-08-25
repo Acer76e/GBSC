@@ -1,0 +1,27 @@
+name: glory_bees_orders
+description: Glory Bees Orders — at-a-glance view of website orders waiting to ship.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+# Versions are pinned rather than caret-ranged: CI builds against Flutter 3.24,
+# and a newer plugin release that requires a newer Flutter would break the APK
+# build long after this was last touched.
+dependencies:
+  flutter:
+    sdk: flutter
+  http: 1.2.2
+  flutter_secure_storage: 9.2.2
+  provider: 6.1.2
+  url_launcher: 6.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,174 @@
+name: Build Orders APK
+
+on:
+  push:
+    branches: ["claude/android-glory-bees-orders-**"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build release APK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: glory_bees_orders
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: stable
+          cache: true
+
+      - name: Scaffold the android/ folder
+        # android/ is generated rather than committed — it is boilerplate that
+        # `flutter create` reproduces exactly. Everything below patches that
+        # generated output.
+        run: |
+          flutter create --project-name glory_bees_orders --org com.acer76e --platforms=android --no-pub .
+
+          # flutter_secure_storage 9.x ships kotlin-stdlib 1.9.x, but Flutter
+          # 3.24 scaffolds with Kotlin Gradle Plugin 1.7.10 — without this,
+          # compileReleaseKotlin fails on an incompatible Kotlin metadata
+          # version.
+          sed -i -E 's/(org\.jetbrains\.kotlin\.android" version ")[^"]+/\11.9.24/' android/settings.gradle
+          grep -n "kotlin.android" android/settings.gradle
+
+          python3 - <<'PY'
+          import re, pathlib
+
+          manifest = pathlib.Path('android/app/src/main/AndroidManifest.xml')
+          xml = manifest.read_text()
+
+          # Only the debug/profile manifests get INTERNET by default, so a
+          # release build cannot reach the store at all without this.
+          if 'android.permission.INTERNET' not in xml:
+              xml = re.sub(
+                  r'(<manifest[^>]*>)',
+                  r'\1\n    <uses-permission android:name="android.permission.INTERNET"/>',
+                  xml, count=1)
+
+          # Android 11+ hides other installed apps unless they are declared
+          # here — this is what "Open in store admin", the call button and the
+          # email button need in order to resolve to anything. Flutter already
+          # scaffolds a <queries> block for PROCESS_TEXT, so add to that one
+          # rather than emitting a second block.
+          if 'android.intent.action.DIAL' not in xml:
+              intents = '\n'.join([
+                  '        <intent>',
+                  '            <action android:name="android.intent.action.VIEW"/>',
+                  '            <data android:scheme="https"/>',
+                  '        </intent>',
+                  '        <intent>',
+                  '            <action android:name="android.intent.action.DIAL"/>',
+                  '            <data android:scheme="tel"/>',
+                  '        </intent>',
+                  '        <intent>',
+                  '            <action android:name="android.intent.action.SENDTO"/>',
+                  '            <data android:scheme="mailto"/>',
+                  '        </intent>',
+                  '',
+              ])
+              if '</queries>' in xml:
+                  xml = re.sub(r'[ \t]*</queries>', intents + '    </queries>', xml, count=1)
+              else:
+                  xml = xml.replace(
+                      '</manifest>',
+                      '    <queries>\n' + intents + '    </queries>\n</manifest>')
+
+          # The Dart package name is what shows under the icon otherwise.
+          xml = xml.replace('android:label="glory_bees_orders"',
+                            'android:label="Glory Bees Orders"')
+
+          manifest.write_text(xml)
+          print(xml)
+          PY
+
+          # Adaptive launcher icon (API 26+, i.e. every phone this will run on).
+          # Vector XML rather than PNGs so no binaries live in the repo; the
+          # scaffolded PNGs stay as the pre-Oreo fallback.
+          cp -r android_res/. android/app/src/main/res/
+
+      - name: Configure release signing
+        # Sign every APK with the SAME persistent keystore (stored as GitHub
+        # secrets) so Android allows installing an update over the top. Without
+        # it each run gets a throwaway debug key and updates fail with
+        # INSTALL_FAILED_UPDATE_INCOMPATIBLE.
+        #
+        # No secrets set → falls through to debug signing, which installs fine
+        # for a first try.
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        run: |
+          if [[ -z "$KEYSTORE_BASE64" ]]; then
+            echo "::notice::KEYSTORE_BASE64 not set — this APK is debug-signed."
+            exit 0
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/release.keystore
+          cat > android/key.properties <<EOF
+          storeFile=release.keystore
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          storePassword=$STORE_PASSWORD
+          EOF
+          cat >> android/app/build.gradle <<'EOF'
+
+          // ─── Release signing (appended by CI) ──────────────────────────
+          def __ksProps = new Properties()
+          def __ksFile  = rootProject.file('key.properties')
+          if (__ksFile.exists()) {
+              __ksFile.withInputStream { __ksProps.load(it) }
+              android {
+                  signingConfigs {
+                      release {
+                          keyAlias      __ksProps['keyAlias']
+                          keyPassword   __ksProps['keyPassword']
+                          storeFile     file(__ksProps['storeFile'])
+                          storePassword __ksProps['storePassword']
+                      }
+                  }
+                  buildTypes {
+                      release {
+                          signingConfig signingConfigs.release
+                      }
+                  }
+              }
+          }
+          EOF
+          echo "✓ Release signing wired"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+        continue-on-error: true
+
+      - name: Test
+        run: flutter test
+
+      - name: Build split APKs (release)
+        run: flutter build apk --release --split-per-abi
+
+      - name: Build universal APK (release)
+        run: flutter build apk --release
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: glory-bees-orders-apk
+          path: glory_bees_orders/build/app/outputs/flutter-apk/*.apk
+          if-no-files-found: error

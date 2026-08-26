@@ -5,6 +5,7 @@ import '../services/orders_controller.dart';
 import '../services/settings_service.dart';
 import '../services/woo_api.dart';
 import '../theme.dart';
+import 'diagnostics_screen.dart';
 import 'setup_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -24,7 +25,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       final count = await api.testConnection();
       messenger.showSnackBar(
-        SnackBar(content: Text('Connected — $count matching order(s) found.')),
+        SnackBar(
+          content: Text(count == null
+              ? 'Connected. The store didn\'t send a count, so run '
+                  'Diagnostics to see what it returns.'
+              : 'Connected — $count matching order(s) found.'),
+        ),
       );
     } on WooException catch (e) {
       messenger.showSnackBar(
@@ -168,6 +174,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: const Text('Test connection'),
                     ),
                     const SizedBox(width: 10),
+                    OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => const DiagnosticsScreen()),
+                      ),
+                      icon: const Icon(Icons.troubleshoot, size: 18),
+                      label: const Text('Diagnostics'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
                     TextButton(
                       onPressed: _disconnect,
                       style: TextButton.styleFrom(
@@ -184,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 20),
           const Center(
             child: Text(
-              'Glory Bees Orders 1.0.1',
+              'Glory Bees Orders 1.0.2',
               style: TextStyle(fontSize: 12, color: AppTheme.muted),
             ),
           ),

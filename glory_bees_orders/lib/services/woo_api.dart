@@ -137,7 +137,12 @@ class WooApi {
 
   /// Cheap round-trip used by the setup screen to prove the key works before
   /// saving it. Pass [creds] to test a key that isn't stored yet.
-  Future<int> testConnection({WooCreds? creds}) async {
+  ///
+  /// Returns null when the store didn't send a count header — some hosts and
+  /// CDNs strip X-WP-*. That is NOT the same as a count of zero, and reporting
+  /// it as zero sent this app's own troubleshooting down the wrong path once
+  /// already.
+  Future<int?> testConnection({WooCreds? creds}) async {
     if (creds != null && !creds.isComplete) {
       throw const WooException('Fill in the web address, key and secret.');
     }
@@ -159,8 +164,26 @@ class WooApi {
               .timeout(_timeout),
         ));
     final total = response.headers['x-wp-total'];
-    return int.tryParse(total ?? '') ?? 0;
+    if (total == null) return null;
+    return int.tryParse(total);
   }
+
+  /// Issues a request exactly the way the app does, but hands back the raw
+  /// response for the diagnostics screen instead of translating errors. Query
+  /// values may be a String or a List<String>; a list becomes a repeated key.
+  Future<http.Response> probe(String path, Map<String, dynamic> query) {
+    return _authed(
+      () => _client
+          .get(_uri(path, query: query), headers: _headers())
+          .timeout(_timeout),
+    );
+  }
+
+  /// The URL a probe hits, with no credentials in it — safe to display and to
+  /// paste into a chat.
+  Uri redactedUrl(String path, Map<String, dynamic> query) =>
+      Uri.parse('${_settings.storeUrl}/wp-json/wc/v3$path')
+          .replace(queryParameters: query);
 
   /// Wraps a request with the network- and HTTP-level error translation that
   /// every call needs.

@@ -5,17 +5,24 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// is nothing to type but the API key.
 const String kDefaultStoreUrl = 'https://glorybeessewingcenter.com';
 
-/// WooCommerce statuses that can plausibly be "waiting on me".
+/// Fallback picker list, used only when the store can't be asked what
+/// statuses it has. The last three are custom ones this shop's plugins add.
 const List<String> kSelectableStatuses = [
   'processing',
   'on-hold',
   'pending',
+  'partially-paid',
+  'ready-pickup',
+  'backordered',
 ];
 
 const Map<String, String> kStatusLabels = {
   'processing': 'Processing',
   'on-hold': 'On hold',
   'pending': 'Pending payment',
+  'partially-paid': 'Partially Paid',
+  'ready-pickup': 'Ready for Pickup',
+  'backordered': 'Backordered',
   'completed': 'Completed',
   'cancelled': 'Cancelled',
   'refunded': 'Refunded',

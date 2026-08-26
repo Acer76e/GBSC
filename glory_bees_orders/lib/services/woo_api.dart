@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
+import '../models/order_status_count.dart';
 import '../models/wc_order.dart';
 import 'settings_service.dart';
 
@@ -115,6 +116,26 @@ class WooApi {
     return decoded
         .whereType<Map>()
         .map((json) => WcOrder.fromJson(Map<String, dynamic>.from(json)))
+        .toList();
+  }
+
+  /// Asks the store which order statuses it has and how many orders are in
+  /// each. Drives the status picker so custom statuses added by plugins are
+  /// offered without this app needing to know about them.
+  Future<List<OrderStatusCount>> fetchStatusCounts() async {
+    final response = await _run(() => _authed(
+          () => _client
+              .get(_uri('/reports/orders/totals'), headers: _headers())
+              .timeout(_timeout),
+        ));
+    final decoded = jsonDecode(response.body);
+    if (decoded is! List) {
+      throw const WooException('The store sent back an unexpected status list.');
+    }
+    return decoded
+        .whereType<Map>()
+        .map((json) => OrderStatusCount.fromJson(Map<String, dynamic>.from(json)))
+        .where((status) => status.isWaitingCandidate)
         .toList();
   }
 

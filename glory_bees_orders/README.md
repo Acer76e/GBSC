@@ -34,8 +34,12 @@ waiting is the first thing on the screen.
 
 **Settings**
 
-- Choose which statuses count as waiting (Processing and On hold by default;
-  Pending payment can be added).
+- Choose which statuses count as waiting. The list is read from the store
+  itself, so custom statuses a plugin adds — this shop has "Ready for Pickup",
+  "Partially Paid" and "Backordered" — appear alongside the standard ones,
+  each showing how many orders are in it right now. Processing and On hold are
+  ticked by default. Statuses an order ends in (Completed, Cancelled, Refunded,
+  Failed) are left out.
 - Show or hide in-store pickups; oldest-first or newest-first.
 - Test the connection, or disconnect the phone.
 

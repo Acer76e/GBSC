@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/order_status_count.dart';
 import '../services/orders_controller.dart';
 import '../services/settings_service.dart';
 import '../services/woo_api.dart';
@@ -17,6 +18,68 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _testing = false;
+
+  /// Statuses as the store reports them. Null until the lookup finishes, and
+  /// stays null if it fails — the picker then falls back to a built-in list.
+  List<OrderStatusCount>? _storeStatuses;
+  bool _statusesFailed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadStatuses();
+  }
+
+  Future<void> _loadStatuses() async {
+    try {
+      final statuses = await context.read<WooApi>().fetchStatusCounts();
+      if (!mounted) return;
+      setState(() => _storeStatuses = statuses);
+    } on WooException {
+      // A key without reports access, or an offline phone. Not worth an error
+      // banner — the fallback list still works.
+      if (mounted) setState(() => _statusesFailed = true);
+    }
+  }
+
+  /// What to show in the picker: the store's own statuses when we have them,
+  /// otherwise the built-in list.
+  List<String> get _pickerStatuses {
+    final fromStore = _storeStatuses;
+    if (fromStore == null || fromStore.isEmpty) return kSelectableStatuses;
+    // Anything already ticked stays visible even if the store stopped
+    // reporting it, so a selection can always be turned off again.
+    final slugs = fromStore.map((s) => s.slug).toList();
+    for (final selected in context.read<AppSettings>().statuses) {
+      if (!slugs.contains(selected)) slugs.add(selected);
+    }
+    return slugs;
+  }
+
+  String _subtitleFor(String slug) {
+    final fromStore = _storeStatuses;
+    if (fromStore != null) {
+      for (final status in fromStore) {
+        if (status.slug != slug) continue;
+        final hint = _statusHint(slug);
+        final count = status.total == 1
+            ? '1 order right now'
+            : '${status.total} orders right now';
+        return hint.isEmpty ? count : '$hint · $count';
+      }
+    }
+    return _statusHint(slug);
+  }
+
+  String _labelFor(String slug) {
+    final fromStore = _storeStatuses;
+    if (fromStore != null) {
+      for (final status in fromStore) {
+        if (status.slug == slug && status.name.isNotEmpty) return status.name;
+      }
+    }
+    return statusLabel(slug);
+  }
 
   Future<void> _test() async {
     final messenger = ScaffoldMessenger.of(context);
@@ -87,14 +150,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (final status in kSelectableStatuses)
+                if (_storeStatuses == null && !_statusesFailed)
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 6),
+                    child: Text(
+                      'Reading the statuses your store uses…',
+                      style: TextStyle(fontSize: 12, color: AppTheme.muted),
+                    ),
+                  ),
+                if (_statusesFailed)
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 6),
+                    child: Text(
+                      'Couldn\'t read the store\'s own status list, so these '
+                      'are the usual ones.',
+                      style: TextStyle(fontSize: 12, color: AppTheme.muted),
+                    ),
+                  ),
+                for (final status in _pickerStatuses)
                   CheckboxListTile(
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                     controlAffinity: ListTileControlAffinity.leading,
                     value: settings.statuses.contains(status),
-                    title: Text(statusLabel(status)),
-                    subtitle: Text(_statusHint(status),
+                    title: Text(_labelFor(status)),
+                    subtitle: Text(_subtitleFor(status),
                         style: const TextStyle(fontSize: 12)),
                     onChanged: (checked) async {
                       final next = Set<String>.from(settings.statuses);
@@ -203,7 +283,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 20),
           const Center(
             child: Text(
-              'Glory Bees Orders 1.0.2',
+              'Glory Bees Orders 1.1',
               style: TextStyle(fontSize: 12, color: AppTheme.muted),
             ),
           ),
@@ -220,6 +300,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return 'Waiting on a check or bank transfer';
       case 'pending':
         return 'Checkout started but never paid';
+      case 'partially-paid':
+        return 'Part of the balance is still owed';
+      case 'ready-pickup':
+        return 'Waiting for the customer to collect';
+      case 'backordered':
+        return 'Waiting on stock to arrive';
       default:
         return '';
     }

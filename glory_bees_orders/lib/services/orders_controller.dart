@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../models/order_status_count.dart';
 import '../models/wc_order.dart';
 import 'settings_service.dart';
 import 'woo_api.dart';
@@ -15,6 +16,7 @@ class OrdersController extends ChangeNotifier {
   final WooApi _api;
 
   List<WcOrder> _orders = const [];
+  List<OrderStatusCount> _waitingElsewhere = const [];
   bool _loading = false;
   WooException? _error;
   DateTime? _lastUpdated;
@@ -23,6 +25,11 @@ class OrdersController extends ChangeNotifier {
   WooException? get error => _error;
   DateTime? get lastUpdated => _lastUpdated;
   bool get hasLoadedOnce => _lastUpdated != null;
+
+  /// Statuses holding orders that the current filter excludes. Only populated
+  /// when the list comes back empty — an empty screen should say where the
+  /// orders went rather than implying there are none.
+  List<OrderStatusCount> get waitingElsewhere => _waitingElsewhere;
 
   /// Everything fetched, including pickups.
   List<WcOrder> get allOrders => _orders;
@@ -40,6 +47,7 @@ class OrdersController extends ChangeNotifier {
   /// can't flash the previous store's orders.
   void clear() {
     _orders = const [];
+    _waitingElsewhere = const [];
     _error = null;
     _lastUpdated = null;
     notifyListeners();
@@ -53,6 +61,7 @@ class OrdersController extends ChangeNotifier {
       _orders = await _api.fetchPendingOrders();
       _error = null;
       _lastUpdated = DateTime.now();
+      _waitingElsewhere = _orders.isEmpty ? await _countElsewhere() : const [];
     } on WooException catch (e) {
       _error = e;
     } catch (e) {
@@ -60,6 +69,19 @@ class OrdersController extends ChangeNotifier {
     } finally {
       _loading = false;
       notifyListeners();
+    }
+  }
+
+  /// Which unselected statuses currently hold orders. Best-effort: an older
+  /// key without reports access just means no hint is shown.
+  Future<List<OrderStatusCount>> _countElsewhere() async {
+    try {
+      final counts = await _api.fetchStatusCounts();
+      return counts
+          .where((c) => c.total > 0 && !_settings.statuses.contains(c.slug))
+          .toList();
+    } catch (_) {
+      return const [];
     }
   }
 

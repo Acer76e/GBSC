@@ -61,6 +61,12 @@ void main() {
     expect(captured.url.queryParameters['per_page'], '50');
     expect(captured.url.queryParameters['_fields'], contains('line_items'));
     expect(captured.headers['Authorization'], _basicAuth);
+    // Without a date bound this store returns nothing at all: a plugin
+    // rewrites an absent date_query into "modified before 1970". Every order
+    // was modified after this, so it filters nothing — it just stops the
+    // rewrite from producing an impossible clause.
+    expect(captured.url.queryParameters['modified_after'],
+        '1970-01-02T00:00:00');
     // Credentials belong in the header, not in a URL that lands in server logs.
     expect(captured.url.queryParameters.containsKey('consumer_secret'), isFalse);
   });
@@ -186,6 +192,9 @@ void main() {
     // The count shown in Settings has to be counting the same statuses the
     // list screen asks for, or "connected, 0 orders" means nothing.
     expect(captured.url.queryParameters['status'], 'processing,on-hold');
+    // ...and carry the same date bound, or it would always count zero.
+    expect(captured.url.queryParameters['modified_after'],
+        '1970-01-02T00:00:00');
   });
 
   test('refuses to test an incomplete credential set', () async {

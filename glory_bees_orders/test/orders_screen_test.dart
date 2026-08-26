@@ -67,10 +67,22 @@ String _ordersPayload() => jsonEncode([
       },
     ]);
 
+const String _totalsBody = '''
+[{"slug":"pending","name":"Pending payment","total":1},
+ {"slug":"processing","name":"Processing","total":0},
+ {"slug":"backordered","name":"Backordered","total":2},
+ {"slug":"completed","name":"Completed","total":162}]
+''';
+
 Widget _app({required AppSettings settings, required String body, int status = 200}) {
   final api = WooApi(
     settings,
-    client: MockClient((_) async => http.Response(body, status)),
+    client: MockClient((request) async {
+      if (request.url.path.endsWith('/reports/orders/totals')) {
+        return http.Response(_totalsBody, 200);
+      }
+      return http.Response(body, status);
+    }),
   );
   return MultiProvider(
     providers: [
@@ -137,6 +149,33 @@ void main() {
     expect(find.text('0'), findsOneWidget);
     // Says what it looked for, so "empty" can't be confused with "wrong filter".
     expect(find.text('Checking for: Processing, On hold'), findsOneWidget);
+
+    await teardown(tester);
+  });
+
+  testWidgets('an empty list points at the statuses that do hold orders',
+      (tester) async {
+    await tester.pumpWidget(_app(settings: _FakeSettings(), body: '[]'));
+    await tester.pumpAndSettle();
+
+    // Backordered and Pending payment have orders; Processing has none, and
+    // Completed is terminal so it is never offered.
+    expect(
+      find.text('Orders are sitting in: Pending payment (1), Backordered (2)'),
+      findsOneWidget,
+    );
+    expect(find.text('Add those in Settings if you want them here.'),
+        findsOneWidget);
+
+    await teardown(tester);
+  });
+
+  testWidgets('no such hint when orders are actually showing', (tester) async {
+    await tester.pumpWidget(
+        _app(settings: _FakeSettings(), body: _ordersPayload()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Orders are sitting in'), findsNothing);
 
     await teardown(tester);
   });

@@ -283,7 +283,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 20),
           const Center(
             child: Text(
-              'Glory Bees Orders 1.1',
+              'Glory Bees Orders 1.2',
               style: TextStyle(fontSize: 12, color: AppTheme.muted),
             ),
           ),

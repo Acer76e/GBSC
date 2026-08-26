@@ -30,7 +30,7 @@ void main() {
   late _FakeSettings settings;
   setUp(() => settings = _FakeSettings());
 
-  test('asks the comma form and the array form as genuinely different requests',
+  test('probes with and without the date bound, so the store bug stays visible',
       () async {
     final urls = <Uri>[];
     final api = WooApi(
@@ -44,13 +44,15 @@ void main() {
     await Diagnostics(api, settings).run();
 
     expect(urls, hasLength(4));
-    // Probe 3: one parameter carrying all three statuses.
-    expect(urls[2].queryParameters['status'], 'processing,on-hold,pending');
-    // Probe 4: the PHP array form, which parses differently server-side. If
-    // these two ever encode the same way the comparison proves nothing.
-    expect(urls[3].queryParametersAll['status[]'],
-        ['processing', 'on-hold', 'pending']);
-    expect(urls[2].toString(), isNot(urls[3].toString()));
+    // 2: what the app relies on — a date bound present.
+    expect(urls[1].queryParameters['modified_after'], '1970-01-02T00:00:00');
+    // 3: deliberately without it. This is the control: while the store is
+    // unpatched this returns nothing, and if it ever starts returning orders
+    // the workaround can be removed.
+    expect(urls[2].queryParameters.containsKey('modified_after'), isFalse);
+    // 4: the real order-list request, statuses and bound together.
+    expect(urls[3].queryParameters['status'], 'processing,on-hold,pending');
+    expect(urls[3].queryParameters['modified_after'], '1970-01-02T00:00:00');
   });
 
   test('reports which statuses the store admits to having', () async {

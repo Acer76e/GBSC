@@ -1,7 +1,7 @@
 name: glory_bees_orders
 description: Glory Bees Orders — at-a-glance view of website orders waiting to ship.
 publish_to: "none"
-version: 1.1.0+4
+version: 1.2.0+5
 
 environment:
   sdk: ">=3.3.0 <4.0.0"

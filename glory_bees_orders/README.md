@@ -159,6 +159,27 @@ glory_bees_orders/
 └── tools/generate-keystore.sh
 ```
 
+## The date bound on every orders request
+
+Every request to `/orders` carries `modified_after=1970-01-02T00:00:00`. It is
+not a filter — every order was modified after 1970 — and removing it makes the
+app show nothing at all.
+
+The store runs "Media API for WooCommerce" (WooPOS 2.8.1), which hooks
+`woocommerce_rest_orders_prepare_object_query` and unconditionally sets
+`date_query[0]['column'] = 'post_modified'`. On a request with no date filter,
+PHP creates a `date_query` holding a column and no bound. Under HPOS that
+column maps to `date_updated`, the missing bound becomes timestamp 0, and the
+SQL asks for orders modified before 1970. The result is zero rows returned as
+HTTP 200 with an empty body — no error, nothing for a client to catch. The
+store had 321 orders throughout.
+
+Supplying any real bound makes the plugin's rewrite behave correctly, and it
+keeps working once the plugin is patched, so it is safe to leave in place.
+`test/woo_api_test.dart` asserts the parameter is sent, and the Diagnostics
+screen deliberately runs one probe *without* it — if that probe ever starts
+returning orders, the store has been fixed and this can come out.
+
 ## Known limits
 
 - Read-only unless the API key has Read/Write; "Mark as shipped" then reports

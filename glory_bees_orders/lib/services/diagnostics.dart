@@ -52,23 +52,32 @@ class Diagnostics {
       await _probe(
         title: '2. Any orders at all (no status filter)',
         path: '/orders',
+        query: {
+          'status': 'any',
+          'per_page': '3',
+          '_fields': _fields,
+          'modified_after': WooApi.epochModifiedAfter,
+        },
+        summarise: _summariseOrders,
+      ),
+      // Proves the date bound is still doing the work. If this one starts
+      // returning orders too, the store has been patched and the workaround
+      // in WooApi could come out.
+      await _probe(
+        title: '3. Same request with no date bound (the store\'s bug)',
+        path: '/orders',
         query: {'status': 'any', 'per_page': '3', '_fields': _fields},
         summarise: _summariseOrders,
       ),
       await _probe(
-        title: '3. Status as one comma-joined value (what the app sends)',
+        title: '4. The exact request the order list makes',
         path: '/orders',
         query: {
           'status': statuses.join(','),
           'per_page': '3',
           '_fields': _fields,
+          'modified_after': WooApi.epochModifiedAfter,
         },
-        summarise: _summariseOrders,
-      ),
-      await _probe(
-        title: '4. Status as a repeated array key (the alternative form)',
-        path: '/orders',
-        query: {'status[]': statuses, 'per_page': '3', '_fields': _fields},
         summarise: _summariseOrders,
       ),
     ];

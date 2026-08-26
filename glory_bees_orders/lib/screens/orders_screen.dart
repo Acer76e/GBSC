@@ -114,6 +114,9 @@ class _OrdersScreenState extends State<OrdersScreen> with WidgetsBindingObserver
               const SizedBox(height: 40),
               _AllCaughtUp(
                 statuses: settings.activeStatuses.map(statusLabel).join(', '),
+                elsewhere: orders.waitingElsewhere
+                    .map((c) => '${c.name} (${c.total})')
+                    .join(', '),
               ),
             ],
             if (!orders.hasLoadedOnce && orders.isLoading) ...[
@@ -277,7 +280,10 @@ class _AllCaughtUp extends StatelessWidget {
   /// "looking for the wrong thing" look identical otherwise.
   final String statuses;
 
-  const _AllCaughtUp({required this.statuses});
+  /// Statuses holding orders that the filter is excluding, if any.
+  final String elsewhere;
+
+  const _AllCaughtUp({required this.statuses, required this.elsewhere});
 
   @override
   Widget build(BuildContext context) {
@@ -312,6 +318,31 @@ class _AllCaughtUp extends StatelessWidget {
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 12, color: AppTheme.muted),
         ),
+        if (elsewhere.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppTheme.infoBg,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Orders are sitting in: $elsewhere',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 13, color: AppTheme.infoFg),
+                ),
+                const SizedBox(height: 2),
+                const Text(
+                  'Add those in Settings if you want them here.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 12, color: AppTheme.muted),
+                ),
+              ],
+            ),
+          ),
+        ],
       ],
     );
   }

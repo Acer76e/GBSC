@@ -35,6 +35,23 @@ class WooApi {
 
   static const Duration _timeout = Duration(seconds: 25);
 
+  /// Sent on every orders request. Without a date bound, this store returns an
+  /// empty list for every query.
+  ///
+  /// "Media API for WooCommerce" (WooPOS 2.8.1) hooks
+  /// `woocommerce_rest_orders_prepare_object_query` and unconditionally sets
+  /// `date_query[0]['column'] = 'post_modified'`. When a request carries no
+  /// date filter, PHP autovivifies a date_query with a column and no bound.
+  /// Under HPOS that column maps to `date_updated`, whose missing bound
+  /// becomes timestamp 0, and the generated SQL asks for orders modified
+  /// before 1970 — always zero rows, HTTP 200, empty body, no error anywhere.
+  ///
+  /// Supplying any real bound makes the plugin's rewrite behave correctly.
+  /// Every order was modified after 1970, so this filters nothing out: the
+  /// store returns all 321 orders with it and 0 without. It stays correct once
+  /// the plugin is patched, so there is nothing here to rip out later.
+  static const String _everyOrderEverModified = '1970-01-02T00:00:00';
+
   void dispose() => _client.close();
 
   Uri _uri(String path,
@@ -84,6 +101,8 @@ class WooApi {
     }
 
     final query = <String, dynamic>{
+      // See _everyOrderEverModified — without this the store returns nothing.
+      'modified_after': _everyOrderEverModified,
       // Comma-joined, NOT a list: Dart encodes a list as a repeated key
       // (status=a&status=b), and PHP keeps only the last one — so a repeated
       // key silently narrows the request to one status. WordPress splits a
@@ -173,6 +192,7 @@ class WooApi {
                 _uri(
                   '/orders',
                   query: {
+                    'modified_after': _everyOrderEverModified,
                     // Comma-joined for the same reason as fetchPendingOrders.
                     'status': _settings.activeStatuses.join(','),
                     'per_page': '1',
@@ -199,6 +219,10 @@ class WooApi {
           .timeout(_timeout),
     );
   }
+
+  /// Exposed so the diagnostics screen probes the store the same way the
+  /// order list does.
+  static String get epochModifiedAfter => _everyOrderEverModified;
 
   /// The URL a probe hits, with no credentials in it — safe to display and to
   /// paste into a chat.

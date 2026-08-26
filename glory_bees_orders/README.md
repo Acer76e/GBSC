@@ -93,22 +93,31 @@ use the release link above.
 
 ### Installing updates over the top
 
-By default each CI run signs with a throwaway debug key, and Android refuses
-to install an update signed by a different key — you would have to uninstall
-first, which also wipes the saved API key.
+Release signing is configured. The four repository secrets — `KEYSTORE_BASE64`,
+`KEY_ALIAS`, `KEY_PASSWORD`, `STORE_PASSWORD` — hold a persistent keystore, so
+every build is signed with the same key and installs straight over the previous
+version, keeping the saved API key and status selections.
 
-To fix that permanently, generate one keystore and store it as repository
-secrets:
+Two things to know:
 
-```bash
-glory_bees_orders/tools/generate-keystore.sh
-```
+- **Keep the keystore file and its password safe** (a password manager, not
+  this repository). If both are lost, no future build can install over an
+  installed copy of the app, and every update goes back to
+  uninstall-and-reinstall. There is no recovery — Android has no way to accept
+  a differently-signed update.
+- `tools/generate-keystore.sh` is what generates one, if it ever has to be
+  redone from scratch.
 
-It prints the four values to add under **Settings → Secrets and variables →
-Actions**: `KEYSTORE_BASE64`, `KEY_ALIAS`, `KEY_PASSWORD`, `STORE_PASSWORD`.
-Every build after that is signed with the same key and installs straight over
-the previous version. Keep the generated `.keystore` file somewhere safe —
-losing it means going back to uninstall-and-reinstall.
+Builds made *before* signing was set up were debug-signed, so the first signed
+build still needs one uninstall. After that, updates install over the top.
+
+### Triggering a build
+
+Pushing to the app's branch builds automatically. The **Run workflow** button
+is not available in the Actions tab, because GitHub only offers
+`workflow_dispatch` for workflows present on the repository's default branch,
+and this repository's default branch is a different project. Push a commit to
+build.
 
 ## Where the credentials live
 

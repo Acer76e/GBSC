@@ -136,3 +136,4 @@ jobs:
           name: cloudflare-mobile-apks
           path: build/app/outputs/flutter-apk/*.apk
           if-no-files-found: error
+          retention-days: 7

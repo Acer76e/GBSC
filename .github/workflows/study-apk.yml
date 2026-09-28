@@ -92,3 +92,4 @@ jobs:
           name: study-quiz-sample-apk
           path: study-quiz-sample.apk
           if-no-files-found: error
+          retention-days: 7

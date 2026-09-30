@@ -8,6 +8,7 @@ A fun multiple-choice study app for 7th grade review and test prep.
 |---|---|
 | 🇺🇸 **US History 7** | Exploration & Colonization · The 13 Colonies · Road to Revolution · The American Revolution · Constitution & New Nation · Westward Expansion · The Civil War · Reconstruction |
 | ✝️ **Religion 7** | The Bible · Jesus & the Gospels · The Seven Sacraments · The Mass & Prayer · Commandments & Morality · The Creed & Our Beliefs · Saints & Holy People · The Liturgical Year · Catholic Social Teaching |
+| 🦠 **Life Science: Bacteria** | Cell Structure · How Bacteria Move · Bacterial Shapes · Groups & Prefixes · Energy & Food · Reproduction · Endospores |
 | 📖 ELA (English) | Vocabulary & roots, literary terms, pronouns, story structure, writing |
 | 📝 Middle School Grammar | Parts of speech, nouns, verbs, adjectives/adverbs, punctuation, capitalization, sentence structure, confused words |
 | 🔢 Math 7 | Whole numbers, integers, decimals, fractions, cards, calendar, unit conversions |
@@ -38,7 +39,7 @@ Open the GitHub Pages URL in **Safari** → Share button → **Add to Home Scree
 - 📂 Study one topic at a time, with memory tricks and flashcards
 - 🎯 Trouble Topics — auto-targets whatever she missed last time
 - 🎮 Games: Daily Challenge, Match Game, Speed Round, Boss Battles, Tower Climb, Termle, Two Truths & a Lie, Spin the Wheel
-- 🏆 43 trophies, streak counter, and high-score tracking (saved on the device)
+- 🏆 44 trophies, streak counter, and high-score tracking (saved on the device)
 - 📊 Score breakdown by topic + Parent Dashboard
 - 🎉 Confetti and sound effects
 - 📱 Works offline after first load (PWA)

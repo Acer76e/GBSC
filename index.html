@@ -1672,6 +1672,159 @@ const TIPS_GEO = {
 };
 const GEO_KEY_ORDER = ["us_states","world_caps","continents","rivers_mountains","landmarks","flags"];
 
+const QUIZ_BACTERIA = {
+  structure: {
+    title: "Cell Structure", emoji: "🧫", color: "#16a34a",
+    questions: [
+      { q: "Bacteria are prokaryotic and ___.", a: 0, opts: ["Unicellular (one cell)","Multicellular (many cells)","Made of tissues","Plants"], hint: "Each bacterium is just ONE cell." },
+      { q: "What does PROKARYOTIC mean for bacteria?", a: 0, opts: ["They lack most of the organelles found in eukaryotic cells","They have more organelles than eukaryotic cells","They are made of many cells","They can make their own food"], hint: "Pro = before; karyon = nucleus. No nucleus and very few organelles." },
+      { q: "Bacteria lack most of the ___ found in eukaryotic cells.", a: 0, opts: ["Organelles","Ribosomes","Cytoplasm","DNA"], hint: "Organelles are the little \"organs\" inside a cell. Bacteria have very few." },
+      { q: "Which part do bacteria DO have that makes new proteins?", a: 0, opts: ["Ribosomes","Nucleus","Mitochondria","Chloroplasts"], hint: "Ribosomes = protein factories. Bacteria have them even though they lack most organelles." },
+      { q: "What do ribosomes create?", a: 0, opts: ["Proteins","Sugar","Spores","Cell walls"], hint: "Ribosomes build proteins." },
+      { q: "What is a bacterium's CELL WALL?", a: 0, opts: ["A tough protective outer layer","A slimy layer that protects from chemicals","A whiplike tail","A jellylike inside"], hint: "The cell wall is TOUGH and lets bacteria live in many environments." },
+      { q: "The cell wall allows bacteria to live in a variety of different ___.", a: 0, opts: ["Environments","Colors","Shapes","Families"], hint: "Tough outer layer = can survive lots of different places." },
+      { q: "What is the outer SLIMY layer on some bacteria called?", a: 0, opts: ["Capsule","Cell wall","Cytoplasm","Flagellum"], hint: "Slimy = capsule." },
+      { q: "What does the slimy capsule protect the cell from?", a: 0, opts: ["Destructive chemicals","Sunlight","Cold weather","Hunger"], hint: "Capsule = slime shield against destructive chemicals." },
+      { q: "What is the inner jellylike substance of a bacterium called?", a: 0, opts: ["Cytoplasm","Capsule","Cell wall","Ribosome"], hint: "The outer layers enclose the jellylike cytoplasm." },
+      { q: "Which is the correct order from OUTSIDE to INSIDE?", a: 0, opts: ["Capsule → cell wall → cytoplasm","Cytoplasm → cell wall → capsule","Cell wall → cytoplasm → capsule","Cytoplasm → capsule → cell wall"], hint: "Slime on the outside, tough wall next, jelly inside." }
+    ]
+  },
+  movement: {
+    title: "How Bacteria Move", emoji: "🏊", color: "#0891b2",
+    questions: [
+      { q: "What is the whiplike structure that helps some bacteria move?", a: 0, opts: ["Flagellum","Capsule","Ribosome","Endospore"], hint: "Flagellum = whip tail. Plural: flagella." },
+      { q: "A flagellum helps bacteria move through ___.", a: 0, opts: ["Liquids","Rocks","Air only","Metal"], hint: "It whips back and forth to swim through liquids." },
+      { q: "What does a flagellum look like?", a: 0, opts: ["A whip","A ball","A cluster of grapes","A shell"], hint: "\"Whiplike structure\"." },
+      { q: "Besides using a flagellum, how do other bacteria move?", a: 0, opts: ["By wriggling","By flying","By walking on legs","By rolling"], hint: "Some bacteria wriggle, like a wiggly worm." },
+      { q: "Can ALL bacteria move on their own?", a: 0, opts: ["No, many bacteria cannot move on their own","Yes, all bacteria swim","Yes, all bacteria wriggle","Only bacteria with capsules can't"], hint: "Many bacteria can't move on their own." },
+      { q: "True or false: every bacterium has a flagellum.", a: 0, opts: ["False, only SOME bacteria have one","True","True, they have two","False, no bacteria have one"], hint: "\"SOME bacteria also have a whiplike structure...\"" },
+      { q: "Which two ways do some bacteria move?", a: 0, opts: ["Flagellum and wriggling","Legs and wings","Budding and fission","Capsule and cell wall"], hint: "Whip tail OR wriggling. Many don't move at all." },
+      { q: "Which is NOT used for moving?", a: 0, opts: ["Ribosome","Flagellum","Wriggling","Whiplike tail"], hint: "Ribosomes make proteins; they don't move the cell." }
+    ]
+  },
+  shapes: {
+    title: "Bacterial Shapes", emoji: "🔵", color: "#2563eb",
+    questions: [
+      { q: "What are the 5 bacterial shapes on the slide?", a: 0, opts: ["Spherical, rod, comma, spiral, corkscrew","Square, triangle, circle, star, heart","Round, flat, tall, short, wide","Spherical, cube, cone, pyramid, rod"], hint: "Say it: Sphere, Rod, Comma, Spiral, Corkscrew." },
+      { q: "What is a SPHERICAL (ball-shaped) bacterium called?", a: 0, opts: ["Coccus","Bacillus","Vibrio","Spirillum"], hint: "Coccus (plural: cocci) = ball. Think \"cocoa puff\"." },
+      { q: "What is a ROD-shaped bacterium called?", a: 0, opts: ["Bacillus","Coccus","Vibrio","Spirochete"], hint: "Bacillus (plural: bacilli) = rod, like a little hot dog." },
+      { q: "What is a COMMA-shaped bacterium called?", a: 0, opts: ["Vibrio","Coccus","Bacillus","Spirillum"], hint: "Vibrio = curved like a comma ( , )." },
+      { q: "What is a SPIRAL-shaped bacterium called?", a: 0, opts: ["Spirillum","Coccus","Vibrio","Bacillus"], hint: "Spirillum = spiral. The names sound alike!" },
+      { q: "What is a CORKSCREW-shaped bacterium called?", a: 0, opts: ["Spirochete","Coccus","Bacillus","Vibrio"], hint: "Spirochete = tightly twisted corkscrew." },
+      { q: "A \"coccus\" is shaped like a ___.", a: 0, opts: ["Sphere (ball)","Rod","Comma","Corkscrew"], hint: "Coccus = sphere." },
+      { q: "A \"bacillus\" is shaped like a ___.", a: 0, opts: ["Rod","Sphere","Spiral","Comma"], hint: "Bacillus = rod." },
+      { q: "A \"vibrio\" is shaped like a ___.", a: 0, opts: ["Comma","Sphere","Rod","Corkscrew"], hint: "Vibrio = comma." },
+      { q: "A \"spirochete\" is shaped like a ___.", a: 0, opts: ["Corkscrew","Comma","Sphere","Rod"], hint: "Spirochete = corkscrew." },
+      { q: "What is a short, oval rod (between a ball and a rod) called?", a: 0, opts: ["Coccobacillus","Spirillum","Vibrio","Spirochete"], hint: "Cocco (ball) + bacillus (rod) = coccobacillus." },
+      { q: "What are the plural forms of coccus and bacillus?", a: 0, opts: ["Cocci and bacilli","Coccuses and bacilluses","Coccae and bacillae","Coccus and bacillus"], hint: "One coccus, two cocci. One bacillus, two bacilli." }
+    ]
+  },
+  groups: {
+    title: "Groups & Prefixes", emoji: "🍇", color: "#9333ea",
+    questions: [
+      { q: "Do all bacteria live the same way?", a: 0, opts: ["No, some live alone and others are attached to one another","Yes, all live alone","Yes, all live in chains","Yes, all live in clusters"], hint: "Some prefer to live ALONE; others are ATTACHED." },
+      { q: "What do we use to describe bacteria seen linked together?", a: 0, opts: ["Prefixes","Colors","Numbers","Suffixes only"], hint: "Diplo-, staphylo-, strepto- are prefixes." },
+      { q: "What does the prefix DIPLO mean?", a: 0, opts: ["Pair","Cluster","Chain","Single"], hint: "Diplo = 2, like a \"duo\"." },
+      { q: "What does the prefix STAPHYLO mean?", a: 0, opts: ["Cluster","Pair","Chain","Spiral"], hint: "Staphylo = cluster, like a bunch of grapes. (The slide spells it \"staphlo\".)" },
+      { q: "What does the prefix STREPTO mean?", a: 0, opts: ["Chain","Pair","Cluster","Rod"], hint: "Strepto = chain. Think \"strep throat\" and a STRIP of beads." },
+      { q: "What are round bacteria in PAIRS called?", a: 0, opts: ["Diplococci","Staphylococci","Streptococci","Bacilli"], hint: "Diplo (pair) + cocci (spheres)." },
+      { q: "What are round bacteria in CLUSTERS called?", a: 0, opts: ["Staphylococci","Diplococci","Streptococci","Spirilla"], hint: "Staphylo (cluster) + cocci (spheres). Like grapes." },
+      { q: "What are round bacteria in CHAINS called?", a: 0, opts: ["Streptococci","Diplococci","Staphylococci","Vibrio"], hint: "Strepto (chain) + cocci (spheres). Strep throat comes from these!" },
+      { q: "What are ROD-shaped bacteria linked in a chain called?", a: 0, opts: ["Streptobacilli","Diplococci","Staphylococci","Spirochetes"], hint: "Strepto (chain) + bacilli (rods)." },
+      { q: "What are rod-shaped bacteria in pairs called?", a: 0, opts: ["Diplobacilli","Streptococci","Staphylobacilli","Coccobacilli"], hint: "Diplo (pair) + bacilli (rods)." },
+      { q: "Name the bacteria: a bunch of balls stuck together like grapes.", a: 0, opts: ["Staphylococcus","Streptococcus","Diplococcus","Bacillus"], hint: "Grapes = cluster = staphylo." }
+    ]
+  },
+  energy: {
+    title: "Energy & Food", emoji: "🍂", color: "#b45309",
+    questions: [
+      { q: "Bacteria can either be autotrophs or ___.", a: 0, opts: ["Heterotrophs","Decomposers only","Eukaryotes","Endospores"], hint: "Auto = self-feeding; hetero = feeds on others." },
+      { q: "What is an AUTOTROPH?", a: 0, opts: ["An organism that makes its own food","An organism that eats other living things","An organism that only eats dead things","An organism that can't get energy"], hint: "Auto = self. Makes its own food." },
+      { q: "What is a HETEROTROPH?", a: 0, opts: ["An organism that feeds on other things for energy","An organism that makes its own food","A bacterium with a flagellum","A type of endospore"], hint: "Hetero = other. It gets food from other things." },
+      { q: "Some bacteria feed on other living things, causing ___.", a: 0, opts: ["Infections","Photosynthesis","Endospores","Budding"], hint: "They cause infections in plants, animals, and people." },
+      { q: "Bacteria can cause infections in which living things?", a: 0, opts: ["Plants, animals, and people","Only people","Only plants","Only animals"], hint: "All three: plants, animals, AND people." },
+      { q: "The bacteria that make you SICK are ___.", a: 0, opts: ["Heterotrophs","Autotrophs","Decomposers","Endospores"], hint: "They feed on YOU, another living thing, so they are heterotrophs." },
+      { q: "What are DECOMPOSERS?", a: 0, opts: ["Bacteria that get energy by breaking down dead organisms or animal wastes","Bacteria that make their own food from sunlight","Bacteria that cause infections","Bacteria that form endospores"], hint: "Decomposers break down (decompose) the dead and the waste." },
+      { q: "Decomposer bacteria get their energy from breaking down ___.", a: 0, opts: ["The remains of dead organisms or animal wastes","Sunlight","Living people","Rocks"], hint: "Dead stuff + animal waste." },
+      { q: "In the \"F.B.I.\" of decomposition, what does F.B.I. stand for?", a: 0, opts: ["Fungi, Bacteria, Invertebrates","Food, Bugs, Insects","Fungi, Bones, Insects","Flowers, Bacteria, Ivy"], hint: "The Department of Decomposition: Fungi, Bacteria, Invertebrates (worms, snails, bugs)." },
+      { q: "According to the lesson, who created each bacterium with a distinct structure?", a: 0, opts: ["God","Scientists","Doctors","Nobody"], hint: "\"God created each bacterium with a distinct structure.\"" },
+      { q: "What do GOOD bacteria do?", a: 0, opts: ["Help us in various ways","Cause diseases","Make endospores only","Nothing at all"], hint: "Good bacteria help us (like in our gut, digesting food)." },
+      { q: "What can BAD bacteria cause?", a: 0, opts: ["Diseases","Healthy digestion","Photosynthesis","Stronger bones"], hint: "Bad bacteria cause diseases." }
+    ]
+  },
+  reproduction: {
+    title: "Reproduction", emoji: "➗", color: "#db2777",
+    questions: [
+      { q: "How do MOST bacteria reproduce?", a: 0, opts: ["Binary fission","Budding","Endospores","Seeds"], hint: "Binary = two. Fission = splitting." },
+      { q: "What is BINARY FISSION?", a: 0, opts: ["One cell divides into two identical daughter cells","A small outgrowth grows into a new organism","A cell makes a protective spore","Two cells join into one"], hint: "1 cell → 2 identical daughter cells." },
+      { q: "In binary fission, one cell divides into how many cells?", a: 0, opts: ["Two","Three","Four","One"], hint: "\"Binary\" means two." },
+      { q: "The two cells made by binary fission are ___.", a: 0, opts: ["Identical daughter cells","Different from each other","Endospores","Parent cells"], hint: "They're identical copies, called daughter cells." },
+      { q: "Some bacterial species reproduce through ___, where a small outgrowth becomes a new organism.", a: 0, opts: ["Budding","Binary fission","Decomposing","Wriggling"], hint: "Budding = a little bud grows off the parent." },
+      { q: "What is BUDDING?", a: 0, opts: ["A small outgrowth of the parent develops into an independent organism","One cell splits evenly into two","A bacterium hides its DNA in a spore","A bacterium grows a flagellum"], hint: "A bud (outgrowth) pops out and becomes its own organism." },
+      { q: "Budding is what type of reproduction?", a: 0, opts: ["Asexual","Sexual","Photosynthetic","Chemical"], hint: "Asexual = only ONE parent is needed." },
+      { q: "In budding, the small outgrowth eventually becomes ___.", a: 0, opts: ["An independent organism","Part of the cell wall","A flagellum","A capsule"], hint: "It grows up and lives on its own." },
+      { q: "Which is the main difference between binary fission and budding?", a: 0, opts: ["Fission splits into 2 equal cells; budding grows a small outgrowth","Budding makes 2 equal cells; fission grows a small bud","Fission needs two parents","There is no difference"], hint: "Fission = even split. Budding = small bud grows off." }
+    ]
+  },
+  endospores: {
+    title: "Endospores", emoji: "🛡️", color: "#4f46e5",
+    questions: [
+      { q: "When some bacteria are in conditions that might harm them, what do they protect?", a: 0, opts: ["Their genetic material","Their flagellum","Their cell wall","Their capsule"], hint: "They protect their genetic material (DNA)." },
+      { q: "Where do these bacteria put a copy of their DNA to protect it?", a: 0, opts: ["In an endospore","In the flagellum","In the ribosomes","In a cluster"], hint: "Endo = inside. The spore forms inside the cell." },
+      { q: "What is an ENDOSPORE?", a: 0, opts: ["A protective capsule holding a copy of the bacterium's DNA","A whiplike tail","A slimy layer that blocks chemicals","A way to reproduce by budding"], hint: "Endospore = protective capsule with DNA inside." },
+      { q: "An endospore protects DNA from ___.", a: 0, opts: ["Extreme heat or harsh conditions","Sunlight only","Other bacteria only","Water only"], hint: "Extreme heat or harsh conditions." },
+      { q: "What does DORMANT mean?", a: 0, opts: ["In a resting state","Very active","Dead","Dividing quickly"], hint: "Dormant = resting, like sleeping. Think \"dorm\" room = where you sleep." },
+      { q: "Endospores allow some bacteria to stay dormant for ___.", a: 0, opts: ["Decades","A few minutes","One hour","Exactly one day"], hint: "Decades = tens of years!" },
+      { q: "What does an endospore contain?", a: 0, opts: ["A copy of the bacterium's DNA","The whole flagellum","Only cytoplasm","Nothing"], hint: "A copy of the DNA (genetic material)." },
+      { q: "Why do bacteria form endospores?", a: 0, opts: ["To survive conditions that might harm them","To swim faster","To make proteins","To cause infections"], hint: "It's a survival trick for bad conditions." },
+      { q: "DNA is another name for a cell's ___.", a: 0, opts: ["Genetic material","Cell wall","Capsule","Cytoplasm"], hint: "DNA = genetic material = the instructions for the cell." },
+      { q: "In endospore formation, what is the cell that makes the spore called?", a: 0, opts: ["The mother cell","The daughter cell","The bud","The capsule"], hint: "The diagram labels the mother cell and the forespore inside it." }
+    ]
+  }
+};
+const TIPS_BACTERIA = {
+  structure: [
+    { h:"Prokaryotic + unicellular 🦠", p:"Bacteria are <b>prokaryotic</b> (lack most <b>organelles</b> found in eukaryotic cells) and <b>unicellular</b> (just ONE cell)." },
+    { h:"But they DO have ribosomes", p:"<b>Ribosomes</b> = protein factories. Bacteria use them to create new <b>proteins</b>." },
+    { h:"Wall vs Capsule", p:"<b>Cell wall</b> = TOUGH outer layer, lets bacteria live in many <b>environments</b>.<br><b>Capsule</b> = SLIMY outer layer, protects from destructive <b>chemicals</b>." },
+    { h:"Jelly inside 🍮", p:"The outer layers enclose the jellylike <b>cytoplasm</b>. Outside → in: <b>capsule → cell wall → cytoplasm</b>." }
+  ],
+  movement: [
+    { h:"Flagellum = whip 🏇", p:"Some bacteria have a whiplike <b>flagellum</b> that helps them move through <b>liquids</b>." },
+    { h:"Wiggle wiggle", p:"Other bacteria move by <b>wriggling</b>." },
+    { h:"Many just sit there", p:"Many bacteria <b>cannot move</b> on their own at all." }
+  ],
+  shapes: [
+    { h:"The 5 shapes", p:"<b>Spherical · Rod · Comma · Spiral · Corkscrew</b>" },
+    { h:"Match shape → name 🔑", p:"Sphere = <b>Coccus</b> · Rod = <b>Bacillus</b> · Comma = <b>Vibrio</b> · Spiral = <b>Spirillum</b> · Corkscrew = <b>Spirochete</b>" },
+    { h:"Memory tricks", p:"<b>Coccus</b> = Cocoa Puff (round) · <b>Bacillus</b> = Bat (long rod) · <b>Vibrio</b> = a comma that Vibrates · <b>Spirillum</b> = Spiral · <b>Spirochete</b> = Corkscrew." },
+    { h:"Plurals", p:"1 coccus → 2 <b>cocci</b>. 1 bacillus → 2 <b>bacilli</b>. <b>Coccobacillus</b> = a short oval rod, in between." }
+  ],
+  groups: [
+    { h:"Alone or attached", p:"Some bacteria prefer to live <b>alone</b>; others are <b>attached</b> to one another. We use <b>prefixes</b> to describe the linked ones." },
+    { h:"The 3 prefixes 🔗", p:"<b>Diplo</b> = pair · <b>Staphylo</b> = cluster · <b>Strepto</b> = chain" },
+    { h:"Memory tricks", p:"<b>Diplo</b> sounds like \"duo\" (2) · <b>Staph</b> = a STACK/bunch of grapes · <b>Strep</b> = a STRIP of beads (strep throat!)." },
+    { h:"Build the name 🧱", p:"Prefix + shape: diplo + cocci = <b>diplococci</b> (pairs of balls) · staphylo + cocci = <b>staphylococci</b> (clusters) · strepto + cocci = <b>streptococci</b> (chains) · strepto + bacilli = <b>streptobacilli</b> (chain of rods)." }
+  ],
+  energy: [
+    { h:"Auto vs Hetero 🍽️", p:"<b>Autotrophs</b> make their own food (auto = self). <b>Heterotrophs</b> feed on other things (hetero = other)." },
+    { h:"Sick-making bacteria", p:"Some bacteria <b>feed</b> on other living things, causing <b>infections</b> in plants, animals, and people. The bacteria that make you sick are <b>heterotrophs</b>." },
+    { h:"Decomposers = F.B.I. 🕵️", p:"<b>Decomposers</b> get their <b>energy</b> from breaking down the remains of dead organisms or animal wastes. The Department of Decomposition: <b>F</b>ungi, <b>B</b>acteria, <b>I</b>nvertebrates." },
+    { h:"Good vs Bad", p:"God created each bacterium with a distinct <b>structure</b>. <b>Good</b> bacteria help us in various ways; <b>bad</b> bacteria can cause <b>diseases</b>." }
+  ],
+  reproduction: [
+    { h:"Binary fission ➗", p:"MOST bacteria reproduce by <b>binary fission</b>: <b>one</b> cell divides into <b>two</b> identical daughter cells. Binary = 2." },
+    { h:"Budding 🌱", p:"Some species reproduce by <b>budding</b>, an <b>asexual</b> reproduction where a small <b>outgrowth</b> of the parent develops into an independent organism." },
+    { h:"Don't mix them up", p:"Fission = even SPLIT down the middle. Budding = little BUD pops out the side and grows." }
+  ],
+  endospores: [
+    { h:"Why endospores? 🛡️", p:"When conditions might <b>harm</b> them, some bacteria protect their <b>genetic material</b> (DNA)." },
+    { h:"What it is", p:"They put a copy of their DNA in an <b>endospore</b>, a protective <b>capsule</b> that protects it from extreme heat or harsh conditions." },
+    { h:"Dormant for decades 😴", p:"Endospores let bacteria stay <b>dormant</b> (in a resting state) for <b>decades</b>. Dormant sounds like \"dorm\", where you sleep!" }
+  ]
+};
+const BACTERIA_KEY_ORDER = ["structure","movement","shapes","groups","energy","reproduction","endospores"];
+
 const QUIZ_GRAMMAR = {
   parts_speech: {
     title: "Parts of Speech", emoji: "🎭", color: "#a21caf",
@@ -2220,6 +2373,11 @@ const SUBJECTS = {
     description: "Planets, stars, galaxies, space exploration, famous missions.",
     topics: QUIZ_SPACE, tips: TIPS_SPACE, keyOrder: SPACE_KEY_ORDER, hasSubObj: false
   },
+  bacteria: {
+    title: "Life Science: Bacteria", emoji: "🦠", color: "#16a34a",
+    description: "Cell structure, movement, shapes, diplo/staphylo/strepto, energy, reproduction & endospores.",
+    topics: QUIZ_BACTERIA, tips: TIPS_BACTERIA, keyOrder: BACTERIA_KEY_ORDER, hasSubObj: false
+  },
   geo: {
     title: "Geography Quest", emoji: "🌍", color: "#0d9488",
     description: "US states & capitals, world capitals, continents, rivers, landmarks, flags.",
@@ -2231,7 +2389,7 @@ const SUBJECTS = {
     topics: QUIZ_CAPITALS, tips: TIPS_CAPITALS, keyOrder: CAPITALS_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["capitals","italy","ela","grammar","social","math","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["capitals","italy","ela","grammar","social","bacteria","math","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2351,6 +2509,7 @@ const TROPHIES = [
   { id:"boss_cs",       emoji:"💻", name:"Code Conqueror",   desc:"Defeat all 6 Computer Science bosses." },
   { id:"boss_space",    emoji:"🪐", name:"Cosmic Champion",  desc:"Defeat all 5 Space bosses." },
   { id:"boss_geo",      emoji:"🌍", name:"World Explorer",   desc:"Defeat all 6 Geography bosses." },
+  { id:"boss_bacteria", emoji:"🦠", name:"Germ Buster",      desc:"Defeat all 7 Bacteria bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
   { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
@@ -2433,6 +2592,15 @@ const BOSSES = {
     exploration: { emoji: "🚀", name: "Rocket Renegade" },
     earth_moon:  { emoji: "🌙", name: "Lunar Lord" },
     missions:    { emoji: "🛰️", name: "Mission Master" }
+  },
+  bacteria: {
+    structure:    { emoji: "🧫", name: "Cell Wall Colossus" },
+    movement:     { emoji: "🏊", name: "Flagellum Fiend" },
+    shapes:       { emoji: "🌀", name: "Spirochete Serpent" },
+    groups:       { emoji: "🍇", name: "Staph Swarm" },
+    energy:       { emoji: "🍂", name: "Decomposer Duke" },
+    reproduction: { emoji: "➗", name: "Fission Phantom" },
+    endospores:   { emoji: "🛡️", name: "Endospore Emperor" }
   },
   geo: {
     us_states:        { emoji: "🗽", name: "States Sage" },

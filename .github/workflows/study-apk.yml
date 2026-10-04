@@ -27,11 +27,10 @@ jobs:
           java-version: "17"
           cache: gradle
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install SDK components
-        run: yes | sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+        # ubuntu-latest ships an Android SDK at $ANDROID_HOME, so use its
+        # sdkmanager directly (android-actions/setup-android@v3 now fails here).
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Bundle the app into the APK's assets
         # index.html at the repo root is the app. This copies it into

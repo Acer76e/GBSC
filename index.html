@@ -1852,6 +1852,398 @@ const TIPS_GEO = {
 };
 const GEO_KEY_ORDER = ["us_states","world_caps","continents","rivers_mountains","landmarks","flags"];
 
+const QUIZ_RATIOS = {
+  ratios: {
+    title: "Ratios", emoji: "⚖️", color: "#7c3aed",
+    questions: [
+      { q: "What is a RATIO?", a: 0, opts: ["A comparison of two quantities","A sum of two numbers","A type of fraction that is always less than 1","A percent"], hint: "Like 3 cats to 2 dogs." },
+      { q: "A class has 12 girls and 15 boys. What is the ratio of girls to boys in simplest form?", a: 0, opts: ["4:5","5:4","12:27","3:5"], hint: "12:15, divide both by 3." },
+      { q: "In the same class (12 girls, 15 boys), what is the ratio of girls to ALL students?", a: 0, opts: ["4:9","4:5","12:15","5:9"], hint: "12 girls out of 27 students. Divide by 3: 4:9." },
+      { q: "Which is NOT a way to write the ratio 3 to 4?", a: 0, opts: ["3 × 4","3:4","3/4","3 to 4"], hint: "Ratios are written with 'to', a colon, or a fraction bar." },
+      { q: "Simplify the ratio 18:24.", a: 0, opts: ["3:4","9:12","2:3","6:7"], hint: "Divide both by the GCF, 6." },
+      { q: "Which ratio is EQUIVALENT to 2:5?", a: 0, opts: ["6:15","5:2","4:12","7:10"], hint: "Multiply both parts by the same number: 2×3 : 5×3." },
+      { q: "A recipe uses 2 cups of flour for every 3 eggs. How many eggs for 8 cups of flour?", a: 0, opts: ["12","9","10","16"], hint: "8 is 2 × 4, so eggs = 3 × 4." },
+      { q: "Order matters in a ratio. 'Dogs to cats' with 5 dogs and 2 cats is ___.", a: 0, opts: ["5:2","2:5","7:2","5:7"], hint: "First word first: dogs (5) to cats (2)." },
+      { q: "Red to blue marbles is 3:7. If there are 50 marbles total, how many are red?", a: 0, opts: ["15","35","21","10"], hint: "3 + 7 = 10 parts. 50 ÷ 10 = 5 per part. Red = 3 × 5." }
+    ]
+  },
+  rates: {
+    title: "Rates & Unit Rates", emoji: "🚗", color: "#2563eb",
+    questions: [
+      { q: "What is a RATE?", a: 0, opts: ["A ratio comparing two different kinds of units","A ratio of the same units","A percent","A type of angle"], hint: "Miles per hour, dollars per pound." },
+      { q: "What is a UNIT RATE?", a: 0, opts: ["A rate with a denominator of 1","A rate that is always in dollars","Any fraction","A rate bigger than 100"], hint: "'Per ONE': 60 miles per 1 hour." },
+      { q: "A car goes 180 miles in 3 hours. What is the unit rate?", a: 0, opts: ["60 miles per hour","540 miles per hour","90 miles per hour","30 miles per hour"], hint: "180 ÷ 3." },
+      { q: "You earn $72 for 8 hours of work. How much per hour?", a: 0, opts: ["$9","$8","$64","$576"], hint: "72 ÷ 8." },
+      { q: "Which is the BETTER buy?", a: 0, opts: ["5 pounds for $10 ($2/lb)","3 pounds for $7.50 ($2.50/lb)","2 pounds for $6 ($3/lb)","1 pound for $3.25"], hint: "Lowest price per pound wins." },
+      { q: "12 pencils cost $3.00. What is the unit price?", a: 0, opts: ["$0.25 per pencil","$4.00 per pencil","$0.30 per pencil","$0.40 per pencil"], hint: "3.00 ÷ 12." },
+      { q: "A printer prints 45 pages in 3 minutes. How many pages in 10 minutes?", a: 0, opts: ["150","135","450","100"], hint: "Unit rate: 15 pages per minute. × 10." },
+      { q: "Julia reads 1/2 page in 1/4 minute. What is her unit rate?", a: 0, opts: ["2 pages per minute","1/8 page per minute","1/2 page per minute","4 pages per minute"], hint: "(1/2) ÷ (1/4) = 1/2 × 4 = 2." },
+      { q: "Which is a unit rate?", a: 0, opts: ["$4 per 1 pound","$12 per 3 pounds","100 miles in 2 hours","6 laps in 3 minutes"], hint: "Look for '1' on the bottom." }
+    ]
+  },
+  proportions: {
+    title: "Proportions", emoji: "🟰", color: "#0891b2",
+    questions: [
+      { q: "What is a PROPORTION?", a: 0, opts: ["An equation showing two ratios are equal","Any single ratio","A percent greater than 100","A unit rate"], hint: "Like 2/3 = 4/6." },
+      { q: "Solve: 3/4 = x/20", a: 0, opts: ["15","12","16","80"], hint: "4 × 5 = 20, so 3 × 5." },
+      { q: "Solve: 5/x = 15/24", a: 0, opts: ["8","3","72","10"], hint: "Cross multiply: 15x = 120." },
+      { q: "What is CROSS MULTIPLYING used for?", a: 0, opts: ["Checking or solving proportions","Adding fractions","Finding area","Rounding"], hint: "a/b = c/d means a × d = b × c." },
+      { q: "Is 4/6 = 10/15 a true proportion?", a: 0, opts: ["Yes, 4 × 15 = 6 × 10 = 60","No, 4 × 15 ≠ 6 × 10","Only if simplified","Proportions can't use fractions"], hint: "Cross products: 60 and 60." },
+      { q: "A map scale is 1 inch : 50 miles. Two cities are 3 inches apart. How far apart are they?", a: 0, opts: ["150 miles","53 miles","50 miles","17 miles"], hint: "3 × 50." },
+      { q: "If 4 tickets cost $26, how much do 10 tickets cost?", a: 0, opts: ["$65","$60","$104","$40"], hint: "26 ÷ 4 = 6.50 each. × 10." },
+      { q: "In a proportional relationship, the graph is a straight line that ___.", a: 0, opts: ["Passes through the origin (0, 0)","Never touches an axis","Is always horizontal","Curves upward"], hint: "Zero of one thing = zero of the other." },
+      { q: "y = 7x. What is the CONSTANT OF PROPORTIONALITY?", a: 0, opts: ["7","x","y","1/7"], hint: "In y = kx, k is the constant." }
+    ]
+  },
+  percents: {
+    title: "Percent Basics", emoji: "💯", color: "#16a34a",
+    questions: [
+      { q: "What does PERCENT mean?", a: 0, opts: ["Per hundred (out of 100)","Per ten","Per thousand","Per one"], hint: "Cent = 100 (like a century)." },
+      { q: "Write 45% as a decimal.", a: 0, opts: ["0.45","4.5","0.045","45.0"], hint: "Move the decimal 2 places LEFT." },
+      { q: "Write 0.8 as a percent.", a: 0, opts: ["80%","8%","0.8%","800%"], hint: "Move the decimal 2 places RIGHT." },
+      { q: "Write 3/4 as a percent.", a: 0, opts: ["75%","34%","3.4%","43%"], hint: "3 ÷ 4 = 0.75." },
+      { q: "Write 2/5 as a percent.", a: 0, opts: ["40%","25%","20%","52%"], hint: "2/5 = 4/10 = 40/100." },
+      { q: "What is 20% of 60?", a: 0, opts: ["12","20","3","120"], hint: "0.20 × 60. Or 10% is 6, so 20% is 12." },
+      { q: "What is 25% of 80?", a: 0, opts: ["20","25","32","4"], hint: "25% = 1/4. 80 ÷ 4." },
+      { q: "15 is what percent of 60?", a: 0, opts: ["25%","15%","40%","4%"], hint: "15 ÷ 60 = 0.25." },
+      { q: "18 is 30% of what number?", a: 0, opts: ["60","54","5.4","48"], hint: "18 ÷ 0.30." },
+      { q: "Write 7% as a decimal.", a: 0, opts: ["0.07","0.7","7.0","0.007"], hint: "7% = 7/100 = 0.07. Watch the zero!" },
+      { q: "Quick trick: 10% of any number is found by ___.", a: 0, opts: ["Moving the decimal one place left","Multiplying by 10","Adding 10","Dividing by 100"], hint: "10% of 350 = 35." }
+    ]
+  },
+  percent_apps: {
+    title: "Sales, Tax & Tips", emoji: "🛍️", color: "#db2777",
+    questions: [
+      { q: "A $40 shirt is 25% off. What is the sale price?", a: 0, opts: ["$30","$10","$35","$15"], hint: "Discount = $10. 40 − 10." },
+      { q: "A $50 game is 30% off. How much is the discount?", a: 0, opts: ["$15","$35","$20","$30"], hint: "0.30 × 50." },
+      { q: "Sales tax is 6%. What is the tax on a $25 purchase?", a: 0, opts: ["$1.50","$6.00","$15.00","$0.60"], hint: "0.06 × 25." },
+      { q: "Dinner costs $30. You leave a 20% tip. What is the total?", a: 0, opts: ["$36","$32","$6","$50"], hint: "Tip = $6. Add it on." },
+      { q: "A store buys a bike for $80 and marks it up 50%. What is the selling price?", a: 0, opts: ["$120","$130","$40","$85"], hint: "Markup = $40. 80 + 40." },
+      { q: "What is a MARKUP?", a: 0, opts: ["An increase in price from what the store paid","A discount","Sales tax","A tip"], hint: "Stores mark UP prices to make a profit." },
+      { q: "Simple interest: $200 saved at 5% per year for 3 years. How much interest?", a: 0, opts: ["$30","$10","$15","$600"], hint: "I = P × r × t = 200 × 0.05 × 3." },
+      { q: "Shortcut: 25% off means you pay what percent?", a: 0, opts: ["75%","25%","125%","50%"], hint: "100% − 25%." },
+      { q: "A $60 jacket is 10% off, then 6% tax is added. What do you pay?", a: 0, opts: ["$57.24","$54.00","$56.40","$60.00"], hint: "60 − 6 = 54. Tax: 54 × 0.06 = 3.24. Total 57.24." }
+    ]
+  },
+  percent_change: {
+    title: "Percent Change", emoji: "📈", color: "#ea580c",
+    questions: [
+      { q: "What is the formula for percent change?", a: 0, opts: ["(amount of change ÷ original) × 100","(new ÷ original) × 10","original − new","(change ÷ new) × 100"], hint: "Always divide by the ORIGINAL (starting) amount." },
+      { q: "A price goes from $20 to $25. What is the percent increase?", a: 0, opts: ["25%","20%","5%","125%"], hint: "Change = 5. 5 ÷ 20 = 0.25." },
+      { q: "A price drops from $50 to $40. What is the percent decrease?", a: 0, opts: ["20%","25%","10%","80%"], hint: "Change = 10. 10 ÷ 50." },
+      { q: "A plant grows from 10 cm to 13 cm. Percent increase?", a: 0, opts: ["30%","3%","13%","23%"], hint: "3 ÷ 10." },
+      { q: "When you find percent change, you divide by the ___.", a: 0, opts: ["Original amount","New amount","Bigger number always","Smaller number always"], hint: "Start with where you STARTED." },
+      { q: "Attendance went from 200 to 150. This is a ___.", a: 0, opts: ["25% decrease","25% increase","50% decrease","33% decrease"], hint: "50 ÷ 200 = 0.25, and it went DOWN." },
+      { q: "Julia guessed 40 jelly beans; there were 50. What is the percent error?", a: 0, opts: ["20%","25%","10%","80%"], hint: "Error = 10. Divide by the ACTUAL amount: 10 ÷ 50." },
+      { q: "A number doubles. What is the percent increase?", a: 0, opts: ["100%","200%","50%","2%"], hint: "From 10 to 20: change 10 ÷ 10 = 100%." },
+      { q: "A $80 price increases by 15%. What is the new price?", a: 0, opts: ["$92","$95","$68","$12"], hint: "15% of 80 = 12. 80 + 12." }
+    ]
+  }
+};
+const TIPS_RATIOS = {
+  ratios: [
+    { h:"3 ways to write ⚖️", p:"<b>3 to 4</b> · <b>3:4</b> · <b>3/4</b>. Order matters: first thing named goes first." },
+    { h:"Simplify like fractions", p:"Divide both parts by the GCF. 18:24 → ÷6 → <b>3:4</b>." },
+    { h:"Part-to-whole trick", p:"Ratio 3:7 → total parts = 10. Divide the total by 10 to find one part, then multiply." }
+  ],
+  rates: [
+    { h:"Rate vs Unit Rate 🚗", p:"<b>Rate</b> compares different units (miles/hours). <b>Unit rate</b> = per <b>1</b>. Divide top by bottom." },
+    { h:"Better buy 🛒", p:"Find the price per 1 item for each choice. <b>Lowest unit price wins.</b>" },
+    { h:"Fractions in rates", p:"(1/2) ÷ (1/4): keep, change, flip → 1/2 × 4/1 = 2." }
+  ],
+  proportions: [
+    { h:"Proportion = equal ratios 🟰", p:"a/b = c/d. <b>Cross multiply</b>: a × d = b × c." },
+    { h:"Solve for x", p:"3/4 = x/20 → 4x = 60 → x = 15. Or notice 4 × 5 = 20, so x = 3 × 5." },
+    { h:"Proportional graphs 📈", p:"A straight line through the <b>origin (0,0)</b>. Equation <b>y = kx</b>, k = constant of proportionality." }
+  ],
+  percents: [
+    { h:"Percent = per 100 💯", p:"45% = 45/100 = 0.45. Decimal → percent: move 2 places <b>right</b>. Percent → decimal: 2 places <b>left</b>." },
+    { h:"Friendly fractions", p:"25% = 1/4 · 50% = 1/2 · 75% = 3/4 · 20% = 1/5 · 10% = 1/10 · 33⅓% = 1/3." },
+    { h:"10% trick", p:"10% = move decimal one place left. Then 20% = double it, 5% = half it." },
+    { h:"The 3 question types", p:"<b>Part = % × Whole</b>. What is 20% of 60? → 0.2 × 60. 15 is what % of 60? → 15 ÷ 60. 18 is 30% of what? → 18 ÷ 0.3." }
+  ],
+  percent_apps: [
+    { h:"Discount 🏷️", p:"Discount = % × price. Sale price = price − discount. Shortcut: 25% off → pay 75%." },
+    { h:"Tax & Tip 💵", p:"Both get <b>added</b>: total = price + (% × price). 20% tip on $30 → $6 → $36." },
+    { h:"Markup", p:"Store's cost + (% × cost). Same as tax/tip math." },
+    { h:"Simple interest", p:"<b>I = P × r × t</b> (principal × rate as decimal × years)." }
+  ],
+  percent_change: [
+    { h:"Formula 📈", p:"<b>Percent change = change ÷ ORIGINAL × 100</b>. Up = increase, down = decrease." },
+    { h:"Original first!", p:"$20 → $25: change 5, divide by <b>20</b> (not 25) = 25%." },
+    { h:"Percent error", p:"|guess − actual| ÷ <b>actual</b> × 100." }
+  ]
+};
+const RATIOS_KEY_ORDER = ["ratios","rates","proportions","percents","percent_apps","percent_change"];
+
+const QUIZ_CELLS = {
+  cell_theory: {
+    title: "Cell Theory", emoji: "🔬", color: "#0d9488",
+    questions: [
+      { q: "What is the basic unit of structure and function in living things?", a: 0, opts: ["The cell","The atom","The organ","The tissue"], hint: "Every living thing is made of cells." },
+      { q: "Which is one of the three parts of the CELL THEORY?", a: 0, opts: ["All cells come from existing cells","Cells can appear from nothing","Only animals have cells","Viruses are cells"], hint: "1) All living things are made of cells. 2) Cells are the basic unit of life. 3) All cells come from existing cells." },
+      { q: "Who first saw and named 'cells' while looking at cork?", a: 0, opts: ["Robert Hooke","Gregor Mendel","Louis Pasteur","Isaac Newton"], hint: "Hooke, 1665. The cork looked like tiny rooms (cells)." },
+      { q: "Who first saw living one-celled organisms with his homemade microscope?", a: 0, opts: ["Anton van Leeuwenhoek","Robert Hooke","Charles Darwin","Edward Jenner"], hint: "He called them 'animalcules'." },
+      { q: "A PROKARYOTIC cell ___.", a: 0, opts: ["Has no nucleus","Has a nucleus","Is always a plant cell","Is always multicellular"], hint: "Pro = before, karyon = nucleus. Bacteria are prokaryotes." },
+      { q: "A EUKARYOTIC cell ___.", a: 0, opts: ["Has a nucleus and organelles","Has no nucleus","Is always a bacterium","Has no DNA"], hint: "Eu = true nucleus. Plants, animals, fungi, protists." },
+      { q: "What is the correct order from smallest to largest?", a: 0, opts: ["Cell → tissue → organ → organ system → organism","Organ → cell → tissue → organism","Tissue → cell → organ → organism","Organism → organ → tissue → cell"], hint: "Cells make tissues, tissues make organs..." },
+      { q: "A group of similar cells working together is a ___.", a: 0, opts: ["Tissue","Organ","Organism","Organelle"], hint: "Muscle tissue, nerve tissue." },
+      { q: "An organism made of only ONE cell is ___.", a: 0, opts: ["Unicellular","Multicellular","Eukaryotic always","A tissue"], hint: "Uni = one." }
+    ]
+  },
+  organelles: {
+    title: "Organelles", emoji: "🏭", color: "#6366f1",
+    questions: [
+      { q: "Which organelle is the control center and holds the DNA?", a: 0, opts: ["Nucleus","Mitochondria","Vacuole","Ribosome"], hint: "The 'brain' or 'principal's office' of the cell." },
+      { q: "Which organelle is the 'powerhouse' that releases energy?", a: 0, opts: ["Mitochondria","Nucleus","Chloroplast","Golgi apparatus"], hint: "Mitochondria do cellular respiration." },
+      { q: "What controls what goes in and out of the cell?", a: 0, opts: ["Cell membrane","Cell wall","Nucleus","Ribosome"], hint: "It's a selective gatekeeper." },
+      { q: "Which organelle makes proteins?", a: 0, opts: ["Ribosome","Vacuole","Lysosome","Cell wall"], hint: "Same as in bacteria!" },
+      { q: "Which organelle stores water, food, and waste?", a: 0, opts: ["Vacuole","Nucleus","Mitochondria","Ribosome"], hint: "Plant cells have one huge central vacuole." },
+      { q: "Which organelle packages and ships proteins?", a: 0, opts: ["Golgi apparatus","Lysosome","Chloroplast","Nucleus"], hint: "The cell's 'post office'." },
+      { q: "Which organelle is a network of passageways that moves materials (a 'highway')?", a: 0, opts: ["Endoplasmic reticulum (ER)","Golgi apparatus","Vacuole","Cell wall"], hint: "Rough ER has ribosomes on it." },
+      { q: "Which organelle breaks down wastes and worn-out parts?", a: 0, opts: ["Lysosome","Ribosome","Chloroplast","Nucleus"], hint: "The 'clean-up crew'." },
+      { q: "Where does photosynthesis happen?", a: 0, opts: ["Chloroplast","Mitochondria","Nucleus","Lysosome"], hint: "Chloroplasts contain green chlorophyll." },
+      { q: "What is the jellylike fluid that fills the cell?", a: 0, opts: ["Cytoplasm","Nucleus","Vacuole","Membrane"], hint: "Organelles float in it." }
+    ]
+  },
+  plant_animal: {
+    title: "Plant vs Animal Cells", emoji: "🌿", color: "#16a34a",
+    questions: [
+      { q: "Which part do PLANT cells have that animal cells do NOT?", a: 0, opts: ["Cell wall","Cell membrane","Nucleus","Mitochondria"], hint: "Plant cells have a cell wall AND chloroplasts." },
+      { q: "Which part do PLANT cells have for making food?", a: 0, opts: ["Chloroplasts","Lysosomes only","Centrioles","Cilia"], hint: "Animals must eat; plants make food." },
+      { q: "What is a plant cell wall mostly made of?", a: 0, opts: ["Cellulose","Chitin","Protein","Bone"], hint: "Fungi walls = chitin. Plant walls = cellulose." },
+      { q: "Plant cells usually have ___ central vacuole.", a: 0, opts: ["One large","Many tiny","No","A purple"], hint: "It pushes against the wall to keep the plant firm." },
+      { q: "What shape are plant cells usually?", a: 0, opts: ["Rectangular or boxy","Perfectly round","Star-shaped","Shapeless blobs"], hint: "The rigid wall makes them boxy." },
+      { q: "Which organelle is found in BOTH plant and animal cells?", a: 0, opts: ["Mitochondria","Chloroplast","Cell wall","Large central vacuole"], hint: "Plants need to release energy too!" },
+      { q: "Why do plants wilt when they don't get water?", a: 0, opts: ["Their vacuoles shrink and lose pressure","Their nucleus disappears","Their chloroplasts fall off","Their cell walls melt"], hint: "Full vacuoles keep plants upright." },
+      { q: "Which cell is round with no cell wall and no chloroplasts?", a: 0, opts: ["Animal cell","Plant cell","Algae cell","Leaf cell"], hint: "Animal cells are rounder and more flexible." }
+    ]
+  },
+  processes: {
+    title: "Cell Processes", emoji: "⚡", color: "#ca8a04",
+    questions: [
+      { q: "What do plants make during PHOTOSYNTHESIS?", a: 0, opts: ["Glucose (sugar) and oxygen","Carbon dioxide and water","Protein and fat","Spores"], hint: "Sunlight + CO₂ + water → sugar + oxygen." },
+      { q: "What are the INGREDIENTS for photosynthesis?", a: 0, opts: ["Sunlight, carbon dioxide, and water","Oxygen and sugar","Soil and oxygen","Protein and light"], hint: "Light + CO₂ + H₂O." },
+      { q: "What is CELLULAR RESPIRATION?", a: 0, opts: ["Breaking down sugar with oxygen to release energy","Making sugar from sunlight","Breathing with lungs","Cell division"], hint: "Happens in the mitochondria. Sugar + oxygen → energy + CO₂ + water." },
+      { q: "How are photosynthesis and respiration related?", a: 0, opts: ["They are opposites; each uses what the other makes","They are exactly the same","Neither uses oxygen","Only animals do both"], hint: "Products of one = ingredients of the other." },
+      { q: "What is DIFFUSION?", a: 0, opts: ["Movement of molecules from high concentration to low concentration","Movement from low to high","Cell division","Making proteins"], hint: "Like perfume spreading through a room." },
+      { q: "What is OSMOSIS?", a: 0, opts: ["Diffusion of water across a membrane","Diffusion of sugar","Making energy","Copying DNA"], hint: "Osmosis = water." },
+      { q: "Movement that needs NO energy from the cell is called ___.", a: 0, opts: ["Passive transport","Active transport","Respiration","Mitosis"], hint: "Passive = like coasting downhill." },
+      { q: "Moving materials from LOW to HIGH concentration needs energy. This is ___.", a: 0, opts: ["Active transport","Passive transport","Diffusion","Osmosis"], hint: "Active = pushing uphill." },
+      { q: "What is FERMENTATION?", a: 0, opts: ["Releasing energy without oxygen","Making sugar from sunlight","Copying DNA","Water moving across a membrane"], hint: "Yeast and tired muscles do this." }
+    ]
+  },
+  division: {
+    title: "Cell Division", emoji: "✂️", color: "#e11d48",
+    questions: [
+      { q: "What is MITOSIS?", a: 0, opts: ["Cell division that makes two identical cells","Making sex cells","Making sugar","Breaking down waste"], hint: "Used for growth and repair." },
+      { q: "Why do cells divide by mitosis?", a: 0, opts: ["For growth and to repair or replace cells","To make sex cells only","To make food","To move"], hint: "Like healing a scraped knee." },
+      { q: "What are the four phases of mitosis in order?", a: 0, opts: ["Prophase, Metaphase, Anaphase, Telophase","Metaphase, Prophase, Telophase, Anaphase","Anaphase, Prophase, Metaphase, Telophase","Telophase, Anaphase, Metaphase, Prophase"], hint: "PMAT: 'Please Make A Taco'." },
+      { q: "In which phase do chromosomes line up in the MIDDLE?", a: 0, opts: ["Metaphase","Prophase","Anaphase","Telophase"], hint: "Metaphase = Middle." },
+      { q: "In which phase are chromosomes pulled APART?", a: 0, opts: ["Anaphase","Metaphase","Prophase","Interphase"], hint: "Anaphase = Apart." },
+      { q: "What happens during INTERPHASE?", a: 0, opts: ["The cell grows and copies its DNA","The cell splits in two","Chromosomes line up","The nucleus disappears forever"], hint: "The 'getting ready' stage. Most of a cell's life is spent here." },
+      { q: "What is CYTOKINESIS?", a: 0, opts: ["The cytoplasm splitting into two cells","Copying DNA","Lining up chromosomes","Making proteins"], hint: "Cyto = cell, kinesis = movement. The final split." },
+      { q: "What is MEIOSIS?", a: 0, opts: ["Cell division that makes sex cells with half the chromosomes","Division that makes identical body cells","A type of respiration","Diffusion of water"], hint: "Makes egg and sperm cells." },
+      { q: "Human body cells have 46 chromosomes. How many do sex cells have?", a: 0, opts: ["23","46","92","12"], hint: "Meiosis halves the number." }
+    ]
+  },
+  dna: {
+    title: "DNA & Chromosomes", emoji: "🧬", color: "#8b5cf6",
+    questions: [
+      { q: "What does DNA stand for?", a: 0, opts: ["Deoxyribonucleic acid","Dinitrogen acid","Double nucleus atom","Dynamic natural acid"], hint: "Dee-OX-ee-RYE-bo-new-CLAY-ic acid." },
+      { q: "What shape is a DNA molecule?", a: 0, opts: ["Double helix (twisted ladder)","Single straight line","Sphere","Square"], hint: "A twisted ladder." },
+      { q: "Which bases pair together in DNA?", a: 0, opts: ["A with T, and C with G","A with C, and T with G","A with G, and C with T","Any base with any base"], hint: "'Apple in the Tree, Car in the Garage.'" },
+      { q: "If one DNA strand reads A-T-G-C, what is the matching strand?", a: 0, opts: ["T-A-C-G","A-T-G-C","G-C-A-T","C-G-T-A"], hint: "A↔T, G↔C." },
+      { q: "What is a GENE?", a: 0, opts: ["A section of DNA that codes for a trait","A whole chromosome","A type of cell","A protein coat"], hint: "Genes are like recipes for traits." },
+      { q: "What are CHROMOSOMES?", a: 0, opts: ["Tightly coiled strands of DNA","Organelles that make energy","Types of sugar","Cell walls"], hint: "DNA wound up into packages." },
+      { q: "Where is DNA found in a eukaryotic cell?", a: 0, opts: ["In the nucleus","In the cell wall","In the vacuole","Outside the cell"], hint: "The nucleus is the control center." },
+      { q: "Which scientists are known for discovering DNA's double helix shape?", a: 0, opts: ["Watson, Crick, and Rosalind Franklin","Hooke and Leeuwenhoek","Mendel and Darwin","Pasteur and Fleming"], hint: "1953. Franklin's X-ray photo was key." },
+      { q: "A change in a DNA sequence is called a ___.", a: 0, opts: ["Mutation","Mitosis","Trait","Phenotype"], hint: "Some mutations are harmful, some helpful, most have no effect." }
+    ]
+  },
+  heredity: {
+    title: "Heredity & Punnett Squares", emoji: "👪", color: "#0284c7",
+    questions: [
+      { q: "What is HEREDITY?", a: 0, opts: ["Passing traits from parents to offspring","Cell division","Making energy","Learning a skill"], hint: "Why you might have your mom's eyes." },
+      { q: "Who is called the 'father of genetics'?", a: 0, opts: ["Gregor Mendel","Charles Darwin","Robert Hooke","Louis Pasteur"], hint: "A monk who studied pea plants in the 1800s." },
+      { q: "What is a DOMINANT allele?", a: 0, opts: ["One that shows up whenever it is present","One that is hidden unless there are two copies","A type of chromosome","A mutation"], hint: "Written with a CAPITAL letter (T)." },
+      { q: "What is a RECESSIVE allele?", a: 0, opts: ["One that only shows when there are two copies","One that always shows","One that only boys have","An extra chromosome"], hint: "Lowercase letter (t). Needs tt to show." },
+      { q: "What does HOMOZYGOUS mean?", a: 0, opts: ["Two of the same allele (TT or tt)","Two different alleles (Tt)","No alleles","Three alleles"], hint: "Homo = same." },
+      { q: "What does HETEROZYGOUS mean?", a: 0, opts: ["Two different alleles (Tt)","Two of the same alleles (TT)","No alleles","Only recessive alleles"], hint: "Hetero = different. Remember heterotroph!" },
+      { q: "GENOTYPE vs PHENOTYPE: which is the physical trait you can see?", a: 0, opts: ["Phenotype","Genotype","Allele","Chromosome"], hint: "Genotype = the letters (Tt). Phenotype = what it looks like (tall)." },
+      { q: "Cross Tt × Tt. What fraction of offspring will be tt?", a: 0, opts: ["1/4 (25%)","1/2 (50%)","3/4 (75%)","0"], hint: "Punnett square: TT, Tt, Tt, tt." },
+      { q: "Cross Tt × Tt (T = tall is dominant). What percent will be TALL?", a: 0, opts: ["75%","25%","50%","100%"], hint: "TT, Tt, Tt are all tall. 3 out of 4." },
+      { q: "Cross TT × tt. What genotype will ALL offspring have?", a: 0, opts: ["Tt","TT","tt","Half TT, half tt"], hint: "Every box gets one T and one t." },
+      { q: "What tool predicts the possible offspring of a genetic cross?", a: 0, opts: ["Punnett square","Microscope","Thermometer","Pedigree only"], hint: "The 2×2 grid." }
+    ]
+  }
+};
+const TIPS_CELLS = {
+  cell_theory: [
+    { h:"Cell theory (3 parts) 🔬", p:"1) All living things are made of <b>cells</b>. 2) Cells are the <b>basic unit</b> of life. 3) All cells come from <b>existing cells</b>." },
+    { h:"Scientists", p:"<b>Hooke</b> named cells (cork) · <b>Leeuwenhoek</b> saw living microbes." },
+    { h:"Levels 🪜", p:"<b>Cell → Tissue → Organ → Organ System → Organism</b>." },
+    { h:"Pro vs Eu", p:"<b>Prokaryote</b> = no nucleus (bacteria). <b>Eukaryote</b> = true nucleus (plants, animals, fungi, protists)." }
+  ],
+  organelles: [
+    { h:"Cell = a school 🏫", p:"<b>Nucleus</b> = principal's office · <b>Mitochondria</b> = cafeteria/power plant · <b>Ribosomes</b> = workers making proteins · <b>ER</b> = hallways · <b>Golgi</b> = mailroom · <b>Lysosomes</b> = janitors · <b>Vacuole</b> = storage closet · <b>Membrane</b> = front door security." },
+    { h:"Mighty mitochondria ⚡", p:"<b>Mitochondria</b> = powerhouse, releases energy from food." },
+    { h:"Plants only", p:"<b>Chloroplasts</b> do photosynthesis; <b>cell wall</b> gives support." }
+  ],
+  plant_animal: [
+    { h:"Plant cell extras 🌿", p:"Plant cells have <b>cell wall</b> (cellulose), <b>chloroplasts</b>, and one <b>large central vacuole</b>. Animal cells don't." },
+    { h:"Shapes", p:"Plant = <b>boxy</b> (rigid wall). Animal = <b>round</b> and flexible." },
+    { h:"Both have", p:"Nucleus, membrane, cytoplasm, mitochondria, ribosomes." }
+  ],
+  processes: [
+    { h:"Photosynthesis ☀️", p:"<b>Sunlight + CO₂ + water → glucose + oxygen</b>. In chloroplasts." },
+    { h:"Respiration 🔥", p:"<b>Glucose + oxygen → energy + CO₂ + water</b>. In mitochondria. The opposite of photosynthesis!" },
+    { h:"Moving stuff", p:"<b>Diffusion</b>: high → low · <b>Osmosis</b>: water diffusing · <b>Passive</b> = no energy · <b>Active</b> = needs energy (low → high)." },
+    { h:"No oxygen?", p:"<b>Fermentation</b> releases energy without oxygen (yeast, sore muscles)." }
+  ],
+  division: [
+    { h:"PMAT 🌮", p:"<b>P</b>lease <b>M</b>ake <b>A</b> <b>T</b>aco: Prophase, Metaphase (Middle), Anaphase (Apart), Telophase (Two nuclei)." },
+    { h:"Before & after", p:"<b>Interphase</b> = grow + copy DNA (before). <b>Cytokinesis</b> = cytoplasm splits (after)." },
+    { h:"Mitosis vs Meiosis", p:"<b>Mitosis</b> = 2 identical body cells (growth, repair). <b>Meiosis</b> = sex cells with half the chromosomes (46 → 23)." }
+  ],
+  dna: [
+    { h:"DNA basics 🧬", p:"<b>Deoxyribonucleic acid</b>, shaped like a <b>double helix</b> (twisted ladder). Found in the nucleus." },
+    { h:"Base pairs", p:"<b>A–T</b> and <b>C–G</b>. 'Apple in the Tree, Car in the Garage.'" },
+    { h:"Gene vs Chromosome", p:"<b>Gene</b> = section of DNA for one trait. <b>Chromosome</b> = coiled package of DNA with many genes." },
+    { h:"Discovery", p:"<b>Watson, Crick & Rosalind Franklin</b> (1953)." }
+  ],
+  heredity: [
+    { h:"Mendel & peas 🌱", p:"<b>Gregor Mendel</b>, a monk, is the father of genetics." },
+    { h:"Dominant vs Recessive", p:"<b>Dominant</b> = CAPITAL (T), shows if present. <b>Recessive</b> = lowercase (t), needs two (tt) to show." },
+    { h:"Vocab pairs", p:"<b>Homozygous</b> = same (TT, tt) · <b>Heterozygous</b> = different (Tt) · <b>Genotype</b> = letters · <b>Phenotype</b> = what you see." },
+    { h:"Punnett square ▦", p:"Put one parent's alleles on top, the other's on the side, fill the boxes. <b>Tt × Tt</b> → 1 TT : 2 Tt : 1 tt (75% show dominant)." }
+  ]
+};
+const CELLS_KEY_ORDER = ["cell_theory","organelles","plant_animal","processes","division","dna","heredity"];
+
+const QUIZ_MICROBES = {
+  viruses: {
+    title: "Viruses", emoji: "🦠", color: "#dc2626",
+    questions: [
+      { q: "What is a virus?", a: 0, opts: ["A tiny nonliving particle that can only multiply inside a living cell","A one-celled living organism","A type of fungus","A plant-like protist"], hint: "Viruses are NOT cells and are not considered alive on their own." },
+      { q: "Are viruses considered living things?", a: 0, opts: ["No, they can't eat, grow, or reproduce on their own","Yes, they are single-celled organisms","Yes, they are tiny animals","Only when they are dormant"], hint: "They need a host cell to do anything." },
+      { q: "What is a HOST?", a: 0, opts: ["A living thing a virus or parasite lives in or on","The protein coat of a virus","A virus that makes you sick","A type of vaccine"], hint: "The host provides the cell the virus hijacks." },
+      { q: "What are the two basic parts of a virus?", a: 0, opts: ["A protein coat and genetic material inside","A nucleus and cell wall","Cytoplasm and ribosomes","A flagellum and capsule"], hint: "Protein coat (outside) + DNA or RNA (inside)." },
+      { q: "How do viruses multiply?", a: 0, opts: ["They take over a host cell and make it build new viruses","Binary fission","Budding","Spores"], hint: "The virus hijacks the cell's machinery like a copy machine." },
+      { q: "Compared to bacteria, viruses are ___.", a: 0, opts: ["Much smaller","Much larger","The same size","Made of more cells"], hint: "Most viruses are far smaller than bacteria and need an electron microscope to see." },
+      { q: "Which disease is caused by a VIRUS?", a: 0, opts: ["The flu (influenza)","Strep throat","Athlete's foot","Malaria"], hint: "Flu, colds, chickenpox, measles, and COVID-19 are viral." },
+      { q: "What is a virus that infects bacteria called?", a: 0, opts: ["Bacteriophage","Protozoan","Spore","Antibiotic"], hint: "Phage = eater. A bacteriophage 'eats' bacteria." },
+      { q: "What's the key difference between a virus and a bacterium?", a: 0, opts: ["Bacteria are living cells; viruses are not cells","Viruses are living cells; bacteria are not","Both are fungi","There is no difference"], hint: "Bacteria = living prokaryotic cells. Viruses = nonliving particles." }
+    ]
+  },
+  fighting: {
+    title: "Fighting Germs", emoji: "💉", color: "#0891b2",
+    questions: [
+      { q: "What does a VACCINE do?", a: 0, opts: ["Trains your immune system to recognize a germ before you get sick","Kills viruses already in your body","Feeds good bacteria","Cures every disease"], hint: "Vaccines help your body build defenses ahead of time." },
+      { q: "What do ANTIBIOTICS kill?", a: 0, opts: ["Bacteria","Viruses","Fungi only","All germs including viruses"], hint: "Anti-BIO-tics work on bacteria, NOT on viruses like colds or flu." },
+      { q: "Why won't antibiotics cure a cold?", a: 0, opts: ["Colds are caused by viruses, and antibiotics only work on bacteria","Colds are too strong","Antibiotics only work on fungi","Colds are caused by protists"], hint: "Wrong germ type. Antibiotics target bacteria." },
+      { q: "Which scientist discovered penicillin, the first antibiotic, from a mold?", a: 0, opts: ["Alexander Fleming","Louis Pasteur","Isaac Newton","Gregor Mendel"], hint: "Fleming, 1928. It came from Penicillium mold, a fungus!" },
+      { q: "Which scientist developed pasteurization and early vaccines?", a: 0, opts: ["Louis Pasteur","Alexander Fleming","Robert Hooke","Charles Darwin"], hint: "Pasteur = pasteurization (heating milk to kill germs)." },
+      { q: "Who made the first vaccine (for smallpox)?", a: 0, opts: ["Edward Jenner","Louis Pasteur","Marie Curie","Anton van Leeuwenhoek"], hint: "Jenner, 1796, using cowpox." },
+      { q: "What is your body's system that fights infections called?", a: 0, opts: ["Immune system","Digestive system","Skeletal system","Nervous system"], hint: "White blood cells are its soldiers." },
+      { q: "What is the BEST everyday way to stop germs from spreading?", a: 0, opts: ["Washing your hands with soap and water","Taking antibiotics every day","Avoiding all food","Staying in the sun"], hint: "Scrub for about 20 seconds." },
+      { q: "What is a PATHOGEN?", a: 0, opts: ["Any organism or virus that causes disease","A helpful bacterium","A type of vaccine","A white blood cell"], hint: "Patho = disease, gen = producer." }
+    ]
+  },
+  protozoa: {
+    title: "Animal-like Protists", emoji: "🔬", color: "#7c3aed",
+    questions: [
+      { q: "What is a PROTIST?", a: 0, opts: ["A eukaryote that is not an animal, plant, or fungus","A prokaryote like bacteria","A virus","A type of moss"], hint: "Protists are the 'junk drawer' kingdom: eukaryotes that don't fit elsewhere." },
+      { q: "Are protists prokaryotes or eukaryotes?", a: 0, opts: ["Eukaryotes (they have a nucleus)","Prokaryotes (no nucleus)","Neither","Both"], hint: "Unlike bacteria, protists have a nucleus." },
+      { q: "What are animal-like protists called?", a: 0, opts: ["Protozoans","Algae","Slime molds","Spores"], hint: "Proto = first, zoa = animal." },
+      { q: "How does an AMOEBA move?", a: 0, opts: ["With pseudopods (false feet)","With cilia","With a flagellum","It cannot move"], hint: "Pseudo = false, pod = foot. It stretches its blob-like body." },
+      { q: "How does a PARAMECIUM move?", a: 0, opts: ["With cilia (tiny hairs)","With pseudopods","With roots","With wings"], hint: "Cilia beat like tiny oars." },
+      { q: "Which protist uses a whiplike flagellum to move?", a: 0, opts: ["Euglena","Amoeba","Paramecium","Mushroom"], hint: "Euglena also has chloroplasts, so it can make food too!" },
+      { q: "What are CILIA?", a: 0, opts: ["Tiny hairlike structures that beat to move a cell","False feet","A protein coat","Spores"], hint: "Paramecium is covered in cilia." },
+      { q: "Which disease is caused by a protist carried by mosquitoes?", a: 0, opts: ["Malaria","Flu","Strep throat","Ringworm"], hint: "The protist Plasmodium causes malaria." },
+      { q: "Most protists live in ___.", a: 0, opts: ["Water or moist places","Dry deserts only","Outer space","Volcanoes"], hint: "Ponds, oceans, damp soil, and inside other organisms." }
+    ]
+  },
+  algae_molds: {
+    title: "Algae & Slime Molds", emoji: "🌊", color: "#059669",
+    questions: [
+      { q: "What are plant-like protists called?", a: 0, opts: ["Algae","Protozoans","Mushrooms","Viruses"], hint: "Algae make their own food like plants." },
+      { q: "How do algae get energy?", a: 0, opts: ["Photosynthesis","Eating other protists only","Breaking down dead logs","Infecting hosts"], hint: "They have chlorophyll, like plants." },
+      { q: "Algae produce a large share of Earth's ___.", a: 0, opts: ["Oxygen","Carbon dioxide","Nitrogen","Salt"], hint: "Ocean algae make much of the oxygen we breathe." },
+      { q: "What are tiny floating algae in the ocean called?", a: 0, opts: ["Phytoplankton","Pseudopods","Hyphae","Bacteriophages"], hint: "Phyto = plant. They're the base of ocean food chains." },
+      { q: "Which is a large, many-celled alga?", a: 0, opts: ["Kelp (seaweed)","Amoeba","Paramecium","Yeast"], hint: "Kelp forests can grow very tall." },
+      { q: "What are DIATOMS?", a: 0, opts: ["Algae with glassy shells made of silica","Animal-like protists with cilia","Mushrooms","Viruses that infect algae"], hint: "Beautiful glass-shelled algae." },
+      { q: "What are fungus-like protists that ooze along the forest floor?", a: 0, opts: ["Slime molds","Kelp","Diatoms","Euglena"], hint: "Slime molds look like colorful goo on rotting logs." },
+      { q: "How are fungus-like protists similar to fungi?", a: 0, opts: ["They are heterotrophs and often reproduce with spores","They make food by photosynthesis","They have cilia","They are prokaryotes"], hint: "They absorb food and make spores, like fungi." },
+      { q: "What is an ALGAL BLOOM?", a: 0, opts: ["A rapid overgrowth of algae in water","A flower on a seaweed","A type of mushroom","A vaccine"], hint: "Too many nutrients in water can cause algae to explode in number." }
+    ]
+  },
+  fungi: {
+    title: "Fungi", emoji: "🍄", color: "#b45309",
+    questions: [
+      { q: "Fungi are eukaryotes that ___.", a: 0, opts: ["Absorb food from their surroundings","Make food by photosynthesis","Are always single-celled","Are prokaryotes"], hint: "Fungi are heterotrophs. They digest food outside their bodies and absorb it." },
+      { q: "Can fungi make their own food?", a: 0, opts: ["No, they are heterotrophs","Yes, by photosynthesis","Yes, from sunlight and water","Only mushrooms can"], hint: "No chlorophyll, so no photosynthesis." },
+      { q: "What are the threadlike tubes that make up a fungus called?", a: 0, opts: ["Hyphae","Cilia","Pseudopods","Flagella"], hint: "Hyphae (HY-fee) branch through soil, wood, or food." },
+      { q: "What is a big tangled mass of hyphae called?", a: 0, opts: ["Mycelium","Capsule","Spore","Colony of cilia"], hint: "Most of a mushroom is actually underground mycelium." },
+      { q: "Fungal cell walls are made of ___.", a: 0, opts: ["Chitin","Cellulose","Glass","Bone"], hint: "Chitin is also in insect shells. Plant walls are cellulose." },
+      { q: "Which fungus is single-celled?", a: 0, opts: ["Yeast","Mushroom","Bread mold","Puffball"], hint: "Yeast makes bread rise." },
+      { q: "What is the mushroom we see above ground?", a: 0, opts: ["The fruiting body that makes spores","The roots","The whole fungus","A protist"], hint: "It's like the 'fruit'; most of the fungus is hidden." },
+      { q: "Which is NOT a fungus?", a: 0, opts: ["Kelp","Yeast","Mold","Mushroom"], hint: "Kelp is a plant-like protist (alga)." },
+      { q: "Fungi were once grouped with plants. Why are they now their own kingdom?", a: 0, opts: ["They can't photosynthesize and have chitin cell walls","They can move","They are prokaryotes","They have no cells"], hint: "Different food-getting and different walls." }
+    ]
+  },
+  fungi_life: {
+    title: "Fungi in Our World", emoji: "🍞", color: "#92400e",
+    questions: [
+      { q: "How do most fungi reproduce?", a: 0, opts: ["With spores","With seeds","By binary fission only","With pollen"], hint: "Spores are light and travel by air and water." },
+      { q: "How does yeast usually reproduce?", a: 0, opts: ["Budding","Binary fission","Seeds","Pseudopods"], hint: "A small bud grows off the parent cell. Remember budding from bacteria!" },
+      { q: "What role do many fungi play in ecosystems?", a: 0, opts: ["Decomposers that recycle nutrients","Producers that make oxygen","Predators that hunt animals","Pollinators"], hint: "Fungi are the 'F' in F.B.I.!" },
+      { q: "Why does yeast make bread rise?", a: 0, opts: ["It releases carbon dioxide gas bubbles","It adds oxygen","It makes the bread colder","It removes water"], hint: "Yeast eats sugar and gives off CO₂ (fermentation)." },
+      { q: "Which medicine comes from a fungus?", a: 0, opts: ["Penicillin","Insulin","Aspirin from willow","Vitamin C"], hint: "Penicillium mold." },
+      { q: "What is a LICHEN?", a: 0, opts: ["A fungus and an alga living together as partners","A type of moss","A protozoan","A virus"], hint: "Fungus gives shelter, alga makes food. A partnership!" },
+      { q: "A partnership where both organisms benefit is called ___.", a: 0, opts: ["Mutualism","Parasitism","Decomposition","Fermentation"], hint: "Mutual = both. Lichens and fungi-plant root partners are examples." },
+      { q: "Which is a disease caused by a fungus?", a: 0, opts: ["Athlete's foot","Flu","Malaria","Strep throat"], hint: "Athlete's foot and ringworm are fungal." },
+      { q: "Why should you never eat wild mushrooms you find?", a: 0, opts: ["Many are poisonous and look like safe ones","They are all made of plastic","They are protists","They have no nutrients"], hint: "Some poisonous mushrooms are deadly look-alikes." }
+    ]
+  }
+};
+const TIPS_MICROBES = {
+  viruses: [
+    { h:"Virus = not alive 🚫", p:"A <b>virus</b> is a tiny particle, <b>not a cell</b>. It can only multiply inside a living <b>host</b> cell." },
+    { h:"Two parts", p:"<b>Protein coat</b> on the outside, <b>genetic material</b> (DNA or RNA) inside." },
+    { h:"Hijacker 🏴‍☠️", p:"A virus takes over a host cell and makes it build copies of the virus, like breaking into a factory." },
+    { h:"Viral diseases", p:"Flu, common cold, chickenpox, measles, COVID-19. A <b>bacteriophage</b> is a virus that infects bacteria." }
+  ],
+  fighting: [
+    { h:"Antibiotics vs Vaccines 💊💉", p:"<b>Antibiotics</b> kill <b>bacteria</b> (not viruses!). <b>Vaccines</b> train your <b>immune system</b> ahead of time." },
+    { h:"Famous germ fighters", p:"<b>Jenner</b>: first vaccine (smallpox) · <b>Pasteur</b>: pasteurization + vaccines · <b>Fleming</b>: penicillin from mold." },
+    { h:"Pathogen", p:"<b>Pathogen</b> = anything that causes disease (bacteria, viruses, protists, fungi)." }
+  ],
+  protozoa: [
+    { h:"Protists = junk drawer 🗃️", p:"<b>Protists</b> are <b>eukaryotes</b> (have a nucleus) that aren't animals, plants, or fungi. Three groups: animal-like, plant-like, fungus-like." },
+    { h:"How they move 🚣", p:"<b>Amoeba</b> = pseudopods (false feet) · <b>Paramecium</b> = cilia (tiny hairs) · <b>Euglena</b> = flagellum (whip)." },
+    { h:"Memory trick", p:"<b>A</b>moeba → p<b>A</b>seudopods (blob that stretches). <b>P</b>aramecium → <b>P</b>addles = cilia. <b>E</b>uglena → <b>E</b>xtra: whip AND chloroplasts." },
+    { h:"Disease", p:"<b>Malaria</b> is caused by a protist spread by mosquitoes." }
+  ],
+  algae_molds: [
+    { h:"Algae = plant-like 🌿", p:"Algae do <b>photosynthesis</b> and make much of Earth's <b>oxygen</b>. Tiny ones = <b>phytoplankton</b>; giant ones = <b>kelp</b>." },
+    { h:"Diatoms ✨", p:"Algae with glassy <b>silica</b> shells." },
+    { h:"Slime molds", p:"<b>Fungus-like protists</b>: heterotrophs that ooze on rotting logs and make spores." }
+  ],
+  fungi: [
+    { h:"Fungi basics 🍄", p:"Eukaryotes, <b>heterotrophs</b>, cell walls of <b>chitin</b>. They <b>absorb</b> food; no photosynthesis." },
+    { h:"Body parts", p:"<b>Hyphae</b> = threads · <b>Mycelium</b> = tangled mass of hyphae · <b>Mushroom</b> = fruiting body that makes spores." },
+    { h:"Examples", p:"<b>Yeast</b> (single-celled) · <b>Molds</b> · <b>Mushrooms</b>. Kelp is NOT a fungus (it's an alga)." }
+  ],
+  fungi_life: [
+    { h:"Reproduction", p:"Most fungi use <b>spores</b>. Yeast reproduces by <b>budding</b>." },
+    { h:"Good fungi 🍞", p:"Decomposers (the F in F.B.I.) · <b>Yeast</b> makes bread rise with CO₂ · <b>Penicillin</b> medicine." },
+    { h:"Partners 🤝", p:"<b>Lichen</b> = fungus + alga. Both benefit = <b>mutualism</b>." },
+    { h:"Bad fungi", p:"Athlete's foot, ringworm, and poisonous mushrooms." }
+  ]
+};
+const MICROBES_KEY_ORDER = ["viruses","fighting","protozoa","algae_molds","fungi","fungi_life"];
+
 const QUIZ_BACTERIA = {
   structure: {
     title: "Cell Structure", emoji: "🧫", color: "#16a34a",
@@ -2390,13 +2782,28 @@ const SUBJECTS = {
     description: "Cell structure, movement, shapes, diplo/staphylo/strepto, energy, reproduction & endospores.",
     topics: QUIZ_BACTERIA, tips: TIPS_BACTERIA, keyOrder: BACTERIA_KEY_ORDER, hasSubObj: false
   },
+  microbes: {
+    title: "Viruses, Protists & Fungi", emoji: "🍄", color: "#7c3aed",
+    description: "Viruses, vaccines & antibiotics, protozoa, algae, slime molds, and fungi.",
+    topics: QUIZ_MICROBES, tips: TIPS_MICROBES, keyOrder: MICROBES_KEY_ORDER, hasSubObj: false
+  },
+  cells: {
+    title: "Cells & Genetics", emoji: "🧬", color: "#8b5cf6",
+    description: "Cell theory, organelles, plant vs animal cells, photosynthesis, mitosis, DNA, and Punnett squares.",
+    topics: QUIZ_CELLS, tips: TIPS_CELLS, keyOrder: CELLS_KEY_ORDER, hasSubObj: false
+  },
+  ratios: {
+    title: "Ratios, Proportions & Percents", emoji: "💯", color: "#ea580c",
+    description: "Ratios, unit rates, proportions, percents, discounts, tax, tips, and percent change.",
+    topics: QUIZ_RATIOS, tips: TIPS_RATIOS, keyOrder: RATIOS_KEY_ORDER, hasSubObj: false
+  },
   geo: {
     title: "Geography Quest", emoji: "🌍", color: "#0d9488",
     description: "US states & capitals, world capitals, continents, rivers, landmarks, flags.",
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","ushistory","religion","bacteria","math","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","ushistory","religion","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2517,6 +2924,9 @@ const TROPHIES = [
   { id:"boss_cs",       emoji:"💻", name:"Code Conqueror",   desc:"Defeat all 6 Computer Science bosses." },
   { id:"boss_space",    emoji:"🪐", name:"Cosmic Champion",  desc:"Defeat all 5 Space bosses." },
   { id:"boss_geo",      emoji:"🌍", name:"World Explorer",   desc:"Defeat all 6 Geography bosses." },
+  { id:"boss_ratios",   emoji:"💯", name:"Percent Pro",      desc:"Defeat all 6 Ratios, Proportions & Percents bosses." },
+  { id:"boss_cells",    emoji:"🧬", name:"Gene Genius",      desc:"Defeat all 7 Cells & Genetics bosses." },
+  { id:"boss_microbes", emoji:"🍄", name:"Microbe Master",   desc:"Defeat all 6 Viruses, Protists & Fungi bosses." },
   { id:"boss_bacteria", emoji:"🦠", name:"Germ Buster",      desc:"Defeat all 7 Bacteria bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
@@ -2620,6 +3030,31 @@ const BOSSES = {
     energy:       { emoji: "🍂", name: "Decomposer Duke" },
     reproduction: { emoji: "➗", name: "Fission Phantom" },
     endospores:   { emoji: "🛡️", name: "Endospore Emperor" }
+  },
+  microbes: {
+    viruses:     { emoji: "🦠", name: "Virus Viper" },
+    fighting:    { emoji: "💉", name: "Vaccine Vanguard" },
+    protozoa:    { emoji: "🔬", name: "Amoeba Ambusher" },
+    algae_molds: { emoji: "🌊", name: "Slime Mold Sorcerer" },
+    fungi:       { emoji: "🍄", name: "Mushroom Monarch" },
+    fungi_life:  { emoji: "🍞", name: "Yeast Beast" }
+  },
+  cells: {
+    cell_theory:  { emoji: "🔬", name: "Hooke's Ghost" },
+    organelles:   { emoji: "🏭", name: "Mitochondria Maximus" },
+    plant_animal: { emoji: "🌿", name: "Chloroplast Chief" },
+    processes:    { emoji: "⚡", name: "Osmosis Overlord" },
+    division:     { emoji: "✂️", name: "Mitosis Menace" },
+    dna:          { emoji: "🧬", name: "Helix Hydra" },
+    heredity:     { emoji: "👪", name: "Punnett Phantom" }
+  },
+  ratios: {
+    ratios:         { emoji: "⚖️", name: "Ratio Raider" },
+    rates:          { emoji: "🚗", name: "Rate Racer" },
+    proportions:    { emoji: "🟰", name: "Proportion Prowler" },
+    percents:       { emoji: "💯", name: "Percent Phantom" },
+    percent_apps:   { emoji: "🛍️", name: "Discount Demon" },
+    percent_change: { emoji: "📈", name: "Change Champion" }
   },
   geo: {
     us_states:        { emoji: "🗽", name: "States Sage" },

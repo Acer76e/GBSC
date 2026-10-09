@@ -8,7 +8,7 @@ A fun multiple-choice study app for 7th grade review and test prep.
 |---|---|
 | 🇺🇸 **US History 7** | Exploration & Colonization · The 13 Colonies · Road to Revolution · The American Revolution · Constitution & New Nation · Westward Expansion · The Civil War · Reconstruction |
 | ✝️ **Religion 7** | The Bible · Jesus & the Gospels · The Seven Sacraments · The Mass & Prayer · Commandments & Morality · The Creed & Our Beliefs · Saints & Holy People · The Liturgical Year · Catholic Social Teaching |
-| 🦠 **Life Science: Bacteria** | Cell Structure · How Bacteria Move · Bacterial Shapes · Groups & Prefixes · Energy & Food · Reproduction · Endospores |
+| 🦠 **Life Science: Bacteria** | Quiz #2 Notes · Cell Structure · How Bacteria Move · Bacterial Shapes · Groups & Prefixes · Energy & Food · Reproduction · Endospores |
 | 🍄 **Viruses, Protists & Fungi** | Viruses · Fighting Germs · Animal-like Protists · Algae & Slime Molds · Fungi · Fungi in Our World |
 | 🧬 **Cells & Genetics** | Cell Theory · Organelles · Plant vs Animal Cells · Cell Processes · Cell Division · DNA & Chromosomes · Heredity & Punnett Squares |
 | 💯 **Ratios, Proportions & Percents** | Ratios · Rates & Unit Rates · Proportions · Percent Basics · Sales, Tax & Tips · Percent Change |

@@ -2065,6 +2065,34 @@ const TIPS_MICROBES = {
 const MICROBES_KEY_ORDER = ["viruses","fighting","protozoa","algae_molds","fungi","fungi_life"];
 
 const QUIZ_BACTERIA = {
+  quiz2: {
+    title: "Quiz #2 Notes", emoji: "📝", color: "#c026d3",
+    questions: [
+      { q: "What is SYMBIOSIS?", a: 0, opts: ["A relationship where 2 organisms live in or near each other and at least 1 benefits","When one bacterium splits into two","A way to kill bacteria with heat","A type of bacterial shape"], hint: "Sym = together, bio = life. Two organisms living together." },
+      { q: "In symbiosis, how many organisms are involved?", a: 0, opts: ["2","1","3","Hundreds"], hint: "A relationship between 2 organisms." },
+      { q: "Where do the organisms in a symbiosis live?", a: 0, opts: ["In each other or near each other","Only on opposite sides of the world","Only in outer space","Only in volcanoes"], hint: "They live IN each other or NEAR each other." },
+      { q: "Good bacteria living in your gut and helping you digest food is an example of ___.", a: 0, opts: ["Symbiosis","Pasteurization","Binary fission","An endospore"], hint: "You and your gut bacteria live together and help each other." },
+      { q: "What do NITROGEN-FIXING BACTERIA do?", a: 0, opts: ["Live in soil and help plants grow","Cause infections in people","Clean up oil spills","Make cheese"], hint: "They turn nitrogen into a form plants can use." },
+      { q: "Where do nitrogen-fixing bacteria live?", a: 0, opts: ["In the soil","In the ocean only","In your blood","In the air only"], hint: "Soil bacteria that help other things grow." },
+      { q: "What are CYANOBACTERIA?", a: 0, opts: ["Long strands of bacteria in water that are autotrophs","Bacteria that cause disease","Bacteria that live only in soil","Viruses that infect bacteria"], hint: "Cyan = blue-green. They live in water and make their own food." },
+      { q: "Cyanobacteria are autotrophs. That means they ___.", a: 0, opts: ["Make their own food","Eat other living things","Only eat dead things","Can't get energy"], hint: "Auto = self. They make their own food like plants." },
+      { q: "Where are cyanobacteria found?", a: 0, opts: ["In water","Inside your stomach","In dry desert sand only","Inside rocks only"], hint: "Long strands of bacteria in water." },
+      { q: "What are PATHOGENS?", a: 0, opts: ["Germs that cause disease","Bacteria that help plants grow","Medicines that kill bacteria","Foods made with bacteria"], hint: "Patho = disease. Pathogens make you sick." },
+      { q: "What are ANTIBIOTICS?", a: 0, opts: ["Medicines created by humans that kill bad bacteria","Germs that cause disease","Bacteria that live in hot springs","A way of heating milk"], hint: "Anti = against, bio = life. Humans made them to kill bad bacteria." },
+      { q: "What is PASTEURIZATION?", a: 0, opts: ["A method of killing bacteria by heating","Adding salt to food","Freezing bacteria","A medicine that kills bacteria"], hint: "Named after Louis Pasteur. Heat it up to kill bacteria (like milk)." },
+      { q: "Which food is commonly pasteurized?", a: 0, opts: ["Milk","Apples","Raw carrots","Bread crust"], hint: "Most milk at the store is pasteurized." },
+      { q: "What do PRESERVATIVES do?", a: 0, opts: ["Slow or prevent the growth of bacteria","Make bacteria grow faster","Heat food to kill bacteria","Help plants grow"], hint: "They help food stay fresh longer." },
+      { q: "What are EXTREMOPHILE bacteria?", a: 0, opts: ["Bacteria that survive extreme environments","Bacteria that only live in your gut","Bacteria that cause the flu","Bacteria that help make cheese"], hint: "Extreme + phile (lover) = extreme lovers! Hot springs, salty lakes, deep sea vents." },
+      { q: "Extremophile bacteria are also called ___.", a: 0, opts: ["Archaebacteria","Cyanobacteria","Pathogens","Preservatives"], hint: "Archae = ancient. Archaebacteria live in extreme places." },
+      { q: "Where might you find archaebacteria?", a: 0, opts: ["Boiling hot springs or very salty lakes","Only in a classroom","Only on your skin","Only in milk"], hint: "Extreme environments!" },
+      { q: "What do some harmful bacteria release that can make you sick?", a: 0, opts: ["Toxins","Oxygen","Vitamins","Antibiotics"], hint: "Toxins = poisons. Some bacteria even release toxins when they die." },
+      { q: "How are bacteria being used to help the environment?", a: 0, opts: ["To clean up oil spills","To make oil spills bigger","To melt glaciers","To create plastic"], hint: "Some bacteria eat the oil!" },
+      { q: "Bacteria are present in, and help make, which foods?", a: 0, opts: ["Cheese and yogurt (milk products)","Candy and soda","Salt and sugar","Ice cubes"], hint: "Bacteria help turn milk into cheese and yogurt." },
+      { q: "What unit is used to measure bacteria?", a: 0, opts: ["Micrometers","Kilometers","Inches","Feet"], hint: "Bacteria are SO tiny. A micrometer is one millionth of a meter." },
+      { q: "Which pair is matched CORRECTLY?", a: 0, opts: ["Pasteurization = killing bacteria with heat","Antibiotics = bacteria that cause disease","Preservatives = make bacteria grow faster","Pathogens = medicines"], hint: "Pasteur + heat." },
+      { q: "Which pair is matched CORRECTLY?", a: 0, opts: ["Cyanobacteria = autotrophs in water","Nitrogen-fixing bacteria = live in hot springs","Archaebacteria = cause all diseases","Pathogens = help plants grow"], hint: "Cyano = water + makes own food." }
+    ]
+  },
   structure: {
     title: "Cell Structure", emoji: "🧫", color: "#16a34a",
     questions: [
@@ -2175,6 +2203,14 @@ const QUIZ_BACTERIA = {
   }
 };
 const TIPS_BACTERIA = {
+  quiz2: [
+    { h:"Symbiosis 🤝", p:"A relationship where <b>2 organisms</b> live <b>in</b> each other or <b>near</b> each other, and at least 1 <b>benefits</b>. Example: good bacteria in your gut." },
+    { h:"Helpful bacteria 🌱", p:"<b>Nitrogen-fixing bacteria</b> live in <b>soil</b> and help plants grow. <b>Cyanobacteria</b> are long strands of bacteria in <b>water</b> that are <b>autotrophs</b>. Bacteria also <b>clean up oil spills</b> and help make <b>milk products and cheese</b>." },
+    { h:"Harmful bacteria ☠️", p:"<b>Pathogens</b> cause disease. Some bacteria release <b>toxins</b> (poisons), even when they die." },
+    { h:"Fighting bacteria 🛡️", p:"<b>Antibiotics</b> = made by humans to kill bad bacteria · <b>Pasteurization</b> = killing bacteria by <b>heating</b> (Louis Pasteur, milk!) · <b>Preservatives</b> = <b>slow or prevent</b> bacteria growth." },
+    { h:"Extreme lovers 🌋", p:"<b>Extremophiles</b> survive <b>extreme environments</b> (hot springs, salty lakes). They are also called <b>archaebacteria</b>." },
+    { h:"Tiny! 📏", p:"Bacteria are measured in <b>micrometers</b> (one millionth of a meter)." }
+  ],
   structure: [
     { h:"Prokaryotic + unicellular 🦠", p:"Bacteria are <b>prokaryotic</b> (lack most <b>organelles</b> found in eukaryotic cells) and <b>unicellular</b> (just ONE cell)." },
     { h:"But they DO have ribosomes", p:"<b>Ribosomes</b> = protein factories. Bacteria use them to create new <b>proteins</b>." },
@@ -2215,7 +2251,7 @@ const TIPS_BACTERIA = {
     { h:"Dormant for decades 😴", p:"Endospores let bacteria stay <b>dormant</b> (in a resting state) for <b>decades</b>. Dormant sounds like \"dorm\", where you sleep!" }
   ]
 };
-const BACTERIA_KEY_ORDER = ["structure","movement","shapes","groups","energy","reproduction","endospores"];
+const BACTERIA_KEY_ORDER = ["quiz2","structure","movement","shapes","groups","energy","reproduction","endospores"];
 
 const QUIZ_GRAMMAR = {
   parts_speech: {
@@ -2767,7 +2803,7 @@ const SUBJECTS = {
   },
   bacteria: {
     title: "Life Science: Bacteria", emoji: "🦠", color: "#16a34a",
-    description: "Cell structure, movement, shapes, diplo/staphylo/strepto, energy, reproduction & endospores.",
+    description: "Quiz #2 notes, cell structure, movement, shapes, diplo/staphylo/strepto, energy, reproduction & endospores.",
     topics: QUIZ_BACTERIA, tips: TIPS_BACTERIA, keyOrder: BACTERIA_KEY_ORDER, hasSubObj: false
   },
   microbes: {
@@ -2919,7 +2955,7 @@ const TROPHIES = [
   { id:"boss_ratios",   emoji:"💯", name:"Percent Pro",      desc:"Defeat all 6 Ratios, Proportions & Percents bosses." },
   { id:"boss_cells",    emoji:"🧬", name:"Gene Genius",      desc:"Defeat all 7 Cells & Genetics bosses." },
   { id:"boss_microbes", emoji:"🍄", name:"Microbe Master",   desc:"Defeat all 6 Viruses, Protists & Fungi bosses." },
-  { id:"boss_bacteria", emoji:"🦠", name:"Germ Buster",      desc:"Defeat all 7 Bacteria bosses." },
+  { id:"boss_bacteria", emoji:"🦠", name:"Germ Buster",      desc:"Defeat all 8 Bacteria bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
   { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
@@ -3004,6 +3040,7 @@ const BOSSES = {
     missions:    { emoji: "🛰️", name: "Mission Master" }
   },
   bacteria: {
+    quiz2:        { emoji: "📝", name: "Quiz Two Titan" },
     structure:    { emoji: "🧫", name: "Cell Wall Colossus" },
     movement:     { emoji: "🏊", name: "Flagellum Fiend" },
     shapes:       { emoji: "🌀", name: "Spirochete Serpent" },

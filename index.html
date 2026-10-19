@@ -2253,6 +2253,166 @@ const TIPS_BACTERIA = {
 };
 const BACTERIA_KEY_ORDER = ["quiz2","structure","movement","shapes","groups","energy","reproduction","endospores"];
 
+const QUIZ_PROTISTS = {
+  basics: {
+    title: "Quiz #1: Protist Basics", emoji: "🔬", color: "#9333ea",
+    questions: [
+      { q: "Scientists define a protist as an organism with a ___ that is not an animal, plant, or fungus.", a: 0, opts: ["Nucleus","Cell wall","Shell","Backbone"], hint: "Protists are eukaryotes, so they have a nucleus." },
+      { q: "A protist is NOT a(n) ___.", a: 0, opts: ["Animal, plant, or fungus","Organism with a nucleus","Living thing","Eukaryote"], hint: "Not an animal, plant, or fungus." },
+      { q: "Many protists are ___ and have a flagella.", a: 0, opts: ["Aquatic","Desert dwellers","Flying","Underground"], hint: "Aquatic = live in water." },
+      { q: "Why don't most protists get much attention?", a: 0, opts: ["They are not a major food source or cause of human disease","They are too big to study","They only live on the moon","They are all extinct"], hint: "Not a major FOOD source, not a major cause of human DISEASE." },
+      { q: "Why are protists still very important for life on Earth?", a: 0, opts: ["They help produce the world's oxygen through photosynthesis","They make all the world's rocks","They eat all the bacteria","They cause rain"], hint: "Oxygen through photosynthesis!" },
+      { q: "Protists help produce the world's ___ through photosynthesis.", a: 0, opts: ["Oxygen","Carbon dioxide","Salt","Nitrogen"], hint: "The gas we breathe in." },
+      { q: "Some protists are autotrophs, while others are ___.", a: 0, opts: ["Heterotrophs","Pathogens","Prokaryotes","Archaebacteria"], hint: "Auto = make own food. Hetero = eat other things." },
+      { q: "Some protists have the ability to be ___ autotrophic and heterotrophic.", a: 0, opts: ["Both","Neither","Never","Only"], hint: "Euglena is a great example: it can do BOTH." },
+      { q: "Animals that eat plants have a ___ relationship with protists in their intestines.", a: 0, opts: ["Symbiotic","Parasitic","Harmful","Predator"], hint: "Sym = together. They help each other." },
+      { q: "Protists in a plant-eater's intestines work alongside ___ to help digest plant matter.", a: 0, opts: ["Bacteria","Viruses","Fungi","Algae"], hint: "Protists + bacteria team up to break down plants." },
+      { q: "What determines whether a protist is plantlike, animallike, or funguslike?", a: 0, opts: ["How the organism feeds","Its color","Its size","Where it lives"], hint: "It's all about how it FEEDS (gets food)." },
+      { q: "How do PLANTLIKE protists get food?", a: 0, opts: ["Photosynthesis","Eating other organisms","Eating decaying matter","Infecting hosts"], hint: "Like plants, they use sunlight." },
+      { q: "How do ANIMALLIKE protists get food?", a: 0, opts: ["They eat other organisms","Photosynthesis","They eat decaying matter","They absorb rocks"], hint: "Like animals, they eat other living things." },
+      { q: "How do FUNGUSLIKE protists get food?", a: 0, opts: ["They eat decaying matter","Photosynthesis","They hunt fish","They eat sunlight"], hint: "Like fungi (mushrooms), they eat decaying (rotting) matter." },
+      { q: "Plantlike protists include ___ and plankton.", a: 0, opts: ["Algae","Amoebas","Slime molds","Sporozoans"], hint: "Algae and plankton!" },
+      { q: "Plankton are tiny organisms that live near the ___ of the water.", a: 0, opts: ["Surface","Bottom","Rocks","Shore only"], hint: "They stay near the top to get sunlight." }
+    ]
+  },
+  plankton: {
+    title: "Quiz #1: Plankton & Dinoflagellates", emoji: "🌊", color: "#0284c7",
+    questions: [
+      { q: "Small fish and other animals eat plantlike protists, making them the ___ of marine food webs.", a: 0, opts: ["Foundation","Top","End","Enemy"], hint: "Foundation = base. Everything else builds on them." },
+      { q: "What are referred to as \"oxygen-producing powerhouses\"?", a: 0, opts: ["Phytoplankton","Zooplankton","Amoebas","Slime molds"], hint: "Phyto = plant. They do photosynthesis and make oxygen." },
+      { q: "Plantlike protists move through liquids with a whiplike structure called a ___.", a: 0, opts: ["Flagella","Pseudopod","Cilia","Holdfast"], hint: "Flagella = whip tail." },
+      { q: "Some plantlike protists have symbiotic relationships with which aquatic creatures?", a: 0, opts: ["Clams, sea anemones, and coral","Sharks, whales, and dolphins","Frogs, turtles, and ducks","Crabs, lobsters, and shrimp"], hint: "Clams, sea anemones, and coral." },
+      { q: "How many main autotrophic protists are there?", a: 0, opts: ["Four","Two","Six","Ten"], hint: "Dinoflagellates, euglena, diatoms, and algae." },
+      { q: "Which list names the 4 main autotrophic protists?", a: 0, opts: ["Dinoflagellates, euglena, diatoms, and algae","Amoebas, ciliates, sporozoans, and slime molds","Bacteria, viruses, fungi, and yeast","Clams, coral, kelp, and krill"], hint: "D-E-D-A: Dinos, Euglena, Diatoms, Algae." },
+      { q: "Dinoflagellates are ___ ocean organisms.", a: 0, opts: ["Unicellular","Multicellular","Giant","Land-dwelling"], hint: "Uni = one. They are made of one cell." },
+      { q: "Dinoflagellates are a type of ___.", a: 0, opts: ["Plankton","Fungus","Amoeba","Seaweed"], hint: "Tiny ocean drifters = plankton." },
+      { q: "Most dinoflagellates are ___, while some are zooplankton.", a: 0, opts: ["Phytoplankton","Sporozoans","Slime molds","Ciliates"], hint: "Phyto = plant (makes food). Zoo = animal (eats)." },
+      { q: "What are ZOOPLANKTON?", a: 0, opts: ["Small marine organisms that feed on smaller phytoplankton","Plants on the ocean floor","Giant seaweed","Bacteria in soil"], hint: "Zoo = animal. They FEED on phytoplankton." },
+      { q: "All dinoflagellates have plantlike cell ___.", a: 0, opts: ["Walls","Nuclei","Legs","Spores"], hint: "Plants have cell walls, and so do dinoflagellates." },
+      { q: "How many flagella do dinoflagellates have?", a: 0, opts: ["Two","One","Eight","None"], hint: "Di = two. Dinoflagellates have TWO flagella." },
+      { q: "What is a rapid growth of dinoflagellates covering a section of ocean water called?", a: 0, opts: ["A red tide","A tsunami","A whirlpool","A coral reef"], hint: "Red tide!" },
+      { q: "Are all red tides actually the color red?", a: 0, opts: ["No, the color depends on the color of the dinoflagellates","Yes, always red","No, they are always green","Yes, because of the sunset"], hint: "Not all red tides are red. It depends on the dinoflagellates' color." },
+      { q: "Why can red tides be dangerous?", a: 0, opts: ["Some dinoflagellates produce large amounts of toxins, or poisons","They make the water too cold","They block all sunlight forever","They eat fish whole"], hint: "Toxins = poisons." }
+    ]
+  },
+  euglena: {
+    title: "Quiz #1: Euglena, Diatoms & Algae", emoji: "🌿", color: "#16a34a",
+    questions: [
+      { q: "Euglena are a type of plankton that can be both ___.", a: 0, opts: ["Autotrophs and heterotrophs","Bacteria and viruses","Plants and animals","Fungi and algae"], hint: "They can make food OR hunt for food." },
+      { q: "When there is enough ___, euglena use photosynthesis to make their own food.", a: 0, opts: ["Light","Water","Bacteria","Salt"], hint: "Photo = light." },
+      { q: "When light is limited, what do euglena do?", a: 0, opts: ["Hunt for bacteria and other microorganisms to eat","Go to sleep forever","Turn into a fungus","Make spores"], hint: "No light? Switch to hunting (heterotroph mode)." },
+      { q: "How many flagella do euglena have?", a: 0, opts: ["2: one short and one long","1 long one","8 short ones","None"], hint: "Two flagella: one short, one long." },
+      { q: "Euglena have ___ used for photosynthesis.", a: 0, opts: ["Chloroplasts","Pseudopods","Cilia","Holdfasts"], hint: "Chloroplasts are the green parts that do photosynthesis." },
+      { q: "What does a euglena's PHOTORECEPTOR do?", a: 0, opts: ["Senses light and determines if there is enough for photosynthesis","Helps it swim","Digests bacteria","Makes spores"], hint: "Photo = light, receptor = receiver." },
+      { q: "Which is NOT one of the three common features of euglena?", a: 0, opts: ["Pseudopods","2 flagella","Chloroplasts","A photoreceptor"], hint: "Pseudopods (false feet) belong to amoebas." },
+      { q: "Which protists are phytoplankton responsible for producing 20% of the oxygen in the atmosphere?", a: 0, opts: ["Diatoms","Amoebas","Slime molds","Sporozoans"], hint: "Diatoms!" },
+      { q: "Diatoms produce about what percent of the oxygen in the atmosphere?", a: 0, opts: ["20%","2%","50%","90%"], hint: "Twenty percent." },
+      { q: "Where are diatoms found?", a: 0, opts: ["Freshwater, saltwater, and soil","Only in volcanoes","Only in the air","Only inside animals"], hint: "Fresh water, salt water, and soil." },
+      { q: "Which algae form blades, stipes, and holdfasts?", a: 0, opts: ["Brown (golden) algae","Red algae","Slime molds","Diatoms"], hint: "Brown algae, like kelp." },
+      { q: "In brown algae, the leaflike parts are called ___.", a: 0, opts: ["Blades","Stipes","Holdfasts","Air bladders"], hint: "A blade of grass is a leaf." },
+      { q: "In brown algae, the stemlike parts are called ___.", a: 0, opts: ["Stipes","Blades","Holdfasts","Flagella"], hint: "Stipe = stem." },
+      { q: "In brown algae, the rootlike parts that anchor them to rocks are called ___.", a: 0, opts: ["Holdfasts","Blades","Stipes","Pseudopods"], hint: "They HOLD FAST (tight) to rocks." },
+      { q: "What keeps brown algae afloat in the sunlight?", a: 0, opts: ["Air bladders (pneumatocysts)","Holdfasts","Flagella","Spores"], hint: "Small bulbs filled with air, like floaties." },
+      { q: "Most of the seaweed around the world is considered to be ___ algae.", a: 0, opts: ["Red","Brown","Blue","Yellow"], hint: "Red algae." }
+    ]
+  },
+  protozoa: {
+    title: "Quiz #2: Protozoa, Amoebas & Ciliates", emoji: "🦠", color: "#7c3aed",
+    questions: [
+      { q: "Protists that share similar features to animals are called ___.", a: 0, opts: ["Protozoa","Algae","Diatoms","Slime molds"], hint: "Proto = first, zoa = animal." },
+      { q: "Which describes protozoa?", a: 0, opts: ["Heterotrophs, most without cell walls, can move freely","Autotrophs with cell walls that can't move","Plants that live in soil","Fungi that make mushrooms"], hint: "Like animals: eat others, no cell walls, move around." },
+      { q: "Most protozoa have cells without ___.", a: 0, opts: ["Cell walls","A nucleus","Cytoplasm","DNA"], hint: "Like animal cells, no cell wall." },
+      { q: "Which animal-like protists move using a pseudopod?", a: 0, opts: ["Amoebas","Ciliates","Euglena","Diatoms"], hint: "Amoebas stretch out a false foot." },
+      { q: "What does PSEUDOPOD mean?", a: 0, opts: ["False foot","Tiny hair","Whip tail","Spore case"], hint: "Pseudo = false, pod = foot." },
+      { q: "A pseudopod is a flowing extension of cytoplasm used to ___.", a: 0, opts: ["Move and obtain food","Make oxygen","Reproduce","Sense light only"], hint: "Move AND get food." },
+      { q: "Amoebas are sensitive to their environment. They move away from ___.", a: 0, opts: ["Light","Water","Food","Darkness"], hint: "Amoebas avoid light." },
+      { q: "Amoebas move either toward or away from certain ___.", a: 0, opts: ["Chemicals","Colors","Sounds","Magnets"], hint: "Chemicals." },
+      { q: "Which group of protozoa has tiny hairlike projections?", a: 0, opts: ["Ciliates","Amoebas","Sporozoans","Zooflagellates"], hint: "Cilia = tiny hairs." },
+      { q: "Ciliates use their hairlike projections to ___.", a: 0, opts: ["Move and sweep food to themselves","Make spores","Do photosynthesis","Attach to rocks"], hint: "Move + sweep in food." },
+      { q: "How many nuclei do ciliates have?", a: 0, opts: ["2: one large and one small","1","None","8"], hint: "One large, one small." },
+      { q: "In a ciliate, what does the LARGE nucleus control?", a: 0, opts: ["Life functions","Reproduction","Photosynthesis","Spore making"], hint: "Big nucleus = everyday life functions." },
+      { q: "In a ciliate, what does the SMALL nucleus control?", a: 0, opts: ["Reproduction","Life functions","Moving","Eating"], hint: "Small nucleus = reproduction." },
+      { q: "What is the overall way ciliates reproduce?", a: 0, opts: ["Binary fission","Budding","Seeds","Sporangium"], hint: "Splitting in two, just like bacteria." },
+      { q: "What is CONJUGATION?", a: 0, opts: ["When two ciliates attach and exchange genetic information","When a ciliate splits in two","When an amoeba eats food","When algae float"], hint: "Two ciliates join up and swap genetic info." },
+      { q: "During conjugation, two ciliates exchange ___ information.", a: 0, opts: ["Genetic","Food","Light","Water"], hint: "Genetic = DNA." }
+    ]
+  },
+  parasites: {
+    title: "Quiz #2: Zooflagellates & Sporozoans", emoji: "🦟", color: "#dc2626",
+    questions: [
+      { q: "Which protists can have anywhere from 1 to 8 flagella?", a: 0, opts: ["Zooflagellates","Amoebas","Ciliates","Diatoms"], hint: "Zoo (animal) + flagellates (flagella)." },
+      { q: "Zooflagellates can have anywhere from ___ flagella.", a: 0, opts: ["1 to 8","2 to 4","10 to 20","0 to 1"], hint: "One to eight." },
+      { q: "Zooflagellates live in aquatic environments or as ___ in fish, reptiles, and amphibians.", a: 0, opts: ["Parasites","Food","Plants","Spores"], hint: "They live inside other animals." },
+      { q: "Zooflagellates can cause which diseases in humans and animals?", a: 0, opts: ["Intestinal diseases and African sleeping sickness","Strep throat and flu","Malaria only","Red tide"], hint: "Intestinal diseases + African sleeping sickness." },
+      { q: "Which heterotrophic protists CANNOT move on their own?", a: 0, opts: ["Sporozoans","Amoebas","Ciliates","Zooflagellates"], hint: "Spore-o-zoans: they rely on spores and hosts to get around." },
+      { q: "Sporozoans live as parasites in the ___ of animals.", a: 0, opts: ["Bloodstream","Lungs only","Hair","Bones"], hint: "Bloodstream." },
+      { q: "Sporozoans form ___ that pass from one organism to another.", a: 0, opts: ["Spores","Seeds","Cilia","Air bladders"], hint: "Sporozoans make spores." },
+      { q: "How do sporozoan spores pass from one organism to another?", a: 0, opts: ["Through food and insect bites","Through sunlight","Through the wind only","Through rocks"], hint: "Food and insect bites." },
+      { q: "Which serious disease, known across the world, is caused by sporozoans?", a: 0, opts: ["Malaria","Chickenpox","The common cold","Red tide"], hint: "Malaria, spread by mosquitoes." },
+      { q: "The malaria sporozoan uses how many hosts?", a: 0, opts: ["Two","One","Three","None"], hint: "Mosquito + human." },
+      { q: "The malaria sporozoan migrates from the ___ of mosquitoes into a human's bloodstream.", a: 0, opts: ["Saliva","Wings","Eggs","Legs"], hint: "When the mosquito bites, its saliva carries the parasite in." },
+      { q: "Which pair is matched CORRECTLY?", a: 0, opts: ["Sporozoans = can't move on their own, cause malaria","Zooflagellates = have no flagella","Ciliates = move with pseudopods","Amoebas = have 2 nuclei"], hint: "Sporozoans: no movement, malaria." }
+    ]
+  },
+  funguslike: {
+    title: "Quiz #2: Fungus-like Protists", emoji: "🍄", color: "#b45309",
+    questions: [
+      { q: "Which fungus-like protists caused the Irish potato famine?", a: 0, opts: ["Saprophytes","Slime molds","Diatoms","Ciliates"], hint: "Sapro = rotten, phyte = plant." },
+      { q: "After entering potato crops, saprophytes extend thread-like ___ into the host.", a: 0, opts: ["Filaments","Flagella","Pseudopods","Blades"], hint: "Thread-like = filaments." },
+      { q: "Saprophytes release strong ___ that destroy the host.", a: 0, opts: ["Enzymes","Oxygen","Spores","Seeds"], hint: "Enzymes break things down." },
+      { q: "The potato famine protist was a ___, feeding off the decaying matter of its host.", a: 0, opts: ["Parasite","Producer","Autotroph","Plankton"], hint: "It lived off its host and hurt it." },
+      { q: "The potato famine protist fed off the ___ matter of its host.", a: 0, opts: ["Decaying","Frozen","Living green","Glowing"], hint: "Fungus-like protists eat decaying matter." },
+      { q: "Which fungus-like protists reproduce using spores made in a sporangium?", a: 0, opts: ["Slime molds","Saprophytes","Amoebas","Euglena"], hint: "Slime molds!" },
+      { q: "Slime mold spores are produced in a compartment called a ___.", a: 0, opts: ["Sporangium","Holdfast","Nucleus","Air bladder"], hint: "Spor-angium = spore container." },
+      { q: "Once a slime mold spore is released, what can it become?", a: 0, opts: ["An amoeba-like cell or a cell with a flagella","A seed or a leaf","A mushroom or a yeast","A virus"], hint: "Amoeba-like OR flagella cell." },
+      { q: "When the two slime mold cells fuse, they form a ___.", a: 0, opts: ["Zygote","Plasmodium","Spore","Sporangium"], hint: "Two cells fuse = zygote." },
+      { q: "The zygote matures into a ___ cell.", a: 0, opts: ["Plasmodium","Pseudopod","Diatom","Holdfast"], hint: "Plasmodium, which eventually forms another sporangium." },
+      { q: "What is the correct order of the slime mold life cycle?", a: 0, opts: ["Spore → amoeba-like or flagella cell → zygote → plasmodium → sporangium","Zygote → spore → seed → plant","Plasmodium → spore → zygote → amoeba","Sporangium → plasmodium → zygote → spore"], hint: "Spore, cells, fuse into zygote, mature into plasmodium, form sporangium." },
+      { q: "Fungus-like protists get their food by eating ___.", a: 0, opts: ["Decaying matter","Sunlight","Other protists only","Rocks"], hint: "Like fungi!" }
+    ]
+  }
+};
+const TIPS_PROTISTS = {
+  basics: [
+    { h:"What is a protist? 🔬", p:"An organism with a <b>nucleus</b> that is <b>not</b> an <b>animal</b>, <b>plant</b>, or <b>fungus</b>. Many are <b>aquatic</b> and have a <b>flagella</b>." },
+    { h:"Why they matter 🌍", p:"Not a major <b>food</b> source or cause of human <b>disease</b>, but they help produce the world's <b>oxygen</b> through <b>photosynthesis</b>." },
+    { h:"How they eat 🍽️", p:"Some are <b>autotrophs</b>, some are <b>heterotrophs</b>, and some can be <b>both</b>. Plant-eaters have a <b>symbiotic</b> relationship with protists in their intestines, working alongside <b>bacteria</b> to digest plants." },
+    { h:"Plant, animal, or fungus-like? 🤔", p:"It depends on how the organism <b>feeds</b>. <b>Plantlike</b> = photosynthesis · <b>Animallike</b> = eat other organisms · <b>Funguslike</b> = eat decaying matter." },
+    { h:"Plantlike protists 🌱", p:"Include <b>algae</b> and <b>plankton</b>, tiny organisms that live near the <b>surface</b> of the water." }
+  ],
+  plankton: [
+    { h:"Foundation of the sea 🐟", p:"Small fish eat these protists, making them the <b>foundation</b> of marine food webs. <b>Phytoplankton</b> = oxygen-producing powerhouses." },
+    { h:"Getting around", p:"They move with whiplike <b>flagella</b>. Some live in symbiosis with <b>clams</b>, <b>sea anemones</b>, and <b>coral</b>." },
+    { h:"The FOUR autotrophs 4️⃣", p:"<b>Dinoflagellates</b>, <b>euglena</b>, <b>diatoms</b>, and <b>algae</b>." },
+    { h:"Dinoflagellates 🌀", p:"<b>Unicellular</b> ocean <b>plankton</b>. Most are <b>phytoplankton</b>, some are <b>zooplankton</b> (they <b>feed</b> on smaller phytoplankton). All have plantlike cell <b>walls</b> and <b>two</b> flagella." },
+    { h:"Red tide 🔴", p:"A rapid growth of dinoflagellates. Not all are <b>red</b>; the color depends on the dinoflagellates. Dangerous because of <b>toxins</b> (<b>poisons</b>)." }
+  ],
+  euglena: [
+    { h:"Euglena 💚", p:"Plankton that can be both <b>autotrophs</b> and <b>heterotrophs</b>. Enough <b>light</b> → photosynthesis makes <b>food</b>. Low light → hunt <b>bacteria</b> and other <b>microorganisms</b>." },
+    { h:"3 features of euglena", p:"1. <b>2</b> flagella (one <b>short</b>, one <b>long</b>) · 2. <b>Chloroplasts</b> for <b>photosynthesis</b> · 3. A <b>photoreceptor</b> that senses if there's enough <b>light</b>." },
+    { h:"Diatoms 💎", p:"Phytoplankton that produce <b>20%</b> of the oxygen in the atmosphere. Found in <b>freshwater</b>, <b>saltwater</b>, and <b>soil</b>." },
+    { h:"Brown (golden) algae 🌊", p:"<b>Blades</b> = leaflike · <b>Stipes</b> = stemlike · <b>Holdfasts</b> = rootlike, anchor to rocks · <b>Air bladders</b> (pneumatocysts) keep them afloat in sunlight." },
+    { h:"Seaweed", p:"Most of the seaweed around the world is <b>red</b> algae." }
+  ],
+  protozoa: [
+    { h:"Protozoa 🐾", p:"Protists with animal-like features. <b>Heterotrophs</b>, most have no <b>cell wall</b>, and they can move freely." },
+    { h:"Amoebas 🫧", p:"Move with a <b>pseudopod</b> (\"false foot\"), a flowing extension of cytoplasm used to <b>move</b> and get <b>food</b>. They move away from <b>light</b> and toward or away from certain <b>chemicals</b>." },
+    { h:"Ciliates 〰️", p:"Tiny hairlike projections (cilia) used to <b>move</b> and sweep <b>food</b> in. They have <b>2 nuclei</b>: the large one controls <b>life functions</b>, the small one controls <b>reproduction</b>." },
+    { h:"Ciliate reproduction ➗", p:"Overall: <b>binary fission</b>, with <b>conjugation</b> as a step: two ciliates attach and exchange <b>genetic</b> information." }
+  ],
+  parasites: [
+    { h:"Zooflagellates 🌀", p:"Have <b>1 to 8</b> flagella. Live in <b>aquatic</b> environments or as <b>parasites</b> in fish, reptiles, and amphibians. Can cause <b>intestinal</b> diseases and <b>African sleeping sickness</b>." },
+    { h:"Sporozoans 🩸", p:"Heterotrophs that <b>cannot move</b> on their own. Live as <b>parasites</b> in the bloodstream. Form <b>spores</b> that pass through <b>food</b> and insect <b>bites</b>." },
+    { h:"Malaria 🦟", p:"Caused by sporozoans that use <b>two hosts</b>: they move from mosquito <b>saliva</b> into a human's bloodstream when the insect bites." }
+  ],
+  funguslike: [
+    { h:"Saprophytes 🥔", p:"Caused the <b>Irish potato famine</b>. Extend thread-like <b>filaments</b> into the host and release strong <b>enzymes</b>. A <b>parasite</b> feeding off the <b>decaying</b> matter of its host." },
+    { h:"Slime molds 🟡", p:"Reproduce using <b>spores</b> made in a <b>sporangium</b>." },
+    { h:"Slime mold life cycle 🔄", p:"Spore → <b>amoeba-like</b> cell or cell with a <b>flagella</b> → the two fuse into a <b>zygote</b> → matures into a <b>plasmodium</b> → forms another sporangium." }
+  ]
+};
+const PROTISTS_KEY_ORDER = ["basics","plankton","euglena","protozoa","parasites","funguslike"];
+
 const QUIZ_GRAMMAR = {
   parts_speech: {
     title: "Parts of Speech", emoji: "🎭", color: "#a21caf",
@@ -2633,6 +2793,11 @@ const SUBJECTS = {
     description: "Quiz #2 notes, cell structure, movement, shapes, diplo/staphylo/strepto, energy, reproduction & endospores.",
     topics: QUIZ_BACTERIA, tips: TIPS_BACTERIA, keyOrder: BACTERIA_KEY_ORDER, hasSubObj: false
   },
+  protists: {
+    title: "Life Science: Protists", emoji: "🔬", color: "#9333ea",
+    description: "Quiz #1 & #2 notes: protist basics, dinoflagellates, euglena, diatoms, algae, protozoa, sporozoans & slime molds.",
+    topics: QUIZ_PROTISTS, tips: TIPS_PROTISTS, keyOrder: PROTISTS_KEY_ORDER, hasSubObj: false
+  },
   microbes: {
     title: "Viruses, Protists & Fungi", emoji: "🍄", color: "#7c3aed",
     description: "Viruses, vaccines & antibiotics, protozoa, algae, slime molds, and fungi.",
@@ -2654,7 +2819,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","social","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","social","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2777,6 +2942,7 @@ const TROPHIES = [
   { id:"boss_ratios",   emoji:"💯", name:"Percent Pro",      desc:"Defeat all 6 Ratios, Proportions & Percents bosses." },
   { id:"boss_cells",    emoji:"🧬", name:"Gene Genius",      desc:"Defeat all 7 Cells & Genetics bosses." },
   { id:"boss_microbes", emoji:"🍄", name:"Microbe Master",   desc:"Defeat all 6 Viruses, Protists & Fungi bosses." },
+  { id:"boss_protists", emoji:"🔬", name:"Protist Pro",      desc:"Defeat all 6 Protists bosses." },
   { id:"boss_bacteria", emoji:"🦠", name:"Germ Buster",      desc:"Defeat all 8 Bacteria bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
@@ -2870,6 +3036,14 @@ const BOSSES = {
     energy:       { emoji: "🍂", name: "Decomposer Duke" },
     reproduction: { emoji: "➗", name: "Fission Phantom" },
     endospores:   { emoji: "🛡️", name: "Endospore Emperor" }
+  },
+  protists: {
+    basics:     { emoji: "🔬", name: "Nucleus Knight" },
+    plankton:   { emoji: "🌊", name: "Red Tide Terror" },
+    euglena:    { emoji: "🌿", name: "Euglena Enigma" },
+    protozoa:   { emoji: "🦠", name: "Pseudopod Prowler" },
+    parasites:  { emoji: "🦟", name: "Malaria Menace" },
+    funguslike: { emoji: "🍄", name: "Slime Mold Sovereign" }
   },
   microbes: {
     viruses:     { emoji: "🦠", name: "Virus Viper" },

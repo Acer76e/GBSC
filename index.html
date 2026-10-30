@@ -4038,6 +4038,182 @@ const BOSSES_ACCEL = {
   transformations: { emoji: "🔄", name: "The Spin Doctor" }
 };
 
+const QUIZ_CROSS = {
+  speed_rates: {
+    title: "Speed & Rates in Science", emoji: "🏃", color: "#0ea5e9",
+    questions: [
+      { q: "A ghost crab runs 12 m across the beach in 4 seconds. What is its speed as a unit rate?", a: 0, opts: ["3 m per second","48 m per second","1/3 m per second","16 m per second"], hint: "Speed = distance ÷ time = 12 m ÷ 4 s = 3 m/s. Trap: time ÷ distance (4 ÷ 12) gives 1/3, and multiplying gives 48." },
+      { q: "A manatee swims 15 km in 3 hours. A dolphin swims 40 km in 5 hours. Which animal is faster, and by how much?", a: 0, opts: ["The dolphin, by 3 km/h","The manatee, by 3 km/h","The dolphin, by 25 km/h","They swim at the same speed"], hint: "Find each unit rate first. Manatee: 15 ÷ 3 = 5 km/h. Dolphin: 40 ÷ 5 = 8 km/h. 8 − 5 = 3 km/h. Trap: comparing total distances (40 − 15 = 25) ignores time." },
+      { q: "A sunflower is 20 cm tall on Monday. Seven days later it is 41 cm tall. What was its average growth rate?", a: 0, opts: ["3 cm per day","21 cm per day","About 6 cm per day","7 cm per day"], hint: "Growth = 41 − 20 = 21 cm. Rate = 21 cm ÷ 7 days = 3 cm per day. Trap: dividing the final height (41 ÷ 7) instead of the CHANGE in height." },
+      { q: "Julia counts her pulse after softball practice. She feels 18 beats in 15 seconds. What is her heart rate in beats per minute?", a: 0, opts: ["72 beats per minute","33 beats per minute","270 beats per minute","1.2 beats per minute"], hint: "A minute has 60 seconds, which is 4 groups of 15 seconds. 18 × 4 = 72 beats per minute. Trap: adding 18 + 15 or multiplying 18 × 15." },
+      { q: "During a hurricane, a rain gauge collects 6 cm of rain in 4 hours. If the rain keeps falling at the same rate, how much falls in 10 hours?", a: 0, opts: ["15 cm","60 cm","24 cm","12 cm"], hint: "Find the unit rate: 6 cm ÷ 4 h = 1.5 cm per hour. Then 1.5 × 10 = 15 cm. Trap: multiplying 6 × 10 skips finding the rate per ONE hour." },
+      { q: "A snail moves 3 cm per minute. How far can it move in 2 hours?", a: 0, opts: ["360 cm","6 cm","40 cm","36 cm"], hint: "Convert time first: 2 hours = 120 minutes. Then 3 cm × 120 = 360 cm. Trap: multiplying 3 × 2 mixes minutes with hours." },
+      { q: "Bike A travels 300 m in 1 minute. Bike B travels 6 m every second. Which bike is faster?", a: 0, opts: ["Bike B, because Bike A goes only 5 m/s","Bike A, because 300 is bigger than 6","They both travel at the same speed","Bike A, because it goes 50 m/s"], hint: "Use the SAME units. 1 minute = 60 s, so Bike A: 300 ÷ 60 = 5 m/s. Bike B is 6 m/s. Trap: comparing 300 and 6 when the time units are different." },
+      { q: "A hurricane is 180 km from the Florida coast and moving toward it at 15 km/h. About how many hours until it reaches the coast?", a: 0, opts: ["12 hours","2,700 hours","195 hours","165 hours"], hint: "Time = distance ÷ speed = 180 ÷ 15 = 12 hours. Trap: multiplying (180 × 15) or adding and subtracting the numbers." },
+      { q: "Students record four measurements at a Florida spring. Which one is a RATE?", a: 0, opts: ["1,200 liters of water flowing out each second","1,200 liters of water stored in a tank","The spring is about 55 meters deep","The water temperature is 21°C"], hint: "A rate compares two different units, like liters PER second or km PER hour. A single amount, depth, or temperature is not a rate." },
+      { q: "A sea turtle swims 3 km in 1 hour. How many meters does it swim each minute?", a: 0, opts: ["50 m per minute","180 m per minute","20 m per minute","3,000 m per minute"], hint: "3 km = 3,000 m and 1 hour = 60 minutes. 3,000 ÷ 60 = 50 m per minute. Trap: multiplying 3 × 60 or forgetting to divide by 60." }
+    ]
+  },
+  graphs: {
+    title: "Reading Science Graphs", emoji: "📈", color: "#10b981",
+    questions: [
+      { q: "Julia tests how water temperature affects how much sugar dissolves. Which variable belongs on the x-axis of her graph?", a: 0, opts: ["Water temperature, the independent variable","Sugar dissolved, the dependent variable","Time, because time always goes on the x-axis","The variable with the biggest numbers"], hint: "The x-axis (across) shows what YOU change: the independent variable. The y-axis (up) shows what you measure. Trap: putting the dependent variable on the x-axis." },
+      { q: "Julia counts how many manatees she sees at four different springs on the same morning. Which graph fits her data best?", a: 0, opts: ["A bar graph, since the springs are separate groups","A line graph, since the data changes over time","A line graph, since the springs are in a row","A scatter plot, since there are four springs"], hint: "Bar graphs compare separate categories (springs, animals, colors). Line graphs show how something changes over time or a continuous amount." },
+      { q: "A weather station records the air temperature every hour for one day. Which graph best shows the data?", a: 0, opts: ["A line graph, to show change over time","A bar graph, to compare separate groups","A circle graph, to show parts of a whole","A pictograph, to count the hours"], hint: "When the x-axis is time and the data keeps changing, a line graph shows the ups and downs clearly." },
+      { q: "A line graph shows a citrus seedling's height. Week 0: 2 cm, Week 2: 6 cm, Week 4: 10 cm, Week 6: 14 cm. About how tall was it at Week 3?", a: 0, opts: ["8 cm","6 cm","10 cm","3 cm"], hint: "Week 3 is halfway between Week 2 (6 cm) and Week 4 (10 cm). Halfway between 6 and 10 is 8 cm. Reading BETWEEN points is called interpolating." },
+      { q: "A graph shows water depth at the beach as the tide comes in. 1:00 pm: 20 cm, 2:00 pm: 35 cm, 3:00 pm: 50 cm. If the pattern continues, what is the depth at 4:00 pm?", a: 0, opts: ["65 cm","60 cm","100 cm","50 cm"], hint: "The depth goes up 15 cm each hour. 50 + 15 = 65 cm. Predicting BEYOND the data is called extrapolating. Trap: doubling instead of following the pattern." },
+      { q: "Lake data: 15°C water holds 9 mg/L of oxygen, 20°C holds 8 mg/L, 25°C holds 7 mg/L, and 30°C holds 6 mg/L. What is the trend?", a: 0, opts: ["As temperature goes up, oxygen goes down","As temperature goes up, oxygen goes up","Temperature and oxygen have no relationship","Oxygen goes up first and then goes down"], hint: "Read left to right: temperature rises (15, 20, 25, 30) while oxygen falls (9, 8, 7, 6). That is a decreasing trend." },
+      { q: "Students graph each classmate's shoe size against their science quiz score. The points are scattered everywhere with no pattern. What should they conclude?", a: 0, opts: ["There is no clear relationship between them","Bigger shoes lead to higher quiz scores","Bigger shoes lead to lower quiz scores","The graph proves shoe size matters a lot"], hint: "If points do not form an upward or downward pattern, the two variables show no relationship." },
+      { q: "A hurricane's wind speed: Day 1: 60 km/h, Day 2: 90 km/h, Day 3: 160 km/h, Day 4: 170 km/h. Between which days did the wind speed increase the MOST?", a: 0, opts: ["Day 2 to Day 3","Day 1 to Day 2","Day 3 to Day 4","Every day was equal"], hint: "Subtract each pair: +30, +70, +10. The biggest jump (+70) is the steepest part of the line. Trap: choosing Day 4 just because it has the highest value." },
+      { q: "On a bar graph of monthly rainfall, the y-axis counts by 5 cm. The bar for June stops exactly halfway between 20 cm and 25 cm. How much rain fell in June?", a: 0, opts: ["22.5 cm","21 cm","25 cm","20.5 cm"], hint: "Check the scale first. Halfway between 20 and 25 is 20 + 2.5 = 22.5 cm. Trap: assuming each grid line is worth 1." },
+      { q: "A survey of an Everglades plot finds 50% sawgrass, 30% cattails, and 20% other plants. Which graph best shows how the plot is split into parts?", a: 0, opts: ["A circle graph","A line graph","A double line graph","A scatter plot"], hint: "Percents that add up to 100% are parts of a whole. A circle (pie) graph shows parts of a whole best." }
+    ]
+  },
+  data_tables: {
+    title: "Data Tables & Averages", emoji: "📋", color: "#f59e0b",
+    questions: [
+      { q: "Julia flies a paper airplane three times. Trial 1: 4 m, Trial 2: 6 m, Trial 3: 5 m. What is the mean distance?", a: 0, opts: ["5 m","15 m","6 m","2 m"], hint: "Mean = add the trials, then divide by how many: (4 + 6 + 5) ÷ 3 = 15 ÷ 3 = 5 m. Trap: stopping at the sum (15), or finding the range (2)." },
+      { q: "A toy car rolls down a ramp. Trial 1: 3.1 s, Trial 2: 3.0 s, Trial 3: 9.4 s, Trial 4: 2.9 s. In Trial 3 the car bumped into Julia's shoe. What is the best mean to report?", a: 0, opts: ["3.0 s, leaving out the bumped trial","4.6 s, using all four trials","9.4 s, the slowest trial","2.9 s, the fastest trial"], hint: "A trial with a known mistake is not good data. Average the other three: (3.1 + 3.0 + 2.9) ÷ 3 = 9 ÷ 3 = 3.0 s. Trap: averaging without checking for an outlier gives 4.6 s." },
+      { q: "Water temperatures at Ichetucknee Springs on five days: 22°C, 23°C, 22°C, 21°C, 22°C. What is the range?", a: 0, opts: ["2°C","22°C","23°C","110°C"], hint: "Range = highest − lowest = 23 − 21 = 2°C. The range shows how spread out the data is. Trap: picking the most common value or the highest value." },
+      { q: "Two groups measure the same table. Group A: 150 cm, 151 cm, 149 cm. Group B: 140 cm, 160 cm, 150 cm. Both means are 150 cm. Which group's data is more consistent?", a: 0, opts: ["Group A, since its range is only 2 cm","Group B, since its range is bigger","Both, since their means are equal","Group B, since one trial reached 160 cm"], hint: "Same mean does not mean same quality. Group A's range is 151 − 149 = 2 cm. Group B's is 160 − 140 = 20 cm. A smaller range means more consistent data." },
+      { q: "Julia drops a ball one time and it bounces 40 cm. Her teacher says she should do four more drops. Why?", a: 0, opts: ["One drop could be off by chance; an average is more reliable","More drops will make the ball bounce higher each time","Five drops will prove the answer is exactly right","More drops let her try a different ball each time"], hint: "Repeated trials help you spot mistakes and get a more reliable average. Trap: more trials never PROVE a result 100%, and the variables must stay the same." },
+      { q: "Julia tests how the number of paper clips on a paper helicopter affects how long it takes to fall. How should she set up her data table?", a: 0, opts: ["Column 1: number of clips; then each trial; then the mean","Column 1: fall time; then the number of clips for each trial","One column with all of the numbers mixed together","Column 1: the mean; then the number of clips at the end"], hint: "Put the independent variable (what you change: paper clips) in the FIRST column. Then the dependent variable trials, then the mean." },
+      { q: "Four newly hatched sea turtles have masses of 18 g, 20 g, 19 g, and 23 g. What is their mean mass?", a: 0, opts: ["20 g","19.5 g","80 g","5 g"], hint: "Add: 18 + 20 + 19 + 23 = 80 g. Divide by 4 turtles: 80 ÷ 4 = 20 g. Trap: 19.5 g is the median, and 5 g is the range." },
+      { q: "A data table of a plant's height reads: Day 1: 2.0 cm, Day 2: 2.4 cm, Day 3: 24 cm, Day 4: 3.1 cm. Which entry is most likely a recording mistake?", a: 0, opts: ["Day 3: 24 cm","Day 1: 2.0 cm","Day 2: 2.4 cm","Day 4: 3.1 cm"], hint: "Look for the value that does not fit the pattern. A plant can't jump to 24 cm and shrink to 3.1 cm. It was probably 2.4 or 2.7 with a missing decimal point." },
+      { q: "The mean of three trials was 10 cm. Trial 1 was 8 cm and Trial 2 was 9 cm. What was Trial 3?", a: 0, opts: ["13 cm","10 cm","11 cm","8.5 cm"], hint: "Mean × number of trials = total. 10 × 3 = 30 cm. 30 − 8 − 9 = 13 cm. Check: (8 + 9 + 13) ÷ 3 = 10." },
+      { q: "Ice cubes melting in the sun at the beach take 6 min, 8 min, 7 min, 9 min, and 10 min. What are the mean and the range?", a: 0, opts: ["Mean 8 min, range 4 min","Mean 4 min, range 8 min","Mean 7 min, range 10 min","Mean 8 min, range 10 min"], hint: "Mean: (6 + 8 + 7 + 9 + 10) ÷ 5 = 40 ÷ 5 = 8 min. Range: 10 − 6 = 4 min. Trap: mixing up which is which, or using the largest value as the range." }
+    ]
+  },
+  variables: {
+    title: "Variables & Fair Tests", emoji: "⚖️", color: "#8b5cf6",
+    questions: [
+      { q: "Julia tests whether water temperature changes how fast a sugar cube dissolves. She uses water at 10°C, 25°C, and 40°C. What is the independent variable?", a: 0, opts: ["The water temperature","The time to dissolve","The size of the sugar cubes","The amount of water in each cup"], hint: "The independent variable is what Julia CHANGES on purpose: the temperature. The time is what she measures (dependent)." },
+      { q: "Marcus tests whether the height of a ramp changes how far a toy car rolls. What is the dependent variable?", a: 0, opts: ["How far the car rolls","The height of the ramp","The mass of the toy car","The type of floor surface"], hint: "The dependent variable is the result you MEASURE. It depends on the ramp height, which Marcus changes." },
+      { q: "Ana tests which sunscreen blocks the most UV light by coating UV beads that change color in sunlight. What must she keep the SAME?", a: 0, opts: ["How long the beads sit in the sun","Which sunscreen goes on each bead","How much the beads change color","Which sunscreen works the best"], hint: "Constants (controlled variables) stay the same so the test is fair. The sunscreen is what she changes, and the color change is the result." },
+      { q: "Leo tests whether salt water or fresh water freezes faster. He puts the salt water in a freezer and the fresh water in a refrigerator. What is wrong?", a: 0, opts: ["He changed two variables at once","He used too much of each water","He should test only salt water","Nothing, it is a fair test"], hint: "A fair test changes only ONE variable. Leo changed the water type AND the place it was cooled, so he can't tell which one made the difference." },
+      { q: "A rescue center tests whether a new food helps baby sea turtles grow faster. Group A gets the new food. Group B gets the usual food. Which is the control group?", a: 0, opts: ["Group B, which gets the usual food","Group A, which gets the new food","Whichever group grows the fastest","Both groups are control groups"], hint: "The control group does not get the new treatment. It is the normal baseline you compare the test group against." },
+      { q: "Mia tests how hours of sunlight (2, 4, 6, 8 hours a day) affect how many tomatoes a plant grows. Which graph setup is correct?", a: 0, opts: ["x-axis: hours of sunlight; y-axis: tomatoes","x-axis: tomatoes; y-axis: hours of sunlight","x-axis: days of the week; y-axis: sunlight","x-axis: plant names; y-axis: soil type"], hint: "Independent variable (sunlight, what she changes) goes on the x-axis. Dependent variable (tomatoes, what she counts) goes on the y-axis. Trap: swapping them." },
+      { q: "Why must scientists keep the constants the same in an experiment?", a: 0, opts: ["So any change in results comes only from the independent variable","So the experiment finishes faster and costs less","So the hypothesis is sure to turn out true","So the dependent variable will never change"], hint: "If other things also change, you can't tell what caused the result. Keeping constants the same makes it a fair test." },
+      { q: "Kai tests whether a fan helps wet towels dry faster. Towel A hangs in the sun with a fan. Towel B hangs in the shade with no fan. How should he fix his test?", a: 0, opts: ["Hang both towels in the same spot","Put a fan on both of the towels","Use a bigger towel for Towel B","Only measure how fast Towel A dries"], hint: "Only the fan should be different. Sun versus shade is a second variable, so both towels must hang in the same place." },
+      { q: "Hypothesis: \"If a softball is stored in a colder place, then it will bounce lower.\" What is the independent variable?", a: 0, opts: ["The temperature where the ball is stored","How high the softball bounces","The brand of softball used","The height it is dropped from"], hint: "In an If..., then... hypothesis, the IF part names what you change (independent). The THEN part names what you measure (dependent)." },
+      { q: "A scientist plants seagrass at depths of 1 m, 2 m, and 3 m in Florida Bay to see how depth affects growth. Which should be a constant?", a: 0, opts: ["The type of seagrass planted","The depth of the water","How much the seagrass grows","Which depth grows best"], hint: "Depth is the independent variable, and growth is the dependent variable. The kind of seagrass must stay the same so the test is fair." }
+    ]
+  },
+  genetics_prob: {
+    title: "Probability in Genetics", emoji: "🎲", color: "#ec4899",
+    questions: [
+      { q: "In a Punnett square, 1 of the 4 boxes shows bb. What PERCENT chance does each offspring have of being bb?", a: 0, opts: ["25%","14%","40%","4%"], hint: "1 out of 4 = 1/4 = 1 ÷ 4 = 0.25 = 25%. Trap: writing the 1 and the 4 side by side (14%) is not how fractions become percents." },
+      { q: "In pea plants, purple (P) is dominant over white (p). A Pp × Pp cross makes 80 seeds. About how many are expected to grow purple flowers?", a: 0, opts: ["60","20","40","75"], hint: "PP, Pp, Pp, pp: 3 of 4 boxes are purple, so 3/4 are expected purple. 3/4 of 80: 80 ÷ 4 = 20, then 20 × 3 = 60. Trap: 20 is only 1/4." },
+      { q: "Two Aa parents are crossed (A is dominant). What is the expected ratio of dominant-trait to recessive-trait offspring?", a: 0, opts: ["3 : 1","1 : 2 : 1","1 : 3","2 : 2"], hint: "AA, Aa, Aa show the dominant trait (3). Only aa shows the recessive trait (1). So 3 : 1. Trap: 1 : 2 : 1 is the GENOTYPE ratio, not the trait ratio." },
+      { q: "A Bb × bb cross has given 4 puppies in a row with the dominant trait. What is the chance the 5th puppy shows the recessive trait?", a: 0, opts: ["1/2, since each puppy is a new chance","Almost certain, since one is overdue","Zero, since the pattern is all dominant","1/5, since it is the 5th puppy"], hint: "Bb × bb gives Bb, Bb, bb, bb, so the chance is 2/4 = 1/2 every time. Past puppies don't change the next one, just like past coin flips." },
+      { q: "Why is a parent passing on one of its two alleles a lot like flipping a coin?", a: 0, opts: ["Each allele has a 1/2 chance of being passed on","The dominant allele always lands face up","Coins and genes are both made of DNA","The parent chooses which allele to pass on"], hint: "A Bb parent gives either B or b, each with a 1/2 chance, like heads or tails. Nobody chooses, and dominant does not mean more likely to be passed on." },
+      { q: "In an Ff × ff cross, 50% of offspring are expected to be ff. Out of 36 offspring, how many are expected to be ff?", a: 0, opts: ["18","9","27","50"], hint: "50% = 1/2. Half of 36 = 18. Trap: 9 is 1/4 of 36 and 27 is 3/4 of 36." },
+      { q: "Two Tt parents have offspring. The chance of tt is 1/4 for each one. What is the chance that BOTH of their first two offspring are tt?", a: 0, opts: ["1/16","1/2","1/8","1/4"], hint: "For \"this AND that\" with separate events, MULTIPLY: 1/4 × 1/4 = 1/16. Trap: adding 1/4 + 1/4 = 1/2 makes it seem MORE likely, which can't be right." },
+      { q: "A Pp × Pp cross is expected to give 3/4 purple flowers. A student grows only 8 plants and gets 5 purple and 3 white. What is the best explanation?", a: 0, opts: ["Small samples often differ from expected results by chance","The Punnett square must have been drawn wrong","The plants changed their own genes as they grew","With 8 plants there must be exactly 6 purple"], hint: "3/4 of 8 = 6 is what we EXPECT on average, not a guarantee. With few offspring, chance makes results wobble. Bigger samples get closer to 3/4." },
+      { q: "A BB dog is crossed with a bb dog, and they have 12 puppies. How many puppies are expected to show the dominant trait?", a: 0, opts: ["12","6","9","3"], hint: "Every box in BB × bb is Bb, so 4/4 = 100% show the dominant trait. 100% of 12 = 12. Trap: assuming every cross gives 3/4 or 1/2." },
+      { q: "A gardener's pea cross gives 600 tall plants and 200 short plants. What is the ratio of tall to short in simplest form?", a: 0, opts: ["3 : 1","4 : 1","1 : 3","2 : 1"], hint: "600 : 200, divide both by 200 = 3 : 1. Trap: 4 : 1 compares the TOTAL (800) to short, and 1 : 3 is backwards." }
+    ]
+  },
+  measurement: {
+    title: "Measurement & Units", emoji: "📏", color: "#14b8a6",
+    questions: [
+      { q: "A scientist measures a manatee and finds it is 3 m long. How many centimeters long is it?", a: 0, opts: ["300 cm","30 cm","3,000 cm","0.03 cm"], hint: "1 m = 100 cm. Going to a smaller unit means MORE of them, so multiply: 3 × 100 = 300 cm." },
+      { q: "Which tool should Julia use to measure the volume of a liquid most accurately?", a: 0, opts: ["A graduated cylinder","A triple beam balance","A meter stick","A thermometer"], hint: "Graduated cylinder = volume (mL). Balance = mass (g). Meter stick = length. Thermometer = temperature." },
+      { q: "Julia pours 50 ___ of seawater into a graduated cylinder. Then she finds its mass is 51 ___. Which units fill the blanks?", a: 0, opts: ["mL, then g","g, then mL","cm, then mL","g, then °C"], hint: "Volume (how much space) is in milliliters (mL). Mass (how much matter) is in grams (g). Trap: mixing up mL and g." },
+      { q: "A plant cell is about 0.05 mm wide. How many micrometers (µm) is that? (1 mm = 1,000 µm)", a: 0, opts: ["50 µm","5 µm","500 µm","0.00005 µm"], hint: "Smaller unit means multiply: 0.05 × 1,000 = 50 µm. Moving to tiny units should give a BIGGER number, not a smaller one." },
+      { q: "On the Celsius scale at sea level, water freezes at ___ and boils at ___.", a: 0, opts: ["0°C and 100°C","32°C and 212°C","0°C and 212°C","100°C and 0°C"], hint: "Celsius is built on water: 0°C freezes, 100°C boils. 32 and 212 are the Fahrenheit numbers." },
+      { q: "Which temperature is most likely for a hot summer afternoon at a Florida beach?", a: 0, opts: ["32°C","90°C","5°C","200°C"], hint: "Benchmarks: 0°C freezing, 20 to 25°C room temperature, 37°C body temperature. A hot day is in the low 30s °C. Trap: 90 is a Fahrenheit-style number; 90°C is near boiling!" },
+      { q: "A sea turtle nest is 2.5 km down the beach. How many meters is that?", a: 0, opts: ["2,500 m","250 m","25 m","0.0025 m"], hint: "Kilo means 1,000. 1 km = 1,000 m, so 2.5 × 1,000 = 2,500 m." },
+      { q: "A rain gauge collects 1,500 mL of water during a storm. How many liters is that?", a: 0, opts: ["1.5 L","15 L","150 L","1,500,000 L"], hint: "1 L = 1,000 mL. Going to a BIGGER unit means fewer of them, so divide: 1,500 ÷ 1,000 = 1.5 L." },
+      { q: "Julia wants to find the mass of a seashell she found at the beach. Which tool should she use?", a: 0, opts: ["A triple beam balance","A graduated cylinder","A metric ruler","A thermometer"], hint: "Mass is measured with a balance, in grams. A graduated cylinder measures volume, not mass." },
+      { q: "Which list goes from the SMALLEST unit to the LARGEST unit?", a: 0, opts: ["µm, mm, cm, km","mm, µm, cm, km","km, cm, mm, µm","cm, mm, µm, km"], hint: "From smallest up: micro (millionth), milli (thousandth), centi (hundredth), the base unit, then kilo (thousand). Cells are measured in µm; trips in km." }
+    ]
+  },
+  ratios_science: {
+    title: "Ratios & Percents in Science", emoji: "🔺", color: "#f97316",
+    questions: [
+      { q: "In an Everglades food chain, grass stores 20,000 units of energy. Grasshoppers get about 10% of it, and frogs that eat the grasshoppers get about 10% of that. About how much reaches the frogs?", a: 0, opts: ["200 units","2,000 units","18,000 units","20 units"], hint: "Take 10% two times. 10% of 20,000 = 2,000 (grasshoppers). 10% of 2,000 = 200 (frogs). Trap: stopping after one step, or subtracting 10%." },
+      { q: "Biologists tag 200 sea turtles. 15% of them are green sea turtles. How many green sea turtles were tagged?", a: 0, opts: ["30","15","185","3"], hint: "15% = 15/100. 10% of 200 = 20, 5% = 10, so 15% = 30. Trap: the percent (15) is not the number of turtles." },
+      { q: "A saltwater mix for brine shrimp uses 2 spoons of salt for every 5 cups of water. How much salt is needed for 20 cups of water?", a: 0, opts: ["8 spoons","17 spoons","50 spoons","10 spoons"], hint: "20 cups is 4 times 5 cups, so use 4 times the salt: 2 × 4 = 8 spoons. Trap: adding 15 to both parts (2 + 15 = 17) breaks the ratio." },
+      { q: "The number of manatees counted at a spring went from 400 to 500. What is the percent increase?", a: 0, opts: ["25%","20%","100%","50%"], hint: "Change = 500 − 400 = 100. Divide by the ORIGINAL amount: 100 ÷ 400 = 1/4 = 25%. Trap: dividing by the new amount (100 ÷ 500 = 20%)." },
+      { q: "A pond had 50 frogs. After a drought it had 40 frogs. What is the percent decrease?", a: 0, opts: ["20%","10%","25%","40%"], hint: "Change = 50 − 40 = 10. Divide by the ORIGINAL: 10 ÷ 50 = 1/5 = 20%. Trap: 10 ÷ 40 = 25% uses the new amount; 10% is just the change." },
+      { q: "Earth is about 4 times as wide as the Moon. In a class model, Earth is a ball 20 cm wide. About how wide should the Moon ball be?", a: 0, opts: ["5 cm","80 cm","16 cm","24 cm"], hint: "The Moon is 1/4 as wide as Earth, so 20 ÷ 4 = 5 cm. Trap: subtracting 4 (16 cm) or multiplying (80 cm) breaks the scale." },
+      { q: "In a scale model, 1 cm stands for 1,000 km. The Moon is about 384,000 km from Earth. How far apart should they be in the model?", a: 0, opts: ["384 cm","38.4 cm","3,840 cm","384,000 cm"], hint: "Divide the real distance by the scale: 384,000 ÷ 1,000 = 384 cm (almost 4 meters!)." },
+      { q: "In a sample of 30 fish from a spring, the ratio of bass to mullet is 1 : 2. How many bass are in the sample?", a: 0, opts: ["10","15","20","2"], hint: "1 : 2 means 3 parts in all (1 + 2). 30 ÷ 3 = 10 per part, so 10 bass and 20 mullet. Trap: treating 1 : 2 as 1/2 of the fish (15)." },
+      { q: "In a citrus grove, 12 of the 60 trees show signs of citrus greening disease. What percent of the trees are sick?", a: 0, opts: ["20%","12%","48%","5%"], hint: "Part ÷ whole: 12 ÷ 60 = 1/5 = 20%. Trap: dividing the whole by the part (60 ÷ 12 = 5)." },
+      { q: "A rabbit eats plants holding 5,000 units of energy. Only about 10% gets stored in the rabbit's body. About how much is used for living or given off as heat?", a: 0, opts: ["About 4,500 units","About 500 units","About 5,000 units","About 50 units"], hint: "10% of 5,000 = 500 is stored. The other 90% is used up: 5,000 − 500 = 4,500 units. Energy is not destroyed; most becomes heat." }
+    ]
+  },
+  cer: {
+    title: "Using Data as Evidence", emoji: "🔎", color: "#6366f1",
+    questions: [
+      { q: "Claim: \"Shaded soil stays cooler than sunny soil.\" Which evidence BEST supports this claim?", a: 0, opts: ["Shaded soil: 24°C; sunny soil: 31°C","Shaded soil: 31°C; sunny soil: 24°C","Lots of gardens in Florida have shade","Shaded and sunny soil were both 28°C"], hint: "Evidence must be DATA that matches the claim. Only the first choice shows the shaded soil with the lower temperature." },
+      { q: "On a beach with bright lights nearby, 40% of sea turtle hatchlings reached the ocean. On a dark beach, 90% did. Which conclusion is BEST supported?", a: 0, opts: ["Hatchlings reached the ocean more often on the dark beach","Bright lights help hatchlings find the ocean","Lights have no effect on the hatchlings","Every hatchling reaches the ocean in the dark"], hint: "Compare the numbers: 90% is more than 40%. Trap: 90% is not 100%, so \"every hatchling\" goes beyond the data." },
+      { q: "Data show that on days when more ice cream is sold at the beach, more people get sunburned. What is the best explanation?", a: 0, opts: ["Hot, sunny days probably cause both to go up","Eating ice cream causes people to get sunburned","Getting sunburned makes people buy ice cream","The data proves that ice cream is unhealthy"], hint: "Two things rising together (correlation) does not prove one CAUSES the other. A third factor, sunny weather, likely explains both." },
+      { q: "Julia tests one paper towel brand one time and claims, \"Brand A is the most absorbent of ALL brands.\" What is the biggest problem?", a: 0, opts: ["One trial of one brand is too little evidence","Her claim is proven because she did a test","Her claim needs to be written longer","Paper towels can't be tested in science"], hint: "To claim \"most absorbent of all,\" she must compare several brands with several trials each. One trial never proves a claim." },
+      { q: "Rainfall in a Florida town: June: 20 cm, July: 22 cm, August: 21 cm, December: 5 cm. Which claim is NOT supported by the data?", a: 0, opts: ["December was the rainiest month","July got the most rain of these months","Summer months got more rain than December","August got about 4 times December's rain"], hint: "Check each claim against the numbers. December (5 cm) had the LEAST rain. 21 ÷ 5 is about 4, so the last claim is supported." },
+      { q: "A lake near farms has 3 times as much algae as a lake far from farms. Does this PROVE that farm fertilizer causes algae to grow?", a: 0, opts: ["No, the lakes may differ in other ways; more tests are needed","Yes, because 3 times more is a very big difference","Yes, because the first lake is close to the farms","No, because algae can never be measured by scientists"], hint: "Two lakes can differ in many ways (depth, sunlight, temperature). Strong evidence needs more data and a fair comparison, not one example." },
+      { q: "Claim: \"Glider B flies farther than Glider A.\" Glider A: 5 m, 6 m, 7 m. Glider B: 8 m, 9 m, 10 m. Which evidence BEST supports the claim?", a: 0, opts: ["B's mean of 9 m beats A's mean of 6 m","Glider A had one flight of 7 m","Glider B was painted a brighter color","Both gliders flew at least 5 m"], hint: "Compare means: A = 18 ÷ 3 = 6 m, B = 27 ÷ 3 = 9 m. A summary of ALL trials is stronger evidence than one trial." },
+      { q: "Claim: The dark sand got hotter. Evidence: Dark sand reached 45°C and light sand reached 38°C. Which sentence is the REASONING?", a: 0, opts: ["Dark colors absorb more sunlight, which warms them more","Dark sand reached 45°C and light sand reached 38°C","The dark sand got hotter than the light sand did","Julia used a thermometer to measure both sands"], hint: "Claim = the answer. Evidence = the data. Reasoning = the SCIENCE idea that explains why the evidence supports the claim." },
+      { q: "Study 1 surveys 3 students. Study 2 surveys 300 students. Both ask about sleep and test scores. Which study gives stronger evidence?", a: 0, opts: ["Study 2, because more data is more reliable","Study 1, because it is easier to check","Both are equally strong if results match","Neither, since surveys are never evidence"], hint: "A larger sample makes it less likely that a few unusual people change the result. Too little data is weak evidence." },
+      { q: "50 citrus trees were sprayed with a new treatment, and 5 got greening disease. 50 trees were not sprayed, and 20 got it. Which statement is BEST supported?", a: 0, opts: ["Sprayed trees got sick less often: 10% vs 40%","The spray cures all citrus greening disease","The spray caused more trees to get sick","Spraying made no difference at all"], hint: "Turn counts into percents: 5 ÷ 50 = 10% and 20 ÷ 50 = 40%. Fewer sprayed trees got sick, but some still did, so \"cures all\" goes too far." }
+    ]
+  }
+};
+const TIPS_CROSS = {
+  speed_rates: [
+    { h:"Speed = d ÷ t 🏃", p:"<b>Speed = distance ÷ time</b>. Distance goes on top because the unit says so: <b>km per hour</b> = km ÷ h. Trap: time ÷ distance." },
+    { h:"Unit rate first ⏱️", p:"Find the rate for <b>ONE</b> unit (per 1 hour, per 1 day, per 1 minute), then multiply. Growth rate uses the <b>change</b>: end − start." },
+    { h:"Match the units 🔁", p:"Convert before comparing: <b>1 h = 60 min</b>, <b>1 min = 60 s</b>, <b>1 km = 1,000 m</b>. Heart rate: beats in 15 s × 4 = beats per minute." }
+  ],
+  graphs: [
+    { h:"Which axis? ↔️", p:"<b>x-axis</b> (across) = <b>independent</b> variable, what you change. <b>y-axis</b> (up) = <b>dependent</b> variable, what you measure." },
+    { h:"Pick the graph 📊", p:"<b>Line graph</b> = change over time. <b>Bar graph</b> = compare separate groups. <b>Circle graph</b> = parts of a whole (100%)." },
+    { h:"Read and predict 🔮", p:"Check the <b>scale</b> first. Between points = <b>interpolate</b>. Past the data = <b>extrapolate</b> by following the pattern. The steepest part is the fastest change." }
+  ],
+  data_tables: [
+    { h:"Mean of trials ➗", p:"<b>Mean</b> = add all trials ÷ number of trials. Check for an <b>outlier</b> or known mistake first, and leave out a trial that went wrong." },
+    { h:"Range = spread 📏", p:"<b>Range</b> = highest − lowest. A <b>small range</b> means consistent, reliable data. Repeating trials helps you trust the mean." },
+    { h:"Build the table 📋", p:"Column 1 = <b>independent variable</b>. Then Trial 1, Trial 2, Trial 3, then the <b>mean</b>. Always include <b>units</b> in the headings." }
+  ],
+  variables: [
+    { h:"IV, DV, constants 🔬", p:"<b>Independent</b> = the ONE thing you change. <b>Dependent</b> = what you measure. <b>Constants</b> = everything else you keep the same." },
+    { h:"Fair test ✅", p:"Change only <b>one variable at a time</b>. If two things change, you can't tell which one caused the result. The <b>control group</b> gets no new treatment." },
+    { h:"If..., then... 💡", p:"In \"<b>If</b> I change X, <b>then</b> Y will happen,\" X is the independent variable (x-axis) and Y is the dependent variable (y-axis)." }
+  ],
+  genetics_prob: [
+    { h:"Boxes to fractions 🎲", p:"Each Punnett box is <b>1/4 = 25%</b>. 2 boxes = <b>1/2 = 50%</b>, 3 boxes = <b>3/4 = 75%</b>. Expected number = fraction × total (3/4 of 80 = 60)." },
+    { h:"Every baby is new 🪙", p:"Each offspring is like a <b>fresh coin flip</b>. Past offspring do NOT change the next chance. Small groups often don't match the expected numbers." },
+    { h:"AND means multiply ✖️", p:"Chance of two things BOTH happening: <b>multiply</b>. 1/4 × 1/4 = 1/16. Adding makes the chance bigger, which is a trap." }
+  ],
+  measurement: [
+    { h:"Metric prefixes 📏", p:"<b>kilo</b> = 1,000 · <b>centi</b> = 1/100 · <b>milli</b> = 1/1,000 · <b>micro (µ)</b> = 1/1,000,000. To a smaller unit: <b>multiply</b>. To a bigger unit: <b>divide</b>." },
+    { h:"Right tool, right unit 🧪", p:"Volume: <b>graduated cylinder</b>, mL. Mass: <b>balance</b>, g. Temperature: <b>thermometer</b>, °C. Length: ruler, cm or m." },
+    { h:"Celsius benchmarks 🌡️", p:"<b>0°C</b> water freezes · <b>20 to 25°C</b> room · <b>37°C</b> body · <b>100°C</b> water boils. A hot Florida day is about 32 to 35°C." }
+  ],
+  ratios_science: [
+    { h:"The 10% rule 🔺", p:"Each step up a food chain keeps about <b>10%</b> of the energy. Two steps: 10% of 10%. The other <b>90%</b> is used for living or lost as heat." },
+    { h:"Percent change 📉", p:"<b>Change ÷ ORIGINAL × 100</b>. 400 to 500 is +100 ÷ 400 = <b>25%</b>. Trap: dividing by the new amount." },
+    { h:"Ratios and scale 🌍", p:"1 : 2 means <b>3 parts total</b>. Scale models <b>multiply or divide</b> every size by the same number. Never add or subtract to keep a ratio." }
+  ],
+  cer: [
+    { h:"Good evidence 🔎", p:"Evidence is <b>data</b> that matches the claim. More trials and bigger samples make <b>stronger</b> evidence. One trial never proves anything." },
+    { h:"Linked is not caused 🔗", p:"When two things rise together, that is a <b>correlation</b>. It does not prove one <b>causes</b> the other. Look for a hidden third factor." },
+    { h:"Don't overclaim ✋", p:"A conclusion should say only what the data shows. Words like <b>all</b>, <b>always</b>, <b>never</b>, and <b>proves</b> usually go too far." }
+  ]
+};
+const CROSS_KEY_ORDER = ["speed_rates","graphs","data_tables","variables","genetics_prob","measurement","ratios_science","cer"];
+const BOSSES_CROSS = {
+  speed_rates:    { emoji: "🏃", name: "Sir Speeds-a-Lot" },
+  graphs:         { emoji: "📈", name: "Axis of Weevil" },
+  data_tables:    { emoji: "📋", name: "The Mean Machine" },
+  variables:      { emoji: "⚖️", name: "Constant Chaos" },
+  genetics_prob:  { emoji: "🎲", name: "The Odds Couple" },
+  measurement:    { emoji: "📏", name: "Centi-Pede" },
+  ratios_science: { emoji: "🔺", name: "The Scale Whale" },
+  cer:            { emoji: "🔎", name: "Claim Jumper" }
+};
+
 const SUBJECTS = {
   italy: {
     title: "My Trip to Italy", emoji: "🇮🇹", color: "#059669",
@@ -4124,6 +4300,11 @@ const SUBJECTS = {
     description: "Get ahead on Florida Grade 7: genetics, food webs, natural selection, rock cycle, plate tectonics, geologic time, light & waves, energy, heat.",
     topics: QUIZ_G7SCI, tips: TIPS_G7SCI, keyOrder: G7SCI_KEY_ORDER, hasSubObj: false
   },
+  cross: {
+    title: "Math + Science Skills", emoji: "🔗", color: "#0f766e",
+    description: "Use math to do science: speed and rates, reading graphs, data tables and averages, fair tests, genetics probability, metric units, percents, and using data as evidence.",
+    topics: QUIZ_CROSS, tips: TIPS_CROSS, keyOrder: CROSS_KEY_ORDER, hasSubObj: false
+  },
   accel: {
     title: "Accelerated Math (Grade 8 Topics)", emoji: "⚡", color: "#be185d",
     description: "For the Florida accelerated track: negative exponents, scientific notation, square roots, slope, y = mx + b, systems, functions, Pythagorean Theorem, angles, transformations.",
@@ -4140,7 +4321,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","social","g6math","g6sci","g7math","g7sci","accel","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","social","g6math","g6sci","cross","g7math","g7sci","accel","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -4270,6 +4451,7 @@ const TROPHIES = [
   { id:"boss_g7math",   emoji:"🚀", name:"Seventh Grade Rocket", desc:"Defeat all 12 FL 7th Grade Math Preview bosses." },
   { id:"boss_g7sci",    emoji:"🌋", name:"Seventh Grade Scientist", desc:"Defeat all 12 FL 7th Grade Science Preview bosses." },
   { id:"boss_accel",    emoji:"⚡", name:"Fast Tracker",     desc:"Defeat all 12 Accelerated Math bosses." },
+  { id:"boss_cross",    emoji:"🔗", name:"Bridge Builder",   desc:"Defeat all 8 Math + Science Skills bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
   { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
@@ -4284,6 +4466,7 @@ const BOSSES = {
   g7math: BOSSES_G7MATH,
   g7sci: BOSSES_G7SCI,
   accel: BOSSES_ACCEL,
+  cross: BOSSES_CROSS,
   italy: {
     landmarks:  { emoji: "🗼", name: "The Leaning Tower" },
     food:       { emoji: "🍕", name: "Pizza Padrone" },

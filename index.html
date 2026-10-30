@@ -2742,6 +2742,522 @@ const TIPS_ITALY = {
 };
 const ITALY_KEY_ORDER = ["landmarks","food","language","culture","geography","history"];
 
+const QUIZ_G6MATH = {
+  fdp: {
+    title: "Fractions, Decimals & Percents", emoji: "🔄", color: "#0ea5e9",
+    questions: [
+      { q: "Which pair shows the SAME amount as 3/5?", a: 0, opts: ["0.6 and 60%","0.35 and 35%","3.5 and 350%","0.53 and 53%"], hint: "A fraction bar means divide: 3 ÷ 5 = 0.6 = 60%. Trap: 3/5 is NOT 0.35 (you can't just push the digits together)." },
+      { q: "Write 7/8 as a decimal.", a: 0, opts: ["0.875","0.78","8.7","0.87"], hint: "Divide 7 ÷ 8 = 0.875. Tip: 1/8 = 0.125, so 7/8 = 7 × 0.125." },
+      { q: "Write 0.045 as a percent.", a: 0, opts: ["4.5%","45%","0.45%","450%"], hint: "Decimal to percent: move the decimal 2 places RIGHT. 0.045 → 4.5%." },
+      { q: "Write 0.36 as a fraction in simplest form.", a: 0, opts: ["9/25","36/10","3/6","18/100"], hint: "0.36 = 36/100. Divide top and bottom by 4: 9/25. Trap: 36/10 would be 3.6." },
+      { q: "Write 125% as a mixed number.", a: 0, opts: ["1 1/4","12 1/2","1 1/25","1/125"], hint: "125% = 125/100 = 1.25 = 1 1/4. A percent over 100 means more than one whole." },
+      { q: "Write 3/20 as a percent.", a: 0, opts: ["15%","3.2%","32%","20%"], hint: "Make the bottom 100: 3/20 = 15/100 (multiply top and bottom by 5) = 15%." },
+      { q: "Which number is the GREATEST: 0.7, 2/3, 68%, or 0.069?", a: 0, opts: ["0.7","2/3","68%","0.069"], hint: "Change all to decimals: 0.700, 0.667, 0.680, 0.069. Trap: more digits does NOT mean bigger." },
+      { q: "Julia got a hit in 9 of her 12 softball at-bats. What percent of at-bats were hits?", a: 0, opts: ["75%","25%","133%","9%"], hint: "Part ÷ whole: 9 ÷ 12 = 0.75 = 75%. Trap: 12 ÷ 9 flips it and gives over 100%." },
+      { q: "Write 0.008 as a fraction in simplest form.", a: 0, opts: ["1/125","1/8","2/25","8/10"], hint: "0.008 is 8 thousandths = 8/1,000. Divide top and bottom by 8: 1/125. Trap: 2/25 = 0.08 (hundredths, not thousandths)." },
+      { q: "At the beach, 2/5 of Julia's shells are white, 0.35 of them are pink, and the rest are tan. What percent are tan?", a: 0, opts: ["25%","65%","75%","60%"], hint: "Same form first: 2/5 = 40% and 0.35 = 35%. White + pink = 75%, so tan = 100% − 75% = 25%." }
+    ]
+  },
+  frac_ops: {
+    title: "Multiply & Divide Fractions", emoji: "🍕", color: "#f97316",
+    questions: [
+      { q: "To divide by a fraction, you multiply by its ___.", a: 0, opts: ["reciprocal (flip it)","opposite (change its sign)","common denominator","whole number part"], hint: "Keep, Change, Flip: a ÷ b/c = a × c/b. Only the SECOND fraction flips." },
+      { q: "Without calculating, 12 × 2/3 is ___.", a: 0, opts: ["less than 12","greater than 12","equal to 12","exactly 24"], hint: "Multiplying by a fraction less than 1 takes PART of the number, so the answer gets smaller. Trap: \"multiplying always makes bigger.\"" },
+      { q: "2/5 × 3/7 = ?", a: 0, opts: ["6/35","5/12","6/12","14/15"], hint: "Multiply straight across: top × top, bottom × bottom. Trap: 5/12 adds the parts instead." },
+      { q: "4/9 × 3/8 = ? (simplest form)", a: 0, opts: ["1/6","7/17","12/17","32/27"], hint: "4 × 3 = 12 and 9 × 8 = 72. 12/72 = 1/6. Or simplify first: cross-cancel 4 with 8 and 3 with 9." },
+      { q: "5/6 ÷ 2/3 = ?", a: 0, opts: ["1 1/4","5/9","4/5","1 1/2"], hint: "Flip the second fraction: 5/6 × 3/2 = 15/12 = 1 1/4. Trap: flipping the FIRST fraction gives 4/5." },
+      { q: "6 ÷ 3/4 = ?", a: 0, opts: ["8","4 1/2","2","1/8"], hint: "How many 3/4s fit in 6? 6 × 4/3 = 24/3 = 8. Trap: 4 1/2 is 6 × 3/4 (you forgot to flip)." },
+      { q: "2 1/2 × 1 1/3 = ?", a: 0, opts: ["3 1/3","2 1/6","3 1/6","2 1/3"], hint: "Change to improper fractions first: 5/2 × 4/3 = 20/6 = 3 1/3. Trap: multiplying whole parts and fraction parts separately gives 2 1/6." },
+      { q: "3 3/4 ÷ 1 1/4 = ?", a: 0, opts: ["3","1/3","4 11/16","2 1/2"], hint: "15/4 ÷ 5/4 = 15/4 × 4/5 = 60/20 = 3. Trap: 2 1/2 is subtracting, not dividing." },
+      { q: "Julia has a 7 1/2 foot ribbon. She cuts it into 3/4 foot pieces to make softball team bows. How many pieces?", a: 0, opts: ["10","5 5/8","6 3/4","8"], hint: "\"How many pieces\" means divide: 15/2 ÷ 3/4 = 15/2 × 4/3 = 60/6 = 10." },
+      { q: "The school store has 4 1/2 pounds of trail mix. It sells 2/3 of it, then packs the rest into 1/4 pound bags. How many bags?", a: 0, opts: ["6","12","18","3/8"], hint: "Sold: 2/3 × 9/2 = 3 lb. Left: 4 1/2 − 3 = 1 1/2 lb. Bags: 3/2 ÷ 1/4 = 3/2 × 4 = 6. Trap: 12 bags is the part that was SOLD." }
+    ]
+  },
+  dec_ops: {
+    title: "Multiply & Divide Decimals", emoji: "🔢", color: "#14b8a6",
+    questions: [
+      { q: "When you multiply decimals, how do you place the decimal point in the answer?", a: 0, opts: ["Count the total decimal places in both factors","Line up the decimal points before multiplying","Use only the decimal places of the bigger number","Always put it 2 places from the right"], hint: "2.4 × 0.3: 1 place + 1 place = 2 places, so 24 × 3 = 72 becomes 0.72. Lining up decimals is for adding, not multiplying." },
+      { q: "2.4 × 0.3 = ?", a: 0, opts: ["0.72","7.2","0.072","2.7"], hint: "24 × 3 = 72. Two decimal places total, so 0.72. Check: 2.4 × 0.3 should be a little less than 1." },
+      { q: "1.25 × 0.04 = ?", a: 0, opts: ["0.05","0.5","0.005","1.29"], hint: "125 × 4 = 500. 2 + 2 = 4 decimal places: 0.0500 = 0.05. Trap: 1.29 is adding." },
+      { q: "To solve 4.8 ÷ 0.06, you can first rewrite it as ___.", a: 0, opts: ["480 ÷ 6","48 ÷ 6","4.8 ÷ 6","4,800 ÷ 6"], hint: "Make the divisor a whole number: 0.06 × 100 = 6. Do the SAME to the dividend: 4.8 × 100 = 480." },
+      { q: "4.8 ÷ 0.06 = ?", a: 0, opts: ["80","8","0.8","800"], hint: "Move both decimals 2 places right: 480 ÷ 6 = 80. Dividing by a number less than 1 gives a BIGGER answer." },
+      { q: "7.35 ÷ 0.5 = ?", a: 0, opts: ["14.7","3.675","1.47","147"], hint: "Move both decimals 1 place: 73.5 ÷ 5 = 14.7. Trap: 3.675 is 7.35 × 0.5 (multiplying instead)." },
+      { q: "3.06 × 2.5 = ?", a: 0, opts: ["7.65","76.5","0.765","6.12"], hint: "306 × 25 = 7,650. 2 + 1 = 3 decimal places: 7.650. Estimate: about 3 × 2.5 = 7.5." },
+      { q: "A beach umbrella rents for $4.80 per hour. How much for 3.5 hours?", a: 0, opts: ["$16.80","$168.00","$8.30","$1.68"], hint: "4.80 × 3.5 = 16.80. Estimate: about $5 × 3.5 = $17.50. Trap: $8.30 adds instead of multiplying." },
+      { q: "Julia's family buys 2.4 pounds of shrimp for $17.40. What is the price per pound?", a: 0, opts: ["$7.25","$72.50","$0.725","$41.76"], hint: "Price per pound = cost ÷ pounds: 17.40 ÷ 2.4 → 174 ÷ 24 = 7.25. Trap: $41.76 multiplies." },
+      { q: "Juice boxes at the school store cost $0.85 each. Mia buys 6 and pays with a $10 bill. How much change does she get?", a: 0, opts: ["$4.90","$5.10","$9.15","$5.90"], hint: "Step 1: 6 × 0.85 = $5.10. Step 2: 10.00 − 5.10 = $4.90. Trap: $5.10 is the cost, not the change." }
+    ]
+  },
+  number_line: {
+    title: "Number Line & Absolute Value", emoji: "📏", color: "#8b5cf6",
+    questions: [
+      { q: "What does the ABSOLUTE VALUE of a number tell you?", a: 0, opts: ["Its distance from 0","Whether it is positive or negative","Its opposite","Which side of 0 it is on"], hint: "|−6| = 6 and |6| = 6: both are 6 steps from 0. Distance is never negative." },
+      { q: "Which statement is true?", a: 0, opts: ["−9 < 4, but |−9| > |4|","−9 > 4, and |−9| > |4|","−9 < 4, and |−9| < |4|","−9 > 4, but |−9| < |4|"], hint: "VALUE: −9 is left of 4, so −9 < 4. SIZE (distance from 0): 9 > 4. Trap: mixing up a number's value with its size." },
+      { q: "Which list is ordered from LEAST to GREATEST?", a: 0, opts: ["−6, −2, 0, 3","−2, −6, 0, 3","0, −2, −6, 3","3, 0, −2, −6"], hint: "Further left on the number line = smaller. −6 is left of −2. Trap: \"6 is bigger than 2, so −6 is bigger.\"" },
+      { q: "What is the opposite of the opposite of −7?", a: 0, opts: ["−7","7","0","1/7"], hint: "The opposite of −7 is 7. The opposite of 7 is −7. Two flips bring you back." },
+      { q: "|−12| − |5| = ?", a: 0, opts: ["7","−17","17","−7"], hint: "Find each absolute value first: |−12| = 12 and |5| = 5. Then 12 − 5 = 7." },
+      { q: "Which temperature is the COLDEST: −5°F, 2°F, −11°F, or 0°F?", a: 0, opts: ["−11°F","−5°F","0°F","2°F"], hint: "Coldest = lowest = furthest left on the number line. −11 is below −5." },
+      { q: "Which number is between −1 and −2 on the number line?", a: 0, opts: ["−1.5","1.5","−0.5","−2.5"], hint: "Between −1 and −2 means a negative number with 1 point something: −1.5. −0.5 is between 0 and −1." },
+      { q: "Order from least to greatest: −1/2, 0.3, −0.75, 1/4", a: 0, opts: ["−0.75, −1/2, 1/4, 0.3","−1/2, −0.75, 0.3, 1/4","−1/2, −0.75, 1/4, 0.3","−0.75, −1/2, 0.3, 1/4"], hint: "As decimals: −0.5, 0.3, −0.75, 0.25. The negative with the bigger size is smaller: −0.75 < −0.5. Then 0.25 < 0.3." },
+      { q: "A scuba diver is at −30 feet. A pelican flies 18 feet above sea level. Which is true?", a: 0, opts: ["The diver is farther from sea level","The pelican is farther from sea level","They are the same distance from sea level","The diver is higher than the pelican"], hint: "Sea level is 0. Compare distances: |−30| = 30 and |18| = 18. 30 > 18." },
+      { q: "On a mountain trip, it was −4°F at dawn and 9°F at noon. How many degrees did the temperature rise?", a: 0, opts: ["13°F","5°F","−13°F","−5°F"], hint: "Count on the number line: 4 degrees from −4 up to 0, then 9 more up to 9. 4 + 9 = 13. Trap: 9 − 4 = 5 ignores the negative." }
+    ]
+  },
+  integers: {
+    title: "Integer Operations", emoji: "➖", color: "#ef4444",
+    questions: [
+      { q: "A negative number times a negative number is always ___.", a: 0, opts: ["positive","negative","zero","the sign of the bigger number"], hint: "Same signs → positive. Different signs → negative. This works for × and ÷." },
+      { q: "What is −15 ÷ 0?", a: 0, opts: ["undefined","0","−15","15"], hint: "You can't split something into 0 groups, so dividing BY 0 is undefined. (But 0 ÷ 15 = 0 is fine.)" },
+      { q: "−3 − 5 = ?", a: 0, opts: ["−8","2","8","−2"], hint: "Subtracting 5 means moving 5 more to the left: −3 + (−5) = −8. Trap: 2 ignores the negative sign on 3." },
+      { q: "−14 + 9 = ?", a: 0, opts: ["−5","5","−23","23"], hint: "Different signs: subtract the sizes (14 − 9 = 5) and keep the sign of the bigger size (−14). Answer −5." },
+      { q: "6 − (−8) = ?", a: 0, opts: ["14","−2","2","−14"], hint: "Subtracting a negative is adding the opposite: 6 + 8 = 14. Trap: −2 treats it like 6 − 8." },
+      { q: "−7 × (−6) = ?", a: 0, opts: ["42","−42","−13","13"], hint: "7 × 6 = 42. Negative × negative = positive." },
+      { q: "−56 ÷ 8 = ?", a: 0, opts: ["−7","7","−48","−64"], hint: "56 ÷ 8 = 7. Different signs → negative: −7." },
+      { q: "0 ÷ (−9) = ?", a: 0, opts: ["0","undefined","−9","9"], hint: "0 split into any number of groups is 0. Only dividing BY zero is undefined." },
+      { q: "−4 × 3 × (−2) × (−1) = ?", a: 0, opts: ["−24","24","−4","4"], hint: "4 × 3 × 2 × 1 = 24. Count the negatives: 3 (odd), so the answer is negative." },
+      { q: "A submarine is at −120 feet. It rises 45 feet, then dives 30 feet. Where is it now?", a: 0, opts: ["−105 feet","−135 feet","−45 feet","−195 feet"], hint: "Rise = add, dive = subtract: −120 + 45 = −75, then −75 − 30 = −105." }
+    ]
+  },
+  factors: {
+    title: "GCF, LCM & Exponents", emoji: "🧮", color: "#22c55e",
+    questions: [
+      { q: "What does 2⁵ mean?", a: 0, opts: ["2 × 2 × 2 × 2 × 2","2 × 5","5 × 5","2 + 2 + 2 + 2 + 2"], hint: "The exponent tells how many times to multiply the base by itself. 2⁵ = 32, not 10." },
+      { q: "3⁴ = ?", a: 0, opts: ["81","12","64","27"], hint: "3 × 3 × 3 × 3 = 9 × 9 = 81. Trap: 3 × 4 = 12 multiplies base by exponent." },
+      { q: "(1/2)³ = ?", a: 0, opts: ["1/8","3/2","1/6","3/8"], hint: "1/2 × 1/2 × 1/2 = 1/8. Both the top and bottom get cubed." },
+      { q: "2³ × 5² = ?", a: 0, opts: ["200","60","400","100"], hint: "Exponents first: 2³ = 8 and 5² = 25. Then 8 × 25 = 200. Trap: 6 × 10 = 60." },
+      { q: "Which is the PRIME factorization of 72?", a: 0, opts: ["2³ × 3²","2² × 3³","8 × 9","2 × 36"], hint: "Factor tree: 72 = 8 × 9 = 2 × 2 × 2 × 3 × 3 = 2³ × 3². 8 × 9 is true but not PRIME factors. 2² × 3³ = 108." },
+      { q: "What is the GCF of 24 and 36?", a: 0, opts: ["12","6","72","4"], hint: "Greatest Common Factor: the biggest number that divides both. 24 = 12 × 2, 36 = 12 × 3. Trap: 72 is the LCM." },
+      { q: "What is the LCM of 6 and 8?", a: 0, opts: ["24","48","2","14"], hint: "List multiples: 6, 12, 18, 24 and 8, 16, 24. First match: 24. Trap: 6 × 8 = 48 is common but not LEAST." },
+      { q: "Use the GCF to rewrite 24 + 36.", a: 0, opts: ["12(2 + 3)","12(24 + 36)","2(12 + 3)","12(2) + 3"], hint: "GCF is 12. 24 = 12 × 2 and 36 = 12 × 3, so 24 + 36 = 12(2 + 3). Check: 12 × 5 = 60." },
+      { q: "Coach has 18 softballs and 24 water bottles. She wants identical equipment bags with nothing left over. What is the GREATEST number of bags?", a: 0, opts: ["6","72","3","12"], hint: "Splitting into equal groups = GCF. GCF of 18 and 24 is 6 (each bag: 3 balls, 4 bottles). 3 works, but it isn't the greatest." },
+      { q: "Hot dogs come in packs of 10 and buns in packs of 8. For a beach party, what is the smallest number of hot dogs you can buy to match the buns exactly?", a: 0, opts: ["40","80","18","2"], hint: "Matching up = LCM. Multiples of 10: 10, 20, 30, 40. Multiples of 8: 8, 16, 24, 32, 40. LCM = 40. Trap: 2 is the GCF." }
+    ]
+  },
+  expressions: {
+    title: "Expressions & Order of Operations", emoji: "🧩", color: "#ec4899",
+    questions: [
+      { q: "In the order of operations, what comes right after parentheses?", a: 0, opts: ["Exponents","Addition","Whatever is on the left","Subtraction"], hint: "PEMDAS: Parentheses, Exponents, Multiply/Divide (left to right), Add/Subtract (left to right)." },
+      { q: "8 + 4 × 3 = ?", a: 0, opts: ["20","36","15","24"], hint: "Multiply before adding: 4 × 3 = 12, then 8 + 12 = 20. Trap: going left to right gives 12 × 3 = 36." },
+      { q: "(6 + 2)² ÷ 4 = ?", a: 0, opts: ["16","7","4","32"], hint: "Parentheses: 8. Exponent: 8² = 64. Divide: 64 ÷ 4 = 16. Trap: 8² is 64, not 16." },
+      { q: "Which expression means \"5 less than a number n\"?", a: 0, opts: ["n − 5","5 − n","5n","n + 5"], hint: "\"5 less than n\" means start with n and take away 5. Trap: the words come in the opposite order of the expression." },
+      { q: "Which phrase matches 3(x + 4)?", a: 0, opts: ["3 times the sum of a number and 4","3 times a number, plus 4","the sum of 3 and a number, plus 4","a number plus 4, divided by 3"], hint: "The parentheses make x + 4 one group (a SUM), and the 3 multiplies the whole group." },
+      { q: "Evaluate 2a + b² when a = −3 and b = 4.", a: 0, opts: ["10","2","22","−22"], hint: "2(−3) = −6 and 4² = 16. −6 + 16 = 10. Trap: b² is 4 × 4, not 4 × 2." },
+      { q: "Evaluate xy − z when x = 5, y = −2, and z = −6.", a: 0, opts: ["−4","−16","4","16"], hint: "xy = 5 × (−2) = −10. Then −10 − (−6) = −10 + 6 = −4. Trap: −16 forgets that subtracting a negative means adding." },
+      { q: "Which expression is equivalent to 4(2x − 3)?", a: 0, opts: ["8x − 12","8x − 3","6x − 7","8x + 12"], hint: "Distribute to EVERY term: 4 × 2x = 8x and 4 × 3 = 12. Trap: 8x − 3 only multiplies the first term." },
+      { q: "Which expression is equivalent to 6x + 9 − 2x + 1?", a: 0, opts: ["4x + 10","8x + 10","4x + 8","14x"], hint: "Combine like terms: 6x − 2x = 4x and 9 + 1 = 10. The minus belongs to the 2x. You can't combine 4x and 10." },
+      { q: "At the beach, Julia buys s snow cones for $3 each and one $2 souvenir. Which expression shows her total cost?", a: 0, opts: ["3s + 2","3 + 2s","5s","(3 + 2)s"], hint: "Each snow cone costs 3, so s cones cost 3s. The souvenir is bought once: + 2." }
+    ]
+  },
+  equations: {
+    title: "Equations & Inequalities", emoji: "⚖️", color: "#6366f1",
+    questions: [
+      { q: "An equation is like a balance scale. To keep it balanced, you must ___.", a: 0, opts: ["do the same thing to both sides","change only the side with the variable","add to one side and subtract from the other","always divide both sides by 2"], hint: "The equals sign means both sides have the same value. Whatever you do to one side, do to the other." },
+      { q: "Solve: x + 9 = −4", a: 0, opts: ["x = −13","x = 5","x = 13","x = −5"], hint: "Subtract 9 from both sides: −4 − 9 = −13. Check: −13 + 9 = −4. ✓" },
+      { q: "Solve: −6x = 42", a: 0, opts: ["x = −7","x = 7","x = 48","x = −252"], hint: "Divide both sides by −6: 42 ÷ (−6) = −7. Check: −6 × (−7) = 42. ✓" },
+      { q: "Solve: x ÷ (−3) = 5", a: 0, opts: ["x = −15","x = 15","x = 2","x = 8"], hint: "Undo dividing by multiplying: 5 × (−3) = −15. Check: −15 ÷ (−3) = 5. ✓" },
+      { q: "Solve: 0.4 × n = 2.8", a: 0, opts: ["n = 7","n = 0.7","n = 1.12","n = 3.2"], hint: "Divide: 2.8 ÷ 0.4 = 28 ÷ 4 = 7. Check: 0.4 × 7 = 2.8. ✓ Trap: 1.12 multiplies instead." },
+      { q: "Solve: n − 3/4 = 1 1/2", a: 0, opts: ["n = 2 1/4","n = 3/4","n = 1 1/8","n = 1 1/4"], hint: "Undo subtracting by ADDING 3/4 to both sides: 1 1/2 + 3/4 = 1 2/4 + 3/4 = 2 1/4. Trap: 3/4 subtracts again." },
+      { q: "Which value from the set {−3, 0, 2, 5} makes 4 − x = 7 true?", a: 0, opts: ["−3","0","2","5"], hint: "Test each one: 4 − (−3) = 4 + 3 = 7. ✓ The others give 4, 2, and −1." },
+      { q: "Which set contains ONLY solutions of x < −1?", a: 0, opts: ["{−5, −3, −2}","{−1, −2, −3}","{0, −1, −2}","{−2, 0, 2}"], hint: "x < −1 means left of −1, NOT including −1. So −1 and 0 don't work." },
+      { q: "Sea turtle eggs need sand warmer than 25°C. Which inequality shows the temperatures t that work?", a: 0, opts: ["t > 25","t ≥ 25","t < 25","t ≤ 25"], hint: "\"Warmer than\" means more than, and exactly 25 is not warmer than 25. So use > (not ≥)." },
+      { q: "On a number line, x > −2 is shown with ___.", a: 0, opts: ["an open circle at −2, shaded right","a closed circle at −2, shaded right","an open circle at −2, shaded left","a closed circle at −2, shaded left"], hint: "> or < → open circle (−2 is not included). Greater → shade right, toward bigger numbers." }
+    ]
+  },
+  ratio_tables: {
+    title: "Ratio Tables & Word Problems", emoji: "📊", color: "#a855f7",
+    questions: [
+      { q: "To make a new column in a ratio table, you can ___.", a: 0, opts: ["multiply or divide both numbers by the same number","add the same number to both numbers","multiply only the top number","subtract the smaller number from the bigger"], hint: "Equivalent ratios scale by MULTIPLYING. Adding the same amount changes the ratio (2:3 is not the same as 4:5)." },
+      { q: "Lemonade ratio table. Mix: 3, 6, ?. Water: 8, 16, 40. What number is missing?", a: 0, opts: ["15","12","35","9"], hint: "8 × 5 = 40, so multiply the mix by 5 too: 3 × 5 = 15. Trap: 35 adds 32 to both instead of multiplying." },
+      { q: "Paint mix, blue : yellow : total = 2 : 5 : 7. If you use 15 cups of yellow, how many cups of paint is that in total?", a: 0, opts: ["21","17","22","35"], hint: "15 ÷ 5 = 3, so multiply every column by 3: blue 6, yellow 15, total 21." },
+      { q: "Julia's softball team won 3 games for every 2 games they lost. They played 25 games with no ties. How many did they win?", a: 0, opts: ["15","10","5","20"], hint: "3 + 2 = 5 parts in each group. 25 ÷ 5 = 5 groups. Wins = 3 × 5 = 15. Trap: 10 is the number of losses." },
+      { q: "A tape diagram shows boys as 4 equal boxes and girls as 5 equal boxes. There are 36 students in all. How many are girls?", a: 0, opts: ["20","16","9","45"], hint: "4 + 5 = 9 boxes. 36 ÷ 9 = 4 students per box. Girls = 5 boxes × 4 = 20." },
+      { q: "Shells to sand dollars is 7 : 3. Julia has 12 more shells than sand dollars. How many shells does she have?", a: 0, opts: ["21","28","9","84"], hint: "The difference is 7 − 3 = 4 parts = 12, so 1 part = 3. Shells = 7 × 3 = 21 (sand dollars = 9)." },
+      { q: "How many inches are in 3 1/2 feet?", a: 0, opts: ["42","35","38","45"], hint: "1 foot = 12 inches. 3 × 12 = 36, and 1/2 foot = 6 inches. 36 + 6 = 42. Trap: 35 uses 10 inches per foot." },
+      { q: "The school store sells punch in 1-cup servings. How many servings are in 2 1/2 gallons?", a: 0, opts: ["40","10","20","32"], hint: "1 gallon = 4 quarts = 16 cups. 2 1/2 × 16 = 40. Trap: 10 is quarts and 20 is pints, not cups." },
+      { q: "Store A: 4 granola bars for $3.00. Store B: 6 granola bars for $4.20. Which is the better buy per bar?", a: 0, opts: ["Store B, by $0.05 per bar","Store A, by $0.05 per bar","Store B, by $1.20 per bar","They cost the same per bar"], hint: "Unit prices: 3.00 ÷ 4 = $0.75 and 4.20 ÷ 6 = $0.70. Store B is $0.05 cheaper per bar." },
+      { q: "Julia bikes at a steady pace: 6 miles in 30 minutes. At that rate, how many minutes will 15 miles take?", a: 0, opts: ["75","39","90","45"], hint: "30 ÷ 6 = 5 minutes per mile. 15 × 5 = 75. Trap: 39 adds 9 to both numbers instead of scaling." }
+    ]
+  },
+  coordinate: {
+    title: "Coordinate Plane", emoji: "📍", color: "#0284c7",
+    questions: [
+      { q: "In which quadrant is the point (−3, 5)?", a: 0, opts: ["Quadrant II","Quadrant I","Quadrant III","Quadrant IV"], hint: "x is negative (left), y is positive (up): top-left = Quadrant II. Quadrants go counterclockwise from top-right." },
+      { q: "Where is the point (0, −4)?", a: 0, opts: ["on the y-axis","on the x-axis","in Quadrant III","at the origin"], hint: "x = 0 means you don't move left or right, so the point sits ON the y-axis, 4 units down." },
+      { q: "In which quadrant is the point (4, −7)?", a: 0, opts: ["Quadrant IV","Quadrant II","Quadrant III","Quadrant I"], hint: "Right 4 (positive x), down 7 (negative y): bottom-right = Quadrant IV." },
+      { q: "Point A is at (2, 6). Reflect it across the x-axis. Where does it land?", a: 0, opts: ["(2, −6)","(−2, 6)","(−2, −6)","(6, 2)"], hint: "Flipping over the x-axis changes up/down, so only the y-coordinate changes sign. Trap: (−2, 6) is the y-axis reflection." },
+      { q: "The points (−5, 3) and (5, 3) are reflections of each other across ___.", a: 0, opts: ["the y-axis","the x-axis","both axes","neither axis"], hint: "The x-coordinates are opposites and the y's match, so they are mirror images left and right of the y-axis." },
+      { q: "On a grid map of the beach, the lifeguard tower is at (3, 2) and the snack shack is at (3, 9). How many units apart are they?", a: 0, opts: ["7","11","5","12"], hint: "Same x, so it's a straight up-and-down distance: 9 − 2 = 7." },
+      { q: "What is the distance between (−4, 1) and (6, 1)?", a: 0, opts: ["10","2","5","−10"], hint: "Same y. The points are on opposite sides of the y-axis, so ADD distances: 4 + 6 = 10. Trap: 6 − 4 = 2. Distance is never negative." },
+      { q: "What is the distance between (−2, −3) and (−2, −8)?", a: 0, opts: ["5","11","−5","3"], hint: "Same x. Both y's are on the same side of 0, so subtract their sizes: 8 − 3 = 5." },
+      { q: "A rectangle has vertices (−3, 4), (5, 4), (5, −2), and (−3, −2). What is its perimeter?", a: 0, opts: ["28 units","48 units","14 units","24 units"], hint: "Width: −3 to 5 = 8. Height: −2 to 4 = 6. Perimeter = 8 + 6 + 8 + 6 = 28. Trap: 48 is the area." },
+      { q: "Three vertices of a rectangle are (−1, 2), (4, 2), and (4, −3). What is the fourth vertex?", a: 0, opts: ["(−1, −3)","(1, −3)","(−3, −1)","(4, 3)"], hint: "The missing corner shares an x with (−1, 2) and a y with (4, −3): (−1, −3)." }
+    ]
+  },
+  area_volume: {
+    title: "Area, Volume & Surface Area", emoji: "📦", color: "#d97706",
+    questions: [
+      { q: "Why is the area of a triangle ½ × base × height?", a: 0, opts: ["A triangle is half of a rectangle with the same base and height","A triangle has 3 sides, so you take half","The height of a triangle is always half the base","You add the 3 sides, then divide by 2"], hint: "Draw a diagonal across a rectangle: it makes 2 equal triangles. So each triangle is ½ of b × h." },
+      { q: "Volume measures ___.", a: 0, opts: ["the space inside a 3-D figure, in cubic units","the distance around a figure, in units","the flat space a figure covers, in square units","the total area of all faces, in square units"], hint: "Volume = how many unit cubes fill it (units³). Area = square units (units²). Perimeter = plain units." },
+      { q: "A triangle has a base of 10 cm and a height of 6 cm. What is its area?", a: 0, opts: ["30 cm²","60 cm²","16 cm²","32 cm²"], hint: "A = ½ × 10 × 6 = 30 cm². Trap: 60 forgets the ½." },
+      { q: "A parallelogram has a base of 12 in, a height of 5 in, and a slanted side of 7 in. What is its area?", a: 0, opts: ["60 in²","84 in²","30 in²","24 in²"], hint: "A = base × HEIGHT (the straight-up distance) = 12 × 5 = 60. Trap: 84 uses the slanted side." },
+      { q: "A rectangular prism is 4 ft by 3 ft by 1/2 ft. What is its volume?", a: 0, opts: ["6 ft³","12 ft³","7 1/2 ft³","24 ft³"], hint: "V = l × w × h = 4 × 3 × 1/2 = 12 × 1/2 = 6 ft³. Trap: 24 multiplies by 2 instead of 1/2." },
+      { q: "A beach cooler is a rectangular prism 1 1/2 ft long, 1 ft wide, and 1 1/2 ft tall. What is its volume?", a: 0, opts: ["2 1/4 ft³","4 ft³","1 1/4 ft³","3 ft³"], hint: "3/2 × 1 × 3/2 = 9/4 = 2 1/4 ft³. Trap: 4 adds the edges." },
+      { q: "A box has a volume of 30 cubic inches. It is 5 in long and 2.4 in wide. How tall is it?", a: 0, opts: ["2.5 in","6 in","22.6 in","360 in"], hint: "Base area = 5 × 2.4 = 12 in². Height = 30 ÷ 12 = 2.5 in. Check: 5 × 2.4 × 2.5 = 30." },
+      { q: "A house shape is a square 8 m on each side with a triangle on top (base 8 m, height 3 m). What is the total area?", a: 0, opts: ["76 m²","88 m²","40 m²","67 m²"], hint: "Square: 8 × 8 = 64. Triangle: ½ × 8 × 3 = 12. Total 64 + 12 = 76. Trap: 88 forgets the ½." },
+      { q: "Using a net, find the surface area of a rectangular prism that is 5 cm by 3 cm by 2 cm.", a: 0, opts: ["62 cm²","30 cm²","31 cm²","10 cm²"], hint: "The net has 3 pairs of faces: 2(5×3) + 2(5×2) + 2(3×2) = 30 + 20 + 12 = 62. Trap: 30 is the volume." },
+      { q: "A square pyramid's net has a square base 6 in on each side and 4 triangles, each with base 6 in and height 5 in. What is the surface area?", a: 0, opts: ["96 in²","156 in²","66 in²","51 in²"], hint: "Base: 6 × 6 = 36. Each triangle: ½ × 6 × 5 = 15, times 4 = 60. Total 36 + 60 = 96. Trap: 156 forgets the ½." }
+    ]
+  },
+  data: {
+    title: "Data & Statistics", emoji: "📈", color: "#10b981",
+    questions: [
+      { q: "Which is a STATISTICAL question?", a: 0, opts: ["How many minutes do 6th graders spend on homework each night?","How many minutes did I spend on homework last night?","What time does school start on Monday?","How many days are in October?"], hint: "A statistical question expects DIFFERENT answers (variability) from many people or times. The others have one answer." },
+      { q: "Which measure is the middle value when the data are in order?", a: 0, opts: ["median","mean","mode","range"], hint: "Median = middle (like the median in the middle of a road). Mean = average. Mode = most often. Range = max − min." },
+      { q: "Find the mean of 4, 8, 6, 10, 7.", a: 0, opts: ["7","6","8","6.5"], hint: "Add them: 4 + 8 + 6 + 10 + 7 = 35. Divide by how many (5): 35 ÷ 5 = 7." },
+      { q: "Find the median of 12, 5, 9, 15, 3, 8.", a: 0, opts: ["8.5","12","9","8 2/3"], hint: "Order first: 3, 5, 8, 9, 12, 15. Two middle numbers, 8 and 9, so the median is 8.5. Trap: 12 skips ordering, 8 2/3 is the mean." },
+      { q: "Julia's softball runs in 6 games: 3, 6, 2, 9, 4, 6. What is the range?", a: 0, opts: ["7","6","5","9"], hint: "Range = max − min = 9 − 2 = 7. Trap: 6 is the mode and 9 is just the max." },
+      { q: "Quiz scores: 88, 92, 85, 90, 20. Which measure best describes a typical score?", a: 0, opts: ["median, because 20 is an outlier","mean, because it uses every score","mode, because it is the most common","range, because it shows the spread"], hint: "The outlier 20 drags the mean down to 75. The median, 88, is not pulled by the outlier, so it shows a typical score better." },
+      { q: "Bags collected at a beach cleanup each day: 2, 3, 3, 4, 3. On Saturday the team collects 15 bags. What happens?", a: 0, opts: ["The mean goes from 3 to 5; the median stays 3","The median goes from 3 to 5; the mean stays 3","The mean and median both go up to 5","The mean and median both stay 3"], hint: "Mean: 15 ÷ 5 = 3, then 30 ÷ 6 = 5. Median: 2, 3, 3, 3, 4, 15 still has 3 in the middle. Outliers move the mean, not the median." },
+      { q: "A box plot shows minimum 10, Q1 15, median 20, Q3 28, maximum 40. What is the interquartile range (IQR)?", a: 0, opts: ["13","30","8","20"], hint: "IQR = Q3 − Q1 = 28 − 15 = 13 (the width of the box). Trap: 30 is the range (40 − 10)." },
+      { q: "A box plot of beach water temperatures has Q1 = 78 and Q3 = 86. About what fraction of the days had temperatures between 78 and 86?", a: 0, opts: ["1/2","1/4","3/4","1/3"], hint: "Each section of a box plot holds about 1/4 of the data. The box (Q1 to Q3) holds 2 sections = about 1/2." },
+      { q: "A histogram of ages at a beach has tall bars on the left and a long, low tail stretching to the right. The data are ___.", a: 0, opts: ["skewed right","skewed left","symmetric","uniform"], hint: "Skew is named for the direction the TAIL points. Tail to the right = skewed right." }
+    ]
+  }
+};
+const TIPS_G6MATH = {
+  fdp: [
+    { h:"Fraction → decimal → percent 🔄", p:"Fraction bar = divide: <b>3/8 = 3 ÷ 8 = 0.375</b>. Then move the decimal <b>2 places right</b> for a percent: <b>37.5%</b>." },
+    { h:"Decimal → fraction", p:"Read the place value: 0.36 = 36 <b>hundredths</b> = 36/100 = <b>9/25</b>. 0.008 = 8 <b>thousandths</b> = 8/1,000 = 1/125." },
+    { h:"Compare in one form ⚖️", p:"To compare 0.7, 2/3 and 68%, change them <b>all to decimals</b>. More digits does <b>not</b> mean bigger: 0.069 < 0.7." }
+  ],
+  frac_ops: [
+    { h:"Multiply: straight across 🍕", p:"<b>top × top, bottom × bottom</b>. Simplify (cross-cancel) first to keep numbers small. Never add the denominators." },
+    { h:"Divide: Keep, Change, Flip", p:"<b>Keep</b> the first, <b>change</b> ÷ to ×, <b>flip</b> the SECOND: 5/6 ÷ 2/3 = 5/6 × 3/2 = 1 1/4." },
+    { h:"Mixed numbers 🔁", p:"Change to <b>improper fractions first</b>: 2 1/2 = 5/2. Don't multiply the wholes and fractions separately." }
+  ],
+  dec_ops: [
+    { h:"Multiplying decimals ✖️", p:"Multiply like whole numbers, then <b>count the total decimal places</b> in both factors. 2.4 × 0.3 → 72 → <b>0.72</b>." },
+    { h:"Dividing decimals ➗", p:"Make the divisor whole: move <b>both</b> decimals the same number of places. 4.8 ÷ 0.06 → <b>480 ÷ 6 = 80</b>." },
+    { h:"Estimate to check 🎯", p:"$4.80 × 3.5 is about 5 × 3.5 = 17.5, so $16.80 makes sense, $168 does not." }
+  ],
+  number_line: [
+    { h:"Left is less 📏", p:"On a number line, numbers get <b>smaller to the left</b>. −6 < −2 even though 6 > 2." },
+    { h:"Absolute value = distance", p:"<b>|−9| = 9</b> means 9 steps from 0. Value vs size: −9 < 4, but |−9| > |4|." },
+    { h:"Zero is the reference 🌊", p:"Sea level, 0°, $0 balance: positives are above/gain, negatives are below/owe." }
+  ],
+  integers: [
+    { h:"Adding & subtracting ➕➖", p:"Same signs: add sizes, keep sign. Different signs: subtract sizes, keep the sign of the bigger size. <b>Subtracting a negative = adding</b>: 6 − (−8) = 14." },
+    { h:"Multiplying & dividing ✖️", p:"<b>Same signs → positive</b>, <b>different signs → negative</b>. Many factors? Odd number of negatives → negative." },
+    { h:"Zero rules 🚫", p:"<b>0 ÷ 9 = 0</b>, but <b>9 ÷ 0 is undefined</b>. You can't split into zero groups." }
+  ],
+  factors: [
+    { h:"Exponents 🧮", p:"<b>2⁵ = 2 × 2 × 2 × 2 × 2 = 32</b>, not 2 × 5. (1/2)³ = 1/8." },
+    { h:"GCF vs LCM", p:"<b>GCF</b> = biggest number that divides both (splitting into equal groups). <b>LCM</b> = smallest shared multiple (when things match up again)." },
+    { h:"Factor out the GCF", p:"24 + 36: GCF is 12, so <b>24 + 36 = 12(2 + 3)</b>. Prime factorization uses only primes: 72 = <b>2³ × 3²</b>." }
+  ],
+  expressions: [
+    { h:"PEMDAS 🧩", p:"<b>P</b>arentheses, <b>E</b>xponents, <b>M</b>ultiply/<b>D</b>ivide left to right, <b>A</b>dd/<b>S</b>ubtract left to right. 8 + 4 × 3 = <b>20</b>, not 36." },
+    { h:"Words → math", p:"\"5 <b>less than</b> n\" = <b>n − 5</b> (order flips!). \"sum of\" = +, \"product\" = ×, \"twice\" = 2×." },
+    { h:"Substitute carefully", p:"Put negatives in parentheses: if a = −3, then 2a = 2(−3) = −6. Distribute to <b>every</b> term: 4(2x − 3) = 8x − 12." }
+  ],
+  equations: [
+    { h:"Balance it ⚖️", p:"Undo with the <b>inverse</b> operation and do it to <b>both sides</b>. −6x = 42 → divide by −6 → <b>x = −7</b>." },
+    { h:"Always check ✅", p:"Plug your answer back in. x = −13 in x + 9 = −4: −13 + 9 = −4 ✓" },
+    { h:"Graphing inequalities", p:"<b>&lt; or &gt;</b>: open circle. <b>≤ or ≥</b>: closed circle. Greater → shade <b>right</b>, less → shade <b>left</b>." }
+  ],
+  ratio_tables: [
+    { h:"Scale by multiplying 📊", p:"In a ratio table, <b>multiply or divide both numbers</b> by the same number. Never add the same amount to both." },
+    { h:"Parts and wholes", p:"Ratio 3:2 → <b>5 total parts</b>. Total ÷ parts = one part. Tape diagrams show each part as a box." },
+    { h:"Conversions 📐", p:"1 ft = 12 in · 1 yd = 3 ft · 1 gal = 4 qt = 8 pt = 16 c · 1 lb = 16 oz. Multiply when going to a smaller unit." }
+  ],
+  coordinate: [
+    { h:"Quadrants 📍", p:"Start top-right, go counterclockwise: <b>I (+,+)</b>, <b>II (−,+)</b>, <b>III (−,−)</b>, <b>IV (+,−)</b>. A 0 means the point is on an axis." },
+    { h:"Reflections 🪞", p:"Across the <b>x-axis</b>: change the sign of <b>y</b>. Across the <b>y-axis</b>: change the sign of <b>x</b>." },
+    { h:"Distance on a line", p:"Same x or same y? Same side of 0: <b>subtract</b> sizes. Opposite sides: <b>add</b> sizes. (−4, 1) to (6, 1) = 4 + 6 = <b>10</b>." }
+  ],
+  area_volume: [
+    { h:"Area formulas 📐", p:"Rectangle/parallelogram: <b>A = b × h</b>. Triangle: <b>A = ½ × b × h</b>. Use the straight-up height, not the slanted side." },
+    { h:"Volume 📦", p:"<b>V = l × w × h</b> in cubic units. Fractions work the same: 4 × 3 × 1/2 = 6. Missing edge? Divide volume by the other two." },
+    { h:"Surface area with nets", p:"Add the area of <b>every face</b> in the net. Prism: 3 pairs of rectangles. Pyramid: base + 4 triangles." }
+  ],
+  data: [
+    { h:"Mean, median, mode, range 📈", p:"<b>Mean</b> = add ÷ count. <b>Median</b> = middle after ordering. <b>Mode</b> = most often. <b>Range</b> = max − min." },
+    { h:"Outliers 🚨", p:"An outlier pulls the <b>mean</b> a lot but barely moves the <b>median</b>. With an outlier, the median is the better \"typical\" value." },
+    { h:"Box plots", p:"5 numbers: min, Q1, median, Q3, max. Each section holds about <b>1/4</b> of the data. <b>IQR = Q3 − Q1</b>." }
+  ]
+};
+const G6MATH_KEY_ORDER = ["fdp","frac_ops","dec_ops","number_line","integers","factors","expressions","equations","ratio_tables","coordinate","area_volume","data"];
+const BOSSES_G6MATH = {
+  fdp: { emoji: "🔄", name: "Percent Shapeshifter" },
+  frac_ops: { emoji: "🍕", name: "Flip-Flop Fractionator" },
+  dec_ops: { emoji: "🔢", name: "Decimal Drifter" },
+  number_line: { emoji: "📏", name: "Absolute Zero" },
+  integers: { emoji: "➖", name: "Negative Nelly" },
+  factors: { emoji: "🧮", name: "Prime Minister" },
+  expressions: { emoji: "🧩", name: "PEMDAS Pirate" },
+  equations: { emoji: "⚖️", name: "Unbalanced Bandit" },
+  ratio_tables: { emoji: "📊", name: "Table Turner" },
+  coordinate: { emoji: "📍", name: "Quadrant Kraken" },
+  area_volume: { emoji: "📦", name: "Cube Crusher" },
+  data: { emoji: "📈", name: "Outlier Ogre" }
+};
+
+const QUIZ_G6SCI = {
+  practice: {
+    title: "Practice of Science", emoji: "🧪", color: "#0ea5e9",
+    questions: [
+      { q: "Julia tests whether fertilizer affects how tall bean plants grow. She gives four groups 0 g, 5 g, 10 g, and 15 g of fertilizer. What is the INDEPENDENT variable?", a: 0, opts: ["The amount of fertilizer","The height of the plants","The type of bean plant","The amount of water given"], hint: "The independent variable is the ONE thing the scientist changes on purpose. Julia chose the fertilizer amounts." },
+      { q: "In Julia's fertilizer experiment, what is the DEPENDENT variable?", a: 0, opts: ["The height of the plants","The amount of fertilizer","The size of the pots","The number of groups"], hint: "The dependent variable is what you MEASURE. It 'depends' on the change you made. She measures plant height." },
+      { q: "Which should Julia keep the SAME for every group (a controlled variable)?", a: 0, opts: ["Amount of water each plant gets","Amount of fertilizer each group gets","Final height of each plant","Number of leaves that grow"], hint: "Controlled variables stay the same so the test is fair. Fertilizer is what she changes, and height and leaves are results." },
+      { q: "Which group in Julia's experiment is the CONTROL group?", a: 0, opts: ["The group that gets 0 g of fertilizer","The group that gets 15 g of fertilizer","The group that grows the tallest","The group that gets 10 g of fertilizer"], hint: "The control group gets NO treatment. It gives you something normal to compare the other groups to." },
+      { q: "Which is the BEST hypothesis for Julia's experiment?", a: 0, opts: ["If plants get more fertilizer, then they will grow taller","Bean plants are the prettiest plants to grow","Fertilizer is a kind of food made for plants","Which bean plant will grow the tallest?"], hint: "A hypothesis is a testable prediction, often written 'If..., then...'. A question is not a hypothesis." },
+      { q: "Why should Julia use 10 plants in each group instead of just 1?", a: 0, opts: ["More trials make results more reliable","More plants prove the hypothesis is true","It lets her change more variables at once","It makes the experiment finish faster"], hint: "Repeated trials reduce the effect of one weird result or mistake. Trap: experiments never 'prove' a hypothesis for sure." },
+      { q: "Another class follows Julia's exact steps but gets very different results. What does this tell scientists?", a: 0, opts: ["The results need to be checked and tested again","Julia's results are now proven to be correct","The other class must have done it wrong","Experiments can never be repeated by others"], hint: "Good science is REPLICABLE: others should get similar results. Different results mean more testing is needed." },
+      { q: "A ball is dropped from different heights. 25 cm drop: 15 cm bounce. 50 cm drop: 30 cm bounce. 75 cm drop: 45 cm bounce. Predict the bounce for a 100 cm drop.", a: 0, opts: ["60 cm","50 cm","75 cm","100 cm"], hint: "Find the pattern in the table: each extra 25 cm of drop adds 15 cm of bounce. 45 + 15 = 60 cm." },
+      { q: "In a Claim-Evidence-Reasoning (CER) answer, what is the EVIDENCE?", a: 0, opts: ["The data or observations that support the claim","The one-sentence answer to the question","The science idea that explains why it works","Your personal opinion about the results"], hint: "Claim = your answer. Evidence = the data (numbers, observations). Reasoning = the science that connects them." },
+      { q: "A scientist counts manatees at Blue Spring every winter without changing anything. What kind of investigation is this?", a: 0, opts: ["An observational field study","A controlled experiment","A scientific law","A physical model"], hint: "In an experiment you change a variable on purpose. Just watching and recording in nature is an observation or field study." }
+    ]
+  },
+  theories: {
+    title: "Theories, Laws & Models", emoji: "📜", color: "#8b5cf6",
+    questions: [
+      { q: "In science, what is a THEORY?", a: 0, opts: ["A well-tested explanation backed by lots of evidence","A wild guess that one person made up","An idea that has never been tested","A rule of nature that can never change"], hint: "In everyday talk, 'theory' means a guess. In science, a theory is a strong explanation supported by many tests." },
+      { q: "What does a scientific LAW do?", a: 0, opts: ["Describes what happens in nature under certain conditions","Tells people what they are allowed to do","Explains a guess that has not been tested","Becomes a theory after many years"], hint: "A scientific law describes WHAT happens (often as a pattern or formula). It is not a rule made by a government." },
+      { q: "Can a scientific theory 'grow up' and become a law?", a: 0, opts: ["No, a theory explains why and a law describes what","Yes, after it has been around for 100 years","Yes, once it has been completely proven","Yes, if a famous scientist says it is true"], hint: "Theories and laws are different kinds of knowledge. Trap: a theory does not turn into a law with time or proof." },
+      { q: "Which is an example of a SCIENTIFIC law?", a: 0, opts: ["Law of Conservation of Energy","The cell theory","A 55 mph speed limit","The theory of plate tectonics"], hint: "Conservation of Energy, the Law of Gravity, and Newton's laws are scientific laws. A speed limit is a law made by people." },
+      { q: "Which question can be answered by science?", a: 0, opts: ["Does salt water boil at a higher temperature than fresh water?","What is the most beautiful color in the rainbow?","Is soccer a better sport than basketball?","Should everyone like the taste of pizza?"], hint: "Science answers questions you can TEST with evidence and measurements. Opinions and 'should' questions are not science." },
+      { q: "Why is astrology (using birth dates to predict personality) NOT considered science?", a: 0, opts: ["Its claims are not supported by testable evidence","It talks about stars and planets","It is a very old idea","Not enough people know about it"], hint: "Science must be testable and supported by evidence. When tested, astrology's predictions do not hold up." },
+      { q: "A globe is a model of Earth. What is one LIMITATION of a globe?", a: 0, opts: ["It is much smaller and leaves out many details","It shows where the continents and oceans are","It is round like the real Earth","It can spin like the real Earth"], hint: "Models help us study things, but every model has limits. A globe can't show every road, river, or mountain." },
+      { q: "Why do scientists use MODELS?", a: 0, opts: ["To study things too big, small, or far to see directly","Because models are always perfectly accurate","So they never have to do experiments again","Because real objects are not important"], hint: "Cell models, globes, and weather maps help us see things we can't easily observe. No model is perfect." },
+      { q: "The cell theory has been updated as microscopes improved. Why does scientific knowledge change?", a: 0, opts: ["New evidence and better tools lead to new ideas","Scientists get bored with the old ideas","Older scientists were always wrong","The laws of nature change every year"], hint: "Science is strong BECAUSE it can change when new evidence appears. That's how knowledge gets better." },
+      { q: "Who can be a scientist?", a: 0, opts: ["People of any background who use evidence to ask and answer questions","Only people who work in a laboratory in a white coat","Only people who are geniuses at math","Only people who live in big cities"], hint: "Scientists come from every background, country, and gender, with all kinds of talents and interests." }
+    ]
+  },
+  organization: {
+    title: "Levels & Cell Theory History", emoji: "🪜", color: "#14b8a6",
+    questions: [
+      { q: "The heart is made of muscle tissue, nerve tissue, and connective tissue working together. The heart is an example of ___.", a: 0, opts: ["An organ","A tissue","An organ system","A cell"], hint: "Different tissues working together for one job form an ORGAN. The heart's job is pumping blood." },
+      { q: "The heart, blood vessels, and blood work together to move materials around the body. This is an example of ___.", a: 0, opts: ["An organ system","An organ","A tissue","An organism"], hint: "Several organs working together form an ORGAN SYSTEM. This one is the circulatory system." },
+      { q: "Which level is MORE complex than an organ but LESS complex than an organism?", a: 0, opts: ["Organ system","Tissue","Cell","Molecule"], hint: "Cell → tissue → organ → organ system → organism." },
+      { q: "In the full list from atoms up to organisms, which level comes between ATOMS and CELLS?", a: 0, opts: ["Molecules","Tissues","Organs","Organ systems"], hint: "Atoms → molecules → cells → tissues → organs → organ systems → organisms. Atoms join to make molecules." },
+      { q: "An amoeba is a one-celled organism. Which levels of organization does it NOT have?", a: 0, opts: ["Tissues, organs, and organ systems","Cells","Molecules and atoms","A cell membrane"], hint: "A unicellular organism is just one cell. It needs many cells to have tissues and organs." },
+      { q: "Which scientist concluded that all PLANTS are made of cells?", a: 0, opts: ["Matthias Schleiden","Theodor Schwann","Rudolf Virchow","Robert Hooke"], hint: "Schleiden studied plants (1838). Schwann did the same for animals a year later." },
+      { q: "Which scientist concluded that all ANIMALS are made of cells?", a: 0, opts: ["Theodor Schwann","Matthias Schleiden","Rudolf Virchow","Anton van Leeuwenhoek"], hint: "Schwann studied animals (1839). Memory trick: a swan is an animal, Schwann = animals." },
+      { q: "Which scientist said that all cells come from pre-existing cells?", a: 0, opts: ["Rudolf Virchow","Robert Hooke","Matthias Schleiden","Theodor Schwann"], hint: "Virchow (1855) completed the cell theory: cells only come from other cells, not from nonliving things." },
+      { q: "Why couldn't anyone discover cells before the 1600s?", a: 0, opts: ["Microscopes had not been invented yet","Cells did not exist before then","Scientists were not allowed to study life","Cells were too big to notice"], hint: "Most cells are too small to see with your eyes alone. Better tools led to new discoveries." },
+      { q: "Which shows the correct ORDER of discoveries that built the cell theory?", a: 0, opts: ["Hooke, then Schleiden and Schwann, then Virchow","Virchow, then Hooke, then Schleiden and Schwann","Schleiden and Schwann, then Virchow, then Hooke","Hooke, then Virchow, then Schleiden and Schwann"], hint: "Hooke named cells (1665). Schleiden and Schwann (1838 to 1839) said plants and animals are made of cells. Virchow (1855) said cells come from cells." }
+    ]
+  },
+  homeostasis: {
+    title: "Cell Processes & Homeostasis", emoji: "⚖️", color: "#f43f5e",
+    questions: [
+      { q: "What is HOMEOSTASIS?", a: 0, opts: ["Keeping a stable balance inside even when the outside changes","Growing a little bigger every single day","Changing body temperature to match the air outside","Making food using energy from sunlight"], hint: "Homeo = same, stasis = standing still. Your body keeps temperature, water, and sugar levels balanced." },
+      { q: "On a hot July day in Florida, you start to sweat. How does sweating help homeostasis?", a: 0, opts: ["Sweat evaporates and cools your body down","Sweat adds extra water to your blood","Sweat warms up your skin","Sweat makes your heart beat slower"], hint: "When sweat evaporates, it carries heat away from your skin, keeping your body near 37°C (98.6°F)." },
+      { q: "When you are very cold, you start to shiver. Why?", a: 0, opts: ["Your muscles move quickly to make heat","Your body is letting heat escape","Your skin is soaking up heat from the air","Your blood stops moving to save energy"], hint: "Shivering is fast muscle movement. Moving muscles release heat that warms you up." },
+      { q: "Someone sprays air freshener in one corner of a room. Soon you can smell it across the room. Which process is this?", a: 0, opts: ["Diffusion","Osmosis","Active transport","Photosynthesis"], hint: "Particles spread from where they are crowded to where they are less crowded. That's diffusion, and it needs no energy." },
+      { q: "A dried raisin is placed in a glass of fresh water overnight. In the morning it is plump and swollen. Why?", a: 0, opts: ["Water moved into the raisin by osmosis","Sugar moved into the raisin from the water","The raisin used energy to pump water in","Air bubbles got trapped inside the raisin"], hint: "Osmosis is the diffusion of WATER across a membrane. Water moved toward the side with less water (inside the raisin)." },
+      { q: "Root cells take in minerals that are already MORE concentrated inside the root than in the soil. How do they do it?", a: 0, opts: ["Active transport, which uses the cell's energy","Diffusion, which uses no energy","Osmosis, which moves only water","Passive transport, which uses no energy"], hint: "Moving materials from low to high concentration is 'uphill', so the cell must spend energy." },
+      { q: "Which life process do ALL cells carry out to stay alive?", a: 0, opts: ["Getting energy and removing wastes","Making food from sunlight","Building a stiff cell wall","Swimming with a flagellum"], hint: "All cells need energy and must get rid of wastes. Trap: only some cells (like plant cells) do photosynthesis." },
+      { q: "After running a lap, you breathe faster and your heart beats faster. Why?", a: 0, opts: ["To bring more oxygen to cells and remove carbon dioxide","To cool down your lungs","To make your blood thicker","To help your muscles use less energy"], hint: "Working muscles need more oxygen to release energy from food. Your body speeds up to keep things balanced." },
+      { q: "You feel very thirsty after playing outside all afternoon. What is thirst?", a: 0, opts: ["Your body's signal to replace lost water","A sign that your cells have too much water","A result of eating too much sugar","A signal that you need more oxygen"], hint: "Thirst is a homeostasis signal. You lost water by sweating, so your body tells you to drink." },
+      { q: "Drops of food coloring spread faster in hot water than in cold water. Why?", a: 0, opts: ["Particles move faster when warmer, so diffusion speeds up","Hot water has fewer particles in it","Cold water blocks the food coloring","Food coloring gets heavier in hot water"], hint: "Higher temperature means faster-moving particles, so they spread out (diffuse) more quickly." }
+    ]
+  },
+  body_systems: {
+    title: "Human Body Systems", emoji: "🫀", color: "#ef4444",
+    questions: [
+      { q: "Which body system breaks food down into nutrients your cells can use?", a: 0, opts: ["Digestive system","Circulatory system","Respiratory system","Excretory system"], hint: "Mouth, esophagus, stomach, small intestine, large intestine. Most nutrients are absorbed in the small intestine." },
+      { q: "Nutrients from your small intestine pass into your blood. Which system then carries them to every cell?", a: 0, opts: ["Circulatory system","Skeletal system","Respiratory system","Nervous system"], hint: "The heart pumps blood through blood vessels, delivering nutrients and oxygen to all your cells." },
+      { q: "Where does oxygen move from the air into your blood?", a: 0, opts: ["Tiny air sacs (alveoli) in the lungs","The lining of the stomach","The chambers of the heart","The filters in the kidneys"], hint: "Alveoli are wrapped in tiny blood vessels. Oxygen diffuses into the blood, and carbon dioxide moves out." },
+      { q: "Which system sends fast electrical messages between your brain and body?", a: 0, opts: ["Nervous system","Endocrine system","Muscular system","Excretory system"], hint: "Brain, spinal cord, and nerves. The endocrine system also sends messages, but with slower chemical hormones." },
+      { q: "Which system uses HORMONES to control growth and other body activities?", a: 0, opts: ["Endocrine system","Nervous system","Digestive system","Skeletal system"], hint: "Glands release hormones (chemical messengers) into the blood." },
+      { q: "Your kidneys filter wastes out of your blood and make urine. Which system is this?", a: 0, opts: ["Excretory system","Digestive system","Respiratory system","Immune system"], hint: "The excretory system removes wastes. Kidneys, bladder, and skin (sweat) are part of it." },
+      { q: "You touch a hot pan and quickly pull your hand away. Which two systems work together most directly?", a: 0, opts: ["Nervous and muscular","Digestive and excretory","Respiratory and immune","Endocrine and digestive"], hint: "Nerves sense the heat and send a signal. Muscles move your hand away." },
+      { q: "How do the respiratory and circulatory systems work together?", a: 0, opts: ["The lungs take in oxygen and the blood carries it to cells","The heart breaks down food so the lungs can use it","The lungs pump blood through the arteries","The blood makes oxygen for the lungs"], hint: "Lungs get oxygen in, blood delivers it. Blood brings carbon dioxide back to the lungs to breathe out." },
+      { q: "What does the SKELETAL system do?", a: 0, opts: ["Supports the body, protects organs, and makes blood cells","Sends electric signals from the brain to the toes","Breaks food into nutrients for the body","Removes liquid waste from the blood"], hint: "Bones hold you up, the skull protects your brain, and bone marrow makes blood cells." },
+      { q: "Which system works with the skeletal system so you can walk and run?", a: 0, opts: ["Muscular system","Digestive system","Endocrine system","Excretory system"], hint: "Muscles pull on bones to move them. Together they are sometimes called the musculoskeletal system." }
+    ]
+  },
+  classification: {
+    title: "Classification", emoji: "🗂️", color: "#22c55e",
+    questions: [
+      { q: "What are the THREE domains of life?", a: 0, opts: ["Bacteria, Archaea, Eukarya","Plants, Animals, Fungi","Bacteria, Protists, Viruses","Kingdom, Phylum, Class"], hint: "Domains are the biggest groups. Eukarya includes everything with a nucleus: protists, fungi, plants, animals." },
+      { q: "Which list shows the SIX kingdoms?", a: 0, opts: ["Archaebacteria, Eubacteria, Protists, Fungi, Plants, Animals","Viruses, Bacteria, Protists, Fungi, Plants, Animals","Bacteria, Archaea, Eukarya, Plants, Animals, Fungi","Protists, Fungi, Plants, Animals, Insects, Viruses"], hint: "Viruses are NOT in any kingdom because they are not cells. Insects are part of the animal kingdom." },
+      { q: "Who created the two-part naming system (binomial nomenclature) used for living things?", a: 0, opts: ["Carl Linnaeus","Charles Darwin","Robert Hooke","Gregor Mendel"], hint: "Linnaeus (1700s) gave every species a two-part Latin name." },
+      { q: "The scientific name for humans is Homo sapiens. What does the FIRST word, Homo, tell you?", a: 0, opts: ["The genus","The species","The kingdom","The family"], hint: "Binomial = two names: Genus + species. The genus is always written first and capitalized." },
+      { q: "Which shows the American alligator's scientific name written correctly?", a: 0, opts: ["Alligator mississippiensis","alligator Mississippiensis","Alligator Mississippiensis","alligator mississippiensis"], hint: "Capitalize the genus, lowercase the species, and write it in italics (or underline it by hand)." },
+      { q: "Which shows the levels of classification from LARGEST to SMALLEST?", a: 0, opts: ["Domain, Kingdom, Phylum, Class, Order, Family, Genus, Species","Kingdom, Domain, Class, Phylum, Order, Genus, Family, Species","Species, Genus, Family, Order, Class, Phylum, Kingdom, Domain","Domain, Kingdom, Class, Phylum, Family, Order, Genus, Species"], hint: "'Dear King Philip Came Over For Good Soup.' Species is the smallest group, with the most similar organisms." },
+      { q: "The Florida panther is also called a cougar, puma, or mountain lion. Why do scientists use ONE scientific name?", a: 0, opts: ["So everyone in the world uses the same name for it","Because scientific names are shorter to say","Because common names are against the rules","Because scientific names change every year"], hint: "Common names change by place and language. A scientific name (Puma concolor) means the same thing everywhere." },
+      { q: "An organism is single-celled, has no nucleus, and lives in extremely hot springs. Which group does it most likely belong to?", a: 0, opts: ["Archaea","Fungi","Protists","Animals"], hint: "Archaea are prokaryotes (no nucleus) famous for living in extreme places. Fungi, protists, and animals all have a nucleus." },
+      { q: "Use this key. 1a: Has fur, go to 2. 1b: No fur, go to 3. 2a: Long flat tail = beaver. 2b: Ringed tail = raccoon. 3a: Has a shell = gopher tortoise. 3b: No shell = green anole. An animal has NO fur and NO shell. What is it?", a: 0, opts: ["Green anole","Gopher tortoise","Raccoon","Beaver"], hint: "A dichotomous key gives two choices at each step. No fur → step 3. No shell → green anole." },
+      { q: "A dolphin lives in the ocean like a fish, but it is classified as a mammal. Why?", a: 0, opts: ["It breathes air, has some hair, and feeds its babies milk","It lives in salt water and swims with fins","It is larger than most fish in the ocean","It eats fish and other sea animals"], hint: "Organisms are classified by shared characteristics (body structures, DNA), not by where they live." }
+    ]
+  },
+  weathering: {
+    title: "Weathering, Erosion & Deposition", emoji: "🏝️", color: "#d97706",
+    questions: [
+      { q: "What is the difference between WEATHERING and EROSION?", a: 0, opts: ["Weathering breaks rock down; erosion moves the pieces away","They are two names for the very same process","Erosion breaks rock down; weathering moves the pieces","Weathering builds up land; erosion makes mountains"], hint: "Weathering = breaking. Erosion = moving (by water, wind, ice, or gravity). Deposition = dropping." },
+      { q: "A river slows down as it reaches the ocean and drops its sand and mud. What is this called?", a: 0, opts: ["Deposition","Weathering","Erosion","Condensation"], hint: "Deposition is when moving water, wind, or ice drops sediment in a new place. It builds land, like deltas." },
+      { q: "Tree roots grow into a crack in a sidewalk and break it apart. What type of weathering is this?", a: 0, opts: ["Physical (mechanical) weathering","Chemical weathering","Deposition","Erosion by wind"], hint: "Physical weathering breaks rock into smaller pieces without changing what it is made of." },
+      { q: "Slightly acidic rainwater slowly dissolves Florida's limestone. What is this?", a: 0, opts: ["Chemical weathering","Physical weathering","Deposition","Erosion by wind"], hint: "Chemical weathering changes the rock's makeup, like acid dissolving limestone or iron rusting." },
+      { q: "How do most sinkholes form in Florida?", a: 0, opts: ["Underground limestone dissolves and the ground above collapses","Strong earthquakes crack open the ground","Meteorites crash into the ground","Small volcanoes erupt under the soil"], hint: "Acidic groundwater dissolves limestone and makes empty spaces. When the roof gets too weak, it caves in." },
+      { q: "Land with sinkholes, underground caves, and springs formed by dissolving limestone is called ___.", a: 0, opts: ["Karst","A delta","A glacier valley","A volcanic plateau"], hint: "Much of Florida is karst. Limestone dissolves easily in slightly acidic water." },
+      { q: "Where does the water in Florida's freshwater springs come from?", a: 0, opts: ["Underground water from the Floridan aquifer","Melting snow from nearby mountains","Ocean water pushed in by the tides","Water heated by a volcano below"], hint: "Rainwater soaks into the ground and flows through limestone in the aquifer, then bubbles up at springs." },
+      { q: "Florida's barrier islands, like Miami Beach, are formed mainly by ___.", a: 0, opts: ["Waves and currents depositing sand","Volcanoes erupting under the sea","Glaciers pushing rocks into piles","Earthquakes lifting up the seafloor"], hint: "Barrier islands are long, sandy islands built by deposition. Storms and hurricanes also erode them." },
+      { q: "Sand dunes along Florida beaches are built up mostly by which agent?", a: 0, opts: ["Wind","Glaciers","Earthquakes","Volcanoes"], hint: "Wind carries sand and drops it in piles. Sea oats help hold dunes in place." },
+      { q: "Students put chalk in vinegar and see it fizz and shrink. Chalk in plain water does not change. What does this model?", a: 0, opts: ["Chemical weathering of limestone by acid","Physical weathering caused by ice","Deposition of sand by waves","Erosion caused by strong wind"], hint: "Chalk and limestone are made of the same mineral. Acid reacts with it, a chemical change." }
+    ]
+  },
+  atmosphere: {
+    title: "Earth's Spheres & Heat", emoji: "🌍", color: "#3b82f6",
+    questions: [
+      { q: "Oceans, lakes, rivers, and groundwater are all part of which sphere?", a: 0, opts: ["Hydrosphere","Geosphere","Atmosphere","Biosphere"], hint: "Hydro = water. Geosphere = rock and soil. Atmosphere = air. Biosphere = living things. (Ice is the cryosphere.)" },
+      { q: "Waves crash against rocky shore cliffs and slowly break them down. Which two spheres are interacting?", a: 0, opts: ["Hydrosphere and geosphere","Biosphere and atmosphere","Atmosphere and cryosphere","Biosphere and geosphere"], hint: "Ocean water (hydrosphere) is wearing away rock (geosphere)." },
+      { q: "Sawgrass in the Everglades takes in carbon dioxide from the air. Which two spheres are interacting?", a: 0, opts: ["Biosphere and atmosphere","Geosphere and hydrosphere","Hydrosphere and cryosphere","Geosphere and atmosphere"], hint: "Plants are living (biosphere), and carbon dioxide is a gas in the air (atmosphere)." },
+      { q: "In which layer of the atmosphere does almost all weather happen?", a: 0, opts: ["Troposphere","Stratosphere","Mesosphere","Thermosphere"], hint: "The troposphere is the lowest layer, where we live. It has most of the air and water vapor." },
+      { q: "How does the ozone layer protect life on Earth?", a: 0, opts: ["It absorbs harmful ultraviolet (UV) rays","It makes most of the rain that falls","It stores the oxygen we breathe","It burns up falling meteors"], hint: "The ozone layer is in the stratosphere. Meteors mostly burn up higher, in the mesosphere." },
+      { q: "You stand in the sunshine and feel your face get warm. How did the heat travel?", a: 0, opts: ["Radiation","Conduction","Convection","Evaporation"], hint: "Radiation moves energy as waves and can even travel through empty space, from the Sun to Earth." },
+      { q: "You sit on a hot metal bench at the park and it burns your legs. How did the heat travel?", a: 0, opts: ["Conduction","Radiation","Convection","Condensation"], hint: "Conduction is heat moving by direct TOUCH. Heat flows from the hotter object to the cooler one." },
+      { q: "Warm air rises, cools, then sinks again in a loop. What is this type of heat transfer?", a: 0, opts: ["Convection","Conduction","Radiation","Precipitation"], hint: "Convection happens in liquids and gases. Warm, less dense fluid rises and cool, denser fluid sinks." },
+      { q: "On a sunny afternoon at a Florida beach, the wind blows from the ocean toward the land. Why?", a: 0, opts: ["Land heats faster, warm air rises, and cool sea air moves in","Water heats faster than land during the day","Ocean waves push the air toward the beach","The Moon pulls the air toward the land"], hint: "This is a SEA breeze. At night land cools faster, so a land breeze blows toward the sea. Sea breezes help cause Florida's afternoon storms." },
+      { q: "Water vapor cools high in the sky and forms tiny droplets that make clouds. What is this step of the water cycle?", a: 0, opts: ["Condensation","Evaporation","Precipitation","Transpiration"], hint: "Evaporation: liquid to gas. Condensation: gas to liquid (clouds). Precipitation: rain falls. The Sun powers the cycle." }
+    ]
+  },
+  weather: {
+    title: "Weather & Climate", emoji: "🌀", color: "#6366f1",
+    questions: [
+      { q: "Which statement describes CLIMATE, not weather?", a: 0, opts: ["South Florida is usually hot and humid with rainy summers","It is raining in Tampa right now","A cold front will arrive tomorrow morning","It was windy at recess today"], hint: "Weather = short-term (today, this week). Climate = the average pattern over many years." },
+      { q: "One January day in Orlando is unusually cold. Someone says, 'So much for Florida having a warm climate!' What is wrong with this?", a: 0, opts: ["One day of weather does not change a long-term climate","Climate is a different thing each day","Weather and climate mean the same thing","Florida actually has a cold climate"], hint: "Trap: weather is not climate. Climate is measured over about 30 years, so one cold day doesn't change it." },
+      { q: "What kind of air mass forms over warm tropical ocean water near Florida?", a: 0, opts: ["Warm and humid","Cold and dry","Warm and dry","Cold and humid"], hint: "Air masses take on the traits of where they form. Over warm water = warm and moist (maritime tropical)." },
+      { q: "When a cold front passes through Florida, what usually happens?", a: 0, opts: ["Storms, then cooler and drier air","Weeks of hot, sunny weather","Snow falls every time","Higher humidity and warmer nights"], hint: "The cold air pushes under the warm air and lifts it, forming storms. Afterward, cooler, drier air arrives." },
+      { q: "A barometer shows the air pressure is falling quickly. What weather is most likely coming?", a: 0, opts: ["Clouds and stormy weather","Clear and sunny skies","Calm, dry air for days","No change in the weather"], hint: "Remember: LOW pressure, LOUSY weather. High pressure usually brings clear skies." },
+      { q: "What is HUMIDITY?", a: 0, opts: ["The amount of water vapor in the air","How hot or cold the air is","How fast the wind is blowing","How hard the air presses down"], hint: "Florida summers feel sticky because the humidity is high." },
+      { q: "Where do hurricanes form?", a: 0, opts: ["Over warm ocean water","Over cold ocean water","Over dry deserts","Over snowy mountains"], hint: "Warm ocean water (about 27°C or 80°F and up) is a hurricane's fuel. They weaken after moving over land." },
+      { q: "The Gulf Stream is a warm ocean current flowing past Florida's east coast. How does it affect nearby weather?", a: 0, opts: ["It brings warmer temperatures and moisture","It makes nearby areas colder and drier","It has no effect on weather at all","It causes earthquakes along the coast"], hint: "Ocean currents move heat around the planet. Warm currents warm nearby land and add moisture to the air." },
+      { q: "Thunder is rumbling during a soccer game. What is the SAFEST place to go?", a: 0, opts: ["Inside a sturdy building or hard-top car","Under a tall tree for cover","Into the swimming pool","Lying flat in the middle of the field"], hint: "'When thunder roars, go indoors!' Florida has more lightning than almost any other state. Trees attract lightning." },
+      { q: "A hurricane warning is issued for your town. What should your family do?", a: 0, opts: ["Follow evacuation orders and have a supply kit ready","Go to the beach to watch the big waves","Open the windows to let the pressure out","Drive through flooded roads to get home"], hint: "Have water, food, flashlights, and medicine ready. Never drive through floodwater: 'Turn around, don't drown.'" }
+    ]
+  },
+  energy: {
+    title: "Kinetic & Potential Energy", emoji: "🎢", color: "#f59e0b",
+    questions: [
+      { q: "What is KINETIC energy?", a: 0, opts: ["Energy of motion","Energy stored by position","Energy only from heat","Energy only from light"], hint: "Anything that is moving has kinetic energy. More mass or more speed means more kinetic energy." },
+      { q: "A book is resting on a high shelf. What type of energy does it have?", a: 0, opts: ["Potential energy (stored because of its height)","Kinetic energy (because it is moving)","No energy, because it is not moving","Sound energy, because it can fall"], hint: "Trap: still objects CAN have energy. Height gives gravitational potential energy." },
+      { q: "Where does a roller coaster have the MOST potential energy?", a: 0, opts: ["At the top of the highest hill","At the bottom of the first drop","Halfway down the first hill","On the flat track at the end"], hint: "Higher = more potential energy. That's why the first hill is the tallest." },
+      { q: "Where does a roller coaster have the MOST kinetic energy?", a: 0, opts: ["At the bottom of the biggest drop","At the top of the highest hill","While waiting at the station","At the top of the second hill"], hint: "At the bottom, most of the potential energy has changed into kinetic energy, so it is moving fastest." },
+      { q: "As a roller coaster rolls DOWN a hill, what energy change happens?", a: 0, opts: ["Potential energy changes into kinetic energy","Kinetic energy changes into potential energy","Energy is destroyed as it goes down","New energy is created by the track"], hint: "Going down: PE → KE. Going up: KE → PE. Energy changes form but is not created or destroyed." },
+      { q: "A pendulum swings back and forth. At the very HIGHEST point of its swing, what is true?", a: 0, opts: ["It has the most potential and least kinetic energy","It has the most kinetic and least potential energy","It has equal kinetic and potential energy","It has no energy of any kind"], hint: "At the top it stops for an instant (least KE) and is highest (most PE). At the bottom it moves fastest." },
+      { q: "What does the Law of Conservation of Energy say?", a: 0, opts: ["Energy cannot be created or destroyed, only changed","Energy gets used up and disappears over time","Energy is created whenever something moves","Energy can only exist as heat and light"], hint: "Energy just changes form: potential to kinetic, kinetic to heat and sound, and so on." },
+      { q: "A bowling ball and a soccer ball roll at the SAME speed. Which has more kinetic energy?", a: 0, opts: ["The bowling ball, because it has more mass","The soccer ball, because it is lighter","They have the same kinetic energy","Neither ball has kinetic energy"], hint: "Kinetic energy depends on mass AND speed. Same speed, more mass = more kinetic energy." },
+      { q: "A bouncing ball goes a little lower after each bounce. Where did the 'missing' energy go?", a: 0, opts: ["It changed into heat and sound","It was destroyed when the ball hit","It was used up and disappeared","Gravity took the energy away"], hint: "Energy is never destroyed. Each bounce changes some energy into thermal energy and sound." },
+      { q: "The same rock sits on a 10 m cliff or on a 2 m ledge. Where does it have more potential energy?", a: 0, opts: ["On the 10 m cliff","On the 2 m ledge","The same in both places","Neither place, it is not moving"], hint: "Same mass, greater height = more gravitational potential energy." }
+    ]
+  },
+  motion: {
+    title: "Speed & Motion Graphs", emoji: "🏃", color: "#10b981",
+    questions: [
+      { q: "What is the formula for speed?", a: 0, opts: ["Speed = distance ÷ time","Speed = time ÷ distance","Speed = distance × time","Speed = distance + time"], hint: "Think of units: kilometers per hour (km/h) means kilometers ÷ hours." },
+      { q: "A car travels 120 km in 2 hours. What is its average speed?", a: 0, opts: ["60 km/h","240 km/h","122 km/h","118 km/h"], hint: "120 km ÷ 2 h = 60 km/h." },
+      { q: "Julia rides her bike 300 meters in 60 seconds. What is her speed?", a: 0, opts: ["5 m/s","360 m/s","18,000 m/s","0.2 m/s"], hint: "300 m ÷ 60 s = 5 m/s. Trap: don't divide time by distance (that gives 0.2)." },
+      { q: "How is VELOCITY different from speed?", a: 0, opts: ["Velocity includes speed and direction","Velocity is exactly the same as speed","Velocity is only the direction of motion","Velocity is the total distance traveled"], hint: "Speed: 30 km/h. Velocity: 30 km/h NORTH." },
+      { q: "Which of these is a VELOCITY?", a: 0, opts: ["50 km/h heading north","50 km/h","50 km","Heading north"], hint: "A velocity needs both a speed (number and units) and a direction." },
+      { q: "On a distance-time graph, what does a FLAT horizontal line mean?", a: 0, opts: ["The object is not moving","The object moves at a constant speed","The object is speeding up","The object is moving very fast"], hint: "Time keeps going, but distance stays the same. So the object is stopped." },
+      { q: "Two runners are shown on the same distance-time graph. Runner A's line is steeper than Runner B's. What does this mean?", a: 0, opts: ["Runner A is faster","Runner B is faster","Both are running at the same speed","Runner A is stopped"], hint: "Steeper line = more distance in the same time = faster. The slope of the line is the speed." },
+      { q: "On a distance-time graph, what does a straight diagonal line going up mean?", a: 0, opts: ["The object moves at a constant speed","The object is speeding up","The object is not moving","The object is slowing down"], hint: "A straight line has the same steepness everywhere, so the speed never changes. A curve means changing speed." },
+      { q: "A distance-time graph shows a runner at 0 m at 0 s, 20 m at 4 s, and 40 m at 8 s. What is the runner's speed?", a: 0, opts: ["5 m/s","20 m/s","80 m/s","4 m/s"], hint: "Pick a point: 20 m ÷ 4 s = 5 m/s. Check: 40 m ÷ 8 s = 5 m/s." },
+      { q: "A boat in the Everglades travels at 8 km/h. How long will it take to go 24 km?", a: 0, opts: ["3 hours","192 hours","16 hours","32 hours"], hint: "Time = distance ÷ speed. 24 km ÷ 8 km/h = 3 h." }
+    ]
+  },
+  forces: {
+    title: "Forces & Gravity", emoji: "🧲", color: "#ec4899",
+    questions: [
+      { q: "What is a FORCE?", a: 0, opts: ["A push or a pull","Only a push","Stored energy","A type of matter"], hint: "Forces are pushes or pulls. They are measured in newtons (N)." },
+      { q: "Two teams pull on a rope with exactly the same force. What happens?", a: 0, opts: ["The rope does not move, the forces are balanced","The rope moves toward the team on the left","The rope speeds up in both directions","The rope always snaps in the middle"], hint: "Balanced forces cancel out, so motion does not change. Equal and opposite = no movement here." },
+      { q: "What does an UNBALANCED force do to an object?", a: 0, opts: ["Changes its speed, its direction, or both","Nothing, the object stays the same","Only makes the object stop","Keeps it at exactly the same speed"], hint: "Unbalanced forces change motion: starting, stopping, speeding up, slowing down, or turning." },
+      { q: "A hockey puck slides across the ice and slowly comes to a stop. Why does it stop?", a: 0, opts: ["Friction from the ice slows it down","It runs out of the force from the hit","The push inside the puck gets used up","Gravity pushes it backward"], hint: "Trap: moving things do NOT need a constant push to keep moving. They stop because friction acts on them." },
+      { q: "Friction acts in which direction?", a: 0, opts: ["Opposite to the direction of motion","The same direction as the motion","Straight up, away from the ground","Always toward the north"], hint: "Friction resists motion between surfaces that touch. Rough surfaces make more friction than smooth ones." },
+      { q: "What does the strength of gravity between two objects depend on?", a: 0, opts: ["Their masses and the distance between them","Only how big the objects look","Only how fast the objects are moving","Whether the objects are touching"], hint: "More mass = stronger pull. More distance = weaker pull. Gravity is a force that acts at a distance." },
+      { q: "Two objects move farther apart. What happens to the gravity between them?", a: 0, opts: ["It gets weaker","It gets stronger","It stays the same","It disappears completely"], hint: "Gravity weakens with distance but never fully disappears." },
+      { q: "An astronaut has a mass of 60 kg on Earth. What happens on the Moon?", a: 0, opts: ["Mass stays 60 kg, but weight is less","Both mass and weight get smaller","Mass gets smaller, but weight stays the same","Both mass and weight stay the same"], hint: "Mass = amount of matter (same everywhere). Weight = pull of gravity. The Moon's gravity is weaker. Trap: mass is not weight." },
+      { q: "A bowling ball and a tennis ball are dropped at the same time from the same height. Ignoring air resistance, which lands first?", a: 0, opts: ["They land at the same time","The bowling ball lands first","The tennis ball lands first","Whichever ball is bigger"], hint: "Trap: heavier objects do NOT fall faster. Without air resistance, all objects fall at the same rate." },
+      { q: "Which is an example of a force that acts at a DISTANCE (without touching)?", a: 0, opts: ["A magnet pulling a paper clip","A foot kicking a soccer ball","Friction slowing a bike tire","A hand pushing open a door"], hint: "Magnetism, gravity, and electric forces act at a distance. Kicks, pushes, and friction are contact forces." }
+    ]
+  }
+};
+const TIPS_G6SCI = {
+  practice: [
+    { h:"Variables 🔬", p:"<b>Independent</b> = what YOU change. <b>Dependent</b> = what you MEASURE. <b>Controlled</b> = what you keep the SAME." },
+    { h:"Control group 🎯", p:"The <b>control group</b> gets no treatment, so you can compare. Use <b>many trials</b> so results are <b>reliable</b>, and others should be able to <b>replicate</b> your work." },
+    { h:"CER ✍️", p:"<b>Claim</b> = your answer. <b>Evidence</b> = the data. <b>Reasoning</b> = the science that explains why the evidence supports the claim." }
+  ],
+  theories: [
+    { h:"Theory vs Law 📜", p:"A <b>theory</b> explains <b>WHY</b> (cell theory). A <b>law</b> describes <b>WHAT</b> happens (Law of Gravity). A theory never 'becomes' a law." },
+    { h:"Is it science? 🤔", p:"Science must be <b>testable</b> with <b>evidence</b>. Opinions and beliefs are not science. Science <b>changes</b> when new evidence appears." },
+    { h:"Models 🌐", p:"Models (globes, cell models, weather maps) help us study things too big, small, or far away. Every model has <b>limits</b>." }
+  ],
+  organization: [
+    { h:"Levels 🪜", p:"<b>Atoms → Molecules → Cells → Tissues → Organs → Organ Systems → Organisms</b>." },
+    { h:"Cell theory team 👩‍🔬", p:"<b>Hooke</b> named cells (1665). <b>Schleiden</b> = plants. <b>Schwann</b> = animals. <b>Virchow</b> = cells come from cells." }
+  ],
+  homeostasis: [
+    { h:"Homeostasis ⚖️", p:"Keeping your insides <b>balanced</b>. <b>Sweating</b> cools you, <b>shivering</b> warms you, <b>thirst</b> tells you to drink." },
+    { h:"Moving stuff 🚪", p:"<b>Diffusion</b> = crowded to less crowded (no energy). <b>Osmosis</b> = diffusion of <b>water</b>. <b>Active transport</b> = uphill, needs <b>energy</b>." }
+  ],
+  body_systems: [
+    { h:"Who does what 🫀", p:"<b>Digestive</b> breaks down food. <b>Circulatory</b> delivers. <b>Respiratory</b> brings in oxygen. <b>Excretory</b> removes waste. <b>Immune</b> fights germs." },
+    { h:"Messengers 📡", p:"<b>Nervous</b> = fast electrical signals. <b>Endocrine</b> = slower <b>hormones</b> in the blood." },
+    { h:"Teamwork 🤝", p:"Systems work together: lungs + blood carry oxygen; nerves + muscles + bones make you move." }
+  ],
+  classification: [
+    { h:"3 Domains, 6 Kingdoms 🗂️", p:"Domains: <b>Bacteria, Archaea, Eukarya</b>. Kingdoms: <b>Archaebacteria, Eubacteria, Protists, Fungi, Plants, Animals</b>." },
+    { h:"King Philip 👑", p:"<b>D</b>ear <b>K</b>ing <b>P</b>hilip <b>C</b>ame <b>O</b>ver <b>F</b>or <b>G</b>ood <b>S</b>oup: Domain, Kingdom, Phylum, Class, Order, Family, Genus, Species." },
+    { h:"Linnaeus names ✏️", p:"<b>Genus species</b>: <b>Homo sapiens</b>. Capital genus, lowercase species. A <b>dichotomous key</b> uses pairs of choices." }
+  ],
+  weathering: [
+    { h:"Break, Move, Drop 🪨", p:"<b>Weathering</b> breaks rock. <b>Erosion</b> moves it. <b>Deposition</b> drops it somewhere new." },
+    { h:"Physical vs Chemical 🧪", p:"<b>Physical</b>: roots, ice, waves break rock into pieces. <b>Chemical</b>: acid or rust changes what the rock is made of." },
+    { h:"Florida karst 🌴", p:"Acidic water dissolves <b>limestone</b>, making <b>sinkholes</b>, caves, and <b>springs</b>. <b>Barrier islands</b> and dunes are built by deposition." }
+  ],
+  atmosphere: [
+    { h:"Earth's spheres 🌍", p:"<b>Geosphere</b> (rock), <b>hydrosphere</b> (water), <b>atmosphere</b> (air), <b>biosphere</b> (life), <b>cryosphere</b> (ice)." },
+    { h:"Heat on the move 🔥", p:"<b>Radiation</b> = waves (Sun). <b>Conduction</b> = touching. <b>Convection</b> = warm fluid rises, cool fluid sinks." },
+    { h:"Breezes 🏖️", p:"Day: land heats faster, so a <b>sea breeze</b> blows in. Night: land cools faster, so a <b>land breeze</b> blows out." }
+  ],
+  weather: [
+    { h:"Weather vs Climate 🌦️", p:"<b>Weather</b> = today. <b>Climate</b> = the long-term average (about 30 years). One cold day doesn't change the climate." },
+    { h:"Pressure & fronts 🌀", p:"<b>Low pressure = lousy weather</b>. A <b>cold front</b> brings storms, then cooler, drier air. Hurricanes need <b>warm ocean water</b>." },
+    { h:"Stay safe ⚡", p:"<b>When thunder roars, go indoors!</b> In a hurricane, follow evacuation orders. <b>Turn around, don't drown.</b>" }
+  ],
+  energy: [
+    { h:"KE vs PE 🎢", p:"<b>Kinetic</b> = moving. <b>Potential</b> = stored (height). Top of the hill = most PE. Bottom = most KE." },
+    { h:"Conservation ♻️", p:"Energy is <b>never created or destroyed</b>, it only changes form (PE ↔ KE, then heat and sound)." }
+  ],
+  motion: [
+    { h:"Speed formula 🏃", p:"<b>Speed = distance ÷ time</b>. <b>Velocity</b> = speed + direction." },
+    { h:"Reading graphs 📈", p:"On a distance-time graph: <b>flat line = stopped</b>, <b>steeper = faster</b>, straight line = constant speed." }
+  ],
+  forces: [
+    { h:"Balanced vs Unbalanced ⚖️", p:"<b>Balanced</b> forces = no change in motion. <b>Unbalanced</b> forces change speed or direction. Things stop because of <b>friction</b>, not because a force 'runs out'." },
+    { h:"Gravity 🌎", p:"Gravity depends on <b>mass</b> and <b>distance</b>. Heavy and light objects fall at the <b>same rate</b> (without air resistance)." },
+    { h:"Mass vs Weight ⚖️", p:"<b>Mass</b> = amount of matter (same everywhere). <b>Weight</b> = gravity's pull (less on the Moon)." }
+  ]
+};
+const G6SCI_KEY_ORDER = ["practice","theories","organization","homeostasis","body_systems","classification","weathering","atmosphere","weather","energy","motion","forces"];
+const BOSSES_G6SCI = {
+  practice:       { emoji: "🧪", name: "Variable Vandal" },
+  theories:       { emoji: "📜", name: "The Hypothe-Sizer" },
+  organization:   { emoji: "🪜", name: "Tissue Tyrant" },
+  homeostasis:    { emoji: "⚖️", name: "Captain Balance" },
+  body_systems:   { emoji: "🫀", name: "Organ Ogre" },
+  classification: { emoji: "🗂️", name: "King Philip's Ghost" },
+  weathering:     { emoji: "🕳️", name: "Sinkhole Sam" },
+  atmosphere:     { emoji: "🌬️", name: "Sea Breeze Sneeze" },
+  weather:        { emoji: "🌀", name: "Hurri-Can't Stop" },
+  energy:         { emoji: "🎢", name: "Coaster Commander" },
+  motion:         { emoji: "🏃", name: "Speedy Slope" },
+  forces:         { emoji: "🧲", name: "Friction Fiend" }
+};
+
 const SUBJECTS = {
   italy: {
     title: "My Trip to Italy", emoji: "🇮🇹", color: "#059669",
@@ -2808,6 +3324,16 @@ const SUBJECTS = {
     description: "Cell theory, organelles, plant vs animal cells, photosynthesis, mitosis, DNA, and Punnett squares.",
     topics: QUIZ_CELLS, tips: TIPS_CELLS, keyOrder: CELLS_KEY_ORDER, hasSubObj: false
   },
+  g6math: {
+    title: "FL 6th Grade Math", emoji: "📐", color: "#0284c7",
+    description: "Florida B.E.S.T. Grade 6: fractions, decimals, integers, exponents, expressions, equations, ratio tables, coordinate plane, area & volume, data.",
+    topics: QUIZ_G6MATH, tips: TIPS_G6MATH, keyOrder: G6MATH_KEY_ORDER, hasSubObj: false
+  },
+  g6sci: {
+    title: "FL 6th Grade Science", emoji: "🔭", color: "#15803d",
+    description: "Florida Grade 6 science: experiments, body systems, classification, weathering, weather & climate, energy, motion & forces.",
+    topics: QUIZ_G6SCI, tips: TIPS_G6SCI, keyOrder: G6SCI_KEY_ORDER, hasSubObj: false
+  },
   ratios: {
     title: "Ratios, Proportions & Percents", emoji: "💯", color: "#ea580c",
     description: "Ratios, unit rates, proportions, percents, discounts, tax, tips, and percent change.",
@@ -2819,7 +3345,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","social","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","social","g6math","g6sci","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -2944,6 +3470,8 @@ const TROPHIES = [
   { id:"boss_microbes", emoji:"🍄", name:"Microbe Master",   desc:"Defeat all 6 Viruses, Protists & Fungi bosses." },
   { id:"boss_protists", emoji:"🔬", name:"Protist Pro",      desc:"Defeat all 6 Protists bosses." },
   { id:"boss_bacteria", emoji:"🦠", name:"Germ Buster",      desc:"Defeat all 8 Bacteria bosses." },
+  { id:"boss_g6math",   emoji:"📐", name:"Sunshine Mathlete", desc:"Defeat all 12 FL 6th Grade Math bosses." },
+  { id:"boss_g6sci",    emoji:"🔭", name:"Sunshine Scientist", desc:"Defeat all 12 FL 6th Grade Science bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
   { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
@@ -2953,6 +3481,8 @@ const TROPHIES = [
 ];
 
 const BOSSES = {
+  g6math: BOSSES_G6MATH,
+  g6sci: BOSSES_G6SCI,
   italy: {
     landmarks:  { emoji: "🗼", name: "The Leaning Tower" },
     food:       { emoji: "🍕", name: "Pizza Padrone" },

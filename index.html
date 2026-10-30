@@ -3778,6 +3778,266 @@ const BOSSES_G7SCI = {
   heat:             { emoji: "🌡️", name: "The Thermo-Nator" }
 };
 
+const QUIZ_ACCEL = {
+  exponents: {
+    title: "Integer Exponents", emoji: "🔢", color: "#8b5cf6",
+    questions: [
+      { q: "What does a NEGATIVE exponent, like the one in 5⁻², tell you to do?", a: 0, opts: ["Take the reciprocal: 5⁻² = 1/5²","Make the answer negative: 5⁻² = −25","Multiply the base by the exponent: 5 × −2","Subtract the exponent from the base: 5 − 2"], hint: "A negative exponent means \"flip it into a fraction.\" Move the power to the bottom and make the exponent positive: 5⁻² = 1/5² = 1/25. Trap: a negative exponent does NOT make the answer negative. 1/25 is a small positive number." },
+      { q: "Which expression means the same thing as 1/4³?", a: 0, opts: ["4⁻³","−4³","−3⁴","3⁻⁴"], hint: "1 over a power is the same as that power with a negative exponent. 1/4³ = 4⁻³. The base (4) stays the same and the exponent (3) just gets a negative sign. Trap: −4³ is a negative number, not a fraction." },
+      { q: "Evaluate 2⁻³.", a: 0, opts: ["1/8","−8","−6","1/6"], hint: "Step 1: flip it: 2⁻³ = 1/2³. Step 2: 2³ = 2 × 2 × 2 = 8. So 2⁻³ = 1/8. Trap 1: −8 thinks the negative exponent makes the answer negative. Trap 2: −6 and 1/6 multiply 2 × 3 instead of using 2 three times." },
+      { q: "Evaluate 10⁻².", a: 0, opts: ["0.01","−100","−20","0.1"], hint: "10⁻² = 1/10² = 1/100 = 0.01. Tip: for 10 to a negative power, the exponent tells you how many places the 1 sits after the decimal point: 10⁻² = 0.01. Trap: 0.1 is 10⁻¹, and −100 makes the answer negative." },
+      { q: "Write 3⁵ × 3⁻² as a single power.", a: 0, opts: ["3³","3⁻¹⁰","3⁷","9³"], hint: "Same base, multiplying, so ADD the exponents, and watch the signs: 5 + (−2) = 3. Answer: 3³. Trap: 3⁻¹⁰ multiplies the exponents, 3⁷ ignores the negative sign, and 9³ multiplies the bases. The base always stays 3." },
+      { q: "Write 7² ÷ 7⁵ as a single power.", a: 0, opts: ["7⁻³","7³","7¹⁰","1⁻³"], hint: "Same base, dividing, so SUBTRACT: top exponent minus bottom exponent: 2 − 5 = −3. Answer: 7⁻³ (which is 1/343). Trap: 7³ subtracts in the wrong order (5 − 2). Always do top minus bottom, even when the answer is negative." },
+      { q: "Write (2⁻³)² as a single power.", a: 0, opts: ["2⁻⁶","2⁻¹","2⁶","2⁻⁵"], hint: "A power of a power: MULTIPLY the exponents: −3 × 2 = −6. Answer: 2⁻⁶. Trap: 2⁻¹ adds the exponents (−3 + 2). Adding is only for multiplying two powers with the same base, not for a power of a power." },
+      { q: "Evaluate 4⁻² × 4³.", a: 0, opts: ["4","1/4","16","−4"], hint: "Step 1: same base, multiplying, so add the exponents: −2 + 3 = 1. Step 2: 4¹ = 4. Trap: 1/4 comes from getting −1 for the exponent (sign mistake), and −4 thinks a negative exponent makes the answer negative." },
+      { q: "What is the value of 5⁻⁴ × 5⁴?", a: 0, opts: ["1","0","−1","625"], hint: "Add the exponents: −4 + 4 = 0, so the answer is 5⁰ = 1. Another way to see it: 5⁻⁴ is 1/625 and 5⁴ is 625, and 1/625 × 625 = 1. Trap: 0 thinks the opposite exponents cancel out to nothing. An exponent of 0 gives 1, not 0." },
+      { q: "Evaluate (3² × 3⁻⁵) ÷ 3⁻⁴.", a: 0, opts: ["3","1/3","1/27","27"], hint: "Go one law at a time. Step 1 (multiply, add): 2 + (−5) = −3, so the top is 3⁻³. Step 2 (divide, subtract): −3 − (−4) = −3 + 4 = 1. Step 3: 3¹ = 3. Trap: 1/27 stops after Step 1, and 1/3 forgets that subtracting a negative means adding." }
+    ]
+  },
+  sci_notation: {
+    title: "Scientific Notation", emoji: "🔬", color: "#0ea5e9",
+    questions: [
+      { q: "Which number is written correctly in scientific notation?", a: 0, opts: ["3.2 × 10⁵","32 × 10⁴","0.32 × 10⁶","3.2 + 10⁵"], hint: "Scientific notation has two parts: a number that is at least 1 but less than 10, TIMES a power of 10. 3.2 fits. Trap: 32 is too big (10 or more) and 0.32 is too small (less than 1), even though both equal the same amount. And it is always ×, never +." },
+      { q: "In 4 × 10⁻³, what does the NEGATIVE exponent tell you?", a: 0, opts: ["The number is small (between 0 and 1)","The number is negative","The number is bigger than 1,000","You subtract 3 from 4"], hint: "A negative power of 10 means you are dividing by 10 again and again, so the number gets tiny: 4 × 10⁻³ = 0.004. Trap: the number is still POSITIVE. A negative exponent means small, not below zero." },
+      { q: "Write 45,000 in scientific notation.", a: 0, opts: ["4.5 × 10⁴","4.5 × 10³","45 × 10³","4.5 × 10⁻⁴"], hint: "Step 1: put the decimal after the first digit: 4.5. Step 2: count how many places it moved: 45,000. to 4.5 is 4 places left. Step 3: a big number gets a positive exponent: 4.5 × 10⁴. Trap: 45 × 10³ equals 45,000 but is not scientific notation, because 45 is not less than 10." },
+      { q: "Write 0.0007 in scientific notation.", a: 0, opts: ["7 × 10⁻⁴","7 × 10⁴","7 × 10⁻³","0.7 × 10⁻³"], hint: "Step 1: move the decimal to just after the 7: 0.0007 becomes 7. Step 2: count the jumps: 4 places to the right. Step 3: a small number (less than 1) gets a NEGATIVE exponent: 7 × 10⁻⁴. Trap: 7 × 10⁴ is 70,000, a huge number. Small numbers always get negative exponents." },
+      { q: "The Sun is about 9.3 × 10⁷ miles from Earth. What is this in standard form?", a: 0, opts: ["93,000,000 miles","9,300,000 miles","930,000,000 miles","0.000000093 miles"], hint: "A positive exponent of 7 means move the decimal 7 places to the RIGHT. 9.3 becomes 93,000,000 (93 million). Trap: count the jumps, not the zeros. 9.3 already uses one place for the 3, so only 6 zeros get added. And moving left would make it tiny, which can't be right for a big distance." },
+      { q: "A bacterium is about 2 × 10⁻⁶ meters long. What is this as a decimal?", a: 0, opts: ["0.000002 m","0.0000002 m","2,000,000 m","0.00002 m"], hint: "A negative exponent of 6 means move the decimal 6 places to the LEFT. Start at 2. and jump left 6 times: 0.000002. Check: the 2 ends up in the 6th place after the decimal point. Trap: 2,000,000 moves the wrong way. A germ can't be 2 million meters long!" },
+      { q: "Which is greater: 6 × 10⁻³ or 2 × 10⁻²?", a: 0, opts: ["2 × 10⁻²","6 × 10⁻³","They are equal","You can't compare them"], hint: "Compare the powers of 10 FIRST. −2 is greater than −3, so 10⁻² is bigger than 10⁻³. Check in decimals: 2 × 10⁻² = 0.02 and 6 × 10⁻³ = 0.006, and 0.02 > 0.006. Trap: looking only at 6 and 2. The exponent matters more than the front number." },
+      { q: "Multiply: (3 × 10⁴) × (2 × 10⁵)", a: 0, opts: ["6 × 10⁹","6 × 10²⁰","5 × 10⁹","6 × 10¹"], hint: "Step 1: multiply the front numbers: 3 × 2 = 6. Step 2: multiply the powers of 10 by ADDING the exponents: 4 + 5 = 9. Answer: 6 × 10⁹. Trap: 10²⁰ multiplies the exponents, and 5 adds the front numbers instead of multiplying them." },
+      { q: "Divide: (8 × 10⁹) ÷ (2 × 10³)", a: 0, opts: ["4 × 10⁶","4 × 10³","6 × 10⁶","4 × 10¹²"], hint: "Step 1: divide the front numbers: 8 ÷ 2 = 4. Step 2: divide the powers of 10 by SUBTRACTING the exponents: 9 − 3 = 6. Answer: 4 × 10⁶. Trap: 10³ divides the exponents (9 ÷ 3), and 10¹² adds them." },
+      { q: "Light travels about 3 × 10⁵ km per second. Sunlight takes about 5 × 10² seconds to reach Earth. About how far is the Sun from Earth?", a: 0, opts: ["1.5 × 10⁸ km","15 × 10⁸ km","1.5 × 10⁷ km","8 × 10⁷ km"], hint: "Distance = speed × time. Step 1: 3 × 5 = 15. Step 2: 10⁵ × 10² = 10⁷. So 15 × 10⁷. Step 3: 15 is too big for scientific notation, so write 15 as 1.5 × 10¹ and add 1 to the exponent: 1.5 × 10⁸ km. Trap: forgetting to bump the exponent up gives 1.5 × 10⁷, which is 10 times too small." }
+    ]
+  },
+  roots: {
+    title: "Square Roots, Cube Roots & Irrationals", emoji: "🌳", color: "#16a34a",
+    questions: [
+      { q: "What does √49 mean?", a: 0, opts: ["The number that times itself makes 49","49 divided by 2","49 times 49","The number that times 3 makes 49"], hint: "A square root undoes squaring. Ask: what number times ITSELF makes 49? 7 × 7 = 49, so √49 = 7. Trap: the square root is NOT half the number. 49 ÷ 2 = 24.5, and 24.5 × 24.5 is way more than 49." },
+      { q: "What does ∛8 mean?", a: 0, opts: ["The number used as a factor 3 times to make 8","8 divided by 3","8 times 3","The number that times itself makes 8"], hint: "A cube root undoes cubing. Ask: what number times itself times itself makes 8? 2 × 2 × 2 = 8, so ∛8 = 2. Trap: the little 3 does not mean divide by 3." },
+      { q: "Evaluate √64 + ∛27.", a: 0, opts: ["11","41","17","35"], hint: "Step 1: √64: what times itself is 64? 8 × 8 = 64, so 8. Step 2: ∛27: 3 × 3 × 3 = 27, so 3. Step 3: 8 + 3 = 11. Trap: 41 comes from halving 64 (32) and dividing 27 by 3 (9). Roots are not halving or dividing by 3." },
+      { q: "√50 is between which two whole numbers?", a: 0, opts: ["7 and 8","25 and 26","6 and 7","49 and 50"], hint: "Find the perfect squares on each side of 50: 7² = 49 and 8² = 64. Since 50 is between 49 and 64, √50 is between 7 and 8 (very close to 7). Trap: √50 ≈ 25 halves the number. Check: 25 × 25 = 625, way too big." },
+      { q: "Which number is IRRATIONAL?", a: 0, opts: ["√20","√25","0.3 repeating","−4/3"], hint: "A rational number can be written as a fraction of integers. Repeating decimals like 0.333... = 1/3 count as rational, and √25 = 5. But 20 is not a perfect square, so √20 is a decimal that never ends and never repeats. That is irrational. Trap: thinking repeating decimals are irrational. Only NON-repeating, never-ending decimals are." },
+      { q: "What is the best estimate of √30 to the nearest tenth?", a: 0, opts: ["5.5","15","5.1","6.5"], hint: "Step 1: perfect squares nearby: 5² = 25 and 6² = 36, so √30 is between 5 and 6. Step 2: 30 is about halfway from 25 to 36, so try 5.5: 5.5 × 5.5 = 30.25. Very close! Trap: 15 is half of 30, and 5.1 only adds a tiny bit even though 30 is far from 25." },
+      { q: "Which list is in order from LEAST to GREATEST?", a: 0, opts: ["√8, 3, π, √10","3, √8, π, √10","√8, 3, √10, π","π, 3, √10, √8"], hint: "Turn each into a decimal. √8 ≈ 2.83 (between 2 and 3), 3 = 3, π ≈ 3.14, √10 ≈ 3.16. So √8, 3, π, √10. Trap: π and √10 are VERY close. √10 is a little more than 3.16 because 3.16 × 3.16 ≈ 9.99, so √10 beats π (3.14)." },
+      { q: "Solve x² = 81.", a: 0, opts: ["x = 9 or x = −9","x = 9 only","x = 40.5","x = 6,561"], hint: "Ask: what numbers times themselves make 81? 9 × 9 = 81 AND (−9) × (−9) = 81. So x = 9 or x = −9. Trap: forgetting the negative answer. A negative times a negative is positive, so both work. 40.5 is half of 81, not a root." },
+      { q: "Solve x³ = −64.", a: 0, opts: ["x = −4","x = 4","x = 4 or x = −4","x = −8"], hint: "Ask: what number used 3 times makes −64? (−4) × (−4) × (−4) = 16 × (−4) = −64. So x = −4. Trap: 4³ is +64, not −64, so 4 does not work. Unlike squares, a cube root has only ONE real answer, and it keeps the sign. −8 is a square root idea (8 × 8 = 64), not a cube root." },
+      { q: "A square beach towel has an area of 20 square feet. What is the best estimate for the length of each side?", a: 0, opts: ["About 4.5 feet","About 10 feet","About 400 feet","About 5.5 feet"], hint: "Area of a square = side × side, so side = √20. Step 1: 4² = 16 and 5² = 25, so √20 is between 4 and 5. Step 2: try 4.5: 4.5 × 4.5 = 20.25. That's the best fit. Trap: 10 halves the area, and 400 squares it instead of taking the root. 5.5 × 5.5 = 30.25, too big." }
+    ]
+  },
+  multi_step: {
+    title: "Multi-Step Equations", emoji: "🔧", color: "#f59e0b",
+    questions: [
+      { q: "In 5x + 2 = 3x + 10, x is on BOTH sides. What is a good first step?", a: 0, opts: ["Subtract 3x from both sides","Add 5x and 3x together","Divide only the left side by 5","Subtract 10 from only the left side"], hint: "Goal: get all the x's on ONE side. Subtract the smaller x-term (3x) from both sides: 5x − 3x + 2 = 10, so 2x + 2 = 10. Trap: 5x and 3x are on opposite sides of the equal sign, so you can't just add them. And whatever you do to one side, you must do to the other." },
+      { q: "You solve an equation and end up with 4 = 4 (true, and no x left). How many solutions are there?", a: 0, opts: ["Infinitely many solutions","No solution","Exactly one solution, x = 4","Exactly one solution, x = 0"], hint: "If the x's disappear and what's left is ALWAYS true (like 4 = 4), then every number works: infinitely many solutions. If what's left is FALSE (like 8 = 5), there is no solution. Trap: the 4 in 4 = 4 is not the value of x." },
+      { q: "Solve 3(x + 4) = 27.", a: 0, opts: ["x = 5","x = 7 2/3","x = 13","x = 9"], hint: "Step 1: distribute the 3 to BOTH terms: 3x + 12 = 27. Step 2: subtract 12: 3x = 15. Step 3: divide by 3: x = 5. Check: 3(5 + 4) = 3 × 9 = 27. Trap: 7 2/3 comes from 3x + 4, multiplying only the x and forgetting the 4." },
+      { q: "Solve 5x + 2 = 3x + 10.", a: 0, opts: ["x = 4","x = 1.5","x = 6","x = 8"], hint: "Step 1: subtract 3x from both sides: 2x + 2 = 10. Step 2: subtract 2: 2x = 8. Step 3: divide by 2: x = 4. Check: 5(4) + 2 = 22 and 3(4) + 10 = 22. Trap: 1.5 comes from ADDING 3x to both sides (8x = 12), and 8 forgets the last divide." },
+      { q: "Solve 2(x − 3) = −4x + 12.", a: 0, opts: ["x = 3","x = 2.5","x = −9","x = 1"], hint: "Step 1: distribute: 2x − 6 = −4x + 12. Step 2: add 4x to both sides: 6x − 6 = 12. Step 3: add 6: 6x = 18. Step 4: x = 3. Check: 2(0) = 0 and −12 + 12 = 0. Trap: 2.5 comes from writing 2x − 3 (the 2 must multiply the 3 too)." },
+      { q: "Solve −2(x + 5) = 4.", a: 0, opts: ["x = −7","x = 3","x = −3","x = 7"], hint: "Step 1: distribute the −2 to BOTH terms: −2x − 10 = 4. Step 2: add 10: −2x = 14. Step 3: divide by −2: x = −7. Check: −2(−7 + 5) = −2(−2) = 4. Trap: the big one is −2 × 5. It is −10, not +10. Writing −2x + 10 leads to x = 3." },
+      { q: "How many solutions does 4(x + 2) = 4x + 5 have?", a: 0, opts: ["No solution","Exactly one solution","Infinitely many solutions","Exactly two solutions"], hint: "Step 1: distribute: 4x + 8 = 4x + 5. Step 2: subtract 4x: 8 = 5. That is FALSE, and the x's are gone, so no number can ever work: no solution. Trap: thinking every equation has exactly one answer." },
+      { q: "How many solutions does 3(2x − 1) = 6x − 3 have?", a: 0, opts: ["Infinitely many solutions","No solution","Exactly one solution","Exactly two solutions"], hint: "Step 1: distribute: 6x − 3 = 6x − 3. Both sides are EXACTLY the same! Step 2: subtract 6x: −3 = −3. Always true, so every number works: infinitely many solutions. Try x = 10: 3(19) = 57 and 60 − 3 = 57. Yes!" },
+      { q: "Theme Park A charges $30 to get in plus $2 per ride. Theme Park B charges $12 to get in plus $5 per ride. For how many rides r do they cost the same?", a: 0, opts: ["6 rides","14 rides","3 rides","18 rides"], hint: "Step 1: write each cost: A = 30 + 2r, B = 12 + 5r. Step 2: set them equal: 30 + 2r = 12 + 5r. Step 3: subtract 2r: 30 = 12 + 3r. Step 4: subtract 12: 18 = 3r, so r = 6. Check: 30 + 12 = 42 and 12 + 30 = 42. Trap: 18 forgets to divide by 3." },
+      { q: "Solve (1/2)(8x − 6) + x = 2x + 18.", a: 0, opts: ["x = 7","x = 8","x = 21","x = 5"], hint: "Step 1: distribute the 1/2 to both terms: 4x − 3 + x = 2x + 18. Step 2: combine like terms: 5x − 3 = 2x + 18. Step 3: subtract 2x: 3x − 3 = 18. Step 4: add 3: 3x = 21, so x = 7. Trap: 8 comes from halving only the 8x and keeping −6. Every term inside gets multiplied." }
+    ]
+  },
+  multi_ineq: {
+    title: "Multi-Step Inequalities", emoji: "🚦", color: "#ef4444",
+    questions: [
+      { q: "In 5x + 3 < 2x + 12, x is on BOTH sides. What is a good first step?", a: 0, opts: ["Subtract 2x from both sides","Flip the inequality sign right away","Divide only the left side by 5","Add 5x and 2x together"], hint: "Solve it like an equation: get the x's on one side by subtracting 2x from both sides: 3x + 3 < 12. Trap: you only flip the sign when you multiply or divide by a NEGATIVE, not at the start of every problem." },
+      { q: "The solution to an inequality is x ≥ −2. Which number is NOT a solution?", a: 0, opts: ["−3","−2","0","5"], hint: "x ≥ −2 means −2 or anything bigger. On a number line, −3 is to the LEFT of −2, so it is smaller and does not work. Trap: −2 IS a solution because of the \"or equal to\" line under the sign (closed circle)." },
+      { q: "Solve 4(x − 2) > 12.", a: 0, opts: ["x > 5","x > 3.5","x > 1","x < 5"], hint: "Step 1: distribute: 4x − 8 > 12. Step 2: add 8: 4x > 20. Step 3: divide by 4 (positive, so no flip): x > 5. Trap: 3.5 comes from 4x − 2 (forgetting to multiply the 2), and x > 1 subtracts 8 instead of adding it." },
+      { q: "Solve −3(x + 1) < 9.", a: 0, opts: ["x > −4","x < −4","x > −2","x < 4"], hint: "Step 1: distribute the −3: −3x − 3 < 9. Step 2: add 3: −3x < 12. Step 3: divide by −3 and FLIP the sign: x > −4. Trap: x < −4 forgets to flip, and x > −2 comes from −3 × 1 = +3 (it's −3)." },
+      { q: "Solve 6x − 4 ≥ 2x + 8.", a: 0, opts: ["x ≥ 3","x ≥ 1","x ≥ 1.5","x ≤ 3"], hint: "Step 1: subtract 2x: 4x − 4 ≥ 8. Step 2: add 4: 4x ≥ 12. Step 3: divide by 4 (positive, no flip): x ≥ 3. Trap: x ≤ 3 flips when you didn't divide by a negative. 1.5 comes from adding 2x to both sides (8x ≥ 12)." },
+      { q: "Solve 2x + 12 < 5x.", a: 0, opts: ["x > 4","x < 4","x > −4","x < −4"], hint: "Way 1: subtract 2x: 12 < 3x, then divide by 3: 4 < x, which is the same as x > 4. Way 2: subtract 5x: −3x + 12 < 0, so −3x < −12, divide by −3 and FLIP: x > 4. Same answer! Trap: x < 4 divides by −3 and forgets to flip." },
+      { q: "Solve 2(x − 4) ≥ 5x + 1.", a: 0, opts: ["x ≤ −3","x ≥ −3","x ≤ 3","x ≥ 3"], hint: "Step 1: distribute: 2x − 8 ≥ 5x + 1. Step 2: subtract 5x: −3x − 8 ≥ 1. Step 3: add 8: −3x ≥ 9. Step 4: divide by −3 and FLIP: x ≤ −3. Check x = −4: 2(−8) = −16 and 5(−4) + 1 = −19, and −16 ≥ −19 is true. Trap: forgetting the flip gives x ≥ −3." },
+      { q: "Which value of x is a solution of 3(x + 2) > 5x − 4?", a: 0, opts: ["4","5","6","10"], hint: "Solve first: 3x + 6 > 5x − 4. Subtract 3x: 6 > 2x − 4. Add 4: 10 > 2x. Divide by 2: 5 > x, so x < 5. Only 4 works. Check x = 5: 21 > 21 is false (they are equal, not greater). Trap: forgetting that > does not include the boundary number." },
+      { q: "Julia has $45 and saves $5 a week. Her cousin has $75 and spends $5 a week. After how many weeks w will Julia have MORE money than her cousin?", a: 0, opts: ["w > 3","w < 3","w > 12","w > 6"], hint: "Step 1: Julia: 45 + 5w. Cousin: 75 − 5w. Step 2: Julia MORE: 45 + 5w > 75 − 5w. Step 3: add 5w: 45 + 10w > 75. Step 4: subtract 45: 10w > 30, so w > 3. Check w = 4: Julia 65, cousin 55. Trap: w > 6 forgets that BOTH amounts are changing (that's 10 a week apart, not 5)." },
+      { q: "Softball League A costs $50 to join plus $8 per game. League B costs $20 to join plus $11 per game. For how many games g is League A CHEAPER?", a: 0, opts: ["g > 10","g < 10","g > 30","g < 3"], hint: "Step 1: A cheaper means 50 + 8g < 20 + 11g. Step 2: subtract 8g: 50 < 20 + 3g. Step 3: subtract 20: 30 < 3g. Step 4: divide by 3: 10 < g, so g > 10. Check g = 11: A = 138, B = 141. Trap: reading 10 < g backward as g < 10. The pointy end always points at the smaller side." }
+    ]
+  },
+  slope: {
+    title: "Slope & Rate of Change", emoji: "⛰️", color: "#14b8a6",
+    questions: [
+      { q: "What does the SLOPE of a line measure?", a: 0, opts: ["How steep it is (rise over run)","Where it crosses the y-axis","How long the line is","Where it crosses the x-axis"], hint: "Slope = rise ÷ run = how much y changes for each 1 step in x. A bigger number means a steeper line. Trap: where the line crosses the y-axis is the y-intercept, a different idea." },
+      { q: "A line goes DOWN as you read it from left to right. What kind of slope does it have?", a: 0, opts: ["Negative","Positive","Zero","Undefined"], hint: "Read lines like words, left to right. Uphill = positive, downhill = negative, flat = zero, straight up and down = undefined. Downhill means negative." },
+      { q: "What is the slope of the line through (1, 2) and (3, 8)?", a: 0, opts: ["3","1/3","−3","6"], hint: "Slope = (change in y) ÷ (change in x). Step 1: rise = 8 − 2 = 6. Step 2: run = 3 − 1 = 2. Step 3: 6 ÷ 2 = 3. Trap: 1/3 is run over rise (upside down). Remember: the y change (rise) always goes on TOP." },
+      { q: "What is the slope of the line through (−2, 5) and (2, −3)?", a: 0, opts: ["−2","2","−1/2","1/2"], hint: "Step 1: rise = −3 − 5 = −8. Step 2: run = 2 − (−2) = 4. Step 3: −8 ÷ 4 = −2. Check: the line goes down as x increases, so it MUST be negative. Trap: 2 loses the negative sign, and −1/2 flips to run over rise." },
+      { q: "A table shows x = 0, 2, 4, 6 and y = 1, 7, 13, 19. What is the rate of change?", a: 0, opts: ["3","6","1/3","1"], hint: "Step 1: y goes up by 6 each time (1, 7, 13, 19). Step 2: x goes up by 2 each time. Step 3: rate = 6 ÷ 2 = 3. Trap: 6 only looks at the y's. Always divide by how much x changed." },
+      { q: "What is the slope of a horizontal line, like y = 4?", a: 0, opts: ["0","Undefined","4","1"], hint: "A horizontal line is flat: the rise is 0 no matter how far you run. 0 ÷ run = 0. Trap: mixing it up with a vertical line, which has undefined slope. Think: flat floor = zero, wall = undefined. 4 is where it crosses the y-axis, not the slope." },
+      { q: "What is the slope of the vertical line through (5, 1) and (5, 9)?", a: 0, opts: ["Undefined","0","8","5"], hint: "Rise = 9 − 1 = 8, run = 5 − 5 = 0. Slope = 8 ÷ 0, and you can never divide by 0. So the slope is undefined. Trap: saying 0. A vertical line is the steepest possible line, so its slope can't be 0." },
+      { q: "On a graph, a line passes through (0, 1) and goes UP 2 units for every 5 units it goes RIGHT. What is its slope?", a: 0, opts: ["2/5","5/2","2","−2/5"], hint: "Slope = rise ÷ run = 2 ÷ 5 = 2/5. It goes up, so the slope is positive. Trap: 5/2 is run over rise. Rise (up and down) always goes on top." },
+      { q: "A rocket launched from Cape Canaveral is 1,200 feet high after 4 seconds and 3,000 feet high after 10 seconds. What is its average rate of change?", a: 0, opts: ["300 feet per second","1,800 feet per second","1/300 second per foot","3,000 feet per second"], hint: "Rate of change = change in height ÷ change in time. Step 1: 3,000 − 1,200 = 1,800 feet. Step 2: 10 − 4 = 6 seconds. Step 3: 1,800 ÷ 6 = 300 feet per second. Trap: 1,800 forgets to divide by the time, and 1/300 flips it upside down." },
+      { q: "Which line is STEEPER: one with slope −5 or one with slope 3?", a: 0, opts: ["The line with slope −5","The line with slope 3","They are equally steep","You can't tell from the slopes"], hint: "Steepness is about the SIZE of the slope, not the sign. Ignore the negative: 5 is bigger than 3, so the slope −5 line is steeper (it just goes downhill). Trap: thinking negative numbers are always \"less steep.\"" }
+    ]
+  },
+  linear: {
+    title: "Linear Equations y = mx + b", emoji: "✏️", color: "#6366f1",
+    questions: [
+      { q: "In the equation y = mx + b, what does m stand for?", a: 0, opts: ["The slope","The y-intercept","The x-intercept","The y-value of a point"], hint: "In y = mx + b, m is the slope (the number multiplying x) and b is the y-intercept (the number added on). Memory trick: m is for \"move\" (how the line moves), b is for \"begin\" (where it starts on the y-axis)." },
+      { q: "In y = mx + b, what does b tell you?", a: 0, opts: ["Where the line crosses the y-axis","Where the line crosses the x-axis","How steep the line is","The x-value of a point"], hint: "b is the y-intercept: the point (0, b) where the line crosses the y-axis. Trap: b is NOT where it crosses the x-axis. When x = 0, y = m(0) + b = b. That's on the y-axis." },
+      { q: "What are the slope and y-intercept of y = −2x + 7?", a: 0, opts: ["Slope −2, y-intercept 7","Slope 7, y-intercept −2","Slope 2, y-intercept 7","Slope −2, y-intercept −7"], hint: "Match it to y = mx + b. The number stuck to x is m = −2 (keep the sign!). The number added on is b = 7. Trap: dropping the negative from −2, or swapping m and b." },
+      { q: "Which equation has slope 4 and y-intercept −1?", a: 0, opts: ["y = 4x − 1","y = −x + 4","y = 4x + 1","y = −4x − 1"], hint: "Plug into y = mx + b: m = 4, b = −1. So y = 4x + (−1) = 4x − 1. Trap: y = −x + 4 swaps the slope and the y-intercept." },
+      { q: "A line passes through (0, 3) and (2, 7). What is its equation?", a: 0, opts: ["y = 2x + 3","y = 3x + 2","y = (1/2)x + 3","y = 2x + 7"], hint: "Step 1: (0, 3) is on the y-axis, so b = 3. Step 2: slope = (7 − 3) ÷ (2 − 0) = 4 ÷ 2 = 2. Step 3: y = 2x + 3. Check (2, 7): 2(2) + 3 = 7. Trap: (1/2)x uses run over rise, and +7 uses the wrong point for b." },
+      { q: "A table shows x = 0, 1, 2, 3 and y = 5, 8, 11, 14. Which equation fits the table?", a: 0, opts: ["y = 3x + 5","y = 5x + 3","y = x + 5","y = 3x"], hint: "Step 1: when x = 0, y = 5, so b = 5. Step 2: y goes up 3 each time x goes up 1, so m = 3. Step 3: y = 3x + 5. Check x = 3: 9 + 5 = 14. Trap: y = 5x + 3 swaps the slope and the start." },
+      { q: "A kayak rental at Cocoa Beach costs $15 plus $10 per hour. Which equation gives the cost c for h hours?", a: 0, opts: ["c = 10h + 15","c = 15h + 10","c = 25h","c = 10h"], hint: "The amount that changes every hour ($10) is the slope, so it goes with h. The one-time fee ($15) is the starting amount b. So c = 10h + 15. Check 2 hours: 20 + 15 = $35. Trap: c = 15h + 10 charges the one-time fee every hour." },
+      { q: "The cost of a theme park order is y = 45x + 20, where x is the number of tickets and y is the total in dollars. What does the 20 mean?", a: 0, opts: ["A $20 fee you pay no matter how many tickets you buy","Each ticket costs $20","You can buy 20 tickets","The total for 45 tickets"], hint: "20 is b, the y-intercept: the cost when x = 0 tickets. It is a one-time fee added to every order. The 45 is the slope, so each ticket costs $45. Trap: mixing up the per-ticket rate (slope) with the starting amount." },
+      { q: "Julia's tablet battery is modeled by y = −5x + 100, where x is hours of gaming and y is the percent left. What does −5 mean?", a: 0, opts: ["The battery drops 5% each hour","The battery starts at 5%","The battery gains 5% each hour","The battery lasts 5 hours"], hint: "−5 is the slope: the change in y for each 1 hour. Negative means it goes DOWN 5% every hour. 100 is the start (a full battery). Trap: ignoring the negative sign. Check: it would last 100 ÷ 5 = 20 hours, not 5." },
+      { q: "A line passes through (2, 5) and (4, 9). What is its equation?", a: 0, opts: ["y = 2x + 1","y = 2x + 5","y = (1/2)x + 4","y = 4x − 3"], hint: "Step 1: slope = (9 − 5) ÷ (4 − 2) = 4 ÷ 2 = 2. Step 2: plug a point into y = 2x + b: 5 = 2(2) + b, so 5 = 4 + b and b = 1. Step 3: y = 2x + 1. Check (4, 9): 8 + 1 = 9. Trap: b = 5 uses the point's y-value, but (2, 5) is not on the y-axis." }
+    ]
+  },
+  systems: {
+    title: "Systems of Linear Equations", emoji: "🔀", color: "#a855f7",
+    questions: [
+      { q: "On a graph, what is the solution to a system of two linear equations?", a: 0, opts: ["The point where the two lines cross","The y-intercept of the first line","The slope of both lines","Any point on either line"], hint: "A solution has to make BOTH equations true at the same time. The only points on BOTH lines are where they cross (intersect). Trap: a point on just one line only works for one equation." },
+      { q: "Two lines have the SAME slope but DIFFERENT y-intercepts. How many solutions does the system have?", a: 0, opts: ["No solution","Exactly one","Infinitely many","Two"], hint: "Same slope means the lines are parallel, like train tracks. Different starting points means they never meet. No crossing point = no solution. If the y-intercepts were also the same, it would be the same line: infinitely many." },
+      { q: "Is (2, 3) a solution of the system y = x + 1 and y = 2x − 1?", a: 0, opts: ["Yes, it makes both equations true","No, it works only in the first equation","No, it works only in the second equation","No, it works in neither equation"], hint: "Plug x = 2 and y = 3 into EACH equation. First: 3 = 2 + 1. True. Second: 3 = 2(2) − 1 = 3. True. Both true, so yes! Trap: stopping after checking only one equation." },
+      { q: "Is (1, 4) a solution of the system y = 3x + 1 and y = −x + 6?", a: 0, opts: ["No, it works only in the first equation","Yes, it works in both equations","No, it works only in the second equation","No, it works in neither equation"], hint: "First: 4 = 3(1) + 1 = 4. True. Second: 4 = −1 + 6 = 5? False! It has to work in BOTH to be a solution, so no. Trap: checking the first equation, seeing it works, and calling it a solution." },
+      { q: "Solve the system: y = 2x and x + y = 12.", a: 0, opts: ["(4, 8)","(8, 4)","(6, 6)","(2, 4)"], hint: "Substitution: y is already alone, so replace y with 2x in the second equation: x + 2x = 12, so 3x = 12 and x = 4. Then y = 2(4) = 8. Answer (4, 8). Check: 8 = 2(4) and 4 + 8 = 12. Trap: (8, 4) swaps x and y. (6, 6) only works in the second equation." },
+      { q: "Solve the system: y = x + 3 and y = −x + 7.", a: 0, opts: ["(2, 5)","(5, 2)","(4, 7)","(2, 3)"], hint: "Both equal y, so set them equal: x + 3 = −x + 7. Add x: 2x + 3 = 7. Subtract 3: 2x = 4, so x = 2. Then y = 2 + 3 = 5. Check the other: −2 + 7 = 5. Trap: (4, 7) works in the first equation only, and (5, 2) swaps x and y." },
+      { q: "How many solutions does the system y = 3x + 2 and y = 3x − 4 have?", a: 0, opts: ["No solution","Exactly one solution","Infinitely many solutions","Exactly two solutions"], hint: "Compare slopes and y-intercepts. Both slopes are 3 (parallel), but the y-intercepts are 2 and −4 (different). Parallel lines never cross: no solution. Try solving: 3x + 2 = 3x − 4 gives 2 = −4, which is false." },
+      { q: "How many solutions does the system y = 2x + 1 and 2y = 4x + 2 have?", a: 0, opts: ["Infinitely many solutions","No solution","Exactly one solution","Exactly two solutions"], hint: "Divide the second equation by 2: y = 2x + 1. It's the SAME line as the first one! Every point on it works for both: infinitely many solutions. Trap: the second equation looks different, so always simplify it first." },
+      { q: "How many solutions does the system y = 2x + 5 and y = −x + 5 have?", a: 0, opts: ["Exactly one solution","No solution","Infinitely many solutions","Exactly two solutions"], hint: "The slopes are DIFFERENT (2 and −1), so the lines cross exactly once. They cross at (0, 5), where both start. Trap: seeing the same y-intercept and thinking they are the same line. Same line needs the same slope AND the same y-intercept." },
+      { q: "At a theme park, drinks cost $3 and pretzels cost $5. Julia buys 5 items and spends $19. How many of each did she buy?", a: 0, opts: ["2 pretzels and 3 drinks","3 pretzels and 2 drinks","1 pretzel and 4 drinks","4 pretzels and 1 drink"], hint: "Let d = drinks, p = pretzels. Equations: d + p = 5 and 3d + 5p = 19. Substitute d = 5 − p: 3(5 − p) + 5p = 19, so 15 + 2p = 19, 2p = 4, p = 2. Then d = 3. Check: 3(3) + 5(2) = 9 + 10 = 19. Trap: 3 pretzels and 2 drinks costs $21, so read carefully which is which." }
+    ]
+  },
+  functions: {
+    title: "Functions", emoji: "🤖", color: "#ec4899",
+    questions: [
+      { q: "What makes a relation a FUNCTION?", a: 0, opts: ["Each input has exactly one output","Each output has exactly one input","Every number in it is positive","Its graph is a straight line"], hint: "Think of a vending machine: press one button (input) and you always get the same ONE snack (output). If one button could give two different snacks, it's not a function. Trap: two inputs CAN share an output. Functions don't have to be straight lines either." },
+      { q: "In a function written with x and y, which letter is usually the INPUT and which is the OUTPUT?", a: 0, opts: ["x is the input and y is the output","y is the input and x is the output","x is the slope and y is the intercept","Both x and y are outputs"], hint: "You pick x (the input) and the rule tells you y (the output). In an ordered pair (x, y), the input comes first. Like (3, 7): put in 3, get out 7." },
+      { q: "Which set of (x, y) pairs is a function?", a: 0, opts: ["(1, 4), (2, 4), (3, 5)","(1, 4), (1, 5), (2, 6)","(2, 3), (2, 7), (4, 1)","(5, 0), (6, 1), (5, 2)"], hint: "Look for a repeated x-value with DIFFERENT y-values. That breaks the rule. In (1, 4), (2, 4), (3, 5), every x is different, so it's a function. The y-value 4 repeats, and that's OK. Trap: thinking a repeated y makes it not a function. Only a repeated x with different y's does." },
+      { q: "Which set of (x, y) pairs is NOT a function?", a: 0, opts: ["(3, 1), (4, 2), (3, 5)","(1, 2), (2, 2), (3, 2)","(0, 0), (1, 1), (2, 4)","(−1, 5), (0, 5), (1, 6)"], hint: "Check the x-values for repeats. In the first set, x = 3 goes to 1 AND to 5. One input, two outputs: not a function. The set (1, 2), (2, 2), (3, 2) IS a function, because every input gives exactly one output (it just happens to be 2 each time)." },
+      { q: "A graph shows Julia's distance from home as she bikes to the beach. The line goes up, then stays flat for 20 minutes, then goes up again. What happened during the flat part?", a: 0, opts: ["She stopped, so her distance stayed the same","She biked back toward home","She biked faster than before","She biked slower but kept moving"], hint: "Flat means the output (distance) is not changing: the function is constant. So she stopped (maybe for a snack!). Going up = increasing distance, going down = heading back home. Trap: slower biking would still go up, just less steeply." },
+      { q: "Which graph is NOT a function?", a: 0, opts: ["A circle","A slanted straight line","A U-shaped curve opening upward","A horizontal line"], hint: "Use the vertical line test: imagine sliding a straight-up-and-down line across the graph. If it ever hits the graph TWICE, one x has two y's, so it's not a function. A circle gets hit twice (top and bottom). Trap: a horizontal line IS a function, since each x has one y." },
+      { q: "Which equation is a LINEAR function?", a: 0, opts: ["y = 4x − 3","y = x² + 1","y = x³","y = 12 ÷ x"], hint: "A linear function can be written as y = mx + b, with x to the first power only (no squares, cubes, or x in the bottom of a fraction). y = 4x − 3 has m = 4 and b = −3. Its graph is a straight line. The others all curve." },
+      { q: "A table shows x = 1, 2, 3, 4 and y = 2, 4, 8, 16. Is this function linear or nonlinear?", a: 0, opts: ["Nonlinear, because y does not change by the same amount each time","Linear, because the y-values go up every time","Linear, because x goes up by 1 each time","Nonlinear, because x goes up by 1 each time"], hint: "For x steps of 1, check how much y changes: +2, +4, +8. The change is NOT constant (it doubles), so it's nonlinear. Trap: \"always going up\" doesn't make it linear. A linear function goes up by the SAME amount each step." },
+      { q: "Function A is y = 3x + 2. Function B is a table: x = 0, 1, 2 and y = 5, 9, 13. Which has the greater rate of change?", a: 0, opts: ["Function B, with a rate of change of 4","Function A, with a rate of change of 3","Function B, with a rate of change of 5","They have the same rate of change"], hint: "Step 1: Function A's rate is the slope, 3. Step 2: Function B: y goes 5, 9, 13, up 4 each time x goes up 1, so its rate is 4. Step 3: 4 > 3, so B wins. Trap: 5 is B's starting value (its y-intercept), not its rate." },
+      { q: "A mapping diagram has inputs 1, 2, 3 and outputs 7, 9. The arrows go 1 → 7, 2 → 7, and 3 → 9. Is it a function?", a: 0, opts: ["Yes, each input has exactly one arrow","No, because 7 has two arrows coming in","No, because there are more inputs than outputs","No, because 9 has only one arrow"], hint: "Count the arrows LEAVING each input. 1 has one, 2 has one, 3 has one. So it's a function. Trap: arrows coming INTO an output can be shared. Only an input with two arrows going out breaks the rule." }
+    ]
+  },
+  pythagorean: {
+    title: "Pythagorean Theorem", emoji: "📐", color: "#f97316",
+    questions: [
+      { q: "In a right triangle, what is the HYPOTENUSE?", a: 0, opts: ["The longest side, across from the right angle","The shortest side","Either side that touches the right angle","Whichever side is on the bottom"], hint: "The two sides that form the right angle (the square corner) are the LEGS. The side across from the right angle is the hypotenuse, and it is always the longest side. Trap: the bottom side is usually a leg, not the hypotenuse." },
+      { q: "For a right triangle with legs a and b and hypotenuse c, what does the Pythagorean Theorem say?", a: 0, opts: ["a² + b² = c²","a + b = c","a² × b² = c²","a² − b² = c²"], hint: "Square each leg, add them, and you get the hypotenuse squared: a² + b² = c². Trap: a + b = c adds the legs without squaring. Real check: legs 3 and 4 give 9 + 16 = 25 = 5², so c = 5, not 7." },
+      { q: "A right triangle has legs 6 and 8. How long is the hypotenuse?", a: 0, opts: ["10","14","100","48"], hint: "Step 1: square the legs: 6² = 36 and 8² = 64. Step 2: add: 36 + 64 = 100. Step 3: take the square root: √100 = 10. Trap: 14 adds the legs, and 100 forgets the last square root step." },
+      { q: "A right triangle has a hypotenuse of 13 and one leg of 5. How long is the other leg?", a: 0, opts: ["12","8","18","144"], hint: "Looking for a LEG, so SUBTRACT: b² = c² − a². Step 1: 13² = 169 and 5² = 25. Step 2: 169 − 25 = 144. Step 3: √144 = 12. Trap: 8 just subtracts 13 − 5 without squaring, and 144 forgets the square root." },
+      { q: "A right triangle has legs 5 and 7. What is the hypotenuse, to the nearest tenth?", a: 0, opts: ["8.6","12","74","6.0"], hint: "Step 1: 5² + 7² = 25 + 49 = 74. Step 2: c = √74. Step 3: 8² = 64 and 9² = 81, so it's between 8 and 9; a calculator gives 8.60..., so 8.6. Trap: 12 adds the legs, and 74 forgets the square root. Also, the hypotenuse must be longer than 7, so 6.0 can't be right." },
+      { q: "A triangle has sides 7, 24, and 25. Is it a right triangle?", a: 0, opts: ["Yes, because 7² + 24² = 25²","No, because 7 + 24 is not 25","Yes, because all the sides are whole numbers","No, because 24² + 25² is not 7²"], hint: "The converse: if the two SHORTER sides squared add up to the LONGEST side squared, it's a right triangle. 49 + 576 = 625, and 25² = 625. Yes! Trap: always put the longest side alone as c. Checking 24² + 25² = 7² puts the sides in the wrong spots." },
+      { q: "Which set of side lengths makes a RIGHT triangle?", a: 0, opts: ["9, 12, 15","4, 5, 6","2, 3, 4","6, 7, 8"], hint: "Test a² + b² = c² with the biggest number as c. 9² + 12² = 81 + 144 = 225 = 15². Yes! Check one other: 4² + 5² = 41, but 6² = 36. No. Tip: 9, 12, 15 is just 3, 4, 5 times 3." },
+      { q: "What is the distance between the points (1, 2) and (4, 6) on a coordinate plane?", a: 0, opts: ["5","7","25","√7"], hint: "Draw a right triangle between the points. Step 1: across: 4 − 1 = 3. Step 2: up: 6 − 2 = 4. Step 3: these are the legs, so 3² + 4² = 9 + 16 = 25, and √25 = 5. Trap: 7 adds the legs (walking along the grid), but the straight-line distance is shorter." },
+      { q: "Julia flies a kite at the beach on a 50-meter string. The kite is directly above a spot 30 meters away from her. How high is the kite?", a: 0, opts: ["40 m","80 m","58.3 m","20 m"], hint: "The string is the hypotenuse (longest side, 50). The ground distance is a leg (30). Find the other leg: 50² − 30² = 2,500 − 900 = 1,600, and √1,600 = 40 m. Trap: 58.3 m ADDS the squares as if 50 were a leg, but the height can't be longer than the string." },
+      { q: "A softball diamond is a square with 60-foot sides. About how far is a throw from home plate straight to second base?", a: 0, opts: ["About 84.9 feet","120 feet","60 feet","About 7,200 feet"], hint: "Home to second cuts the square into two right triangles with legs of 60 and 60. Step 1: 60² + 60² = 3,600 + 3,600 = 7,200. Step 2: √7,200 ≈ 84.9 feet. Trap: 120 feet adds the legs (that's running the bases), and 7,200 forgets the square root." }
+    ]
+  },
+  angles: {
+    title: "Angle Relationships", emoji: "🔺", color: "#84cc16",
+    questions: [
+      { q: "The three angles inside ANY triangle always add up to what?", a: 0, opts: ["180°","360°","90°","270°"], hint: "Every triangle's angles add to 180°. Tear off the 3 corners of a paper triangle and line them up: they make a straight line, which is 180°. Trap: 360° is for a full circle or a four-sided shape." },
+      { q: "When two PARALLEL lines are cut by a transversal, what is true about corresponding angles?", a: 0, opts: ["They are equal","They always add to 180°","They are always 90°","They always add to 90°"], hint: "Corresponding angles are in the SAME spot at each crossing (like both \"top left\"). Since the lines are parallel, the two crossings look exactly alike, so corresponding angles are equal. Trap: they only add to 180° in special cases, like when both are 90°." },
+      { q: "Two angles of a triangle are 50° and 60°. What is the third angle?", a: 0, opts: ["70°","110°","250°","90°"], hint: "Step 1: add the two you know: 50 + 60 = 110. Step 2: subtract from 180: 180 − 110 = 70°. Trap: 110° is just the sum of the two angles, and 250° subtracts from 360 instead of 180." },
+      { q: "The two remote (far) interior angles of a triangle are 40° and 75°. What is the exterior angle at the third corner?", a: 0, opts: ["115°","65°","35°","245°"], hint: "Exterior Angle Theorem: an exterior angle equals the SUM of the two interior angles that are NOT next to it: 40 + 75 = 115°. Trap: 65° is the inside angle next to it (180 − 115), not the outside one." },
+      { q: "Two parallel lines are cut by a transversal. One angle is 65°. What is its ALTERNATE INTERIOR angle?", a: 0, opts: ["65°","115°","25°","130°"], hint: "Alternate interior angles are between the parallel lines on opposite sides of the transversal (they make a Z shape). With parallel lines, they are EQUAL: 65°. Trap: 115° is the supplement, which is for same-side interior angles." },
+      { q: "Two parallel lines are cut by a transversal. Two SAME-SIDE interior angles are formed. One is 72°. What is the other?", a: 0, opts: ["108°","72°","18°","288°"], hint: "Same-side interior angles (between the parallel lines, on the same side, a C shape) add up to 180°. So 180 − 72 = 108°. Trap: 72° treats them as equal, and 18° uses 90° instead of 180°." },
+      { q: "The angles of a triangle are x°, 2x°, and 3x°. What is x?", a: 0, opts: ["30","60","90","15"], hint: "Step 1: the angles add to 180: x + 2x + 3x = 180. Step 2: combine: 6x = 180. Step 3: x = 30. So the angles are 30°, 60°, 90°. Trap: 60 divides 360 by 6, and 90 is the biggest angle (3x), not x." },
+      { q: "An exterior angle of a triangle is 130°. One of the remote interior angles is 55°. What is the other remote interior angle?", a: 0, opts: ["75°","50°","185°","125°"], hint: "Exterior angle = sum of the two remote interior angles: 55 + ? = 130. So ? = 130 − 55 = 75°. Trap: 50° is the interior angle right next to the exterior angle (180 − 130), not a remote one." },
+      { q: "Two parallel lines are cut by a transversal. One angle measures (3x + 10)° and its CORRESPONDING angle measures 70°. What is x?", a: 0, opts: ["20","33 1/3","26 2/3","60"], hint: "Corresponding angles are equal, so 3x + 10 = 70. Step 1: subtract 10: 3x = 60. Step 2: divide by 3: x = 20. Check: 3(20) + 10 = 70. Trap: 33 1/3 sets them to add to 110 (wrong), and 26 2/3 adds the 10 instead of subtracting it. 60 forgets the last step." },
+      { q: "A brace on a beach lifeguard stand forms a triangle with angles 90°, (2x)°, and (x + 30)°. What is x?", a: 0, opts: ["20","40","10","70"], hint: "Step 1: all three add to 180: 90 + 2x + x + 30 = 180. Step 2: combine: 3x + 120 = 180. Step 3: subtract 120: 3x = 60, so x = 20. The angles are 90°, 40°, 50°. Trap: 40 is the angle 2x, not x itself. Read what the question asks for." }
+    ]
+  },
+  transformations: {
+    title: "Transformations", emoji: "🔄", color: "#06b6d4",
+    questions: [
+      { q: "Which transformation SLIDES a figure without turning or flipping it?", a: 0, opts: ["Translation","Reflection","Rotation","Dilation"], hint: "Translation = slide. Reflection = flip (mirror image). Rotation = turn. Dilation = shrink or stretch. A slide just moves the shape left, right, up, or down." },
+      { q: "Which transformation can change a figure's SIZE?", a: 0, opts: ["Dilation","Translation","Reflection","Rotation"], hint: "Only a dilation changes size: it multiplies every length by a scale factor. Slides, flips, and turns keep the same size and shape (congruent). A dilation makes a similar figure: same shape, different size." },
+      { q: "The point (2, −3) is translated 4 units LEFT and 5 units UP. Where does it land?", a: 0, opts: ["(−2, 2)","(6, 2)","(−2, −8)","(7, −7)"], hint: "Left/right changes x, up/down changes y. Step 1: 4 left: x = 2 − 4 = −2. Step 2: 5 up: y = −3 + 5 = 2. Answer (−2, 2). Trap: (6, 2) moves right instead of left, and (7, −7) mixes up which number changes x and which changes y." },
+      { q: "Reflect the point (3, 5) across the x-axis. Where does it land?", a: 0, opts: ["(3, −5)","(−3, 5)","(−3, −5)","(5, 3)"], hint: "Reflecting across the x-axis flips the point up or down, so the y-value changes sign and x stays the same: (x, y) → (x, −y) = (3, −5). Trap: (−3, 5) is the rule for the y-axis. Tip: the axis you reflect over is the one whose number STAYS the same." },
+      { q: "Reflect the point (−4, 1) across the y-axis. Where does it land?", a: 0, opts: ["(4, 1)","(−4, −1)","(4, −1)","(1, −4)"], hint: "Reflecting across the y-axis flips the point left or right, so the x-value changes sign: (x, y) → (−x, y) = (4, 1). Trap: (−4, −1) is the x-axis rule, and (4, −1) flips both (that's a 180° rotation)." },
+      { q: "Rotate the point (2, 5) 180° about the origin. Where does it land?", a: 0, opts: ["(−2, −5)","(−5, 2)","(5, −2)","(2, −5)"], hint: "A 180° turn is a half-turn: BOTH coordinates change sign: (x, y) → (−x, −y) = (−2, −5). Trap: (−5, 2) and (5, −2) swap the numbers. That only happens with 90° turns." },
+      { q: "Rotate the point (3, 1) 90° COUNTERCLOCKWISE about the origin. Where does it land?", a: 0, opts: ["(−1, 3)","(1, −3)","(−3, −1)","(3, −1)"], hint: "Rule for 90° counterclockwise: (x, y) → (−y, x). Swap the numbers and make the NEW first one negative: (3, 1) → (−1, 3). Check: (3, 1) is in Quadrant I, and a quarter-turn left moves it to Quadrant II. Trap: (1, −3) is the 90° CLOCKWISE answer." },
+      { q: "Dilate the point (4, −6) by a scale factor of 1/2, centered at the origin. Where does it land?", a: 0, opts: ["(2, −3)","(8, −12)","(4.5, −5.5)","(2, 3)"], hint: "A dilation centered at the origin MULTIPLIES both coordinates by the scale factor: (4 × 1/2, −6 × 1/2) = (2, −3). Trap: (8, −12) multiplies by 2 instead of 1/2, and (4.5, −5.5) adds 1/2. Keep the sign: −6 × 1/2 = −3." },
+      { q: "A triangle is dilated by a scale factor of 3. How does the new triangle compare to the original?", a: 0, opts: ["Similar but not congruent","Congruent","Neither similar nor congruent","Congruent but not similar"], hint: "A dilation keeps the same SHAPE (angles stay equal) but changes the SIZE (sides are 3 times longer). Same shape = similar. Congruent means same shape AND same size, so it's not congruent. Trap: every congruent figure is also similar, so \"congruent but not similar\" is never possible." },
+      { q: "Point A(1, 2) is reflected across the x-axis, and then translated 4 units RIGHT. Where does it end up?", a: 0, opts: ["(5, −2)","(−3, −2)","(5, 2)","(1, −2)"], hint: "Do one move at a time. Step 1: reflect across the x-axis: (1, 2) → (1, −2). Step 2: 4 right adds 4 to x: (1 + 4, −2) = (5, −2). Trap: (5, 2) skips the reflection, (−3, −2) moves left, and (1, −2) stops after the first step." }
+    ]
+  }
+};
+const TIPS_ACCEL = {
+  exponents: [
+    { h:"Negative means flip 🔄", p:"A negative exponent means <b>reciprocal</b>, not a negative answer: <b>2⁻³ = 1/2³ = 1/8</b>. And anything (except 0) to the <b>0 power is 1</b>." },
+    { h:"Same laws, now with negatives 🔢", p:"Multiply: <b>add</b> exponents (3⁵ × 3⁻² = 3³). Divide: <b>subtract</b>, top minus bottom (7² ÷ 7⁵ = 7⁻³). Power of a power: <b>multiply</b> ((2⁻³)² = 2⁻⁶). The base never changes." },
+    { h:"Watch the signs ⚠️", p:"Subtracting a negative means adding: 3⁻³ ÷ 3⁻⁴ = 3 to the (−3 − (−4)) = <b>3¹</b>. Write the exponent math out on paper." }
+  ],
+  sci_notation: [
+    { h:"The two-part form 🔬", p:"<b>(a number from 1 to just under 10) × 10 to a power</b>. 45,000 = <b>4.5 × 10⁴</b>. 32 × 10⁴ is NOT scientific notation because 32 is too big." },
+    { h:"Big or small? 🐜🌞", p:"<b>Positive</b> exponent = big number, move the decimal <b>right</b> (Sun: 9.3 × 10⁷ = 93,000,000 miles). <b>Negative</b> exponent = tiny number, move <b>left</b> (bacterium: 2 × 10⁻⁶ = 0.000002 m)." },
+    { h:"Multiply and divide 🧮", p:"Handle the front numbers and the powers of 10 separately. Multiply: <b>add</b> exponents. Divide: <b>subtract</b>. If the front number ends up 10 or more, fix it: 15 × 10⁷ = <b>1.5 × 10⁸</b>." }
+  ],
+  roots: [
+    { h:"Roots undo powers 🌳", p:"<b>√49 = 7</b> because 7 × 7 = 49. <b>∛8 = 2</b> because 2 × 2 × 2 = 8. A square root is NOT half the number." },
+    { h:"Estimate between perfect squares 🎯", p:"For √50: 7² = 49 and 8² = 64, so √50 is between <b>7 and 8</b>, close to 7. Learn the perfect squares 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144." },
+    { h:"Rational or irrational? 🤔", p:"Rational = can be a fraction (that includes repeating decimals and √25 = 5). <b>Irrational</b> = never ends AND never repeats, like <b>π</b> and <b>√2</b>. x² = 81 has two answers, <b>9 and −9</b>." }
+  ],
+  multi_step: [
+    { h:"The game plan 🔧", p:"1) <b>Distribute</b> (multiply EVERY term inside, signs too). 2) <b>Combine</b> like terms on each side. 3) Get x's on <b>one side</b>. 4) Undo + and −. 5) Undo × and ÷. 6) <b>Check</b> by plugging in." },
+    { h:"Distribute the negative ⚠️", p:"−2(x + 5) = <b>−2x − 10</b>, not −2x + 10. The negative multiplies both terms." },
+    { h:"One, none, or infinite? ♾️", p:"x = a number: <b>one solution</b>. x's vanish and you get something false like 8 = 5: <b>no solution</b>. x's vanish and you get something true like −3 = −3: <b>infinitely many</b>." }
+  ],
+  multi_ineq: [
+    { h:"Solve like an equation 🚦", p:"Distribute, collect x's on one side, then undo + and −, then × and ÷. Same steps as equations." },
+    { h:"The one big rule 🔁", p:"Multiply or divide by a <b>negative</b>? <b>Flip the sign.</b> −3x ≥ 9 becomes <b>x ≤ −3</b>. Adding or subtracting never flips it." },
+    { h:"Test a number ✅", p:"Pick a number from your answer and plug it into the ORIGINAL inequality. If it makes a true statement, you're right. Remember: &gt; and &lt; do <b>not</b> include the boundary number." }
+  ],
+  slope: [
+    { h:"Rise over run ⛰️", p:"Slope = <b>change in y ÷ change in x</b>. From (1, 2) to (3, 8): 6 ÷ 2 = <b>3</b>. Y goes on top! Run over rise gives the upside-down answer." },
+    { h:"Four kinds of slope ↗️↘️", p:"Uphill = <b>positive</b>. Downhill = <b>negative</b>. Flat (horizontal) = <b>0</b>. Straight up and down (vertical) = <b>undefined</b>, because you can't divide by 0." },
+    { h:"Rate of change in real life 🚀", p:"Slope is a rate: feet per second, dollars per ride. A rocket going from 1,200 ft to 3,000 ft in 6 seconds climbs <b>300 feet per second</b>." }
+  ],
+  linear: [
+    { h:"y = mx + b ✏️", p:"<b>m</b> = slope (the rate, stuck to x). <b>b</b> = y-intercept (where the line crosses the <b>y-axis</b>, the starting amount). In y = −2x + 7, m = −2 and b = 7." },
+    { h:"From a story 🛶", p:"$15 to rent plus $10 per hour: the per-hour amount is m, the one-time fee is b: <b>c = 10h + 15</b>." },
+    { h:"From two points 📍", p:"1) Find the slope. 2) Plug one point into y = mx + b to find b. Through (2, 5) and (4, 9): m = 2, then 5 = 4 + b, so <b>y = 2x + 1</b>." }
+  ],
+  systems: [
+    { h:"Where lines meet 🔀", p:"The solution is the point that works in <b>both</b> equations: where the lines <b>cross</b>. Always check a point in BOTH equations." },
+    { h:"Substitution 🔁", p:"If y = 2x and x + y = 12, swap in 2x for y: x + 2x = 12, so x = 4, then y = 8. Answer <b>(4, 8)</b>." },
+    { h:"One, none, or infinite 🛤️", p:"Different slopes: <b>one</b> solution. Same slope, different b: parallel, <b>no</b> solution. Same slope AND same b: same line, <b>infinitely many</b>." }
+  ],
+  functions: [
+    { h:"One input, one output 🤖", p:"A function gives each input <b>exactly one</b> output. A repeated x with different y's breaks it. A repeated y is fine!" },
+    { h:"Vertical line test 📏", p:"If any vertical line hits a graph <b>twice</b>, it's not a function. A circle fails. Lines that aren't vertical pass." },
+    { h:"Linear or not? 📈", p:"Linear = y changes by the <b>same amount</b> each step (y = mx + b, a straight line). y = 2, 4, 8, 16 doubles, so it's <b>nonlinear</b>. Flat parts of a graph mean the function is <b>constant</b>." }
+  ],
+  pythagorean: [
+    { h:"a² + b² = c² 📐", p:"Only for <b>right</b> triangles. a and b are the legs, c is the <b>hypotenuse</b> (longest side, across from the right angle). Legs 6 and 8: 36 + 64 = 100, √100 = <b>10</b>." },
+    { h:"Finding a leg? Subtract ➖", p:"b² = c² − a². Hypotenuse 13, leg 5: 169 − 25 = 144, √144 = <b>12</b>. Don't forget the square root at the end!" },
+    { h:"Is it a right triangle? 🥎", p:"Check if the two short sides squared add up to the longest side squared. 9² + 12² = 225 = 15², so yes. Distance on a grid: make a right triangle and use the theorem." }
+  ],
+  angles: [
+    { h:"Triangle facts 🔺", p:"Inside angles add to <b>180°</b>. An exterior angle equals the <b>sum of the two far-away interior angles</b>." },
+    { h:"Parallel lines + transversal ➗", p:"<b>Equal</b>: corresponding (same spot), alternate interior (Z shape), alternate exterior, vertical angles. <b>Add to 180°</b>: same-side interior (C shape), and angles that form a straight line." },
+    { h:"Make an equation ✍️", p:"Angles with x? Use the fact to set up an equation: equal angles: <b>3x + 10 = 70</b>. Triangle: add all three and set equal to 180." }
+  ],
+  transformations: [
+    { h:"Slide, flip, turn, resize 🔄", p:"<b>Translation</b> = slide. <b>Reflection</b> = flip. <b>Rotation</b> = turn. These keep figures <b>congruent</b>. <b>Dilation</b> = resize, making figures <b>similar</b>." },
+    { h:"Coordinate rules 📍", p:"Reflect over x-axis: <b>(x, −y)</b>. Over y-axis: <b>(−x, y)</b>. Rotate 180°: <b>(−x, −y)</b>. Rotate 90° counterclockwise: <b>(−y, x)</b>. Dilate by k: <b>(kx, ky)</b>." },
+    { h:"One step at a time 👣", p:"For two moves in a row, finish the first move completely, then do the second on the NEW point." }
+  ]
+};
+const ACCEL_KEY_ORDER = ["exponents","sci_notation","roots","multi_step","multi_ineq","slope","linear","systems","functions","pythagorean","angles","transformations"];
+const BOSSES_ACCEL = {
+  exponents: { emoji: "🔢", name: "Count Negatula" },
+  sci_notation: { emoji: "🔬", name: "Ten-tacle Terror" },
+  roots: { emoji: "🌳", name: "Root Rot" },
+  multi_step: { emoji: "🔧", name: "Both-Sides Bandit" },
+  multi_ineq: { emoji: "🚦", name: "The Inequali-Tyrant" },
+  slope: { emoji: "⛰️", name: "Rise-Run Rex" },
+  linear: { emoji: "✏️", name: "Y-Intercept Yeti" },
+  systems: { emoji: "🔀", name: "Crossroads Croc" },
+  functions: { emoji: "🤖", name: "Mal-Function" },
+  pythagorean: { emoji: "📐", name: "Hypotenuse Hippo" },
+  angles: { emoji: "🔺", name: "Acute Brute" },
+  transformations: { emoji: "🔄", name: "The Spin Doctor" }
+};
+
 const SUBJECTS = {
   italy: {
     title: "My Trip to Italy", emoji: "🇮🇹", color: "#059669",
@@ -3864,6 +4124,11 @@ const SUBJECTS = {
     description: "Get ahead on Florida Grade 7: genetics, food webs, natural selection, rock cycle, plate tectonics, geologic time, light & waves, energy, heat.",
     topics: QUIZ_G7SCI, tips: TIPS_G7SCI, keyOrder: G7SCI_KEY_ORDER, hasSubObj: false
   },
+  accel: {
+    title: "Accelerated Math (Grade 8 Topics)", emoji: "⚡", color: "#be185d",
+    description: "For the Florida accelerated track: negative exponents, scientific notation, square roots, slope, y = mx + b, systems, functions, Pythagorean Theorem, angles, transformations.",
+    topics: QUIZ_ACCEL, tips: TIPS_ACCEL, keyOrder: ACCEL_KEY_ORDER, hasSubObj: false
+  },
   ratios: {
     title: "Ratios, Proportions & Percents", emoji: "💯", color: "#ea580c",
     description: "Ratios, unit rates, proportions, percents, discounts, tax, tips, and percent change.",
@@ -3875,7 +4140,7 @@ const SUBJECTS = {
     topics: QUIZ_GEO, tips: TIPS_GEO, keyOrder: GEO_KEY_ORDER, hasSubObj: false
   }
 };
-const SUBJECT_ORDER = ["italy","ela","grammar","social","g6math","g6sci","g7math","g7sci","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
+const SUBJECT_ORDER = ["italy","ela","grammar","social","g6math","g6sci","g7math","g7sci","accel","protists","bacteria","microbes","cells","math","ratios","algebra","reading","cs","space","geo"];
 
 let QUIZ = QUIZ_ELA;
 let TIPS = TIPS_ELA;
@@ -4004,6 +4269,7 @@ const TROPHIES = [
   { id:"boss_g6sci",    emoji:"🔭", name:"Sunshine Scientist", desc:"Defeat all 12 FL 6th Grade Science bosses." },
   { id:"boss_g7math",   emoji:"🚀", name:"Seventh Grade Rocket", desc:"Defeat all 12 FL 7th Grade Math Preview bosses." },
   { id:"boss_g7sci",    emoji:"🌋", name:"Seventh Grade Scientist", desc:"Defeat all 12 FL 7th Grade Science Preview bosses." },
+  { id:"boss_accel",    emoji:"⚡", name:"Fast Tracker",     desc:"Defeat all 12 Accelerated Math bosses." },
   { id:"grand_champion",emoji:"👑", name:"Grand Champion",   desc:"Defeat every boss across every subject." },
   { id:"termle_first",  emoji:"🟩", name:"First Word",       desc:"Solve your first Termle puzzle." },
   { id:"termle_3",      emoji:"🟩", name:"Word Streak",      desc:"Solve Termle 3 days in a row." },
@@ -4017,6 +4283,7 @@ const BOSSES = {
   g6sci: BOSSES_G6SCI,
   g7math: BOSSES_G7MATH,
   g7sci: BOSSES_G7SCI,
+  accel: BOSSES_ACCEL,
   italy: {
     landmarks:  { emoji: "🗼", name: "The Leaning Tower" },
     food:       { emoji: "🍕", name: "Pizza Padrone" },
